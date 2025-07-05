@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/00_Scenes/GameScene/Splash.unity
+    guid: 0c66d6d6a884b9d48a437abc5baa69de
+  - enabled: 1
+    path: Assets/00_Scenes/GameScene/InitScene.unity
+    guid: d0f245c3240cd9c40845ec621fdededf
+  - enabled: 1
+    path: Assets/00_Scenes/GameScene/LoadingScene.unity
+    guid: 47a5307bb166dd24481bb1acce14d0d4
+  - enabled: 1
+    path: Assets/00_Scenes/GameScene/LobbyScene.unity
+    guid: f5d787bff90451e4a8a67f0ca7acb950
+  - enabled: 1
+    path: Assets/00_Scenes/GameScene/PlayScene_ST001.unity
+    guid: 2a8677cebf2d4d14fa9f151deb441e1e
+  - enabled: 1
+    path: Assets/00_Scenes/GameScene/PlayScene_ST002.unity
+    guid: 71a3ef563c5935b44bca62d211b33b04
+  - enabled: 1
+    path: Assets/00_Scenes/GameScene/TutorialScene.unity
+    guid: 8f07b31c99a862c44a4f45e6a233d5f3
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 6d471c235cec51742983b07eb1c717c9,
+      type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: 8b2a7dcdea7f14042854e99839eed342,
+      type: 2}
+  m_UseUCBPForAssetBundles: 0

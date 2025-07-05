@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EQ
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: obj_CH013_Toaster
+    m_Weight: 0
+  - m_Path: obj_CH013_Toaster/obj_CH013_Toaster_face
+    m_Weight: 1
+  - m_Path: rig_CH
+    m_Weight: 1
+  - m_Path: rig_CH/obj_EQ013_SuperComputer
+    m_Weight: 0
+  - m_Path: rig_CH/obj_EQ013_SuperComputer/PC_Body
+    m_Weight: 0
+  - m_Path: rig_CH/obj_EQ013_SuperComputer/PC_Body/L_Body_window
+    m_Weight: 0
+  - m_Path: rig_CH/obj_EQ013_SuperComputer/PC_Body/L_Cooling
+    m_Weight: 0
+  - m_Path: rig_CH/obj_EQ013_SuperComputer/PC_Body/L_Cooling/L_Fan
+    m_Weight: 0
+  - m_Path: rig_CH/obj_EQ013_SuperComputer/PC_Body/R_Body_Window
+    m_Weight: 0
+  - m_Path: rig_CH/obj_EQ013_SuperComputer/PC_Body/R_Cooling
+    m_Weight: 0
+  - m_Path: rig_CH/obj_EQ013_SuperComputer/PC_Body/R_Cooling/R_Fan
+    m_Weight: 1
+  - m_Path: rig_CH/root
+    m_Weight: 1
+  - m_Path: rig_CH/root/def_MainCha_00
+    m_Weight: 1
+  - m_Path: rig_CH/root/def_MainCha_00/def_MainCha_01
+    m_Weight: 1
+  - m_Path: rig_CH/root/def_MainCha_00/def_MainCha_01/def_MainCha_02
+    m_Weight: 1
+  - m_Path: rig_CH/root/def_MainCha_00/def_MainCha_01/def_MainCha_02/def_MainCha_02_end
+    m_Weight: 1
+  - m_Path: rig_CH/root/root_Hand_L
+    m_Weight: 1
+  - m_Path: rig_CH/root/root_Hand_L/def_Hand_L
+    m_Weight: 1
+  - m_Path: rig_CH/root/root_Hand_L/def_Hand_L/def_Hand_L_end
+    m_Weight: 1
+  - m_Path: rig_CH/root/root_Hand_R
+    m_Weight: 1
+  - m_Path: rig_CH/root/root_Hand_R/def_Hand_R
+    m_Weight: 1
+  - m_Path: rig_CH/root/root_Hand_R/def_Hand_R/def_Hand_R_end
+    m_Weight: 1
