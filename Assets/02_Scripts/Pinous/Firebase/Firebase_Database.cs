@@ -39,13 +39,14 @@ public partial class Firebase_Mng: MonoBehaviour
             }
             else if (task.Result.Exists)
             {
-                string versionValue = task.Result.Value.ToString();
-                if(versionValue != Application.version)
-                {
-                    VersionCheck.instance.GetVersionPopUP();
-                    return;
-                }
-                else
+                // TODO: 아래 주석은 임시 로그인 허용이므로 후에 변경 필요합니다. 하랑
+                // string versionValue = task.Result.Value.ToString();
+                // if(versionValue != Application.version)
+                // {
+                //     VersionCheck.instance.GetVersionPopUP();
+                //     return;
+                // }
+                // else
                 {
                     AccountInitializer.instance.GetCheckVersionAndLogin();
                 }
