@@ -115,13 +115,13 @@ public class UI_Shop : UI_Base
     }
     public void GetProduct(string name)
     {
-        Base_Mng.m_Analytics.RecordCustomEventWithParameters(name, 1);
+        Base_Mng.Analytics.RecordCustomEventWithParameters(name, 1);
         Base_Mng.IAP.Purchase(name);
     }
 
     public void GetBuyAsset(int value)
     {
-        Base_Mng.m_Analytics.RecordSaleItemForInGame("InGame");
+        Base_Mng.Analytics.RecordSaleItemForInGame("InGame");
 
         if (Base_Mng.Data.data.GetCharacterData[value]) return;
         if (Base_Mng.Data.data.Red < 100000)
@@ -142,7 +142,7 @@ public class UI_Shop : UI_Base
     }
     public void GetBuyAsset02(int value)
     {
-        Base_Mng.m_Analytics.RecordSaleItemForInGame("InGame");
+        Base_Mng.Analytics.RecordSaleItemForInGame("InGame");
 
         if (Base_Mng.Data.data.GetCharacterData[value]) return;
         if (Base_Mng.Data.data.Red < 75000)
@@ -163,7 +163,7 @@ public class UI_Shop : UI_Base
     }
     public void GetBuyAsset03(int value)
     {
-        Base_Mng.m_Analytics.RecordSaleItemForInGame("InGame");
+        Base_Mng.Analytics.RecordSaleItemForInGame("InGame");
 
         if (Base_Mng.Data.data.GetCharacterData[value]) return;
         if (Base_Mng.Data.data.Red < 150000)
@@ -185,7 +185,7 @@ public class UI_Shop : UI_Base
 
     public void GetBuyAssetDown(int value)
     {
-        Base_Mng.m_Analytics.RecordSaleItemForInGame("InGame");
+        Base_Mng.Analytics.RecordSaleItemForInGame("InGame");
 
         if (Base_Mng.Data.data.GetCharacterData[value]) return;
 
@@ -207,7 +207,7 @@ public class UI_Shop : UI_Base
     }
     public void GetBuyAssetEQ(int value)
     {
-        Base_Mng.m_Analytics.RecordSaleItemForInGame("InGame");
+        Base_Mng.Analytics.RecordSaleItemForInGame("InGame");
 
         if (Base_Mng.Data.data.GetEQData[value]) return;
 
@@ -229,7 +229,7 @@ public class UI_Shop : UI_Base
     }
     public void GetBuyAssetEQ02(int value)
     {
-        Base_Mng.m_Analytics.RecordSaleItemForInGame("InGame");
+        Base_Mng.Analytics.RecordSaleItemForInGame("InGame");
 
         if (Base_Mng.Data.data.GetEQData[value]) return;
 

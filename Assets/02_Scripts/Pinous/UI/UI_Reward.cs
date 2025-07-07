@@ -25,13 +25,13 @@ public class UI_Reward : UI_Base
     {
         if(Base_Mng.Data.data.IAP == 0)
         {
-            Base_Mng.m_Analytics.RecordCustomEventWithParameters("First Buy", (Base_Mng.Data.data.Level + 1));
+            Base_Mng.Analytics.RecordCustomEventWithParameters("First Buy", (Base_Mng.Data.data.Level + 1));
         }
         else
         {
-            Base_Mng.m_Analytics.RecordCustomEventWithParameters("Duplicate Buy", 1);
+            Base_Mng.Analytics.RecordCustomEventWithParameters("Duplicate Buy", 1);
         }
-        Base_Mng.m_Analytics.RecordSaleItemForPurchase(name);
+        Base_Mng.Analytics.RecordSaleItemForPurchase(name);
 
         switch (name)
         {
@@ -102,8 +102,8 @@ public class UI_Reward : UI_Base
         {
             if (Base_Mng.Data.data.GetEQData[i] == true) eq++;
         }
-        Base_Mng.m_Analytics.RecordCustomEventWithParameters("Character", character);
-        Base_Mng.m_Analytics.RecordCustomEventWithParameters("EQ", eq);
+        Base_Mng.Analytics.RecordCustomEventWithParameters("Character", character);
+        Base_Mng.Analytics.RecordCustomEventWithParameters("EQ", eq);
     }
 
     public override void DisableOBJ()

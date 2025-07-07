@@ -19,7 +19,7 @@ public class Base_Mng : MonoBehaviour
     public static ADS_Mng ADS { get { return s_ADS; } }
     public static Firebase_Mng Firebase { get { return s_Firebase; } }
     public static IAP_Manager IAP { get { return s_IAP; } }
-    public static Analytics_Mng m_Analytics { get { return s_Analytics; } }
+    public static Analytics_Mng Analytics { get { return s_Analytics; } }
     float timer = 0.0f;
     public float saveTimer = 0.0f;
     public bool GetStartGame = false;
@@ -80,7 +80,7 @@ public class Base_Mng : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
             IAP.Init();
             Firebase.Init();
-            m_Analytics.Init();
+            Analytics.Init();
         }
         else
         {
@@ -117,7 +117,7 @@ public class Base_Mng : MonoBehaviour
     {
         Data.data.E_DateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         var Timer = DateTime.Parse(Data.data.E_DateTime) - DateTime.Parse(Data.data.S_DateTime);
-        m_Analytics.RecordCustomEventWithParameters("Time", (int)Timer.TotalMinutes);
+        Analytics.RecordCustomEventWithParameters("Time", (int)Timer.TotalMinutes);
         Data.Save();
     }
 }

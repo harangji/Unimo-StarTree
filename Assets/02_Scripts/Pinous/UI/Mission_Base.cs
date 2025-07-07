@@ -81,7 +81,7 @@ public class Mission_Base : MonoBehaviour
     {
         if (valueCount(style) < count) return;
 
-        Base_Mng.m_Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
+        Base_Mng.Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
 
         Base_Mng.Data.data.GetArchivements[reward] = true;
         Canvas_Holder.instance.NoneClose = true;
@@ -96,7 +96,7 @@ public class Mission_Base : MonoBehaviour
     private void GetButtonCheck(string style, int count, int reward, Asset_State rewardType)
     {
         if (valueCount(style) < count) return;
-        Base_Mng.m_Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
+        Base_Mng.Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
 
         switch (style)
         {
