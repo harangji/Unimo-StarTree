@@ -8,7 +8,7 @@ using Google;
 using Unity.Services.Authentication.PlayerAccounts;
 using Firebase;
 using System;
-public partial class Firebase_Mng
+public partial class Firebase_Manager
 {
     private GoogleSignInConfiguration configuration;
     void FirebaseInit(EAccountType type)

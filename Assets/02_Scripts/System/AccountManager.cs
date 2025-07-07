@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AccountManager : SingletonBehaviour<AccountManager>
 {
-    [HideInInspector] public SAccountData AccountData;
+    [HideInInspector] public AccountData AccountData;
     new private void Awake()
     {
         base.Awake();
@@ -19,12 +19,12 @@ public class AccountManager : SingletonBehaviour<AccountManager>
         //First setting is completed when name is set
         AccountData.Name = userName;
         Base_Mng.Firebase.UserName = userName;
-        PlayDataManager.SaveData<SAccountData>(AccountData, typeof(SAccountData).ToString());
+        PlayDataManager.SaveData<AccountData>(AccountData, typeof(AccountData).ToString());
 
-        SAccountConfig config = new SAccountConfig();
+        AccountConfig config = new AccountConfig();
         config.isNotFirst = true;
         config.AccountType = AccountData.AccountType;
-        DataConfigIOManager.SaveData<SAccountConfig>(config, typeof(SAccountConfig).ToString());
+        DataConfigIOManager.SaveData<AccountConfig>(config, typeof(AccountConfig).ToString());
 
         AccountInitializer initializer = FindAnyObjectByType<AccountInitializer>();
         if (initializer != null) { initializer.EndAccountInitialize(); }
@@ -44,13 +44,13 @@ public class AccountManager : SingletonBehaviour<AccountManager>
     }
 }
 [System.Serializable]
-public class SAccountConfig
+public class AccountConfig
 {
     public bool isNotFirst;
     public EAccountType AccountType;
 }
 [System.Serializable]
-public class SAccountData
+public class AccountData
 {
     public EAccountType AccountType;
     public string Name;

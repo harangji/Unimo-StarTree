@@ -4,7 +4,7 @@ using UnityEngine;
 using Firebase.Extensions;
 using Firebase.Database;
 
-public partial class Firebase_Mng
+public partial class Firebase_Manager
 {
     public string UserID = "";
     public string UserName;

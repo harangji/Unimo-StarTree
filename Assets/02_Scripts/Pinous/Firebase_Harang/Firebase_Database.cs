@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
-public partial class Firebase_Mng: MonoBehaviour
+public partial class Firebase_Manager: MonoBehaviour
 {
     // 데이터베이스에 데이터 쓰기
     public void WriteData(string key, string value)
@@ -70,9 +70,9 @@ public partial class Firebase_Mng: MonoBehaviour
             else if (task.Result.Exists)
             {
                 string value = task.Result.GetRawJsonValue();
-                if(value == "" || value == null)
+                if(string.IsNullOrEmpty(value)) //값이 없을 때 = 유저 정보가 없음
                 {
-                    value = NewData();
+                    value = NewData(); //새로 생성
                 }
                 isSetFirebase = true;
 

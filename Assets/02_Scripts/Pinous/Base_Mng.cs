@@ -12,12 +12,12 @@ public class Base_Mng : MonoBehaviour
 
     private static ADS_Mng s_ADS = new ADS_Mng();
     private static Data_Mng s_Data = new Data_Mng();
-    private static Firebase_Mng s_Firebase = new Firebase_Mng();
+    private static Firebase_Manager s_Firebase = new Firebase_Manager();
     private static IAP_Manager s_IAP = new IAP_Manager();
     private static Analytics_Mng s_Analytics = new Analytics_Mng();
     public static Data_Mng Data { get { return s_Data; } }
     public static ADS_Mng ADS { get { return s_ADS; } }
-    public static Firebase_Mng Firebase { get { return s_Firebase; } }
+    public static Firebase_Manager Firebase { get { return s_Firebase; } }
     public static IAP_Manager IAP { get { return s_IAP; } }
     public static Analytics_Mng m_Analytics { get { return s_Analytics; } }
     float timer = 0.0f;
