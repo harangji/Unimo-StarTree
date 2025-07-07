@@ -141,7 +141,7 @@ public class Data_Mng
             data.Level++;
             if (data.Level >= 99)
             {
-                Base_Mng.m_Analytics.RecordCustomEventWithParameters("Level", data.Level);
+                Base_Mng.Analytics.RecordCustomEventWithParameters("Level", data.Level);
                 if (data.GetGameTwo == false)
                 {
                     data.GetGameTwo = true;
