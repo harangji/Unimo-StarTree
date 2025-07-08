@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 게임 진행 상태 관리 
+// 타이머 초기값, 일시정지/재개, 게임 오버 처리, 결과 화면 활성화 등을 제어
 public class PlayProcessController : MonoBehaviour
 {
     public static float InitTimeSTATIC = 1.2f;
