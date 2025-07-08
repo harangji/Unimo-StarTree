@@ -7,6 +7,7 @@ public class Mon005State_Preaction : MonsterState_Preaction
     [SerializeField] private float moveSpeed = 4.2f;
     [SerializeField] private int moveDir_0x1y2z = 1;
     [SerializeField] private int moveFrontBack = -1;
+    protected float existTime = 4f;
     private Vector3 moveVec;
 
     public override void TransitionAction(MonsterController controller)
@@ -18,11 +19,19 @@ public class Mon005State_Preaction : MonsterState_Preaction
 
     public override void UpdateAction()
     {
-        controller.transform.position += moveSpeed * Time.deltaTime * moveVec;
-        
-        if (controller.transform.position.y < -2f * controller.transform.localScale.y)
+        existTime -= Time.deltaTime;
+        if (existTime < 0)
         {
-            controller.EnemyExplode();
+            InvokeDisappearState();
+        }
+        else
+        {
+            controller.transform.position += moveSpeed * Time.deltaTime * moveVec;
+
+            if (controller.transform.position.y < -2f * controller.transform.localScale.y)
+            {
+                controller.EnemyExplode();
+            }
         }
     }
 
@@ -49,7 +58,7 @@ public class Mon005State_Preaction : MonsterState_Preaction
 
         moveVec = moveFrontBack * moveDir;
     }
-    
+
     private void InvokeDisappearState()
     {
         if (!hasTransit)
