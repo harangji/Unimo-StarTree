@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mon005State_Action : MonsterState_Action
+public class Mon005State_Preaction : MonsterState_Preaction
 {
     [SerializeField] private float moveSpeed = 4.2f;
     [SerializeField] private int moveDir_0x1y2z = 1;
@@ -48,5 +48,14 @@ public class Mon005State_Action : MonsterState_Action
         }
 
         moveVec = moveFrontBack * moveDir;
+    }
+    
+    private void InvokeDisappearState()
+    {
+        if (!hasTransit)
+        {
+            hasTransit = true;
+            controller.EnemyDisappear();
+        }
     }
 }
