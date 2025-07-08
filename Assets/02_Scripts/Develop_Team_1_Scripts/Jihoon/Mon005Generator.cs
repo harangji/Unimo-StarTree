@@ -26,7 +26,7 @@ public class Mon005Generator : MonsterGenerator
             0.4f * genRadius * Mathf.Sqrt(-Mathf.Log(1 - rand))+1.5f;
         float angle = 2f * Mathf.PI * Random.Range(0f, 1f);
 
-        Vector3 pos = new Vector3(radius * Mathf.Cos(angle), 0f, radius * Mathf.Sin(angle));
+        Vector3 pos = new Vector3(radius * Mathf.Cos(angle), 1f, radius * Mathf.Sin(angle));
         pos += playerTransform.position;
         if (PlaySystemRefStorage.mapSetter.IsInMap(pos) == false)
         {
@@ -34,15 +34,7 @@ public class Mon005Generator : MonsterGenerator
         }
         return pos;
     }
-    protected override Quaternion setGenRotation(Vector3 genPos)
-    {
-        Quaternion quat = Quaternion.LookRotation(playerTransform.position - genPos, Vector3.up);
-        float randAngle = (Random.Range(0,2) * 2 -1) * Mathf.Pow(Random.Range(0f, 1f),2f);
-        randAngle *= randDirAngle;
-        if (randAngle < 0f) { randAngle += 360f; }
-        quat *= Quaternion.Euler(0f, randAngle, 0f);
-        return quat;
-    }
+    
     protected override IEnumerator exPatternCoroutine()
     {
         isExtreme = true;
