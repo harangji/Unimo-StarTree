@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
+    public int stage = 1;
+    
     public int defaultDamage;
     public int skillDamage;
 
