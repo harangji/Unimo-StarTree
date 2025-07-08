@@ -50,9 +50,9 @@ namespace Google {
   public class GoogleSignIn {
 
 #if !UNITY_ANDROID && !UNITY_IOS
-  static GoogleSignIn() {
-    Debug.LogError("This platform is not supported");
-  }
+  // static GoogleSignIn() {
+  //   Debug.LogError("This platform is not supported");
+  // }
 #endif
 
     private static GoogleSignIn theInstance = null;
@@ -90,10 +90,10 @@ namespace Google {
 #if UNITY_ANDROID || UNITY_IOS
           theInstance = new GoogleSignIn(new GoogleSignInImpl(Configuration));
 #else
-          theInstance = new GoogleSignIn(null);
-          throw new SignInException(
-              GoogleSignInStatusCode.DeveloperError,
-              "This platform is not supported by GoogleSignIn");
+          theInstance = new GoogleSignIn(new GoogleSignInImpl(Configuration));
+          // throw new SignInException(
+          //     GoogleSignInStatusCode.DeveloperError,
+          //     "This platform is not supported by GoogleSignIn");
 #endif
         }
         return theInstance;
