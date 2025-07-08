@@ -30,14 +30,19 @@ public class Mon001State_Action : MonsterState_Action
             StartCoroutine(CoroutineExtensions.DelayedActionCall(() => 
             { isDashing = true; controller.indicatorCtrl.ControlIndicator(1f); audioSource.enabled = true; }, animTime));
         }
+        
         if (hasStartDash && !isDashing)
         {
             float ratio = controller.enemyAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
             controller.indicatorCtrl.ControlIndicator(ratio);
         }
-        if (isDashing) 
+        
+        if (isDashing)
         {
+            //대쉬 스킬을 사용할 때만 bIsSkill = true. 단, 스킬 사용 후 몬스터가 사라지기에 다시 false로 하지 않음 
+            GetComponentInParent<Monster>().bIsSkill = true;
+            
             timeAfterDash += Time.deltaTime;
             float ratio = timeAfterDash / dashTime;
             //ratio *= ratio;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MonsterController : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private float collideStunTime = 0.8f;
     [SerializeField] private bool isExplode = true;
     [SerializeField] private GameObject explodeFX;
-    [SerializeField] private bool isexplodeFXAtPlayer = true;
+    [SerializeField] private bool isExplodeFXAtPlayer = true;
 
     private MonsterMachine machine;
     private MonsterState_Appear enemyAppear;
@@ -22,8 +23,9 @@ public class MonsterController : MonoBehaviour
     private MonsterState_Action enemyAction;
     private MonsterState_Disappear enemyDiappear;
     private MonsterState_Explode enemyExplode;
+    
     private float existTime = 0f;
-
+    
     private void Update()
     {
         existTime += Time.deltaTime;
@@ -38,11 +40,16 @@ public class MonsterController : MonoBehaviour
             {
                 Vector3 hitpos =  transform.position; //other.ClosestPoint(transform.position + new Vector3(0f, 1.5f, 0f))
                 hitpos.y = 0f;
-                player.Hit(collideStunTime, hitpos);
-                Vector3 fxPos = (isexplodeFXAtPlayer) ? (hitpos + other.transform.position) / 2f + 1.5f * Vector3.up : hitpos + 1.5f * Vector3.up;
+                
+                //todo 이 부분에서 나중에 컴벳 시스템으로 바꿔야 함 -> 지금은 그냥 Hit 메서드를 변경함
+                player.Hit(collideStunTime, hitpos, GetComponent<Monster>().GetDamage());
+                
+                Vector3 fxPos = (isExplodeFXAtPlayer) ? (hitpos + other.transform.position) / 2f + 1.5f * Vector3.up : hitpos + 1.5f * Vector3.up;
                 GameObject obj = Instantiate(explodeFX, fxPos, Quaternion.identity);
+                
                 obj.GetComponent<AudioSource>().volume = Sound_Manager.instance._audioSources[1].volume;
                 obj.transform.localScale *= transform.localScale.x;
+                
                 EnemyExplode();
             }
         }
