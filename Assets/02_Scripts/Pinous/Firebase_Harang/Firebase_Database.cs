@@ -28,36 +28,7 @@ public partial class Firebase_Manager: MonoBehaviour
             }
         });
     }
-
-    public void ReadDataOnVersion()
-    {
-        DatabaseReference childReference = reference.Child("ADMIN").Child("Version");
-        childReference.GetValueAsync().ContinueWithOnMainThread(task => {
-            if (task.Exception != null)
-            {
-                Debug.LogError($"데이터 읽기 오류: {task.Exception}");
-            }
-            else if (task.Result.Exists)
-            {
-                // TODO: 아래 주석은 임시 로그인 허용이므로 후에 변경 필요합니다. 하랑
-                // string versionValue = task.Result.Value.ToString();
-                // if(versionValue != Application.version)
-                // {
-                //     VersionCheck.instance.GetVersionPopUP();
-                //     return;
-                // }
-                // else
-                {
-                    AccountInitializer.instance.GetCheckVersionAndLogin();
-                }
-            }
-            else
-            {
-             
-            }
-        });
-    }
-
+    
     // 데이터베이스에서 데이터 읽기
     public void ReadData(string key, System.Action<string> onDataReceived)
     {

@@ -40,24 +40,8 @@ public class AccountInitializer : MonoBehaviour
                 break;
         }
 
-        StartCoroutine(CheckVersionDelay());
-    }
-
-    public void GetCheckVersionAndLogin()
-    {
-        StartCoroutine(CheckDelay());
-    }
-    IEnumerator CheckVersionDelay()
-    {
-        yield return new WaitForSeconds(0.2f);
-        Base_Mng.Firebase.ReadDataOnVersion();
-    }
-    IEnumerator CheckDelay()
-    {
-        yield return new WaitForSeconds(0.2f);
-
         var data = PlayerPrefs.GetInt("GetUser");
-        yield return new WaitForSeconds(0.2f);
+        
         value = data;
         EAccountType accountT = (EAccountType)data;
         m_accountType = accountT;
@@ -70,7 +54,7 @@ public class AccountInitializer : MonoBehaviour
             EndAccountInitialize();
         }
     }
-
+    
     public void StartAccountInitialize()
     {
         typeSetter.SetActive(true);
