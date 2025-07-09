@@ -45,7 +45,6 @@ public class MonsterGenerator : MonoBehaviour
         timetoNextBigWave -= timediff;
         if (timetoNextGen < 0f)
         {
-            //여기서 패턴 분류를 하면 될 듯?
             generateEnemy();
             timetoNextGen = monGenCalculator.calculateBasicGenTime();
         }

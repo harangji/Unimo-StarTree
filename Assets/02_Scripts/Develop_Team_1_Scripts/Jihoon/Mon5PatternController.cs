@@ -26,12 +26,7 @@ public class Mon5PatternController : MonoBehaviour
 
     private float patternTime = 0f;
     private float existTime = 6f;
-
-    private void Awake()
-    {
-        // Optional debugging
-    }
-
+    
     private IEnumerator Start()
     {
         currentPattern = GetComponentInChildren<MonsterController>().pattern;
