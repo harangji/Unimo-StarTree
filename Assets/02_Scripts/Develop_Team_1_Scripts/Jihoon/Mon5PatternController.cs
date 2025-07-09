@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class Mon5PatternController : MonoBehaviour
 {
-    [Header("기본 설정")] [SerializeField] private float moveSpeed;
+    [Header("기본 설정")] 
+    [SerializeField] private float moveSpeed;
 
-    [Header("패턴 3 추가 설정")] [SerializeField] [Tooltip("초당 진동 횟수")]
+    [Header("패턴 3 추가 설정")] 
+    [SerializeField] [Tooltip("초당 진동 횟수")]
     private float waveFrequency = 2f;
 
     [SerializeField] [Tooltip("진폭(= 세로 크기)")]
     private float waveAmplitude = 1f;
+
+    [SerializeField] private float rotateSpeed = 10f; // ← 부드러운 회전 속도
 
     private Vector3 moveDirection = Vector3.zero;
     private bool canMove = false;
@@ -20,22 +24,26 @@ public class Mon5PatternController : MonoBehaviour
     private Vector3 originPos;
     private Vector3 prevPos;
 
+    private float patternTime = 0f;
+
     private void Awake()
     {
-
-        // var names = GetComponentInChildren<MonsterController>().gameObject.name;
-        // Debug.Log(names);
+        // Optional debugging
     }
 
     private IEnumerator Start()
     {
         currentPattern = GetComponentInChildren<MonsterController>().pattern;
-        
+
+        originPos = transform.position;
+        prevPos = originPos;
+
         SetDirection();
         SetRotation();
 
         yield return new WaitForSeconds(1f);
 
+        patternTime = 0f;
         canMove = true;
     }
 
@@ -74,7 +82,6 @@ public class Mon5PatternController : MonoBehaviour
 
     private void SetRotation()
     {
-        // Y축 회전만 적용 (XZ 평면에서 바라보는 방향)
         if (moveDirection != Vector3.zero)
         {
             float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
@@ -89,24 +96,23 @@ public class Mon5PatternController : MonoBehaviour
 
     private void MovePattern3()
     {
-        float time = Time.time;
+        patternTime += Time.deltaTime;
 
-        // 이동 계산
-        Vector3 forwardMove = moveDirection.normalized * (moveSpeed * time);
-        float offset = Mathf.Sin(time * waveFrequency) * waveAmplitude;
+        Vector3 forwardMove = moveDirection.normalized * (moveSpeed * patternTime);
+        float offset = Mathf.Sin(patternTime * waveFrequency) * waveAmplitude;
         Vector3 waveOffset = Vector3.Cross(moveDirection.normalized, Vector3.up) * offset;
 
         Vector3 newPos = originPos + forwardMove + waveOffset;
 
-        // 회전: 실제 이동 방향 기준
+        // 부드러운 회전 처리
         Vector3 velocity = newPos - prevPos;
         if (velocity != Vector3.zero)
         {
             float angleY = Mathf.Atan2(velocity.x, velocity.z) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, angleY, 0f);
+            Quaternion targetRotation = Quaternion.Euler(0f, angleY, 0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
         }
 
-        // 위치 갱신
         transform.position = newPos;
         prevPos = newPos;
     }

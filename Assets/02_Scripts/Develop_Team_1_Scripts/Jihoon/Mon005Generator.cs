@@ -71,7 +71,7 @@ public class Mon005Generator : MonsterGenerator
         Vector3 pos = findGenPosition();
         Quaternion quat = setGenRotation(pos);
 
-        var rate = Random.Range(90, 100);
+        var rate = Random.Range(0, 100);
 
         if (rate < 70)
         {

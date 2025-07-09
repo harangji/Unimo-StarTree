@@ -4,7 +4,7 @@ using UnityEngine;
 public class Mon5Pattern3Controller : MonoBehaviour
 {
     [Header("패턴 3 설정")] 
-    [SerializeField] [Tooltip("이동 속도")] private float moveSpeed = 7.1f;
+    [SerializeField] [Tooltip("이동 속도")] private float moveSpeed;
     [SerializeField] [Tooltip("초당 진동 횟수")] private float waveFrequency = 2f;
     [SerializeField] [Tooltip("진폭(= 세로 크기)")] private float waveAmplitude = 1f;
 
