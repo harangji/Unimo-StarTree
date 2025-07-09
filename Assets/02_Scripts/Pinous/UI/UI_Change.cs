@@ -16,7 +16,7 @@ public class UI_Change : UI_Base
     float orange, yellow;
     public override void Start()
     {
-        blueCount = (int)Base_Mng.Data.data.Blue;
+        blueCount = (int)Base_Manager.Data.UserData.Blue;
 
         Camera_Event.instance.GetCameraEvent(CameraMoveState.TeaPot);
 
@@ -38,21 +38,21 @@ public class UI_Change : UI_Base
     void TextCheck()
     {
         Blue.text = BlueStarCount.ToString();
-        Blue.color = Base_Mng.Data.data.Blue >= BlueStarCount ? Color.green : Color.red;
+        Blue.color = Base_Manager.Data.UserData.Blue >= BlueStarCount ? Color.green : Color.red;
         Orange.text = OrangeStarCount.ToString();
         Yellow.text = StringMethod.ToCurrencyString(YellowStarCount);
     }
 
     void BlueCount()
     {
-        BlueStarCount = (OrangeStarCount / 500) + (int)(YellowStarCount / Base_Mng.Data.data.Second_Base);
+        BlueStarCount = (OrangeStarCount / 500) + (int)(YellowStarCount / Base_Manager.Data.UserData.Second_Base);
     }
 
     // Orange
     void ValueChangeSlider_Orange(float value)
     {
-        var index = YellowStarCount / Base_Mng.Data.data.Second_Base;
-        var DetectedYellow = Base_Mng.Data.data.Blue - index;
+        var index = YellowStarCount / Base_Manager.Data.UserData.Second_Base;
+        var DetectedYellow = Base_Manager.Data.UserData.Blue - index;
         if (value >= DetectedYellow)
         {
             value = (float)DetectedYellow;
@@ -68,13 +68,13 @@ public class UI_Change : UI_Base
     void ValueChangeSlider_Yellow(float value)
     {
         var index = OrangeStarCount / 500;
-        var DetectedYellow = Base_Mng.Data.data.Blue - index;
+        var DetectedYellow = Base_Manager.Data.UserData.Blue - index;
         if(value >= DetectedYellow)
         {
             value = (float)DetectedYellow;
             YellowSlider.value = value;
         }
-        YellowStarCount = (int)(value * Base_Mng.Data.data.Second_Base);
+        YellowStarCount = (int)(value * Base_Manager.Data.UserData.Second_Base);
         BlueCount();
         TextCheck();
     }
@@ -89,11 +89,11 @@ public class UI_Change : UI_Base
             Canvas_Holder.instance.Get_Toast("NoneBlue");
             return;
         }
-        if(Base_Mng.Data.data.Blue >= BlueStarCount)
+        if(Base_Manager.Data.UserData.Blue >= BlueStarCount)
         {
-            Base_Mng.Data.data.Blue -= BlueStarCount;
-            Base_Mng.Data.data.Red += OrangeStarCount;
-            Base_Mng.Data.data.Yellow += YellowStarCount;
+            Base_Manager.Data.UserData.Blue -= BlueStarCount;
+            Base_Manager.Data.UserData.Red += OrangeStarCount;
+            Base_Manager.Data.UserData.Yellow += YellowStarCount;
             Main_UI.instance.Text_Check();
             Canvas_Holder.instance.Get_Toast("SuccessChange");
 

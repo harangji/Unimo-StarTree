@@ -36,7 +36,7 @@ public class Tutorial : MonoBehaviour
         Sound_Manager.BGM_volume = 0.25f;
         Sound_Manager.instance.SoundCheck();
         Sound_Manager.instance.Play(Sound.Bgm, "BGM000");
-        if (Base_Mng.Data.data.ADSBuy == false)
+        if (Base_Manager.Data.UserData.ADSBuy == false)
             transform.GetChild(0).GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.0f);
         else transform.GetChild(0).GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.1f);
     }
@@ -56,7 +56,7 @@ public class Tutorial : MonoBehaviour
         if (PlayerPrefs.GetInt("Tutorial") == 0)
         {
             WholeSceneController.Instance.ReadyNextScene(1);
-            Base_Mng.Data.data.GamePlay++;
+            Base_Manager.Data.UserData.GamePlay++;
         }
         else
             WholeSceneController.Instance.ReadyNextScene(0);
@@ -84,7 +84,7 @@ public class Tutorial : MonoBehaviour
             if (PlayerPrefs.GetInt("Tutorial") == 0)
             {
                 WholeSceneController.Instance.ReadyNextScene(1);
-                Base_Mng.Data.data.GamePlay++;
+                Base_Manager.Data.UserData.GamePlay++;
             }
             else
                 WholeSceneController.Instance.ReadyNextScene(0);
@@ -99,14 +99,14 @@ public class Tutorial : MonoBehaviour
         ExplaneText.alignment = Makers[idx].Title == "" ? TextAlignmentOptions.Center : TextAlignmentOptions.TopLeft;
         if (Makers[idx].Title != "")
         {
-            NameText.text = Localization_Mng.local_Data["Character/" + Makers[idx].Title].Get_Data();
+            NameText.text = Localization_Manager.local_Data["Character/" + Makers[idx].Title].Get_Data();
         }
         else
         {
             NameText.text = "";
         }
         if (Makers[idx].Description.Length != 0)
-            ExplaneText.text = Localization_Mng.local_Data["Tutorial01_" + (Makers[idx].Description[Makers[idx].Description.Length > 1 ? subidx : 0])].Get_Data();
+            ExplaneText.text = Localization_Manager.local_Data["Tutorial01_" + (Makers[idx].Description[Makers[idx].Description.Length > 1 ? subidx : 0])].Get_Data();
         else ExplaneText.text = "";
         subIDX = 0;
 

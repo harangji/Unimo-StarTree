@@ -11,7 +11,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI resultTxt;
     private List<double> gatheredResources;
     private double score;
-    private PlayHoneyGainCalculator honeyCalculator;
+    // private PlayHoneyGainCalculator honeyCalculator;
     private GameRecordManager recordManager;
     private void Awake()
     {
@@ -21,8 +21,10 @@ public class ScoreManager : MonoBehaviour
     }
     private void Start()
     {
-        recordManager = FindAnyObjectByType<GameRecordManager>();
-        honeyCalculator = GetComponent<PlayHoneyGainCalculator>();
+        //ToDo :: recordManager 대신 Easy Save사용하기 하랑
+        // recordManager = FindAnyObjectByType<GameRecordManager>();
+        // honeyCalculator = GetComponent<PlayHoneyGainCalculator>();
+        
         for (int i = 1; i < gatheredResources.Count; i++)
         {
             specialResourceTxts[i-1].text = gatheredResources[i].ToString();
@@ -44,13 +46,13 @@ public class ScoreManager : MonoBehaviour
     {
         if (idx == 1)
         {
-            gatheredResources[idx] += CalculateReward(Base_Mng.Data.data.Level);
+            gatheredResources[idx] += CalculateReward(Base_Manager.Data.UserData.Level);
         }
         else
         {
-            gatheredResources[idx] += (Base_Mng.Data.data.Second_Base * (Base_Mng.Data.data.BuffFloating[1] > 0.0f ? 2.0f : 1.0f));
+            gatheredResources[idx] += (Base_Manager.Data.UserData.Second_Base * (Base_Manager.Data.UserData.BuffFloating[1] > 0.0f ? 2.0f : 1.0f));
         }
-        this.score += (Base_Mng.Data.data.Second_Base * (Base_Mng.Data.data.BuffFloating[1] > 0.0f ? 2.0f : 1.0f));
+        this.score += (Base_Manager.Data.UserData.Second_Base * (Base_Manager.Data.UserData.BuffFloating[1] > 0.0f ? 2.0f : 1.0f));
         if (idx != 0) { specialResourceTxts[idx-1].text = gatheredResources[idx].ToString(); }
         scoreTxt.text = StringMethod.ToCurrencyString(gatheredResources[0]);
     }
@@ -73,15 +75,15 @@ public class ScoreManager : MonoBehaviour
         switch(getGameIndex())
         {
             case 0:
-                if(Base_Mng.Data.data.BestScoreGameOne <= score)
+                if(Base_Manager.Data.UserData.BestScoreGameOne <= score)
                 {
-                    Base_Mng.Data.data.BestScoreGameOne = best;
+                    Base_Manager.Data.UserData.BestScoreGameOne = best;
                 }
                 break;
             case 1:
-                if (Base_Mng.Data.data.BestScoreGameTwo <= score)
+                if (Base_Manager.Data.UserData.BestScoreGameTwo <= score)
                 {
-                    Base_Mng.Data.data.BestScoreGameTwo = best;
+                    Base_Manager.Data.UserData.BestScoreGameTwo = best;
                 }
                 break;
         }

@@ -45,7 +45,7 @@ public class MissionFinder : MonoBehaviour
     }
     private bool GetCheckAchieve(int value)
     {
-        return Base_Mng.Data.data.GetArchivements[value];
+        return Base_Manager.Data.UserData.GetArchivements[value];
     }
 
 
@@ -54,17 +54,17 @@ public class MissionFinder : MonoBehaviour
         switch (style)
         {
             case "GamePlay":
-                return Base_Mng.Data.data.GetGamePlay;
+                return Base_Manager.Data.UserData.GetGamePlay;
             case "ADS":
-                return Base_Mng.Data.data.GetADS;
+                return Base_Manager.Data.UserData.GetADS;
             case "Touch":
-                return Base_Mng.Data.data.GetTouch;
+                return Base_Manager.Data.UserData.GetTouch;
             case "DailyAccount":
-                return Base_Mng.Data.data.GetDaily;
+                return Base_Manager.Data.UserData.GetDaily;
             case "TimeItem":
-                return Base_Mng.Data.data.GetTimeItem;
+                return Base_Manager.Data.UserData.GetTimeItem;
             case "RePlay":
-                return Base_Mng.Data.data.GetRePlay;
+                return Base_Manager.Data.UserData.GetRePlay;
         }
         return false;
     }
@@ -79,20 +79,20 @@ public class MissionFinder : MonoBehaviour
     {
         switch (style)
         {
-            case "GamePlay": return Base_Mng.Data.data.GamePlay;
-            case "ADS": return Base_Mng.Data.data.ADS;
-            case "ADSNONE": return Base_Mng.Data.data.ADSNoneReset;
-            case "Touch": return Base_Mng.Data.data.Touch;
-            case "Level": return Base_Mng.Data.data.Level + 1;
-            case "DailyAccount": return Base_Mng.Data.data.DailyAccount;
-            case "TimeItem": return Base_Mng.Data.data.TimeItem;
-            case "RePlay": return Base_Mng.Data.data.RePlay;
-            case "IAP": return Base_Mng.Data.data.IAP;
+            case "GamePlay": return Base_Manager.Data.UserData.GamePlay;
+            case "ADS": return Base_Manager.Data.UserData.ADS;
+            case "ADSNONE": return Base_Manager.Data.UserData.ADSNoneReset;
+            case "Touch": return Base_Manager.Data.UserData.Touch;
+            case "Level": return Base_Manager.Data.UserData.Level + 1;
+            case "DailyAccount": return Base_Manager.Data.UserData.DailyAccount;
+            case "TimeItem": return Base_Manager.Data.UserData.TimeItem;
+            case "RePlay": return Base_Manager.Data.UserData.RePlay;
+            case "IAP": return Base_Manager.Data.UserData.IAP;
             case "Collection":
                 int a = 0;
-                for (int i = 0; i < Base_Mng.Data.data.GetCharacterData.Length; i++)
+                for (int i = 0; i < Base_Manager.Data.UserData.GetCharacterData.Length; i++)
                 {
-                    if (Base_Mng.Data.data.GetCharacterData[i] == true)
+                    if (Base_Manager.Data.UserData.GetCharacterData[i] == true)
                     {
                         a++;
                     }
@@ -100,9 +100,9 @@ public class MissionFinder : MonoBehaviour
                 return a;
             case "Collection_EQ":
                 int b = 0;
-                for (int i = 0; i < Base_Mng.Data.data.GetEQData.Length; i++)
+                for (int i = 0; i < Base_Manager.Data.UserData.GetEQData.Length; i++)
                 {
-                    if (Base_Mng.Data.data.GetEQData[i] == true)
+                    if (Base_Manager.Data.UserData.GetEQData[i] == true)
                     {
                         b++;
                     }

@@ -122,7 +122,7 @@ public class IAP_Manager : IStoreListener
         Debug.Log("#############" + args.purchasedProduct.transactionID);
         Debug.Log("#############" + args.purchasedProduct.definition.id);
 
-        Base_Mng.Data.data.IAP++;
+        Base_Manager.Data.UserData.IAP++;
 
         Canvas_Holder.instance.GetUI("##Reward");
         Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;

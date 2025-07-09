@@ -41,7 +41,7 @@ public class WholeSceneController : SingletonBehaviour<WholeSceneController>
             {
                 if (nextSceneIdx == 3 || nextSceneIdx == 6)
                 {
-                    if (Base_Mng.Firebase.isSetFirebase)
+                    if (EasySaveManager.Instance.bSetEasySaveUser)
                     {
                         isLoadingScene = false;
                         StartCoroutine(callNextSceneLoading());

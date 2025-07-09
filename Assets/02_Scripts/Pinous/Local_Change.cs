@@ -17,11 +17,11 @@ public class Local_Change : MonoBehaviour
     {
         T = GetComponent<TextMeshProUGUI>();
         Set_LocalData();
-        Localization_Mng.localization += Set_LocalData;
+        Localization_Manager.localization += Set_LocalData;
     }
     private void OnDestroy()
     {
-        Localization_Mng.localization -= Set_LocalData;
+        Localization_Manager.localization -= Set_LocalData;
     }
     public void ReturnText(string temp)
     {
@@ -40,8 +40,8 @@ public class Local_Change : MonoBehaviour
                 Character_Local = "Motor/";
             }
             if (Get_Format)
-                temp = string.Format(Localization_Mng.local_Data[Character_Local + Local_Count].Get_Data(), Foramt_Count);
-            else temp = Localization_Mng.local_Data[Character_Local + Local_Count].Get_Data();
+                temp = string.Format(Localization_Manager.local_Data[Character_Local + Local_Count].Get_Data(), Foramt_Count);
+            else temp = Localization_Manager.local_Data[Character_Local + Local_Count].Get_Data();
             T.text = temp + Semi_Data;
         }
     }

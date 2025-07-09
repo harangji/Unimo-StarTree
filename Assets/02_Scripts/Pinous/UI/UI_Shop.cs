@@ -26,17 +26,17 @@ public class UI_Shop : UI_Base
     public override bool Init()
     {
         CheckShop();
-        texts[0].text = StringMethod.ToCurrencyString(Base_Mng.Data.data.Yellow);
-        texts[1].text = string.Format("{0:#,###}", Base_Mng.Data.data.Red);
-        texts[2].text = Base_Mng.Data.data.Blue.ToString();
+        texts[0].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Yellow);
+        texts[1].text = string.Format("{0:#,###}", Base_Manager.Data.UserData.Red);
+        texts[2].text = Base_Manager.Data.UserData.Blue.ToString();
         return base.Init();
     }
 
     public override void Update()
     {
-        texts[0].text = StringMethod.ToCurrencyString(Base_Mng.Data.data.Yellow);
-        texts[1].text = string.Format("{0:#,###}", Base_Mng.Data.data.Red);
-        texts[2].text = Base_Mng.Data.data.Blue.ToString();
+        texts[0].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Yellow);
+        texts[1].text = string.Format("{0:#,###}", Base_Manager.Data.UserData.Red);
+        texts[2].text = Base_Manager.Data.UserData.Blue.ToString();
         return;
         base.Update();
     }
@@ -51,7 +51,7 @@ public class UI_Shop : UI_Base
         state = stateAsset;
         ValueCount = value;
 
-        PurchaseImage.sprite = Data_Mng.atlas.GetSprite(state.ToString());
+        PurchaseImage.sprite = Data_Manager.atlas.GetSprite(state.ToString());
         PurchaseText.text = ValueCount.ToString();
 
         rewardAction = reward;
@@ -76,7 +76,7 @@ public class UI_Shop : UI_Base
 
     private void CheckShop()
     {
-        if(Base_Mng.Data.data.ADSBuy)
+        if(Base_Manager.Data.UserData.ADSBuy)
         {
             for(int i = 0; i< ADSObjects.Length; i++)
             {
@@ -90,7 +90,7 @@ public class UI_Shop : UI_Base
 
         for (int i = 0; i < Characters.Length; i++)
         {
-            if (Base_Mng.Data.data.GetCharacterData[Character_valueCounts[i]])
+            if (Base_Manager.Data.UserData.GetCharacterData[Character_valueCounts[i]])
             {
                 Characters[i].transform.GetChild(0).gameObject.SetActive(true);
                 Characters[i].transform.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -102,7 +102,7 @@ public class UI_Shop : UI_Base
         }
         for(int i = 0; i < EQs.Length; i++)
         {
-            if (Base_Mng.Data.data.GetEQData[Eq_valueCounts[i]])
+            if (Base_Manager.Data.UserData.GetEQData[Eq_valueCounts[i]])
             {
                 EQs[i].transform.GetChild(0).gameObject.SetActive(true);
                 EQs[i].transform.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -115,16 +115,16 @@ public class UI_Shop : UI_Base
     }
     public void GetProduct(string name)
     {
-        Base_Mng.Analytics.RecordCustomEventWithParameters(name, 1);
-        Base_Mng.IAP.Purchase(name);
+        Base_Manager.Analytics.RecordCustomEventWithParameters(name, 1);
+        Base_Manager.IAP.Purchase(name);
     }
 
     public void GetBuyAsset(int value)
     {
-        Base_Mng.Analytics.RecordSaleItemForInGame("InGame");
+        Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
-        if (Base_Mng.Data.data.GetCharacterData[value]) return;
-        if (Base_Mng.Data.data.Red < 100000)
+        if (Base_Manager.Data.UserData.GetCharacterData[value]) return;
+        if (Base_Manager.Data.UserData.Red < 100000)
         {
             Canvas_Holder.instance.Get_Toast("NM");
 
@@ -132,7 +132,7 @@ public class UI_Shop : UI_Base
         }
         GetPurchase(true, Asset_State.Red, 100000, () =>
         {
-            Base_Mng.Data.data.Red -= 100000;
+            Base_Manager.Data.UserData.Red -= 100000;
             Canvas_Holder.instance.NoneClose = true;
             Canvas_Holder.instance.GetUI("##Reward");
             Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
@@ -142,10 +142,10 @@ public class UI_Shop : UI_Base
     }
     public void GetBuyAsset02(int value)
     {
-        Base_Mng.Analytics.RecordSaleItemForInGame("InGame");
+        Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
-        if (Base_Mng.Data.data.GetCharacterData[value]) return;
-        if (Base_Mng.Data.data.Red < 75000)
+        if (Base_Manager.Data.UserData.GetCharacterData[value]) return;
+        if (Base_Manager.Data.UserData.Red < 75000)
         {
             Canvas_Holder.instance.Get_Toast("NM");
 
@@ -153,7 +153,7 @@ public class UI_Shop : UI_Base
         }
         GetPurchase(true, Asset_State.Red, 75000, () =>
         {
-            Base_Mng.Data.data.Red -= 75000;
+            Base_Manager.Data.UserData.Red -= 75000;
             Canvas_Holder.instance.NoneClose = true;
             Canvas_Holder.instance.GetUI("##Reward");
             Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
@@ -163,10 +163,10 @@ public class UI_Shop : UI_Base
     }
     public void GetBuyAsset03(int value)
     {
-        Base_Mng.Analytics.RecordSaleItemForInGame("InGame");
+        Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
-        if (Base_Mng.Data.data.GetCharacterData[value]) return;
-        if (Base_Mng.Data.data.Red < 150000)
+        if (Base_Manager.Data.UserData.GetCharacterData[value]) return;
+        if (Base_Manager.Data.UserData.Red < 150000)
         {
             Canvas_Holder.instance.Get_Toast("NM");
 
@@ -174,7 +174,7 @@ public class UI_Shop : UI_Base
         }
         GetPurchase(true, Asset_State.Red, 150000, () =>
         {
-            Base_Mng.Data.data.Red -= 150000;
+            Base_Manager.Data.UserData.Red -= 150000;
             Canvas_Holder.instance.NoneClose = true;
             Canvas_Holder.instance.GetUI("##Reward");
             Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
@@ -185,11 +185,11 @@ public class UI_Shop : UI_Base
 
     public void GetBuyAssetDown(int value)
     {
-        Base_Mng.Analytics.RecordSaleItemForInGame("InGame");
+        Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
-        if (Base_Mng.Data.data.GetCharacterData[value]) return;
+        if (Base_Manager.Data.UserData.GetCharacterData[value]) return;
 
-        if (Base_Mng.Data.data.Red < 50000)
+        if (Base_Manager.Data.UserData.Red < 50000)
         {
             Canvas_Holder.instance.Get_Toast("NM");
 
@@ -197,7 +197,7 @@ public class UI_Shop : UI_Base
         }
         GetPurchase(true, Asset_State.Red, 50000, () =>
         {
-            Base_Mng.Data.data.Red -= 50000;
+            Base_Manager.Data.UserData.Red -= 50000;
             Canvas_Holder.instance.NoneClose = true;
             Canvas_Holder.instance.GetUI("##Reward");
             Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
@@ -207,11 +207,11 @@ public class UI_Shop : UI_Base
     }
     public void GetBuyAssetEQ(int value)
     {
-        Base_Mng.Analytics.RecordSaleItemForInGame("InGame");
+        Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
-        if (Base_Mng.Data.data.GetEQData[value]) return;
+        if (Base_Manager.Data.UserData.GetEQData[value]) return;
 
-        if (Base_Mng.Data.data.Red < 50000)
+        if (Base_Manager.Data.UserData.Red < 50000)
         {
             Canvas_Holder.instance.Get_Toast("NM");
 
@@ -219,7 +219,7 @@ public class UI_Shop : UI_Base
         }
         GetPurchase(true, Asset_State.Red, 50000, () =>
         {
-            Base_Mng.Data.data.Red -= 50000;
+            Base_Manager.Data.UserData.Red -= 50000;
             Canvas_Holder.instance.NoneClose = true;
             Canvas_Holder.instance.GetUI("##Reward");
             Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
@@ -229,11 +229,11 @@ public class UI_Shop : UI_Base
     }
     public void GetBuyAssetEQ02(int value)
     {
-        Base_Mng.Analytics.RecordSaleItemForInGame("InGame");
+        Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
-        if (Base_Mng.Data.data.GetEQData[value]) return;
+        if (Base_Manager.Data.UserData.GetEQData[value]) return;
 
-        if (Base_Mng.Data.data.Red < 25000)
+        if (Base_Manager.Data.UserData.Red < 25000)
         {
             Canvas_Holder.instance.Get_Toast("NM");
 
@@ -241,7 +241,7 @@ public class UI_Shop : UI_Base
         }
         GetPurchase(true, Asset_State.Red, 25000, () =>
         {
-            Base_Mng.Data.data.Red -= 25000;
+            Base_Manager.Data.UserData.Red -= 25000;
             Canvas_Holder.instance.NoneClose = true;
             Canvas_Holder.instance.GetUI("##Reward");
             Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;

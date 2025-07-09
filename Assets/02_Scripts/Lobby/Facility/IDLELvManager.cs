@@ -23,7 +23,7 @@ public class IDLELvManager : MonoBehaviour
     private Action<int> IDLELvUpCheckAction;
     private List<Func<int, string>> IDLEUpListStrFunc;
 
-    private StarHoneyManager starHoneyManager;
+    // private StarHoneyManager starHoneyManager;
 
     void Awake()
     {
@@ -56,7 +56,7 @@ public class IDLELvManager : MonoBehaviour
     private void initIDLE()
     {
         IDLEUpListStrFunc = new();
-        starHoneyManager = FindAnyObjectByType<StarHoneyManager>();
+        // starHoneyManager = FindAnyObjectByType<StarHoneyManager>();
         //InitData();
         lvData = new IDLELvData();
         currentTotalExp = calculateTotalExp();

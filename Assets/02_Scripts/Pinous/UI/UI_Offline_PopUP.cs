@@ -13,8 +13,8 @@ public class UI_Offline_PopUP : UI_Base
     {
         Camera_Event.instance.GetCameraEvent(CameraMoveState.Offline);
 
-        float value = (float)Base_Mng.instance.TimerCheck();
-        valueCount = Base_Mng.Data.data.Second_Base * Base_Mng.instance.TimerCheck();
+        float value = (float)Base_Manager.instance.TimerCheck();
+        valueCount = Base_Manager.Data.UserData.Second_Base * Base_Manager.instance.TimerCheck();
         RewardText.text = StringMethod.ToCurrencyString(valueCount);
 
         TimeSpan span = TimeSpan.FromSeconds(value);
@@ -31,8 +31,8 @@ public class UI_Offline_PopUP : UI_Base
     public void CollectButton()
     {
         var dataValue = valueCount;
-        Base_Mng.Data.data.Yellow += dataValue;
-        Base_Mng.Data.data.E_DateTime = Base_Mng.Data.data.S_DateTime;
+        Base_Manager.Data.UserData.Yellow += dataValue;
+        Base_Manager.Data.UserData.E_DateTime = Base_Manager.Data.UserData.S_DateTime;
         Canvas_Holder.instance.Get_Toast("Reward");
         DisableOBJ();
     }
@@ -41,10 +41,10 @@ public class UI_Offline_PopUP : UI_Base
     {
         var dataValue = valueCount * 2.0f;
 
-        Base_Mng.ADS.ShowRewardedAds(() =>
+        Base_Manager.ADS.ShowRewardedAds(() =>
         {
-            Base_Mng.Data.data.Yellow += dataValue;
-            Base_Mng.Data.data.E_DateTime = Base_Mng.Data.data.S_DateTime;
+            Base_Manager.Data.UserData.Yellow += dataValue;
+            Base_Manager.Data.UserData.E_DateTime = Base_Manager.Data.UserData.S_DateTime;
             Canvas_Holder.instance.Get_Toast("Reward");
 
             Canvas_Holder.CloseAllPopupUI();

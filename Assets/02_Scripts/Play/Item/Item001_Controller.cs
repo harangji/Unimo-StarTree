@@ -10,7 +10,7 @@ public class Item001_Controller : ItemController
     {
         if (playTimeManager == null) { playTimeManager = PlaySystemRefStorage.playTimeManager; }
         playTimeManager.ChangeTimer(gainRatio * playTimeManager.GetMaxTime());
-        Base_Mng.Data.data.TimeItem++;
+        Base_Manager.Data.UserData.TimeItem++;
         base.UseItem();
     }
 }

@@ -20,7 +20,7 @@ public class Ray_Object : MonoBehaviour
         }
         else
         {
-            if (Base_Mng.Data.data.BonusRewardCount < 900.0f)
+            if (Base_Manager.Data.UserData.BonusRewardCount < 900.0f)
             {
                 return;
             }

@@ -12,13 +12,13 @@ public class PlaySceneController : MonoBehaviour
         if(PlayerPrefs.GetInt("GetRewardCount") <= 0)
         {
             PlayerPrefs.SetInt("GetRewardCount", 2);
-            Base_Mng.ADS._interstitialCallback = () =>
+            Base_Manager.ADS._interstitialCallback = () =>
             {
                 WholeSceneController.Instance.ReadyNextScene(SceneManager.GetActiveScene().buildIndex - WholeSceneController.ActualSceneIdxOffset);
                 Time.timeScale = 1f;
 
             };
-            Base_Mng.ADS.ShowInterstitialAds();
+            Base_Manager.ADS.ShowInterstitialAds();
         }
         else
         {
@@ -44,17 +44,17 @@ public class PlaySceneController : MonoBehaviour
     public void LoadLobby()
     {
         PlayerPrefs.SetInt("GetRewardCount", PlayerPrefs.GetInt("GetRewardCount") - 1);
-        Data_Mng.SetPlayScene = true;
+        Data_Manager.SetPlayScene = true;
         if (PlayerPrefs.GetInt("GetRewardCount") <= 0)
         {
             PlayerPrefs.SetInt("GetRewardCount", 2);
-            Base_Mng.ADS._interstitialCallback = () =>
+            Base_Manager.ADS._interstitialCallback = () =>
             {
                 WholeSceneController.Instance.ReadyNextScene(0);
                 Time.timeScale = 1f;
 
             };
-            Base_Mng.ADS.ShowInterstitialAds();
+            Base_Manager.ADS.ShowInterstitialAds();
         }
         else
         {

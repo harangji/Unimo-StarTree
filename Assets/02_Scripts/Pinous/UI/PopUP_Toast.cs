@@ -9,7 +9,7 @@ public class PopUP_Toast : MonoBehaviour
 
     public void GetPopUp(string temp)
     {
-        TMP_Text.text = Localization_Mng.local_Data["Popup/" + temp].Get_Data();
+        TMP_Text.text = Localization_Manager.local_Data["Popup/" + temp].Get_Data();
         Destroy(this.gameObject, 2.0f);
     }
 }

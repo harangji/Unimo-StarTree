@@ -36,8 +36,8 @@ public class GameRecordManager : MonoBehaviour
         gameRecords.Records[gameidx] = score;
         switch(gameidx)
         {
-            case 0: Base_Mng.Data.data.BestScoreGameOne = score; break;
-            case 1: Base_Mng.Data.data.BestScoreGameTwo = score; break;
+            case 0: Base_Manager.Data.UserData.BestScoreGameOne = score; break;
+            case 1: Base_Manager.Data.UserData.BestScoreGameTwo = score; break;
         }
         SaveData();
     }

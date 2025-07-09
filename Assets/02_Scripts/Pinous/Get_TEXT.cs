@@ -17,7 +17,7 @@ public class Get_TEXT : MonoBehaviour
 
     public void Init(Vector3 pos, double Get)
     {
-        if (Base_Mng.SavingMode)
+        if (Base_Manager.SavingMode)
         {
             ReturnText();
             return;

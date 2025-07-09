@@ -17,36 +17,36 @@ public class UI_Reward : UI_Base
     public override void Start()
     {
         Sound_Manager.instance.Play(Sound.Effect, "effect_16");
-        GetRewardText.text = Localization_Mng.local_Data["Popup/Reward"].Get_Data();
+        GetRewardText.text = Localization_Manager.local_Data["Popup/Reward"].Get_Data();
         base.Start();
     }
 
     public void GetIAPReward(string name)
     {
-        if(Base_Mng.Data.data.IAP == 0)
+        if(Base_Manager.Data.UserData.IAP == 0)
         {
-            Base_Mng.Analytics.RecordCustomEventWithParameters("First Buy", (Base_Mng.Data.data.Level + 1));
+            Base_Manager.Analytics.RecordCustomEventWithParameters("First Buy", (Base_Manager.Data.UserData.Level + 1));
         }
         else
         {
-            Base_Mng.Analytics.RecordCustomEventWithParameters("Duplicate Buy", 1);
+            Base_Manager.Analytics.RecordCustomEventWithParameters("Duplicate Buy", 1);
         }
-        Base_Mng.Analytics.RecordSaleItemForPurchase(name);
+        Base_Manager.Analytics.RecordSaleItemForPurchase(name);
 
         switch (name)
         {
             case "removeads": 
-                if(Base_Mng.Data.data.ADSBuy == false)
+                if(Base_Manager.Data.UserData.ADSBuy == false)
                 GetRewardInit(RewardState.Other, CharCostumer.Charcater, 50, 0, 0);
-                Base_Mng.Data.data.ADSBuy = true;
-                Base_Mng.ADS.BannerDestroy();
+                Base_Manager.Data.UserData.ADSBuy = true;
+                Base_Manager.ADS.BannerDestroy();
                 Main_UI.instance.RectADSCheck();
                 break;
             case "revemoads_all": 
-                if(Base_Mng.Data.data.ADSBuy == false)
+                if(Base_Manager.Data.UserData.ADSBuy == false)
                 GetRewardInit(RewardState.Other, CharCostumer.Charcater, 400, 0, 0);
-                Base_Mng.Data.data.ADSBuy = true;
-                Base_Mng.ADS.BannerDestroy();
+                Base_Manager.Data.UserData.ADSBuy = true;
+                Base_Manager.ADS.BannerDestroy();
                 Main_UI.instance.RectADSCheck();
                 break;
             case "bluehoney_1500": GetRewardInit(RewardState.Other, CharCostumer.Charcater, 40, 0, 0); break;
@@ -67,7 +67,7 @@ public class UI_Reward : UI_Base
             case RewardState.Other:
                 OtherRewardPanel.SetActive(true);
                 TextMeshProUGUI texts = OtherRewardPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-                Base_Mng.Data.data.Blue += cnt;
+                Base_Manager.Data.UserData.Blue += cnt;
                 texts.text = "x" + cnt.ToString();
                 break;
             case RewardState.Character:
@@ -76,16 +76,16 @@ public class UI_Reward : UI_Base
                 switch(costumer)
                 {
                     case CharCostumer.Charcater:
-                        Debug.Log(charIdx + " : " + Base_Mng.Data.data.GetCharacterData.Length);
-                        Base_Mng.Data.data.GetCharacterData[charIdx] = true;
+                        Debug.Log(charIdx + " : " + Base_Manager.Data.UserData.GetCharacterData.Length);
+                        Base_Manager.Data.UserData.GetCharacterData[charIdx] = true;
                         if(charIdx < 13)
                         {
-                            Base_Mng.Data.data.GetEQData[charIdx] = true;
+                            Base_Manager.Data.UserData.GetEQData[charIdx] = true;
                         }
                         Land.instance.GetCharacter(charIdx);
                         break;
                     case CharCostumer.EQ:
-                        Base_Mng.Data.data.GetEQData[eqIdx] = true;
+                        Base_Manager.Data.UserData.GetEQData[eqIdx] = true;
                         break;
                 }
                 CurrentCharReward.instance.Init(costumer, charIdx+1, eqIdx+1);
@@ -94,16 +94,16 @@ public class UI_Reward : UI_Base
 
         int character = 0;
         int eq = 0;
-        for(int i = 0; i < Base_Mng.Data.data.GetCharacterData.Length; i++)
+        for(int i = 0; i < Base_Manager.Data.UserData.GetCharacterData.Length; i++)
         {
-            if (Base_Mng.Data.data.GetCharacterData[i] == true) character++;
+            if (Base_Manager.Data.UserData.GetCharacterData[i] == true) character++;
         }
-        for(int i = 0; i < Base_Mng.Data.data.GetEQData.Length; i++)
+        for(int i = 0; i < Base_Manager.Data.UserData.GetEQData.Length; i++)
         {
-            if (Base_Mng.Data.data.GetEQData[i] == true) eq++;
+            if (Base_Manager.Data.UserData.GetEQData[i] == true) eq++;
         }
-        Base_Mng.Analytics.RecordCustomEventWithParameters("Character", character);
-        Base_Mng.Analytics.RecordCustomEventWithParameters("EQ", eq);
+        Base_Manager.Analytics.RecordCustomEventWithParameters("Character", character);
+        Base_Manager.Analytics.RecordCustomEventWithParameters("EQ", eq);
     }
 
     public override void DisableOBJ()

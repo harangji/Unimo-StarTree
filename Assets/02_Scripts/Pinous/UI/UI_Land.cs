@@ -10,7 +10,7 @@ public class UI_Land : UI_Base
     {
         for(int i = 0; i< Level.Length; i++)
         {
-            if (Base_Mng.Data.data.Level >= Level[i])
+            if (Base_Manager.Data.UserData.Level >= Level[i])
             {
                 Lock[i].SetActive(false);
             }

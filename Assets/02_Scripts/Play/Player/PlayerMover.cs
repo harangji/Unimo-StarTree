@@ -38,7 +38,7 @@ public class PlayerMover : MonoBehaviour
     public void SetSpeed(float speed)
     {
         moveSpeed = speed;
-        if (Base_Mng.Data.data.BuffFloating[0] >= 0.0f)
+        if (Base_Manager.Data.UserData.BuffFloating[0] >= 0.0f)
             moveSpeed = 16.0f;
         else moveSpeed = 8.5f;
     }

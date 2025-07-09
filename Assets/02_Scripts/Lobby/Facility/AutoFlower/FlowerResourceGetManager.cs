@@ -6,7 +6,7 @@ using UnityEngine;
 public class FlowerResourceGetManager : FacilityBehaviour
 {
     private readonly double hBoostPerLv = 1.15d;
-    private StarHoneyManager honeyManager;
+    // private StarHoneyManager honeyManager;
     private double honeyPerFlower = 30d;
     private double honeyBonus = 1d;
 
@@ -14,13 +14,13 @@ public class FlowerResourceGetManager : FacilityBehaviour
     new void Start()
     {
         base.Start();
-        honeyManager = FindAnyObjectByType<StarHoneyManager>();
-        FlowerController_Lobby.resourceManager = this;
+        // honeyManager = FindAnyObjectByType<StarHoneyManager>();
+        // FlowerController_Lobby.resourceManager = this;
     }
-    public void GetResource()
-    {
-        honeyManager.AddYellow(honeyPerFlower * honeyBonus);
-    }
+    // public void GetResource()
+    // {
+    //     honeyManager.AddYellow(honeyPerFlower * honeyBonus);
+    // }
     private double calculateHoneyBonus(double accum)
     {
         return Math.Pow(hBoostPerLv, accum);

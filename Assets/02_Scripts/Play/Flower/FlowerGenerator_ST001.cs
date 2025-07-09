@@ -54,7 +54,7 @@ public class FlowerGenerator_ST001 : FlowerGenerator
     override protected IEnumerator generateCoroutine()
     {
         float value = 2.0f;
-        if (Base_Mng.Data.data.BuffFloating[1] > 0.0f) value = 1.5f;
+        if (Base_Manager.Data.UserData.BuffFloating[1] > 0.0f) value = 1.5f;
         yield return new WaitForSeconds(value);
         while(true)
         {

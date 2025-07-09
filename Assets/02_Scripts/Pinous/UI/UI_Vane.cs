@@ -20,11 +20,11 @@ public class UI_Vane : UI_Base
     {
         for (int i = 0; i < 3; i++)
         {
-            if (Base_Mng.Data.data.BuffFloating[i] >= 0.0f)
+            if (Base_Manager.Data.UserData.BuffFloating[i] >= 0.0f)
             {
-                Base_Mng.Data.data.BuffFloating[i] -= Time.deltaTime;
-                Text_Timers[i].text = ShowTimer(Base_Mng.Data.data.BuffFloating[i]);
-                sliders[i].value = Base_Mng.Data.data.BuffFloating[i] / 1800.0f;
+                Base_Manager.Data.UserData.BuffFloating[i] -= Time.deltaTime;
+                Text_Timers[i].text = ShowTimer(Base_Manager.Data.UserData.BuffFloating[i]);
+                sliders[i].value = Base_Manager.Data.UserData.BuffFloating[i] / 1800.0f;
             }
             else
             {
@@ -41,24 +41,24 @@ public class UI_Vane : UI_Base
 
     public void RewardVane(int value)
     {
-        Base_Mng.ADS.ShowRewardedAds(() => GetTimer(value));
+        Base_Manager.ADS.ShowRewardedAds(() => GetTimer(value));
     }
 
     public void GetTimer(int value)
     {
         Canvas_Holder.instance.Get_Toast("ADS");
         Locks[value].SetActive(true);
-        Base_Mng.Data.data.BuffFloating[value] = 1800.0f;
+        Base_Manager.Data.UserData.BuffFloating[value] = 1800.0f;
         sliders[value].gameObject.SetActive(true);
-        Base_Mng.Data.Save();
+        Base_Manager.Data.SaveUserData();
     }
 
     public void ReturnTimer(int value)
     {
         Locks[value].SetActive(false);
-        Base_Mng.Data.data.BuffFloating[value] = 0.0f;
+        Base_Manager.Data.UserData.BuffFloating[value] = 0.0f;
         sliders[value].gameObject.SetActive(false);
-        Base_Mng.Data.Save();
+        Base_Manager.Data.SaveUserData();
     }
 
     public static string ShowTimer(double timer)
