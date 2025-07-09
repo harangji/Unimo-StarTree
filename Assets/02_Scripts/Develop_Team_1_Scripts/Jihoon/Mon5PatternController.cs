@@ -25,6 +25,7 @@ public class Mon5PatternController : MonoBehaviour
     private Vector3 prevPos;
 
     private float patternTime = 0f;
+    private float existTime = 6f;
 
     private void Awake()
     {
@@ -42,7 +43,8 @@ public class Mon5PatternController : MonoBehaviour
         SetRotation();
 
         yield return new WaitForSeconds(1f);
-
+        
+        StartCoroutine(DelayDestroy());
         patternTime = 0f;
         canMove = true;
     }
@@ -115,5 +117,12 @@ public class Mon5PatternController : MonoBehaviour
 
         transform.position = newPos;
         prevPos = newPos;
+    }
+
+    private IEnumerator DelayDestroy()
+    {
+        yield return new WaitForSeconds(existTime);
+        
+        Destroy(gameObject);
     }
 }
