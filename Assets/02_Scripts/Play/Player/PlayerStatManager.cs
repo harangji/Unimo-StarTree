@@ -18,6 +18,9 @@ public class PlayerStatManager : MonoBehaviour
     [SerializeField] private bool isTestModel = false;
     [SerializeField] private GameObject equipPrefab;
     [SerializeField] private GameObject chaPrefab;
+
+    private int hp = 10;
+    
     private void Awake()
     {
         PlaySystemRefStorage.playerStatManager = this;
@@ -81,6 +84,29 @@ public class PlayerStatManager : MonoBehaviour
             hitPos.y = 0;
             stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
             PlaySystemRefStorage.harvestLvController.LossExp(stun);
+        }
+    }
+    
+    //임시로 만듦. 컴벳 시스템의 피격 메서드를 대체하고 있음.
+    public void Hit(float stun, Vector3 hitPos, int damage)
+    {
+        //스턴 시간 계산
+        stun = Mathf.Max(stun, 0.2f);
+        
+        if (isInvincible) { return; }
+        
+        //스턴 로직
+        hitPos.y = 0;
+        stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
+        PlaySystemRefStorage.harvestLvController.LossExp(stun);
+            
+        //데미지 로직
+        hp -= damage;
+        Debug.Log($"Player가 {gameObject.name}에게 {damage}의 피해를 입었습니다!! [현재 체력: {hp}]");
+        
+        if (hp <= 0)
+        {
+            Debug.Log("Player가 사망했습니다!");
         }
     }
     private void stopPlay()

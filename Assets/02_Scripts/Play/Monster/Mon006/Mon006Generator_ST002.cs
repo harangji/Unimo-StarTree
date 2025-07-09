@@ -40,7 +40,7 @@ public class Mon006Generator_ST002 : MonsterGenerator
             float xpos = 0.9f * genWidth * (-1f + 2f*(i/4f));
             if (i == empty) { continue; }
             Vector3 pos = new Vector3(xpos, genHeight, 0f);
-            MonsterController controller = Instantiate(monsterPrefab, pos, Quaternion.Euler(90f, 180f, 0f)).GetComponent<MonsterController>();
+            MonsterController controller = Instantiate(monsterPattern1, pos, Quaternion.Euler(90f, 180f, 0f)).GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
         }
         yield return new WaitForSeconds(6f);
@@ -61,7 +61,7 @@ public class Mon006Generator_ST002 : MonsterGenerator
         {
             float xpos = 0.9f * genWidth * (-1f + i);
             Vector3 pos = new Vector3(xpos, genHeight, 0f);
-            MonsterController controller = Instantiate(monsterPrefab, pos, Quaternion.Euler(90f, 180f, 0f)).GetComponent<MonsterController>();
+            MonsterController controller = Instantiate(monsterPattern1, pos, Quaternion.Euler(90f, 180f, 0f)).GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
         }
         yield return new WaitForSeconds(6f);

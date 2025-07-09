@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 남은 플레이 시간 관리를 담당
+// 시간 감소, 게이지 갱신, 일시정지, 시간 초과 처리, 난이도 증가 곡선 적용
 public class PlayTimeManager : MonoBehaviour
 {
     public float LapseTime { get; private set; } = 0f;

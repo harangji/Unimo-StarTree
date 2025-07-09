@@ -53,7 +53,7 @@ public class Mon003Generator : MonsterGenerator
         {
             angle = 2f/3f*Mathf.PI * i;
             Vector3 pos = center + 5.5f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
-            MonsterController controller = Instantiate(monsterPrefab, pos, Quaternion.identity).GetComponent<MonsterController>();
+            MonsterController controller = Instantiate(monsterPattern1, pos, Quaternion.identity).GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
         }
         yield return new WaitForSeconds(1.5f);
@@ -61,7 +61,7 @@ public class Mon003Generator : MonsterGenerator
         {
             angle = 2f / 3f * Mathf.PI * i + 1f / 3f * Mathf.PI;
             Vector3 pos = center + 5.5f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
-            MonsterController controller = Instantiate(monsterPrefab, pos, Quaternion.identity).GetComponent<MonsterController>();
+            MonsterController controller = Instantiate(monsterPattern1, pos, Quaternion.identity).GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
         }
         yield return new WaitForSeconds(4f);
@@ -83,7 +83,7 @@ public class Mon003Generator : MonsterGenerator
         {
             angle = 0.4f * Mathf.PI * i;
             Vector3 pos = center + 4.8f * new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
-            MonsterController controller = Instantiate(monsterPrefab, pos, Quaternion.identity).GetComponent<MonsterController>();
+            MonsterController controller = Instantiate(monsterPattern1, pos, Quaternion.identity).GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
         }
         yield return new WaitForSeconds(3f);
