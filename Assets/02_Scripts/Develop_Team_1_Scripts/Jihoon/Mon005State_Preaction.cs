@@ -9,7 +9,7 @@ public class Mon005State_Preaction : MonsterState_Preaction
     [SerializeField] private float moveSpeed = 4.2f;
     [SerializeField] private int moveDir_0x1y2z = 1;
     [SerializeField] private int moveFrontBack = -1;
-    protected float existTime = 4f;
+    protected float existTime = 6f;
     private Vector3 moveVec;
 
     public override void TransitionAction(MonsterController controller)

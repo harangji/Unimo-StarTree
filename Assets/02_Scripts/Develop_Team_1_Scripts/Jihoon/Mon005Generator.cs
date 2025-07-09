@@ -66,14 +66,12 @@ public class Mon005Generator : MonsterGenerator
 
     protected override MonsterController generateEnemy()
     {
-        Debug.Log("오버라이드 메서드 사용");
-
         //todo 난이도 점유 기능 추가해야 함 -> 나중에 게임 매니저 만들어지면 하면 됨
 
         Vector3 pos = findGenPosition();
         Quaternion quat = setGenRotation(pos);
 
-        var rate = Random.Range(70, 90);
+        var rate = Random.Range(90, 100);
 
         if (rate < 70)
         {
@@ -85,8 +83,8 @@ public class Mon005Generator : MonsterGenerator
         }
         else if (rate < 90)
         {
-            Debug.Log("패턴 2 발생!");
-
+            Debug.Log("패턴 2");
+            
             var pattern = Instantiate(monsterPattern2, pos, quat);
             var controllers = pattern.GetComponentsInChildren<MonsterController>();
 
@@ -99,7 +97,17 @@ public class Mon005Generator : MonsterGenerator
         }
         else
         {
-            Debug.Log("패턴 3 발생!");
+            Debug.Log("패턴 3");
+            
+            var pattern = Instantiate(monsterPattern3, pos, quat);
+            var controllers = pattern.GetComponentsInChildren<MonsterController>();
+
+            foreach (var controller in controllers)
+            {
+                controller.pattern = Patterns.Pattern3;
+
+                controller.InitEnemy(playerTransform);
+            }
         }
 
         return null;
