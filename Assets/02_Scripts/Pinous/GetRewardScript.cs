@@ -12,8 +12,8 @@ public class GetRewardScript : MonoBehaviour
     {
         ADSButton.SetActive(true);
 
-        Base_Mng.Data.data.Red += double.Parse(texts[0].text.ToString());
-        Base_Mng.Data.data.Yellow += StringMethod.ToCurrencyDouble(texts[1].text);
+        Base_Manager.Data.UserData.Red += double.Parse(texts[0].text.ToString());
+        Base_Manager.Data.UserData.Yellow += StringMethod.ToCurrencyDouble(texts[1].text);
 
         YellowText.text = texts[1].text;
         RedText.text = texts[0].text;
@@ -21,12 +21,12 @@ public class GetRewardScript : MonoBehaviour
 
     public void GetRewardDoubleScore()
     {
-        Base_Mng.ADS.ShowRewardedAds(() =>
+        Base_Manager.ADS.ShowRewardedAds(() =>
         {
-            Base_Mng.Data.data.Red += double.Parse(texts[0].text);
-            Base_Mng.Data.data.RePlay++;
+            Base_Manager.Data.UserData.Red += double.Parse(texts[0].text);
+            Base_Manager.Data.UserData.RePlay++;
             var yellow = StringMethod.ToCurrencyDouble(texts[1].text);
-            Base_Mng.Data.data.Yellow += yellow;
+            Base_Manager.Data.UserData.Yellow += yellow;
 
             RedText.text = (double.Parse(texts[0].text) * 2).ToString();
             YellowText.text = StringMethod.ToCurrencyString(yellow * 2);

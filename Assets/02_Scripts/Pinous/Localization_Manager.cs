@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Localization_Mng
+public class Localization_Manager
 {
     public class String_Data
     {

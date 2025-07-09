@@ -10,7 +10,7 @@ public class UI_ADS_INTERESTING : MonoBehaviour
     {
         RectTransform rect = GetComponent<RectTransform>();
 
-        if (Base_Mng.Data.data.ADSBuy == true)
+        if (Base_Manager.Data.UserData.ADSBuy == true)
         {
             rect.anchorMin = new Vector2(0.0f, 0.0f);
         }

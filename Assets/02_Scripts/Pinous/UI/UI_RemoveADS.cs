@@ -6,11 +6,11 @@ public class UI_RemoveADS : UI_Base
 {
     public void GetRemoveADS()
     {
-        Base_Mng.IAP.Purchase("removeads");
+        Base_Manager.IAP.Purchase("removeads");
     }
 
     public void GetRemoveAllADS()
     {
-        Base_Mng.IAP.Purchase("revemoads_all");
+        Base_Manager.IAP.Purchase("revemoads_all");
     }
 }

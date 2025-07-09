@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.Android.Gradle.Manifest;
 using static UnityEngine.Rendering.DebugUI;
 
 public class AccountInitializer : MonoBehaviour
@@ -19,17 +20,17 @@ public class AccountInitializer : MonoBehaviour
     [SerializeField] private GameObject nameSetter;
     [SerializeField] private TMP_InputField inputField;
 
-    EAccountType m_accountType;
+    // EAccountType m_accountType;
     public Sprite[] sprites;
     public UnityEngine.UI.Image TitleImage;
     int value = 0;
     private void Start()
     {
-        if (Localization_Mng.LocalAccess == "kr")
+        if (Localization_Manager.LocalAccess == "kr")
             inputField.characterLimit = 10;
         else inputField.characterLimit = 20;
         Sound_Manager.instance.Play(Sound.Bgm, "BGM000");
-        switch(Localization_Mng.LocalAccess)
+        switch(Localization_Manager.LocalAccess)
         {
             case "kr":
                 TitleImage.sprite = sprites[0];
@@ -39,42 +40,37 @@ public class AccountInitializer : MonoBehaviour
             default: TitleImage.sprite = sprites[2];
                 break;
         }
-
-        var data = PlayerPrefs.GetInt("GetUser");
         
-        value = data;
-        EAccountType accountT = (EAccountType)data;
-        m_accountType = accountT;
-        if (data == 0)
+        if (EasySaveManager.Instance.TryLoad("User_Data", out User_Data user)) //파일이 있는지 검사
         {
-            StartAccountInitialize();
+            EndAccountInitialize(); //있다면 진행
         }
         else
         {
-            EndAccountInitialize();
+            nameSetter.SetActive(true);
         }
     }
     
-    public void StartAccountInitialize()
-    {
-        typeSetter.SetActive(true);
-    }
+
+    // public void StartAccountInitialize()
+    // {
+    //     typeSetter.SetActive(true); //구글 게스트 고르기
+    // }
+    
     public void EndAccountInitialize()
     {
-        PlayerPrefs.SetInt("GetUser", value);
-        PlayerPrefs.Save();
-        Base_Mng.Firebase.Login(m_accountType);
+        Base_Manager.Data.LoadUserData();
     }
-    public void SetAccountType(int accountType)
-    {
-        EAccountType accountT = (EAccountType)accountType;
-        m_accountType = accountT;
-        value = accountType;
-        Debug.Log(value);
-        typeSetter.SetActive(false);
-        nameSetter.SetActive(true);
-    }
-    public void SetUserName()
+    
+    // public void SetAccountType(int accountType) //버튼
+    // {
+    //     value = accountType;
+    //     Debug.Log(value);
+    //     typeSetter.SetActive(false);
+    //     nameSetter.SetActive(true);
+    // }
+    
+    public void SetUserName() //버튼
     {
         if(inputField.text.Length < 2)
         {
@@ -82,7 +78,8 @@ public class AccountInitializer : MonoBehaviour
             go.GetPopUp("NameCheck");
             return;
         }
-        Base_Mng.Firebase.UserName = inputField.text;
+
+        Base_Manager.Data.UserData.UserName = inputField.text;
         nameSetter.SetActive(false);
 
         EndAccountInitialize();

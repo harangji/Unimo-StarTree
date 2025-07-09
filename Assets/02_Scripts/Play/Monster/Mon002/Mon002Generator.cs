@@ -62,7 +62,7 @@ public class Mon002Generator : MonsterGenerator
             Vector3 pos = center + genRadius * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
             newIndicatorPos = center + 6f * new Vector3(Mathf.Cos(angle + 1f / 8f * Mathf.PI), 0f, Mathf.Sin(angle + 1f / 8f * Mathf.PI));
             Quaternion quat = Quaternion.LookRotation(newIndicatorPos - pos, Vector3.up);
-            MonsterController controller = Instantiate(monsterPrefab, pos, quat).GetComponent<MonsterController>();
+            MonsterController controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
             Transform indicator = controller.indicatorCtrl.GetIndicatorTransform();
             Vector3 indicatorPos = newIndicatorPos + new Vector3(0f, indicator.position.y, 0f);
@@ -90,7 +90,7 @@ public class Mon002Generator : MonsterGenerator
             Vector3 pos = center + genRadius * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
             newIndicatorPos = center + 4.5f * new Vector3(Mathf.Cos(angle + 1f / 6f * Mathf.PI), 0f, Mathf.Sin(angle + 1f / 6f * Mathf.PI));
             Quaternion quat = Quaternion.LookRotation(newIndicatorPos - pos, Vector3.up);
-            MonsterController controller = Instantiate(monsterPrefab, pos, quat).GetComponent<MonsterController>();
+            MonsterController controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
             Transform indicator = controller.indicatorCtrl.GetIndicatorTransform();
             Vector3 indicatorPos = newIndicatorPos + new Vector3(0f, indicator.position.y, 0f);

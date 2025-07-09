@@ -60,7 +60,7 @@ public class Mon002Generator_ST002 : MonsterGenerator
             newIndicatorPos = playerTransform.position;
             newIndicatorPos.z = pos.z;
             Quaternion quat = Quaternion.LookRotation(newIndicatorPos - pos, Vector3.back);
-            MonsterController controller = Instantiate(monsterPrefab, pos, quat).GetComponent<MonsterController>();
+            MonsterController controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
             Transform indicator = controller.indicatorCtrl.GetIndicatorTransform();
             Vector3 indicatorPos = newIndicatorPos + new Vector3(0f, 0f, -1f);
@@ -76,7 +76,7 @@ public class Mon002Generator_ST002 : MonsterGenerator
             newIndicatorPos = playerTransform.position;
             newIndicatorPos.z = pos.z;
             Quaternion quat = Quaternion.LookRotation(newIndicatorPos - pos, Vector3.back);
-            MonsterController controller = Instantiate(monsterPrefab, pos, quat).GetComponent<MonsterController>();
+            MonsterController controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
             Transform indicator = controller.indicatorCtrl.GetIndicatorTransform();
             Vector3 indicatorPos = newIndicatorPos + new Vector3(0f, 0f, -1f);
@@ -106,7 +106,7 @@ public class Mon002Generator_ST002 : MonsterGenerator
             newIndicatorPos = playerTransform.position;
             newIndicatorPos.z = pos.z;
             Quaternion quat = Quaternion.LookRotation(newIndicatorPos - pos, Vector3.back);
-            MonsterController controller = Instantiate(monsterPrefab, pos, quat).GetComponent<MonsterController>();
+            MonsterController controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
             Transform indicator = controller.indicatorCtrl.GetIndicatorTransform();
             Vector3 indicatorPos = newIndicatorPos + new Vector3(0f, 0f, -1f);

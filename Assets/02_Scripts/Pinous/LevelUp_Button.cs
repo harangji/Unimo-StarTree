@@ -58,7 +58,7 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
         if (isPush)
         {
-            Base_Mng.instance.saveTimer = 0.0f;
+            Base_Manager.instance.saveTimer = 0.0f;
             timer += Time.deltaTime;
             if (timer >= 0.01f)
             {
@@ -76,13 +76,13 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     private void InitLevelUpBUtton()
     {
-        if (Base_Mng.Data.data.Yellow < Base_Mng.Data.data.NextLevel_Base)
+        if (Base_Manager.Data.UserData.Yellow < Base_Manager.Data.UserData.NextLevel_Base)
         {
             Canvas_Holder.instance.Get_Toast("NM");
             return;
         }
-        Base_Mng.Data.data.Yellow -= Base_Mng.Data.data.NextLevel_Base;
-        Base_Mng.Data.LevelUP();
+        Base_Manager.Data.UserData.Yellow -= Base_Manager.Data.UserData.NextLevel_Base;
+        Base_Manager.Data.LevelUP();
         Sound_Manager.instance.Play(Sound.Effect, "effect_00");
     }
 }

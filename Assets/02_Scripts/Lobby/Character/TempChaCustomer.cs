@@ -12,8 +12,8 @@ public class TempChaCustomer : MonoBehaviour
     private GameObject chObj;
     private void Start()
     {
-        currentChar = Base_Mng.Data.data.CharCount;
-        currentEq = Base_Mng.Data.data.EQCount;
+        currentChar = Base_Manager.Data.UserData.CharCount;
+        currentEq = Base_Manager.Data.UserData.EQCount;
 
         GameManager.Instance.ChaIdx = currentChar;
         GameManager.Instance.EqIdx = currentEq;
@@ -22,14 +22,14 @@ public class TempChaCustomer : MonoBehaviour
     public void ChangeCharacter(int diff)
     {
         currentChar = diff;
-        Base_Mng.Data.data.CharCount = currentChar;
+        Base_Manager.Data.UserData.CharCount = currentChar;
         GameManager.Instance.ChaIdx = currentChar;
         makePreviewObj();
     }
     public void ChangeEquip(int diff)
     {
         currentEq = diff;
-        Base_Mng.Data.data.EQCount = currentEq;
+        Base_Manager.Data.UserData.EQCount = currentEq;
         GameManager.Instance.EqIdx = currentEq;
         makePreviewObj();
     }

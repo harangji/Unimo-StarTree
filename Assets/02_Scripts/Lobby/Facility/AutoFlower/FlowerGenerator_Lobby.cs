@@ -18,7 +18,7 @@ public class FlowerGenerator_Lobby : MonoBehaviour
 
     public void InitGenFlower()
     {
-        for (int i = 0; i < (Base_Mng.Data.data.Level / 50) + 1; i++)
+        for (int i = 0; i < (Base_Manager.Data.UserData.Level / 50) + 1; i++)
         {
             bool RandomCount = Random.Range(0, 2) == 1 ? true : false;
             if (RandomCount)
@@ -42,9 +42,9 @@ public class FlowerGenerator_Lobby : MonoBehaviour
     private int CharacterCount()
     {
         int value = 0;
-        for(int i = 0; i< Base_Mng.Data.data.GetCharacterData.Length; i++)
+        for(int i = 0; i< Base_Manager.Data.UserData.GetCharacterData.Length; i++)
         {
-            if (Base_Mng.Data.data.GetCharacterData[i] == true) value++;
+            if (Base_Manager.Data.UserData.GetCharacterData[i] == true) value++;
         }
         return value;
     }

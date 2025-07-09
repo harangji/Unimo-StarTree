@@ -7,8 +7,8 @@ public class UI_Game : UI_Base
     public override void Start()
     {
         Camera_Event.instance.GetCameraEvent(CameraMoveState.InGame);
-        GameOneBest.text = "Best Score\n" + StringMethod.ToCurrencyString(Base_Mng.Data.data.BestScoreGameOne);
-        GameTwoBest.text = "Best Score\n" + StringMethod.ToCurrencyString(Base_Mng.Data.data.BestScoreGameTwo);
+        GameOneBest.text = "Best Score\n" + StringMethod.ToCurrencyString(Base_Manager.Data.UserData.BestScoreGameOne);
+        GameTwoBest.text = "Best Score\n" + StringMethod.ToCurrencyString(Base_Manager.Data.UserData.BestScoreGameTwo);
         base.Start();
     }
 
@@ -20,7 +20,7 @@ public class UI_Game : UI_Base
     public void GoGameScene(int value)
     {
         WholeSceneController.Instance.ReadyNextScene(value);
-        Base_Mng.Data.data.GamePlay++;
+        Base_Manager.Data.UserData.GamePlay++;
         Pinous_Flower_Holder.FlowerHolder.Clear();
         //Base_Mng.ADS._interstitialCallback = () =>
         //{

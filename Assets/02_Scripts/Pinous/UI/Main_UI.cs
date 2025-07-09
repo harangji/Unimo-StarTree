@@ -25,9 +25,9 @@ public class Main_UI : MonoBehaviour
         Text_Check();
         RectADSCheck();
 
-        if(Base_Mng.Data.data.GetOarkTong == false && Base_Mng.Data.data.GetEQData[13] == false)
+        if(Base_Manager.Data.UserData.GetOarkTong == false && Base_Manager.Data.UserData.GetEQData[13] == false)
         {
-            Base_Mng.Data.data.GetOarkTong = true;
+            Base_Manager.Data.UserData.GetOarkTong = true;
 
             holderQueue.Enqueue("##Reward");
             holderQueue_Action.Enqueue(() =>
@@ -37,7 +37,7 @@ public class Main_UI : MonoBehaviour
             });
         }
 
-        if(Base_Mng.Data.data.GetStarChange == false)
+        if(Base_Manager.Data.UserData.GetStarChange == false)
         {
             StarChangeAnimation.SetTrigger("NoneStarChange");
         }
@@ -46,20 +46,20 @@ public class Main_UI : MonoBehaviour
             StarChangeAnimation.SetBool("GetStarChange", true);
         }
 
-        if(Data_Mng.SetPlayScene)
+        if(Data_Manager.SetPlayScene)
         {
-            Data_Mng.SetPlayScene = false;
-            if(Base_Mng.Data.data.GetReview == false && Base_Mng.Data.data.Level >= 99)
+            Data_Manager.SetPlayScene = false;
+            if(Base_Manager.Data.UserData.GetReview == false && Base_Manager.Data.UserData.Level >= 99)
             {
-                Base_Mng.Data.data.GetReview = true;
+                Base_Manager.Data.UserData.GetReview = true;
                 holderQueue.Enqueue("##Review");
                 holderQueue_Action.Enqueue(null);
             }
         }
 
-        if(!Base_Mng.Data.data.GetInGame)
+        if(!Base_Manager.Data.UserData.GetInGame)
         {
-            Base_Mng.Data.data.GetInGame = true;
+            Base_Manager.Data.UserData.GetInGame = true;
             holderQueue.Enqueue("##ADSREMOVER");
             holderQueue_Action.Enqueue(() => Canvas_Holder.instance.Get_Toast("ADSRemovePopUp"));
         }
@@ -74,7 +74,7 @@ public class Main_UI : MonoBehaviour
 
     public void GetStarChangeCheck()
     {
-        Base_Mng.Data.data.GetStarChange = true;
+        Base_Manager.Data.UserData.GetStarChange = true;
         StarChangeAnimation.SetBool("GetStarChange", true);
     }
 
@@ -100,7 +100,7 @@ public class Main_UI : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            if (Base_Mng.Data.data.Level >= Base_Mng.Data.AltaCount[3 - i])
+            if (Base_Manager.Data.UserData.Level >= Base_Manager.Data.AltaCount[3 - i])
             {
                 NoneDefault = true;
                 value = 4-i;
@@ -114,18 +114,18 @@ public class Main_UI : MonoBehaviour
             objs[0].SetActive(true);
         }
 
-        m_Slider.fillAmount = Base_Mng.Data.EXP_Percentage();
-        m_Slider_Text.text = string.Format("{0:0.00}", Base_Mng.Data.EXP_Percentage() * 100.0f) +"%";
-        LevelText.text = "LV." + (Base_Mng.Data.data.Level + 1).ToString();
+        m_Slider.fillAmount = Base_Manager.Data.EXP_Percentage();
+        m_Slider_Text.text = string.Format("{0:0.00}", Base_Manager.Data.EXP_Percentage() * 100.0f) +"%";
+        LevelText.text = "LV." + (Base_Manager.Data.UserData.Level + 1).ToString();
 
-        Assets_Text[0].text = StringMethod.ToCurrencyString(Base_Mng.Data.data.Yellow);
-        Assets_Text[1].text = string.Format("{0:#,###}", Base_Mng.Data.data.Red);
-        Assets_Text[2].text = Base_Mng.Data.data.Blue.ToString();
+        Assets_Text[0].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Yellow);
+        Assets_Text[1].text = string.Format("{0:#,###}", Base_Manager.Data.UserData.Red);
+        Assets_Text[2].text = Base_Manager.Data.UserData.Blue.ToString();
      
-        GetSecondText.text = StringMethod.ToCurrencyString(Base_Mng.Data.data.Second_Base) + "/Sec";
-        NextLevelText.text = StringMethod.ToCurrencyString(Base_Mng.Data.data.NextLevel_Base);
+        GetSecondText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Second_Base) + "/Sec";
+        NextLevelText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.NextLevel_Base);
 
-        NameText.text = Base_Mng.Data.data.UserName;
+        NameText.text = Base_Manager.Data.UserData.UserName;
         OnActionEvent?.Invoke();
         TextColorCheck();
     }
@@ -134,8 +134,8 @@ public class Main_UI : MonoBehaviour
     public Image NextLevelImage;
     public void TextColorCheck()
     {
-        NextLevelText.color = Base_Mng.Data.data.Yellow >= Base_Mng.Data.data.NextLevel_Base ? colors[0] : colors[1];
-        NextLevelImage.color = Base_Mng.Data.data.Yellow >= Base_Mng.Data.data.NextLevel_Base ?
+        NextLevelText.color = Base_Manager.Data.UserData.Yellow >= Base_Manager.Data.UserData.NextLevel_Base ? colors[0] : colors[1];
+        NextLevelImage.color = Base_Manager.Data.UserData.Yellow >= Base_Manager.Data.UserData.NextLevel_Base ?
             new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.5f);
     }
 }

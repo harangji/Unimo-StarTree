@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ADS_Mng
+public class ADS_Manager
 {
     public enum AdsStateType
     {
@@ -65,7 +65,7 @@ public class ADS_Mng
 
     public void BannerView()
     {
-        if (Base_Mng.Data.data.ADSBuy == true) return;
+        if (Base_Manager.Data.UserData.ADSBuy == true) return;
 
         if (_bannerView != null)
         {
@@ -183,8 +183,8 @@ public class ADS_Mng
         yield return new WaitForSeconds(0.3f);
 
         _rewardedCallback?.Invoke();
-        Base_Mng.Data.data.ADS++;
-        Base_Mng.Data.data.ADSNoneReset++;
+        Base_Manager.Data.UserData.ADS++;
+        Base_Manager.Data.UserData.ADSNoneReset++;
 
         _rewardedCallback = null;
     }
@@ -192,7 +192,7 @@ public class ADS_Mng
     public void ShowInterstitialAds()
     {
 
-        if (Base_Mng.Data.data.ADSBuy || Base_Mng.Data.data.ADS_Inter_Buy)
+        if (Base_Manager.Data.UserData.ADSBuy || Base_Manager.Data.UserData.ADS_Inter_Buy)
         {
             if (_interstitialCallback != null)
             {
@@ -217,11 +217,11 @@ public class ADS_Mng
         "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
         _rewardedCallback = rewardedCallback;
 
-        if (Base_Mng.Data.data.ADSBuy)
+        if (Base_Manager.Data.UserData.ADSBuy)
         {
             _rewardedCallback?.Invoke();
-            Base_Mng.Data.data.ADS++;
-            Base_Mng.Data.data.ADSNoneReset++;
+            Base_Manager.Data.UserData.ADS++;
+            Base_Manager.Data.UserData.ADSNoneReset++;
             PlayerPrefs.SetInt("GetRewardCount", 2);
             _rewardedCallback = null;
             return;
@@ -230,7 +230,7 @@ public class ADS_Mng
         if (_rewardedAd != null && _rewardedAd.CanShowAd())
             _rewardedAd.Show((Reward reward) =>
             {
-                Base_Mng.instance.Coroutine_Starter(GetReward());
+                Base_Manager.instance.Coroutine_Starter(GetReward());
             });
         else
         {

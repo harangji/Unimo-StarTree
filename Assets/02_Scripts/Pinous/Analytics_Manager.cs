@@ -4,7 +4,7 @@ using Unity.Services.Analytics;
 using Unity.Services.Core;
 using UnityEngine;
 
-public class Analytics_Mng
+public class Analytics_Manager
 {
     public async void Init()
     {
