@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+
+public enum Patterns { Pattern1, Pattern2, Pattern3 }
 
 public class MonsterController : MonoBehaviour
 {
@@ -25,6 +28,8 @@ public class MonsterController : MonoBehaviour
     private MonsterState_Explode enemyExplode;
     
     private float existTime = 0f;
+    
+    public  Patterns pattern = Patterns.Pattern1;
     
     private void Update()
     {

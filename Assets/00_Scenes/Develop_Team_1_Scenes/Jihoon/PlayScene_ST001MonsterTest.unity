@@ -1539,8 +1539,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: cea42b4abbd7a8549956fc07a95b4d2d, type: 2}
-  monsterPrefab: {fileID: 1072457946450581002, guid: c02c1f7cc92d0d246a08e5d9c106b44b,
+  monsterPattern1: {fileID: 1072457946450581002, guid: c02c1f7cc92d0d246a08e5d9c106b44b,
     type: 3}
+  monsterPattern2: {fileID: 6673824433684689492, guid: 86ca129ac9fcfb14a968da8d64a5cf74,
+    type: 3}
+  monsterPattern3: {fileID: 0}
 --- !u!4 &981523602 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4876853301105598587, guid: e542909bea402f345a760b7cda46b419,
@@ -3567,8 +3570,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: dcffbb70795227246bfd4ef98d31a243, type: 2}
-  monsterPrefab: {fileID: 8470377270446183419, guid: 448b05eca14b205479fa46300963edd4,
+  monsterPattern1: {fileID: 8470377270446183419, guid: 448b05eca14b205479fa46300963edd4,
     type: 3}
+  monsterPattern2: {fileID: 0}
+  monsterPattern3: {fileID: 0}
 --- !u!82 &2075450155
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5546,7 +5551,7 @@ PrefabInstance:
     - target: {fileID: 4876853301105598581, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4876853301105598584, guid: e542909bea402f345a760b7cda46b419,
         type: 3}

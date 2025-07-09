@@ -2,11 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MonsterGenerator : MonoBehaviour
 {
     [SerializeField] protected MonGenCalculator monGenCalculator;
-    [SerializeField] protected GameObject monsterPrefab;
+    
+    [SerializeField] protected GameObject monsterPattern1;
+    [SerializeField] protected GameObject monsterPattern2;
+    [SerializeField] protected GameObject monsterPattern3;
 
     protected float timetoNextGen;
     protected float timetoNextBigWave;
@@ -41,6 +45,7 @@ public class MonsterGenerator : MonoBehaviour
         timetoNextBigWave -= timediff;
         if (timetoNextGen < 0f)
         {
+            //여기서 패턴 분류를 하면 될 듯?
             generateEnemy();
             timetoNextGen = monGenCalculator.calculateBasicGenTime();
         }
@@ -70,7 +75,7 @@ public class MonsterGenerator : MonoBehaviour
     {
         Vector3 pos = findGenPosition();
         Quaternion quat = setGenRotation(pos);
-        MonsterController controller = Instantiate(monsterPrefab, pos, quat).GetComponent<MonsterController>();
+        MonsterController controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
         controller.InitEnemy(playerTransform);
 
         return controller;
@@ -79,7 +84,7 @@ public class MonsterGenerator : MonoBehaviour
     {
         return Vector3.zero;
     }
-    virtual protected Quaternion setGenRotation(Vector3 genPos)
+    protected virtual Quaternion setGenRotation(Vector3 genPos)
     {
         Quaternion rot = Quaternion.identity;
         return rot;

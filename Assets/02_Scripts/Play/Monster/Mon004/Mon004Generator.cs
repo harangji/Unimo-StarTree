@@ -57,7 +57,7 @@ public class Mon004Generator : MonsterGenerator
             }
             Vector3 pos = center + 6f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
             Quaternion quat = Quaternion.LookRotation(playerTransform.position - pos, Vector3.up);
-            MonsterController controller = Instantiate(monsterPrefab, pos, quat).GetComponent<MonsterController>();
+            MonsterController controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
             yield return new WaitForSeconds(0.3f);
         }
@@ -82,7 +82,7 @@ public class Mon004Generator : MonsterGenerator
             }
             Vector3 pos = center + 5f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
             Quaternion quat = Quaternion.LookRotation(playerTransform.position - pos, Vector3.up);
-            MonsterController controller = Instantiate(monsterPrefab, pos, quat).GetComponent<MonsterController>();
+            MonsterController controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
             yield return new WaitForSeconds(0.25f);
         }
