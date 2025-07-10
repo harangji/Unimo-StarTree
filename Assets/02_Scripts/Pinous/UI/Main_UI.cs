@@ -22,6 +22,7 @@ public class Main_UI : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log($"Base_Manager.Data.UserData.Second_Base : {Base_Manager.Data.UserData.Second_Base}");
         Text_Check();
         RectADSCheck();
 
@@ -88,7 +89,7 @@ public class Main_UI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_Slider_Text;
     [SerializeField] private TextMeshProUGUI LevelText;
     [SerializeField] private TextMeshProUGUI[] Assets_Text;
-    [SerializeField] private TextMeshProUGUI GetSecondText;
+    [SerializeField] private TextMeshProUGUI GetSecondText; //다음 레벨까지 요구 EXP 텍스트
     [SerializeField] private TextMeshProUGUI NextLevelText;
     [SerializeField] private TextMeshProUGUI NameText;
     [SerializeField] private GameObject[] objs;
@@ -115,13 +116,13 @@ public class Main_UI : MonoBehaviour
         }
 
         m_Slider.fillAmount = Base_Manager.Data.EXP_Percentage();
-        m_Slider_Text.text = string.Format("{0:0.00}", Base_Manager.Data.EXP_Percentage() * 100.0f) +"%";
+        m_Slider_Text.text = $"{Base_Manager.Data.EXP_Percentage() * 100.0f:0.00} %";
         LevelText.text = "LV." + (Base_Manager.Data.UserData.Level + 1).ToString();
 
         Assets_Text[0].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Yellow);
         Assets_Text[1].text = string.Format("{0:#,###}", Base_Manager.Data.UserData.Red);
         Assets_Text[2].text = Base_Manager.Data.UserData.Blue.ToString();
-     
+        
         GetSecondText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Second_Base) + "/Sec";
         NextLevelText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.NextLevel_Base);
 
