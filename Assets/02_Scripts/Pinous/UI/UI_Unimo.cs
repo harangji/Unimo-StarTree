@@ -11,8 +11,8 @@ public class UI_Unimo : UI_Base
     public override void Start()
     {
         Debug.Log(Key);
-        Name.text = Localization_Mng.local_Data["Character/" + Key.ToString()].Get_Data();
-        Description.text = Localization_Mng.local_Data["Character/" + Key.ToString() + "_Text"].Get_Data();
+        Name.text = Localization_Manager.local_Data["Character/" + Key.ToString()].Get_Data();
+        Description.text = Localization_Manager.local_Data["Character/" + Key.ToString() + "_Text"].Get_Data();
         base.Start();
     }
 

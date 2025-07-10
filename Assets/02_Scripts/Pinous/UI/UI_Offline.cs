@@ -13,10 +13,10 @@ public class UI_Offline : UI_Base
     public override void Start()
     {
         Camera_Event.instance.GetCameraEvent(CameraMoveState.Offline);
-        float timer = (float)Base_Mng.instance.TimerCheck();
+        float timer = (float)Base_Manager.instance.TimerCheck();
         slider.value = timer / 43200;
 
-        valueCount = Base_Mng.Data.data.Second_Base * timer;
+        valueCount = Base_Manager.Data.UserData.Second_Base * timer;
         RewardText.text = StringMethod.ToCurrencyString(valueCount);
 
         base.Start();
@@ -30,8 +30,8 @@ public class UI_Offline : UI_Base
     public void CollectButton()
     {
         var dataValue = valueCount;
-        Base_Mng.Data.data.Yellow += dataValue;
-        Base_Mng.Data.data.E_DateTime = Base_Mng.Data.data.S_DateTime;
+        Base_Manager.Data.UserData.Yellow += dataValue;
+        Base_Manager.Data.UserData.E_DateTime = Base_Manager.Data.UserData.S_DateTime;
         Canvas_Holder.instance.Get_Toast("Reward");
         Canvas_Holder.CloseAllPopupUI();
     }
@@ -40,10 +40,10 @@ public class UI_Offline : UI_Base
     {
         var dataValue = valueCount * 2.0f;
 
-        Base_Mng.ADS.ShowRewardedAds(() =>
+        Base_Manager.ADS.ShowRewardedAds(() =>
         {
-            Base_Mng.Data.data.Yellow += dataValue;
-            Base_Mng.Data.data.E_DateTime = Base_Mng.Data.data.S_DateTime;
+            Base_Manager.Data.UserData.Yellow += dataValue;
+            Base_Manager.Data.UserData.E_DateTime = Base_Manager.Data.UserData.S_DateTime;
             Canvas_Holder.instance.Get_Toast("Reward");
             Canvas_Holder.CloseAllPopupUI();
         });

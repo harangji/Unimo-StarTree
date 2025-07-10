@@ -58,7 +58,7 @@ public class Mon005Generator_ST002 : MonsterGenerator
                 float xpos = offset + 0.8f * j;
                 xpos *= genWidth;
                 Vector3 pos = new Vector3(xpos, 30f, 0f);
-                MonsterController controller = Instantiate(monsterPrefab, pos, 
+                MonsterController controller = Instantiate(monsterPattern1, pos, 
                     Quaternion.Euler(0, 180f, Random.Range(-randAngle, randAngle))).GetComponent<MonsterController>();
                 controller.transform.localScale = (0.9f + 0.3f * i) * Vector3.one;
                 controller.InitEnemy(playerTransform);
@@ -67,7 +67,7 @@ public class Mon005Generator_ST002 : MonsterGenerator
         }
         yield return new WaitForSeconds(1f);
         Vector3 Bigpos = new Vector3(genWidth * Random.Range(-0.5f, 0.5f), 30f, 0f);
-        MonsterController Bigcontroller = Instantiate(monsterPrefab, Bigpos,
+        MonsterController Bigcontroller = Instantiate(monsterPattern1, Bigpos,
                     Quaternion.Euler(0, 180f, Random.Range(-randAngle, randAngle))).GetComponent<MonsterController>();
         Bigcontroller.transform.localScale = 5f * Vector3.one;
         Bigcontroller.InitEnemy(playerTransform);

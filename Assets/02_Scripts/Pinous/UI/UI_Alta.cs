@@ -25,7 +25,7 @@ public class UI_Alta : UI_Base
         for (int i = 0; i < objs.Length; i++) objs[i].SetActive(false);
         for (int i = 0; i < 4; i++)
         {
-            if (Base_Mng.Data.data.Level >= Base_Mng.Data.AltaCount[3 - i])
+            if (Base_Manager.Data.UserData.Level >= Base_Manager.Data.AltaCount[3 - i])
             {
                 NoneDefault = true;
                 value = 4-i;
@@ -44,19 +44,19 @@ public class UI_Alta : UI_Base
     }
     public void Text_Check()
     {
-        m_Slider.value = Base_Mng.Data.EXP_Percentage();
-        m_Slider_Text.text = string.Format("{0:0.00}", Base_Mng.Data.EXP_Percentage() * 100.0f) + "%";
-        LevelText.text = "LV." + (Base_Mng.Data.data.Level + 1).ToString();
-        NextLevelText.text = StringMethod.ToCurrencyString(Base_Mng.Data.data.NextLevel_Base);
-        SecText.text = StringMethod.ToCurrencyString(Base_Mng.Data.data.Second_Base) + "/Sec";
+        m_Slider.value = Base_Manager.Data.EXP_Percentage();
+        m_Slider_Text.text = string.Format("{0:0.00}", Base_Manager.Data.EXP_Percentage() * 100.0f) + "%";
+        LevelText.text = "LV." + (Base_Manager.Data.UserData.Level + 1).ToString();
+        NextLevelText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.NextLevel_Base);
+        SecText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Second_Base) + "/Sec";
         TextColorCheck();
     }
 
     [SerializeField] private Image LevelAssetImage;
     public void TextColorCheck()
     {
-        NextLevelText.color = Base_Mng.Data.data.Yellow >= Base_Mng.Data.data.NextLevel_Base ? colors[0] : colors[1];
-        LevelAssetImage.color = Base_Mng.Data.data.Yellow >= Base_Mng.Data.data.NextLevel_Base ?
+        NextLevelText.color = Base_Manager.Data.UserData.Yellow >= Base_Manager.Data.UserData.NextLevel_Base ? colors[0] : colors[1];
+        LevelAssetImage.color = Base_Manager.Data.UserData.Yellow >= Base_Manager.Data.UserData.NextLevel_Base ?
             new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.5f);
     }
     public override void DisableOBJ()

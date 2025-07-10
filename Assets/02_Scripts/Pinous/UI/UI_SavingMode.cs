@@ -21,8 +21,8 @@ public class UI_SavingMode : UI_Base
     private void Start()
     {
         camera = Camera.main;
-        Base_Mng.SavingMode = true;
-        Base_Mng.Savingyellow = 0.0d;
+        Base_Manager.SavingMode = true;
+        Base_Manager.Savingyellow = 0.0d;
         Sound_Manager.instance.ReturnSound(false);
 
         transform.parent = Canvas_Holder.instance.transform;
@@ -33,7 +33,7 @@ public class UI_SavingMode : UI_Base
     {
         BatteryText.text = (SystemInfo.batteryLevel * 100.0f).ToString() + "%";
         BatteryFill.fillAmount = SystemInfo.batteryLevel;
-        GetYellowText.text = StringMethod.ToCurrencyString(Base_Mng.Savingyellow);
+        GetYellowText.text = StringMethod.ToCurrencyString(Base_Manager.Savingyellow);
         TimeText.text = System.DateTime.Now.ToString("HH:mm");
         slider.value = SavingKingPos.anchoredPosition.x / 900.0f;
     }
@@ -42,7 +42,7 @@ public class UI_SavingMode : UI_Base
     {
         camera.enabled = true;
         OnDemandRendering.renderFrameInterval = 1;
-        Base_Mng.SavingMode = false;
+        Base_Manager.SavingMode = false;
 
         Sound_Manager.instance.ReturnSound(true);
 

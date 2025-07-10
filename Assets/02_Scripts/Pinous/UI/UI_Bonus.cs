@@ -9,21 +9,21 @@ public class UI_Bonus : UI_Base
 
     public override bool Init()
     {
-        RewardText.text = StringMethod.ToCurrencyString(Base_Mng.Data.data.Second_Base * 7200);
+        RewardText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Second_Base * 7200);
         return base.Init();
     }
 
     public void GetReward()
     {
-        Base_Mng.ADS.ShowRewardedAds(() =>
+        Base_Manager.ADS.ShowRewardedAds(() =>
         {
-            Base_Mng.Data.data.Yellow += Base_Mng.Data.data.Second_Base * 7200;
+            Base_Manager.Data.UserData.Yellow += Base_Manager.Data.UserData.Second_Base * 7200;
             Main_UI.instance.Text_Check();
-            Base_Mng.Data.data.BonusRewardCount = 0.0f;
+            Base_Manager.Data.UserData.BonusRewardCount = 0.0f;
             Canvas_Holder.instance.Get_Toast("Reward");
             DisableOBJ();
 
-            Base_Mng.Data.Save();
+            Base_Manager.Data.SaveUserData();
         });
     }
 }

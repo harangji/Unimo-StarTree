@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FlowerController_Lobby : MonoBehaviour
 {
-    static public FlowerResourceGetManager resourceManager;
+    // static public FlowerResourceGetManager resourceManager;
     private float destroyWaitTime = 2f;
     private FlowerFXController_Lobby fxController;
     // Start is called before the first frame update
@@ -16,7 +16,7 @@ public class FlowerController_Lobby : MonoBehaviour
     public void HarvestFlower(Transform unimoPos)
     {
         fxController.TriggerHarvestFX(unimoPos);
-        resourceManager.GetResource();
+        // resourceManager.GetResource();
         Destroy(gameObject, destroyWaitTime);
     }
     public void GrowFlower(float ratio)

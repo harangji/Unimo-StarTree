@@ -16,7 +16,7 @@ public class UI_Costume : UI_Base
     {
         Costumer = Costume_Finder.instance.transform.GetComponent<TempChaCustomer>();
         Costume_Finder.instance.GetStartHandler = true;
-        TitleText.text = Localization_Mng.local_Data["UI/Unimo"].Get_Data();
+        TitleText.text = Localization_Manager.local_Data["UI/Unimo"].Get_Data();
         base.Start();
     }
 
@@ -44,7 +44,7 @@ public class UI_Costume : UI_Base
 
     public void GetUnimo()
     {
-        TitleText.text = Localization_Mng.local_Data["UI/Unimo"].Get_Data();
+        TitleText.text = Localization_Manager.local_Data["UI/Unimo"].Get_Data();
 
         SelectObj[0].SetActive(true);
         SelectObj[1].SetActive(false);
@@ -55,7 +55,7 @@ public class UI_Costume : UI_Base
 
     public void GetEQ()
     {
-        TitleText.text = Localization_Mng.local_Data["UI/B-B-Engine"].Get_Data();
+        TitleText.text = Localization_Manager.local_Data["UI/B-B-Engine"].Get_Data();
         SelectObj[0].SetActive(false);
         SelectObj[1].SetActive(true);
 

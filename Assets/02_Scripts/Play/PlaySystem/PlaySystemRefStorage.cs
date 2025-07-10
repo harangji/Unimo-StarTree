@@ -13,7 +13,7 @@ public class PlaySystemRefStorage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (scoreManager == null) { Debug.Log("Score Manager not found."); }
+        // if (scoreManager == null) { Debug.Log("Score Manager not found."); }
         if (mapSetter == null) { Debug.Log("MapSetter not found."); }
         if (playTimeManager == null) { Debug.Log("Time Manage not found."); }
         if (playProcessController == null) { Debug.Log("process Ctrl not found."); }

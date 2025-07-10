@@ -27,7 +27,7 @@ public class Mission_Base : MonoBehaviour
         {
             m_RewardText.text = reward.ToString();
             Debug.Log(rewardType);
-            m_Reward.sprite = Data_Mng.atlas.GetSprite(rewardType.ToString());
+            m_Reward.sprite = Data_Manager.atlas.GetSprite(rewardType.ToString());
             GetCheck(style);
 
             button.onClick.AddListener(() => GetButtonCheck(style, count, reward, rewardType));
@@ -41,7 +41,7 @@ public class Mission_Base : MonoBehaviour
 
     private void GetCheckAchieve(int value)
     {
-        bool Base = Base_Mng.Data.data.GetArchivements[value];
+        bool Base = Base_Manager.Data.UserData.GetArchivements[value];
         button.gameObject.SetActive(Base ? false : true);
         InProgress.SetActive(Base ? true : false);
     }
@@ -51,28 +51,28 @@ public class Mission_Base : MonoBehaviour
         switch(style)
         {
             case "GamePlay": 
-                button.gameObject.SetActive(Base_Mng.Data.data.GetGamePlay ? false : true);
-                InProgress.SetActive(Base_Mng.Data.data.GetGamePlay ? true : false);
+                button.gameObject.SetActive(Base_Manager.Data.UserData.GetGamePlay ? false : true);
+                InProgress.SetActive(Base_Manager.Data.UserData.GetGamePlay ? true : false);
                 break;
             case "ADS":
-                button.gameObject.SetActive(Base_Mng.Data.data.GetADS ? false : true);
-                InProgress.SetActive(Base_Mng.Data.data.GetADS ? true : false);
+                button.gameObject.SetActive(Base_Manager.Data.UserData.GetADS ? false : true);
+                InProgress.SetActive(Base_Manager.Data.UserData.GetADS ? true : false);
                 break;
             case "Touch":
-                button.gameObject.SetActive(Base_Mng.Data.data.GetTouch ? false : true);
-                InProgress.SetActive(Base_Mng.Data.data.GetTouch ? true : false);
+                button.gameObject.SetActive(Base_Manager.Data.UserData.GetTouch ? false : true);
+                InProgress.SetActive(Base_Manager.Data.UserData.GetTouch ? true : false);
                 break;
             case "DailyAccount":
-                button.gameObject.SetActive(Base_Mng.Data.data.GetDaily ? false : true);
-                InProgress.SetActive(Base_Mng.Data.data.GetDaily ? true : false);
+                button.gameObject.SetActive(Base_Manager.Data.UserData.GetDaily ? false : true);
+                InProgress.SetActive(Base_Manager.Data.UserData.GetDaily ? true : false);
                 break;
             case "TimeItem":
-                button.gameObject.SetActive(Base_Mng.Data.data.GetTimeItem ? false : true);
-                InProgress.SetActive(Base_Mng.Data.data.GetTimeItem ? true : false);
+                button.gameObject.SetActive(Base_Manager.Data.UserData.GetTimeItem ? false : true);
+                InProgress.SetActive(Base_Manager.Data.UserData.GetTimeItem ? true : false);
                 break;
             case "RePlay":
-                button.gameObject.SetActive(Base_Mng.Data.data.GetRePlay ? false : true);
-                InProgress.SetActive(Base_Mng.Data.data.GetRePlay ? true : false);
+                button.gameObject.SetActive(Base_Manager.Data.UserData.GetRePlay ? false : true);
+                InProgress.SetActive(Base_Manager.Data.UserData.GetRePlay ? true : false);
                 break;
         }
     }
@@ -81,9 +81,9 @@ public class Mission_Base : MonoBehaviour
     {
         if (valueCount(style) < count) return;
 
-        Base_Mng.Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
+        Base_Manager.Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
 
-        Base_Mng.Data.data.GetArchivements[reward] = true;
+        Base_Manager.Data.UserData.GetArchivements[reward] = true;
         Canvas_Holder.instance.NoneClose = true;
         Canvas_Holder.instance.GetUI("##Reward");
         Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
@@ -96,16 +96,16 @@ public class Mission_Base : MonoBehaviour
     private void GetButtonCheck(string style, int count, int reward, Asset_State rewardType)
     {
         if (valueCount(style) < count) return;
-        Base_Mng.Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
+        Base_Manager.Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
 
         switch (style)
         {
-            case "GamePlay": Base_Mng.Data.data.GetGamePlay = true; break;
-            case "ADS": Base_Mng.Data.data.GetADS = true; break;
-            case "Touch": Base_Mng.Data.data.GetTouch = true; break;
-            case "DailyAccount": Base_Mng.Data.data.GetDaily = true; break;
-            case "TimeItem": Base_Mng.Data.data.GetTimeItem = true; break;
-            case "RePlay": Base_Mng.Data.data.GetRePlay = true; break;
+            case "GamePlay": Base_Manager.Data.UserData.GetGamePlay = true; break;
+            case "ADS": Base_Manager.Data.UserData.GetADS = true; break;
+            case "Touch": Base_Manager.Data.UserData.GetTouch = true; break;
+            case "DailyAccount": Base_Manager.Data.UserData.GetDaily = true; break;
+            case "TimeItem": Base_Manager.Data.UserData.GetTimeItem = true; break;
+            case "RePlay": Base_Manager.Data.UserData.GetRePlay = true; break;
         }
 
         Canvas_Holder.instance.NoneClose = true;
@@ -121,20 +121,20 @@ public class Mission_Base : MonoBehaviour
     {
         switch(style)
         {
-            case "GamePlay": return Base_Mng.Data.data.GamePlay;
-            case "ADS": return Base_Mng.Data.data.ADS;
-            case "ADSNONE": return Base_Mng.Data.data.ADSNoneReset;
-            case "Touch": return Base_Mng.Data.data.Touch;
-            case "Level": return Base_Mng.Data.data.Level + 1;
-            case "DailyAccount": return Base_Mng.Data.data.DailyAccount;
-            case "TimeItem":  return Base_Mng.Data.data.TimeItem;
-            case "RePlay": return Base_Mng.Data.data.RePlay;
-            case "IAP": return Base_Mng.Data.data.IAP;
+            case "GamePlay": return Base_Manager.Data.UserData.GamePlay;
+            case "ADS": return Base_Manager.Data.UserData.ADS;
+            case "ADSNONE": return Base_Manager.Data.UserData.ADSNoneReset;
+            case "Touch": return Base_Manager.Data.UserData.Touch;
+            case "Level": return Base_Manager.Data.UserData.Level + 1;
+            case "DailyAccount": return Base_Manager.Data.UserData.DailyAccount;
+            case "TimeItem":  return Base_Manager.Data.UserData.TimeItem;
+            case "RePlay": return Base_Manager.Data.UserData.RePlay;
+            case "IAP": return Base_Manager.Data.UserData.IAP;
             case "Collection":
                 int a = 0;
-                for(int i = 0; i < Base_Mng.Data.data.GetCharacterData.Length; i++)
+                for(int i = 0; i < Base_Manager.Data.UserData.GetCharacterData.Length; i++)
                 {
-                    if (Base_Mng.Data.data.GetCharacterData[i] == true)
+                    if (Base_Manager.Data.UserData.GetCharacterData[i] == true)
                     {
                         a++;
                     }
@@ -142,9 +142,9 @@ public class Mission_Base : MonoBehaviour
                 return a;
             case "Collection_EQ":
                 int b = 0;
-                for(int i = 0; i < Base_Mng.Data.data.GetEQData.Length; i++)
+                for(int i = 0; i < Base_Manager.Data.UserData.GetEQData.Length; i++)
                 {
-                    if (Base_Mng.Data.data.GetEQData[i] == true)
+                    if (Base_Manager.Data.UserData.GetEQData[i] == true)
                     {
                         b++;
                     }

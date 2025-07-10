@@ -29,24 +29,24 @@ public class LevelCheck : MonoBehaviour
     {
         if(BonusReward)
         {
-            if(Base_Mng.Data.data.BonusRewardCount >= 900.0f)
+            if(Base_Manager.Data.UserData.BonusRewardCount >= 900.0f)
             {
                 LockRewardOBJ.SetActive(false);
                 InserParticle.SetActive(true);
-                CountText.text = Localization_Mng.local_Data["UI/PlusReward"].Get_Data();
+                CountText.text = Localization_Manager.local_Data["UI/PlusReward"].Get_Data();
             }
             else
             {
                 LockRewardOBJ.SetActive(true);
                 InserParticle.SetActive(false);
-                CountText.text = ShowTimer(900 - Base_Mng.Data.data.BonusRewardCount);
+                CountText.text = ShowTimer(900 - Base_Manager.Data.UserData.BonusRewardCount);
             }
         }
     }
 
     public void InitCheck()
     {
-        if (Base_Mng.Data.data.Level >= Level)
+        if (Base_Manager.Data.UserData.Level >= Level)
         {
             switch (typeCheck)
             {

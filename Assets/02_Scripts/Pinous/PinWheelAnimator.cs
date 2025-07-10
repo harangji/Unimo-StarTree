@@ -8,9 +8,9 @@ public class PinWheelAnimator : MonoBehaviour
 
     private void Update()
     {
-        for(int i = 0; i< Base_Mng.Data.data.BuffFloating.Length; i++)
+        for(int i = 0; i< Base_Manager.Data.UserData.BuffFloating.Length; i++)
         {
-            if (Base_Mng.Data.data.BuffFloating[i] > 0.0f)
+            if (Base_Manager.Data.UserData.BuffFloating[i] > 0.0f)
             {
                 animator[i].speed = 150.0f;
             }

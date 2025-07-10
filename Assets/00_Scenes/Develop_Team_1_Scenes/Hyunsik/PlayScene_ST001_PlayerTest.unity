@@ -4114,6 +4114,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 100
   hpGauge: {fileID: 900243003}
+  regenAmountPerSecond: 5
+  fKeyHealAmount: 20
 --- !u!1001 &1986546981
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6447,7 +6449,7 @@ PrefabInstance:
         type: 3}
       propertyPath: chaPrefab
       value: 
-      objectReference: {fileID: 3562987322334865032, guid: ab5b52a169da17c4aa8c34010ad89f0f,
+      objectReference: {fileID: 3074103645958566556, guid: c725cbfee82b51f46bc0db488872fcdb,
         type: 3}
     - target: {fileID: 4876853301105598578, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
@@ -6459,6 +6461,11 @@ PrefabInstance:
         type: 3}
       propertyPath: isTestModel
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876853301105598578, guid: e542909bea402f345a760b7cda46b419,
+        type: 3}
+      propertyPath: bEvadeChance
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4876853301105598580, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
@@ -6479,7 +6486,7 @@ PrefabInstance:
     - target: {fileID: 4876853301105598581, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4876853301105598584, guid: e542909bea402f345a760b7cda46b419,
         type: 3}

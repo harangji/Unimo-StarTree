@@ -17,11 +17,11 @@ public class Canvas_Holder : MonoBehaviour
         {
             instance = this;
         }
-        Base_Mng.ADS.Init();
+        Base_Manager.ADS.Init();
     }
     private void Start()
     {
-        if (Base_Mng.instance.TimerCheck() >= 30)
+        if (Base_Manager.instance.TimerCheck() >= 30)
         {
             Main_UI.instance.holderQueue.Enqueue("##Offline_Reward");
             Main_UI.instance.holderQueue_Action.Enqueue(null);
@@ -148,7 +148,7 @@ public class Canvas_Holder : MonoBehaviour
 
                 break;
             case "##BonusReward":
-                if (Base_Mng.Data.data.BonusRewardCount < 900.0f)
+                if (Base_Manager.Data.UserData.BonusRewardCount < 900.0f)
                 {
                     return;
                 }

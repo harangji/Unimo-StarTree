@@ -26,9 +26,9 @@ public class Land : MonoBehaviour
     {
         Generators[0].InitGenFlower();
 
-        for (int i = 0; i < Base_Mng.Data.AltaCount.Length; i++)
+        for (int i = 0; i < Base_Manager.Data.AltaCount.Length; i++)
         {
-            if(Base_Mng.Data.data.Level >= Base_Mng.Data.AltaCount[i])
+            if(Base_Manager.Data.UserData.Level >= Base_Manager.Data.AltaCount[i])
             {
                 Generators[i+1].InitGenFlower();
                 animators[i].gameObject.SetActive(true);
@@ -45,7 +45,7 @@ public class Land : MonoBehaviour
         {
             if (i < 4)
             {
-                if (Base_Mng.Data.data.Level >= Base_Mng.Data.AltaCount[3 - i])
+                if (Base_Manager.Data.UserData.Level >= Base_Manager.Data.AltaCount[3 - i])
                 {
                     NoneDefault = true;
                     var obj = objects[4 - i].transform.parent.gameObject;
@@ -65,19 +65,19 @@ public class Land : MonoBehaviour
 
     public void GetUnimo()
     {
-        for (int i = 0; i < Base_Mng.Data.AltaCount.Length; i++)
+        for (int i = 0; i < Base_Manager.Data.AltaCount.Length; i++)
         {
             if (i > 0)
             {
-                if (Base_Mng.Data.data.Level >= Base_Mng.Data.AltaCount[i - 1])
+                if (Base_Manager.Data.UserData.Level >= Base_Manager.Data.AltaCount[i - 1])
                 {
                     CacheValue++;
                 }
             }
         }
-        for(int i = 0; i < Base_Mng.Data.data.GetCharacterData.Length; i++)
+        for(int i = 0; i < Base_Manager.Data.UserData.GetCharacterData.Length; i++)
         {
-            if (Base_Mng.Data.data.GetCharacterData[i] == true)
+            if (Base_Manager.Data.UserData.GetCharacterData[i] == true)
             {
                 GetCharacter(i);
             }
@@ -180,9 +180,9 @@ public class Land : MonoBehaviour
         if (value == 2)
         {
             yield return new WaitForSeconds(0.5f);
-            if (Base_Mng.Data.data.GetVane == false)
+            if (Base_Manager.Data.UserData.GetVane == false)
             {
-                Base_Mng.Data.data.GetVane = true;
+                Base_Manager.Data.UserData.GetVane = true;
                 Canvas_Holder.instance.GetUI("##Vane");
             }
         }

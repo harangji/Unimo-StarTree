@@ -76,7 +76,7 @@ public class Ray_Checker : MonoBehaviour
                     Canvas_Holder.instance.GetUI("##Unimo");
                     Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Unimo>().Key = hit.transform.gameObject.GetComponent<AI_Move>().Name;
 
-                    Base_Mng.Data.data.Touch++;
+                    Base_Manager.Data.UserData.Touch++;
                 }
             }
             obj = null;

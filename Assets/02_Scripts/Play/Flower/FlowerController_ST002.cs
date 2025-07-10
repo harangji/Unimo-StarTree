@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// 플레이어의 아우라에 닿으면 끌려오듯이 움직이고, 플레이어와 충돌 시 수확(completeBloom)되는 로직. 정현식
 public class FlowerController_ST002 : FlowerController
 {
     static private Transform playerTransform;

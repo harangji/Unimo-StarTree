@@ -1,13 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Mon005State_Preaction : MonsterState_Preaction
 {
     [SerializeField] private float moveSpeed = 4.2f;
     [SerializeField] private int moveDir_0x1y2z = 1;
     [SerializeField] private int moveFrontBack = -1;
-    protected float existTime = 4f;
+    protected float existTime = 6f;
     private Vector3 moveVec;
 
     public override void TransitionAction(MonsterController controller)
@@ -24,13 +26,22 @@ public class Mon005State_Preaction : MonsterState_Preaction
         {
             InvokeDisappearState();
         }
-        else
+        else //이동 로직 처리 =>
         {
-            controller.transform.position += moveSpeed * Time.deltaTime * moveVec;
-
-            if (controller.transform.position.y < -2f * controller.transform.localScale.y)
+            switch (controller.pattern)
             {
-                controller.EnemyExplode();
+                case Patterns.Pattern1:
+                    controller.transform.position += moveSpeed * Time.deltaTime * moveVec;
+
+                    if (controller.transform.position.y < -2f * controller.transform.localScale.y) //이거 왜 있는 거지
+                    {
+                        controller.EnemyExplode();
+                    }
+                    break;
+                case Patterns.Pattern2:
+                    break;
+                case Patterns.Pattern3:
+                    break;
             }
         }
     }
