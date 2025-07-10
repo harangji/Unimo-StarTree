@@ -70,7 +70,7 @@ public class MonsterGenerator : MonoBehaviour
         PauseGenerate(false);
         specialPatternCoroutine = StartCoroutine(exPatternCoroutine());
     }
-    virtual protected MonsterController generateEnemy()
+    protected virtual MonsterController generateEnemy()
     {
         Vector3 pos = findGenPosition();
         Quaternion quat = setGenRotation(pos);
