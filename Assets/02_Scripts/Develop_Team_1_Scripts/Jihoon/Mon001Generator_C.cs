@@ -54,7 +54,7 @@ public class Mon001Generator_C : MonsterGenerator
     {
         //todo 난이도 점유 기능 추가해야 함 -> 나중에 게임 매니저 만들어지면 하면 됨
 
-        var rate = Random.Range(0, 90);
+        var rate = Random.Range(90, 100);
 
         if (rate < 70)
         {
@@ -87,15 +87,22 @@ public class Mon001Generator_C : MonsterGenerator
         {
             Debug.Log("패턴 3");
 
-            // var pattern = Instantiate(monsterPattern3, pos, quat);
-            // var controllers = pattern.GetComponentsInChildren<MonsterController>();
-            //
-            // foreach (var controller in controllers)
-            // {
-            //     controller.pattern = Patterns.Pattern3;
-            //
-            //     controller.InitEnemy(playerTransform);
-            // }
+            float angle;
+            Vector3 center = playerTransform.position;
+            
+            if (center.magnitude > PlaySystemRefStorage.mapSetter.MaxRange - 7.2f)
+            {
+                center *= (PlaySystemRefStorage.mapSetter.MaxRange - 7.2f) / center.magnitude;
+            }
+
+            for (int i = 0; i < 8; i++)
+            {
+                angle = 1f / 4f * Mathf.PI * i;
+                Vector3 pos = center + 7.5f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+                Quaternion quat = Quaternion.LookRotation(center - pos, Vector3.up);
+                MonsterController controller = Instantiate(monsterPattern3, pos, quat).GetComponent<MonsterController>();
+                controller.InitEnemy(playerTransform);
+            }
         }
 
         return null;
