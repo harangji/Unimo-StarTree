@@ -9,7 +9,6 @@ using UnityEngine.Playables;
 public class Base_Manager : MonoBehaviour
 {
     public static Base_Manager instance = null;
-    private static EasySaveManager s_EasySaveManager = new EasySaveManager();
     private static ADS_Manager s_ADS = new ADS_Manager();
     private static Data_Manager s_Data = new Data_Manager();
     private static IAP_Manager s_IAP = new IAP_Manager();
