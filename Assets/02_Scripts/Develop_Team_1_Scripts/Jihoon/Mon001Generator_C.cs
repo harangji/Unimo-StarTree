@@ -54,7 +54,7 @@ public class Mon001Generator_C : MonsterGenerator
     {
         //todo 난이도 점유 기능 추가해야 함 -> 나중에 게임 매니저 만들어지면 하면 됨
 
-        var rate = Random.Range(90, 100);
+        var rate = Random.Range(0, 100);
 
         if (rate < 70)
         {
