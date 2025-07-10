@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlaySceneStatMultiplier : MonoBehaviour
 {
+    
+    // 해당 스크립트에서 아우라 넓이 관리. 정현식
     //Class will be used initailize player stats using multiplier
     [SerializeField] private float speedMultiplier = 8.5f;
     [SerializeField] private float areaMultiplier = 9f;

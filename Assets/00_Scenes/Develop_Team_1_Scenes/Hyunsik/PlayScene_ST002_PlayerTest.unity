@@ -414,8 +414,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: 3b4d65c9b8e5f4145a945b9768e70da5, type: 2}
-  monsterPrefab: {fileID: 6964213239136335483, guid: c4d35c87bc3a9dc42bb316bd71affd26,
-    type: 3}
+  monsterPattern1: {fileID: 0}
+  monsterPattern2: {fileID: 0}
+  monsterPattern3: {fileID: 0}
 --- !u!1 &107975394
 GameObject:
   m_ObjectHideFlags: 0
@@ -855,8 +856,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: a41d453bb487d1343a561cbf7269b055, type: 2}
-  monsterPrefab: {fileID: 2560127493471256366, guid: d676f08f8464aef41ae8c2123cb6cbd6,
-    type: 3}
+  monsterPattern1: {fileID: 0}
+  monsterPattern2: {fileID: 0}
+  monsterPattern3: {fileID: 0}
 --- !u!1 &210031641
 GameObject:
   m_ObjectHideFlags: 0
@@ -3098,6 +3100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a64409ac880374cac9e35e43b4e4fc08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Character: 0
+  Motor: 0
   Local_Count: Quit
   Semi_Data: 
   Get_Format: 0
@@ -4359,6 +4363,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a64409ac880374cac9e35e43b4e4fc08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Character: 0
+  Motor: 0
   Local_Count: GameExit
   Semi_Data: 
   Get_Format: 0
@@ -6237,6 +6243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a64409ac880374cac9e35e43b4e4fc08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Character: 0
+  Motor: 0
   Local_Count: GetRewardx2
   Semi_Data: 
   Get_Format: 0
@@ -6386,8 +6394,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: df4fea242ac922f44b2565ca26ea9e89, type: 2}
-  monsterPrefab: {fileID: 1072457946450581002, guid: da7fa8d7657e17141957d66e99d4910f,
-    type: 3}
+  monsterPattern1: {fileID: 0}
+  monsterPattern2: {fileID: 0}
+  monsterPattern3: {fileID: 0}
 --- !u!1 &2079710336
 GameObject:
   m_ObjectHideFlags: 0
@@ -6665,6 +6674,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a64409ac880374cac9e35e43b4e4fc08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Character: 0
+  Motor: 0
   Local_Count: Restart
   Semi_Data: 
   Get_Format: 0
@@ -7276,10 +7287,20 @@ PrefabInstance:
       propertyPath: isTestModel
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4876853301105598578, guid: e542909bea402f345a760b7cda46b419,
+        type: 3}
+      propertyPath: bEvadeChance
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876853301105598578, guid: e542909bea402f345a760b7cda46b419,
+        type: 3}
+      propertyPath: fStunReduceRate
+      value: 0.07
+      objectReference: {fileID: 0}
     - target: {fileID: 4876853301105598581, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4876853301105598584, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
