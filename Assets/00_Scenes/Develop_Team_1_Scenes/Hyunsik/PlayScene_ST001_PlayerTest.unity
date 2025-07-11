@@ -4074,6 +4074,10 @@ MonoBehaviour:
   - {fileID: 1148019907}
   scoreTxt: {fileID: 1148019908}
   resultTxt: {fileID: 6151373446196199413}
+  redBloomMultiplyChance: 0.5
+  redBloomMultiplyValue: 1.5
+  yellowBloomMultiplyChance: 0.8
+  yellowBloomMultiplyValue: 2
 --- !u!114 &1971803517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6458,6 +6462,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 4876853301105598578, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
+      propertyPath: hpManager
+      value: 
+      objectReference: {fileID: 1971803519}
+    - target: {fileID: 4876853301105598578, guid: e542909bea402f345a760b7cda46b419,
+        type: 3}
       propertyPath: equipPrefab
       value: 
       objectReference: {fileID: 1515319741539133133, guid: cae3dac606517c745aadf8e1fc447322,
@@ -6470,7 +6479,12 @@ PrefabInstance:
     - target: {fileID: 4876853301105598578, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
       propertyPath: bEvadeChance
-      value: 0.8
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876853301105598578, guid: e542909bea402f345a760b7cda46b419,
+        type: 3}
+      propertyPath: fStunReduceRate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4876853301105598580, guid: e542909bea402f345a760b7cda46b419,
         type: 3}

@@ -6,13 +6,19 @@ public class PlayerStatManager : MonoBehaviour
 {
     private static readonly float invincibleTime = 0.5f;
 
+    // 스탯 추가. 정현식
+    [Header("유닛 ID로 선택")]
+    [SerializeField] private int unimoID = 10101;
+    private UnimoData mUnimoData;
+    private UnimoRuntimeStat mStat;
+    
     //private PlayerHPspriter HPspriter;
     private PlayerMover playerMover;
     private AuraController auraController;
     private PlayerVisualController visualCtrl;
     private GameObject renderCam;
     // HP 매니저 추가.
-    private HPManager hpManager;
+    [SerializeField] private HPManager hpManager;
     
     private bool isInvincible = false;
     private Coroutine stunCoroutine;
@@ -22,8 +28,9 @@ public class PlayerStatManager : MonoBehaviour
     [SerializeField] private GameObject chaPrefab;
 
     // 임시로 작성.정현식
-    [SerializeField] [Range(0f, 1f)] private float bEvadeChance = 0.5f;     // 50% 확률로 피격 무시
-    [SerializeField] [Range(0f, 1f)] private float fStunReduceRate = 0.5f;   // 스턴 시간 50% 감소
+    // 회피, 스턴 저항 (스탯 반영 예정)
+    [SerializeField] [Range(0f, 1f)] private float bEvadeChance = 0.5f;
+    [SerializeField] [Range(0f, 1f)] private float fStunReduceRate = 0.5f;
     
     private int hp = 10;
     
@@ -40,8 +47,6 @@ public class PlayerStatManager : MonoBehaviour
         
         playerMover = GetComponent<PlayerMover>();
         visualCtrl = GetComponent<PlayerVisualController>();
-        // HP 매니저 추가
-        hpManager = GetComponent<HPManager>();
         if (isTestModel)
         {
             visualCtrl.test_InitModeling(equipPrefab, chaPrefab);
@@ -64,7 +69,36 @@ public class PlayerStatManager : MonoBehaviour
         playerMover.FindAuraCtrl(auraController);
         auraController.gameObject.SetActive(false);
         PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(stopPlay);
+        
+        
+        InitCharacter(unimoID);
     }
+    
+    // 스탯 추가.정현식
+    public void InitCharacter(int id)
+    {
+        Debug.Log($"[PlayerStatManager] InitCharacter 호출됨: ID = {id}");
+        mUnimoData = UnimoDatabase.GetUnimoData(id);
+        Debug.Log($"[PlayerStatManager] 불러온 체력 = {mUnimoData.Stat.Health}");
+        if (mUnimoData == null)
+        {
+            Debug.LogError($"[PlayerStatManager] 잘못된 Unimo ID: {id}");
+            return;
+        }
+
+        mStat = new UnimoRuntimeStat(mUnimoData.Stat);
+        playerMover.SetCharacterStat(mStat);
+        hpManager.SetCharacterStat(mStat);
+
+        bEvadeChance = mStat.FinalStat.StunIgnoreChance;
+        fStunReduceRate = mStat.FinalStat.StunResistanceRate;
+    }
+
+    public UnimoRuntimeStat GetStat()
+    {
+        return mStat;
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<ItemController>(out var item)) 

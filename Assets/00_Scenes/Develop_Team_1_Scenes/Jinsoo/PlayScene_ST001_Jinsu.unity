@@ -493,6 +493,7 @@ GameObject:
   - component: {fileID: 159835806}
   - component: {fileID: 159835808}
   - component: {fileID: 159835809}
+  - component: {fileID: 159835810}
   m_Layer: 0
   m_Name: SystemObjects
   m_TagString: Untagged
@@ -548,6 +549,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6c46ba6388420e4f9282eda48572052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &159835810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159835805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a5b569e2eacf8f4893be1b8ee6f00e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &207323009
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,8 +607,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: 0acc670c81fdf7a45a157f5ac2e8ad05, type: 2}
-  monsterPrefab: {fileID: 2560127493471256366, guid: e6be70c81c9e65f4eacd99fe05a0286b,
-    type: 3}
+  monsterPattern1: {fileID: 0}
+  monsterPattern2: {fileID: 0}
+  monsterPattern3: {fileID: 0}
   focusingObj: {fileID: 481137415}
 --- !u!1001 &229194273
 PrefabInstance:
@@ -1098,6 +1112,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1242819726}
     m_Modifications:
+    - target: {fileID: 1951268219486976824, guid: b6b2aa04fd7b9a5429c95b5af40f5185,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 16375
+      objectReference: {fileID: 0}
     - target: {fileID: 8409811821023838986, guid: b6b2aa04fd7b9a5429c95b5af40f5185,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1835,6 +1854,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1240776426841718184, guid: b1956e88be2370445b65ee422ee8c7cd,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 16375
+      objectReference: {fileID: 0}
     - target: {fileID: 1240776427178260251, guid: b1956e88be2370445b65ee422ee8c7cd,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -2253,7 +2277,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 16375
 --- !u!114 &1242819724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2629,8 +2653,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: 4e9ecec1f16a9774d85e0b297b46fe12, type: 2}
-  monsterPrefab: {fileID: 1313915641652497427, guid: f48f7f0760c567641a416aa20f8ac084,
-    type: 3}
+  monsterPattern1: {fileID: 0}
+  monsterPattern2: {fileID: 0}
+  monsterPattern3: {fileID: 0}
 --- !u!114 &1551605799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3325,7 +3350,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1971803515}
   - component: {fileID: 1971803516}
-  - component: {fileID: 1971803518}
   - component: {fileID: 1971803517}
   m_Layer: 0
   m_Name: PlayDataContoller
@@ -3381,18 +3405,6 @@ MonoBehaviour:
   maxTime: 60
   reduceIncTime: 120
   timerGauge: {fileID: 4088}
---- !u!114 &1971803518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1971803514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef7c76f11b1f41a4ab496cc2f99d82b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1986546981
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3505,6 +3517,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6680839830493902629, guid: 4e4e62dcbdcea114db92b1596c233ba9,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 16375
       objectReference: {fileID: 0}
     - target: {fileID: 6680839830493902631, guid: 4e4e62dcbdcea114db92b1596c233ba9,
         type: 3}
@@ -3727,8 +3744,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: dcffbb70795227246bfd4ef98d31a243, type: 2}
-  monsterPrefab: {fileID: 8470377270446183419, guid: 2f9251f5327008c49bfc738fa48aa829,
-    type: 3}
+  monsterPattern1: {fileID: 0}
+  monsterPattern2: {fileID: 0}
+  monsterPattern3: {fileID: 0}
 --- !u!82 &2075450155
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3872,8 +3890,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: b2702407e1adb7f43a5689528a167d0d, type: 2}
-  monsterPrefab: {fileID: 2682052996701666488, guid: a5c7863238834ae42a2a8ca62c3969a4,
-    type: 3}
+  monsterPattern1: {fileID: 0}
+  monsterPattern2: {fileID: 0}
+  monsterPattern3: {fileID: 0}
 --- !u!222 &33501478476362097
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5753,7 +5772,7 @@ PrefabInstance:
     - target: {fileID: 4876853301105598581, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4876853301105598584, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
@@ -6073,7 +6092,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 12.71051, y: -412.6316}
+  m_AnchoredPosition: {x: 12.710449, y: -412.6316}
   m_SizeDelta: {x: -89.2761, y: 104}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &5612858979199285471

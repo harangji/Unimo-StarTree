@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 15003, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: "New Android\u2122 Profile"
+  m_Name: AndroidScene_Hyunsik
   m_EditorClassIdentifier: 
   m_AssetVersion: 1
   m_BuildTarget: 13
@@ -18,8 +18,22 @@ MonoBehaviour:
   m_PlatformId: b9b35072a6f44c2e863f17467ea3dc13
   m_PlatformBuildProfile:
     rid: 1624554226894242015
-  m_OverrideGlobalSceneList: 0
-  m_Scenes: []
+  m_OverrideGlobalSceneList: 1
+  m_Scenes:
+  - m_enabled: 1
+    m_path: Assets/00_Scenes/GameScene/Splash.unity
+  - m_enabled: 1
+    m_path: Assets/00_Scenes/GameScene/InitScene.unity
+  - m_enabled: 1
+    m_path: Assets/00_Scenes/GameScene/LoadingScene.unity
+  - m_enabled: 1
+    m_path: Assets/00_Scenes/GameScene/LobbyScene.unity
+  - m_enabled: 1
+    m_path: Assets/00_Scenes/GameScene/PlayScene_ST001.unity
+  - m_enabled: 1
+    m_path: Assets/00_Scenes/GameScene/PlayScene_ST002.unity
+  - m_enabled: 1
+    m_path: Assets/00_Scenes/GameScene/TutorialScene.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings:
@@ -167,7 +181,7 @@ MonoBehaviour:
     - line: '|   loadStoreDebugModeEnabled: 0'
     - line: '|   visionOSBundleVersion: 1.0'
     - line: '|   tvOSBundleVersion: 1.0'
-    - line: '|   bundleVersion: 1.0.10'
+    - line: '|   bundleVersion: 1.0.14'
     - line: '|   preloadedAssets:'
     - line: '|   - {fileID: 11400000, guid: 8b2a7dcdea7f14042854e99839eed342, type:
         2}'
@@ -202,8 +216,8 @@ MonoBehaviour:
     - line: '|     tvOS: 0'
     - line: '|   overrideDefaultApplicationIdentifier: 1'
     - line: '|   AndroidBundleVersionCode: 28'
-    - line: '|   AndroidMinSdkVersion: 25'
-    - line: '|   AndroidTargetSdkVersion: 35'
+    - line: '|   AndroidMinSdkVersion: 31'
+    - line: '|   AndroidTargetSdkVersion: 0'
     - line: '|   AndroidPreferredInstallLocation: 1'
     - line: '|   aotOptions: '
     - line: '|   stripEngineCode: 1'
@@ -305,7 +319,7 @@ MonoBehaviour:
     - line: '|   AndroidEnableTango: 0'
     - line: '|   androidEnableBanner: 1'
     - line: '|   androidUseLowAccuracyLocation: 0'
-    - line: '|   androidUseCustomKeystore: 1'
+    - line: '|   androidUseCustomKeystore: 0'
     - line: '|   m_AndroidBanners:'
     - line: '|   - width: 320'
     - line: '|     height: 180'
@@ -855,28 +869,30 @@ MonoBehaviour:
     - line: '|   webGLCloseOnQuit: 0'
     - line: '|   webWasm2023: 0'
     - line: '|   scriptingDefineSymbols:'
-    - line: '|     Android: DOTWEEN'
-    - line: '|     EmbeddedLinux: DOTWEEN'
+    - line: '|     Android: DOTWEEN;UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ODIN_INSPECTOR_3_2;ODIN_INSPECTOR_3_3'
+    - line: '|     EmbeddedLinux: DOTWEEN;UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI'
     - line: '|     GameCoreScarlett: DOTWEEN'
     - line: '|     GameCoreXboxOne: DOTWEEN'
-    - line: '|     LinuxHeadlessSimulation: DOTWEEN'
-    - line: '|     Nintendo Switch: DOTWEEN'
-    - line: '|     PS4: DOTWEEN'
-    - line: '|     PS5: DOTWEEN'
-    - line: '|     QNX: DOTWEEN'
+    - line: '|     LinuxHeadlessSimulation: DOTWEEN;UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI'
+    - line: '|     Nintendo Switch: DOTWEEN;UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI'
+    - line: '|     PS4: DOTWEEN;UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI'
+    - line: '|     PS5: DOTWEEN;UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI'
+    - line: '|     QNX: DOTWEEN;UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI'
+    - line: '|     Server: UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI'
     - line: '|     Stadia: DOTWEEN'
-    - line: '|     Standalone: DOTWEEN'
-    - line: '|     WebGL: DOTWEEN'
-    - line: '|     Windows Store Apps: DOTWEEN'
-    - line: '|     XboxOne: DOTWEEN'
-    - line: '|     iPhone: DOTWEEN'
-    - line: '|     tvOS: DOTWEEN'
+    - line: '|     Standalone: DOTWEEN;UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI'
+    - line: '|     VisionOS: UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI'
+    - line: '|     WebGL: DOTWEEN;UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI'
+    - line: '|     Windows Store Apps: DOTWEEN;UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI'
+    - line: '|     XboxOne: DOTWEEN;UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI'
+    - line: '|     iPhone: DOTWEEN;UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI'
+    - line: '|     tvOS: DOTWEEN;UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI'
     - line: '|   additionalCompilerArguments: {}'
     - line: '|   platformArchitecture: {}'
     - line: '|   scriptingBackend:'
     - line: '|     Android: 1'
     - line: '|   il2cppCompilerConfiguration:'
-    - line: '|     Android: 0'
+    - line: '|     Android: 1'
     - line: '|   il2cppCodeGeneration: {}'
     - line: '|   il2cppStacktraceInformation: {}'
     - line: '|   managedStrippingLevel:'
@@ -984,7 +1000,7 @@ MonoBehaviour:
     - line: '|   qnxGraphicConfPath: '
     - line: '|   apiCompatibilityLevel: 6'
     - line: '|   captureStartupLogs: {}'
-    - line: '|   activeInputHandler: 0'
+    - line: '|   activeInputHandler: 2'
     - line: '|   windowsGamepadBackendHint: 0'
     - line: '|   cloudProjectId: fd9abab5-b2f8-42ba-b7a8-628488865e04'
     - line: '|   framebufferDepthMemorylessMode: 0'

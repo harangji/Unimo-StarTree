@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HPManager : MonoBehaviour
 {
-    [SerializeField] private float maxHP = 100f;
+    [SerializeField] private float maxHP;
     private float currentHP;
 
     [SerializeField] private HPGaugeController hpGauge;
@@ -25,7 +25,7 @@ public class HPManager : MonoBehaviour
         // 데미지 테스트 (스페이스바)
         if (Input.GetKeyDown(KeyCode.Space) && !bIsDead)
         {
-            TakeDamage(20f);
+            TakeDamage(240f);
         }
 
         // 회복 테스트 (F키)
@@ -67,4 +67,17 @@ public class HPManager : MonoBehaviour
         currentHP = Mathf.Min(currentHP, maxHP);
         hpGauge.SetGauge(currentHP / maxHP);
     }
+    
+    //캐릭터 스탯 적용. 정현식
+    public void SetCharacterStat(UnimoRuntimeStat stat)
+    {
+        maxHP = stat.FinalStat.Health;
+        currentHP = maxHP;
+
+        regenAmountPerSecond = stat.FinalStat.HealthRegen;
+        hpGauge.SetGauge(1f);
+        
+        Debug.Log($"[HPManager] 체력 설정됨. HP: {maxHP}, 회복/초: {regenAmountPerSecond}");
+    }
+    
 }
