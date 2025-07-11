@@ -31,10 +31,12 @@ public class Data_Manager
     public float EXP_GET = 0;
     public static bool SetPlayScene = false;
     public static int QualityLevel;
+    
     float CalculateExperienceForLevel(float baseValue, int level, float value)
     {
         return baseValue * Mathf.Pow((level+1), value);
     }
+    
     public void Init()
     {
         if (PlayerPrefs.HasKey("QualityLevel"))
@@ -63,7 +65,6 @@ public class Data_Manager
         EXP_SET = CalculateExperienceForLevel(15, UserData.Level + 1, exp_data.EXP);
         EXP_GET = CalculateExperienceForLevel(5,  UserData.Level + 1, exp_data.GET_EXP);
 
-
         float timer = (float)Base_Manager.instance.TimerCheck();
         for(int i = 0; i < UserData.BuffFloating.Length; i++)
         {
@@ -73,8 +74,7 @@ public class Data_Manager
         UserData.BonusRewardCount += timer;
         if (UserData.BonusRewardCount >= 900.0f) UserData.BonusRewardCount = 1000.0f;
     }
-
-    //TODo : 레벨업 하랑
+    
     public void LevelUP()
     {
         UserData.EXP += EXP_GET;
@@ -107,8 +107,9 @@ public class Data_Manager
     public float EXP_Percentage()
     {
         float exp = EXP_SET;
+        
         double myExp = UserData.EXP;
-   
+        
         return (float)myExp / exp;
     }
     
@@ -214,6 +215,7 @@ public class Data_Manager
         else
         {
             UserData = NewData();
+            Init();
             
             EasySaveManager.Instance.SaveBuffered("User_Data", UserData);
             EasySaveManager.Instance.CommitBuffered(); //버퍼에 쌓인 기록 저장

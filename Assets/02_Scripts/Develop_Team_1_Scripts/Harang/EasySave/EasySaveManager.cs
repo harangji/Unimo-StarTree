@@ -8,7 +8,7 @@ public class EasySaveManager : MonoBehaviour
     private ES3Settings UserDataSettings { get; set; }
     private ES3File UserDataES3File { get; set; }
     private ES3File UserDataES3FileLoaded { get; set; }
-    public bool bSetEasySaveUser { get; set; }
+    public bool bSetEasySaveUser { get; set; } = false;
     
     private void Awake()
     {
@@ -28,9 +28,9 @@ public class EasySaveManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            Debug.Log(bSetEasySaveUser);
+            CommitBuffered();
         }
     }
     // ES3Settings 즉시 저장 //위험해서 안씀
@@ -49,7 +49,6 @@ public class EasySaveManager : MonoBehaviour
     // ES3File 버퍼에 쌓인 value를 저장
     public void CommitBuffered()
     {
-        Debug.Log("1111111111111111111111111111111");
         MyDebug.Log("쌓인 스택 저장 완료");
         UserDataES3File.Sync();
     }
@@ -89,11 +88,11 @@ public class User_Data
 {
     public string UserName = "";
 
-    public float EXP = 0;
-    public int Level = 0;
-    public double Second_Base = 5;
-    public double NextLevel_Base = 5;
-    public double Yellow, Red, Blue;
+    public float EXP = 0; // 현재 경험치
+    public int Level = 0; // 현재 레벨
+    public double Second_Base = 5; // 시설 초당 별꿀 생산량
+    public double NextLevel_Base = 5; // 레벨업 비용
+    public double Yellow, Red, Blue; //별꿀
 
     public float[] BuffFloating = new float[3];
 

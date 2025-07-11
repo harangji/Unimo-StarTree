@@ -38,10 +38,32 @@ public class PlayerMover : MonoBehaviour
     public void SetSpeed(float speed)
     {
         moveSpeed = speed;
+
+        // 예시: Floating 버프가 적용되면 최고속도 강제 적용
         if (Base_Manager.Data.UserData.BuffFloating[0] >= 0.0f)
-            moveSpeed = 16.0f;
-        else moveSpeed = 8.5f;
+        {
+            moveSpeed = 8.5f;
+        }
     }
+
+    // 스탯 적용.정현식
+    public void SetCharacterStat(UnimoRuntimeStat stat)
+    {
+        moveSpeed = stat.FinalStat.MoveSpd;
+        // 향후 확장 가능 예시
+        // pushSpeed = stat.FinalStat.AuraStr * 2f;
+        // Debug.Log($"[PlayerMover] 이동속도 설정됨: {moveSpeed}");
+    }
+    
+    
+    //원본.정현식
+    //public void SetSpeed(float speed)
+    //{
+    //    moveSpeed = speed;
+    //    if (Base_Manager.Data.UserData.BuffFloating[0] >= 0.0f)
+    //        moveSpeed = 8.5f;
+    //    else moveSpeed = 8.5f;
+    //}
     public void StunPush(float stunTime, Vector3 hitPos)
     {
         float duration = 0.6f * stunTime;
