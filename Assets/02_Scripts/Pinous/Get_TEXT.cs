@@ -28,8 +28,9 @@ public class Get_TEXT : MonoBehaviour
 
         target = pos;
         m_Text.text = StringMethod.ToCurrencyString(Get);
-        transform.parent = Canvas_Holder.instance.LAYER_HOLDER;
-
+        // transform.parent = Canvas_Holder.instance.LAYER_HOLDER; //Local 기준 위치/회전/스케일을 잃을 수도 있음
+        transform.SetParent(Canvas_Holder.instance.LAYER_HOLDER, false); //Local 기준 위치/회전/스케일 유지됨
+        
         Invoke("ReturnText", 3.0f);
     }
 
