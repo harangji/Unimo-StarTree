@@ -9,7 +9,6 @@ public class FlowerController : MonoBehaviour
     protected FlowerGenerator flowerGenerator;
 
     [SerializeField] protected float scoreGain = 10f;
-    [SerializeField] protected float timerGain = 1f;
     [SerializeField] protected int resourceIdx = 0;
     [SerializeField] protected float destroyWaitTime = 2f;
 
@@ -31,8 +30,6 @@ public class FlowerController : MonoBehaviour
         DeactivateFlower();
         visual.TriggerHarvestFX(HarvestLvCtrlSTATIC.GetLvSatuRatio()); //Change so that use lv satu ratio
         PlaySystemRefStorage.scoreManager.AddBloomScore(resourceIdx, HarvestLvCtrlSTATIC.GetScoreBonus() * scoreGain);
-        PlaySystemRefStorage.playTimeManager.ChangeTimer(HarvestLvCtrlSTATIC.GetTimeBonus() * timerGain);
-        HarvestLvCtrlSTATIC.AddExp(0.15f * timerGain);
         if (flowerGenerator != null) 
         { 
             flowerGenerator.AllFlowers.Remove(this); 
