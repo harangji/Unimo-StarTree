@@ -18,7 +18,7 @@ public class Mon003Generator_C : MonsterGenerator
     {
         base.Update();
     }
-    
+
     protected override MonsterController generateEnemy()
     {
         // Vector3 pos = findGenPosition();
@@ -27,8 +27,8 @@ public class Mon003Generator_C : MonsterGenerator
         // controller.InitEnemy(playerTransform);
         //
         // return controller;
-        
-        var rate = Random.Range(70, 90);
+
+        var rate = Random.Range(90, 100);
 
         if (rate < 70)
         {
@@ -45,11 +45,12 @@ public class Mon003Generator_C : MonsterGenerator
         else
         {
             Debug.Log("패턴 3");
+            StartPattern3();
         }
 
         return null;
     }
-    
+
     protected override Vector3 findGenPosition()
     {
         Random.InitState(System.DateTime.Now.Millisecond);
@@ -64,45 +65,47 @@ public class Mon003Generator_C : MonsterGenerator
         {
             pos = PlaySystemRefStorage.mapSetter.FindNearestPoint(pos);
         }
+
         return pos;
     }
+
     protected override Quaternion setGenRotation(Vector3 genPos)
     {
         float rand = Random.Range(-20f, 20f);
         Quaternion quat = Quaternion.Euler(0f, 180f + rand, 0f);
         return quat;
     }
-    
+
     //소환 시작되면 나오는 패턴
-    protected override IEnumerator startPatternCoroutine()
-    {
-        isExtreme = true;
-        float angle;
-        Vector3 center = playerTransform.position;
-        if (center.magnitude > PlaySystemRefStorage.mapSetter.MaxRange-6)
-        {
-            center *= (PlaySystemRefStorage.mapSetter.MaxRange - 6) / center.magnitude;
-        }
-        for (int i = 0; i < 3; i++)
-        {
-            angle = 2f/3f*Mathf.PI * i;
-            Vector3 pos = center + 5.5f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
-            MonsterController controller = Instantiate(monsterPattern1, pos, Quaternion.identity).GetComponent<MonsterController>();
-            controller.InitEnemy(playerTransform);
-        }
-        yield return new WaitForSeconds(1.5f);
-        for (int i = 0; i < 3; i++)
-        {
-            angle = 2f / 3f * Mathf.PI * i + 1f / 3f * Mathf.PI;
-            Vector3 pos = center + 5.5f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
-            MonsterController controller = Instantiate(monsterPattern1, pos, Quaternion.identity).GetComponent<MonsterController>();
-            controller.InitEnemy(playerTransform);
-        }
-        yield return new WaitForSeconds(4f);
-        isPaused = false;
-        isExtreme = false;
-        yield break;
-    }
+    // protected override IEnumerator startPatternCoroutine()
+    // {
+    //     isExtreme = true;
+    //     float angle;
+    //     Vector3 center = playerTransform.position;
+    //     if (center.magnitude > PlaySystemRefStorage.mapSetter.MaxRange-6)
+    //     {
+    //         center *= (PlaySystemRefStorage.mapSetter.MaxRange - 6) / center.magnitude;
+    //     }
+    //     for (int i = 0; i < 3; i++)
+    //     {
+    //         angle = 2f/3f*Mathf.PI * i;
+    //         Vector3 pos = center + 5.5f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+    //         MonsterController controller = Instantiate(monsterPattern1, pos, Quaternion.identity).GetComponent<MonsterController>();
+    //         controller.InitEnemy(playerTransform);
+    //     }
+    //     yield return new WaitForSeconds(1.5f);
+    //     for (int i = 0; i < 3; i++)
+    //     {
+    //         angle = 2f / 3f * Mathf.PI * i + 1f / 3f * Mathf.PI;
+    //         Vector3 pos = center + 5.5f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+    //         MonsterController controller = Instantiate(monsterPattern1, pos, Quaternion.identity).GetComponent<MonsterController>();
+    //         controller.InitEnemy(playerTransform);
+    //     }
+    //     yield return new WaitForSeconds(4f);
+    //     isPaused = false;
+    //     isExtreme = false;
+    //     yield break;
+    // }
 
     private void StartPattern2()
     {
@@ -112,13 +115,43 @@ public class Mon003Generator_C : MonsterGenerator
         {
             center *= (PlaySystemRefStorage.mapSetter.MaxRange - 6f) / center.magnitude;
         }
+
         for (int i = 0; i < 5; i++)
         {
             angle = 0.4f * Mathf.PI * i;
             Vector3 pos = center + 4.8f * new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
-            MonsterController controller = Instantiate(monsterPattern1, pos, Quaternion.identity).GetComponent<MonsterController>();
+            MonsterController controller = Instantiate(monsterPattern1, pos, Quaternion.identity)
+                .GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
         }
     }
-}
 
+    private void StartPattern3()
+    {
+        int firstBombCount = 0;
+        Vector3 center = playerTransform.position;
+        Vector3[] spawnOffsets = new Vector3[]
+        {
+            new Vector3(-2f, 0, 4f), // 앞왼
+            new Vector3(4f, 0, 2f), // 오앞
+            new Vector3(2f, 0, -4f), // 뒤오
+            new Vector3(-4f, 0, -2f), // 왼뒤
+
+            new Vector3(2f, 0, 4f), // 앞오
+            new Vector3(-2f, 0, -4f), // 뒤왼
+            new Vector3(4f, 0, -2f), // 오뒤
+            new Vector3(-4f, 0, 2f) // 왼앞
+        };
+
+        foreach (var spawnOffset in spawnOffsets)
+        {
+            MonsterController controller = Instantiate(monsterPattern1, center + spawnOffset, Quaternion.identity).GetComponent<MonsterController>();
+            controller.InitEnemy(playerTransform);
+        }
+    }
+
+    private IEnumerator DelayBomb()
+    {
+        
+    }
+}
