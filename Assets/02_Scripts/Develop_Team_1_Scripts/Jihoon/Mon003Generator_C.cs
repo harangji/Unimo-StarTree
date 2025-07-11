@@ -138,20 +138,40 @@ public class Mon003Generator_C : MonsterGenerator
             new Vector3(-4f, 0, -2f), // ¿ÞµÚ
 
             new Vector3(2f, 0, 4f), // ¾Õ¿À
-            new Vector3(-2f, 0, -4f), // µÚ¿Þ
             new Vector3(4f, 0, -2f), // ¿ÀµÚ
+            new Vector3(-2f, 0, -4f), // µÚ¿Þ
             new Vector3(-4f, 0, 2f) // ¿Þ¾Õ
         };
-
+        List<Mon003State_Action_C> actions = new List<Mon003State_Action_C>();
+        
         foreach (var spawnOffset in spawnOffsets)
         {
-            MonsterController controller = Instantiate(monsterPattern1, center + spawnOffset, Quaternion.identity).GetComponent<MonsterController>();
+            var obj = Instantiate(monsterPattern1, center + spawnOffset, Quaternion.identity);
+            MonsterController controller = obj.GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
+
+            if (firstBombCount < 4)
+            {
+                firstBombCount++;
+
+                var component = obj.GetComponentInChildren<Mon003State_Action_C>();
+                component.canBomb = false;
+                
+                actions.Add(component);
+            }
         }
+
+        StartCoroutine(DelayBomb(actions));
     }
 
-    private IEnumerator DelayBomb()
+    private IEnumerator DelayBomb(List<Mon003State_Action_C> actions)
     {
-        
+        yield return new WaitForSeconds(2f);
+
+        foreach (var action in actions)
+        {
+            action.canBomb = true;
+            action.OnTriggerAction();
+        }
     }
 }
