@@ -39,7 +39,7 @@ public class PlayerMover : MonoBehaviour
     {
         moveSpeed = speed;
         if (Base_Manager.Data.UserData.BuffFloating[0] >= 0.0f)
-            moveSpeed = 16.0f;
+            moveSpeed = 8.5f;
         else moveSpeed = 8.5f;
     }
     public void StunPush(float stunTime, Vector3 hitPos)

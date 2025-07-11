@@ -43,7 +43,7 @@ public class AccountInitializer : MonoBehaviour
         
         if (EasySaveManager.Instance.TryLoad("User_Data", out User_Data user)) //파일이 있는지 검사
         {
-            EndAccountInitialize(); //있다면 진행
+            Base_Manager.Data.LoadUserData(); //있다면 진행
         }
         else
         {
@@ -57,10 +57,10 @@ public class AccountInitializer : MonoBehaviour
     //     typeSetter.SetActive(true); //구글 게스트 고르기
     // }
     
-    public void EndAccountInitialize()
-    {
-        Base_Manager.Data.LoadUserData();
-    }
+    // public void EndAccountInitialize()
+    // {
+    //     Base_Manager.Data.LoadUserData();
+    // }
     
     // public void SetAccountType(int accountType) //버튼
     // {
@@ -82,6 +82,6 @@ public class AccountInitializer : MonoBehaviour
         Base_Manager.Data.UserData.UserName = inputField.text;
         nameSetter.SetActive(false);
 
-        EndAccountInitialize();
+        Base_Manager.Data.LoadUserData();
     }
 }

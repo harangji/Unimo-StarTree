@@ -48,3 +48,4 @@ public class Get_TEXT : MonoBehaviour
         Destroy(this.gameObject);
     }
 }
+
