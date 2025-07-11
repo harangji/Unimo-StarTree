@@ -18,6 +18,38 @@ public class Mon003Generator_C : MonsterGenerator
     {
         base.Update();
     }
+    
+    protected override MonsterController generateEnemy()
+    {
+        // Vector3 pos = findGenPosition();
+        // Quaternion quat = setGenRotation(pos);
+        // MonsterController controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
+        // controller.InitEnemy(playerTransform);
+        //
+        // return controller;
+        
+        var rate = Random.Range(70, 90);
+
+        if (rate < 70)
+        {
+            Debug.Log("패턴 1");
+
+            base.generateEnemy();
+        }
+        else if (rate < 90)
+        {
+            Debug.Log("패턴 2");
+
+            StartPattern2();
+        }
+        else
+        {
+            Debug.Log("패턴 3");
+        }
+
+        return null;
+    }
+    
     protected override Vector3 findGenPosition()
     {
         Random.InitState(System.DateTime.Now.Millisecond);
@@ -40,6 +72,8 @@ public class Mon003Generator_C : MonsterGenerator
         Quaternion quat = Quaternion.Euler(0f, 180f + rand, 0f);
         return quat;
     }
+    
+    //소환 시작되면 나오는 패턴
     protected override IEnumerator startPatternCoroutine()
     {
         isExtreme = true;
@@ -69,10 +103,9 @@ public class Mon003Generator_C : MonsterGenerator
         isExtreme = false;
         yield break;
     }
-    protected override IEnumerator exPatternCoroutine()
+
+    private void StartPattern2()
     {
-        isExtreme = true;
-        yield return new WaitForSeconds(3f);
         float angle;
         Vector3 center = playerTransform.position;
         if (center.magnitude > PlaySystemRefStorage.mapSetter.MaxRange - 6f)
@@ -86,10 +119,6 @@ public class Mon003Generator_C : MonsterGenerator
             MonsterController controller = Instantiate(monsterPattern1, pos, Quaternion.identity).GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
         }
-        yield return new WaitForSeconds(3f);
-        isPaused = false;
-        isExtreme = false;
-        yield break;
     }
 }
 
