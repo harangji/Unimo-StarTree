@@ -2801,7 +2801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: b2702407e1adb7f43a5689528a167d0d, type: 2}
-  monsterPattern1: {fileID: 2682052996701666488, guid: a5c7863238834ae42a2a8ca62c3969a4,
+  monsterPattern1: {fileID: 2682052996701666488, guid: b3bb4774883e28c44a4f21eecaa08034,
     type: 3}
   monsterPattern2: {fileID: 0}
   monsterPattern3: {fileID: 0}
@@ -3064,15 +3064,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   generators:
-  - {fileID: 1689117727}
   - {fileID: 944503178}
-  - {fileID: 1838791278}
   - {fileID: 2051661442}
+  - {fileID: 1838791278}
+  - {fileID: 1689117727}
   activateTime:
   - 5
-  - 250
-  - 500
-  - 1000
+  - 25
+  - 50
+  - 100
   extreamTime: 10000
   extreamCoolTime: 10000
 --- !u!1 &1838791276
