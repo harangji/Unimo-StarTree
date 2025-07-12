@@ -93,6 +93,7 @@ public class User_Data
     public double Second_Base = 5; // 시설 초당 별꿀 생산량
     public double NextLevel_Base = 5; // 레벨업 비용
     public double Yellow, Red, Blue; //별꿀
+    public int BestStage = 0; //최고 클리어 스테이지
 
     public float[] BuffFloating = new float[3];
 
