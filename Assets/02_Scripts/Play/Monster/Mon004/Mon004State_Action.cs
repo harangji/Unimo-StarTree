@@ -35,12 +35,15 @@ public class Mon004State_Action : MonsterState_Action
     private IEnumerator jumpCoroutine()
     {
         yield return null;
+        
         Sound_Manager.instance.PlayClip(jumpSFX[remainJump - 1]);
+        
         seePlayer();
         checkJumpDuration();
+        
         controller.indicatorCtrl.ActivateIndicator();
-        controller.indicatorCtrl.GetIndicatorTransform().localScale =
-            2f * attRange / controller.transform.localScale.x * Vector3.one;
+        controller.indicatorCtrl.GetIndicatorTransform().localScale = 2f * attRange / controller.transform.localScale.x * Vector3.one;
+        
         while (remainJump > 0)
         {
             yield return new WaitForSeconds(jumpDuration);
@@ -71,6 +74,7 @@ public class Mon004State_Action : MonsterState_Action
 
         attRange *= 0.8f;
         attDamage *= 0.65f;
+        
         if (remainJump > 0)
         {
             Sound_Manager.instance.PlayClip(jumpSFX[remainJump - 1]);
