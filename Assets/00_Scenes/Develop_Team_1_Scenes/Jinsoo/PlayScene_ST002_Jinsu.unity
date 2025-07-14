@@ -5761,10 +5761,8 @@ MonoBehaviour:
   - {fileID: 1148019907}
   scoreTxt: {fileID: 1148019908}
   resultTxt: {fileID: 323274427}
-  redBloomMultiplyChance: 0.5
-  redBloomMultiplyValue: 1.5
-  yellowBloomMultiplyChance: 0.8
-  yellowBloomMultiplyValue: 1.8
+  criticalChance: 0
+  criticalMult: 0
 --- !u!114 &1971803517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6141,6 +6139,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6680839830493902629, guid: 4e4e62dcbdcea114db92b1596c233ba9,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 16375
       objectReference: {fileID: 0}
     - target: {fileID: 6680839830493902631, guid: 4e4e62dcbdcea114db92b1596c233ba9,
         type: 3}
@@ -7293,7 +7296,7 @@ GameObject:
   - component: {fileID: 3836256240184129011}
   - component: {fileID: 3836256240184129010}
   m_Layer: 0
-  m_Name: TimeBar_Max
+  m_Name: ScoreBar_Max
   m_TagString: Untagged
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

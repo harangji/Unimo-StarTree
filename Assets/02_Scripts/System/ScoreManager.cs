@@ -66,20 +66,21 @@ public class ScoreManager : MonoBehaviour
     {
         if (idx == 1) // »¡°£ ²É
         {
-            int baseReward = CalculateReward(Base_Manager.Data.UserData.Level);
+            // int baseReward = CalculateReward(Base_Manager.Data.UserData.Level);
 
             if (Random.value < criticalChance)
             {
-                baseReward = Mathf.FloorToInt(baseReward * criticalMult);
-                Debug.Log($"[ScoreManager]  »¡°£ ²É Å©¸®Æ¼ÄÃ ¹ßµ¿! x{criticalMult} ¡æ {baseReward}");
+                score = Mathf.FloorToInt(score * criticalMult);
+                Debug.Log($"[ScoreManager]  »¡°£ ²É Å©¸®Æ¼ÄÃ ¹ßµ¿! x{criticalMult} ¡æ {score}");
             }
 
-            gatheredResources[idx] += baseReward;
+            gatheredResources[idx] += score;
+            this.score += score;
         }
         else if (idx == 0) // ³ë¶õ ²É
         {
-            double gain = Base_Manager.Data.UserData.Second_Base *
-                          (Base_Manager.Data.UserData.BuffFloating[1] > 0.0f ? 2.0f : 1.0f);
+            // double gain = score * (Base_Manager.Data.UserData.BuffFloating[1] > 0.0f ? 2.0f : 1.0f);
+            float gain = score;
 
             if (Random.value < criticalChance)
             {

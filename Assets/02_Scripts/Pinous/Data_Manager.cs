@@ -23,7 +23,7 @@ public class Data_Manager
     public static SpriteAtlas atlas;
 
     public User_Data UserData = new User_Data();
-    public readonly int[] AltaCount = { 99, 249, 599, 999 }; // ·ÎºñÀÇ ³ª¹« '¾ËÅ¸'ÀÇ ¸ğ½ÀÀ» °áÁ¤ÇÏ´Â ±âÁØÀÌ µÇ´Â int¹è¿­
+    public readonly int[] AltaCount = { 99, 249, 599, 999 }; // ë¡œë¹„ì˜ ë‚˜ë¬´ 'ì•Œíƒ€'ì˜ ëª¨ìŠµì„ ê²°ì •í•˜ëŠ” ê¸°ì¤€ì´ ë˜ëŠ” intë°°ì—´
 
     public EXP_DATA exp_data;
 
@@ -166,12 +166,12 @@ public class Data_Manager
         UserData.E_DateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
         EasySaveManager.Instance.SaveBuffered("User_Data", UserData);
-        EasySaveManager.Instance.CommitBuffered(); //¹öÆÛ¿¡ ½×ÀÎ ±â·Ï ÀúÀå
+        EasySaveManager.Instance.CommitBuffered(); //ë²„í¼ì— ìŒ“ì¸ ê¸°ë¡ ì €ì¥
     }
 
     public void LoadUserData()
     {
-        if (EasySaveManager.Instance.TryLoad("User_Data", out User_Data _UserData)) //Å° Å½»ö ÈÄ outÀ¸·Î ¹İÈ¯
+        if (EasySaveManager.Instance.TryLoad("User_Data", out User_Data _UserData)) //í‚¤ íƒìƒ‰ í›„ outìœ¼ë¡œ ë°˜í™˜
         {
             UserData = _UserData;
             
@@ -218,7 +218,7 @@ public class Data_Manager
             Init();
             
             EasySaveManager.Instance.SaveBuffered("User_Data", UserData);
-            EasySaveManager.Instance.CommitBuffered(); //¹öÆÛ¿¡ ½×ÀÎ ±â·Ï ÀúÀå
+            EasySaveManager.Instance.CommitBuffered(); //ë²„í¼ì— ìŒ“ì¸ ê¸°ë¡ ì €ì¥
             
             EasySaveManager.Instance.bSetEasySaveUser = true;
         }
@@ -283,8 +283,8 @@ public class Data_Manager
         data.S_DateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         data.E_DateTime = "";
 
-        data.CharCount = 1;
-        data.EQCount = 1;
+        data.selectCharacter = 1;
+        data.selectEngine = 1;
 
         data.BonusRewardCount = 1000.0f;
 

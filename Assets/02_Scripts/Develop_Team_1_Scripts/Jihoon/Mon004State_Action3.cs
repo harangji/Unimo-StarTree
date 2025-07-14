@@ -1,21 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Mon004State_Action : MonsterState_Action
+public class Mon004State_Action3 : MonsterState_Action
 {
     [SerializeField] private GameObject slamVFX;
     [SerializeField] private AudioClip[] jumpSFX;
     private AudioSource audioSource;
     private int remainJump = 3;
     private float jumpDuration = 10f;
-    private float maxRotation = Mathf.PI * 7f / 18f;
-    private float moveSpeed = 4f;
-    private float attRange = 1.8f;
+    private float maxRotation = Mathf.PI * 0.5f;
+    private float moveSpeed = 6f;
+    private float attRange = 2.7f;
     private float attDamage = 2f;
     private Vector3 indicatorPos = Vector3.zero;
     private float lapseForIndicator = 0f;
 
+    [SerializeField]private GameObject summonMonsterPrefab;
+    
     public override void TransitionAction(MonsterController controller)
     {
         base.TransitionAction(controller);
@@ -48,6 +51,7 @@ public class Mon004State_Action : MonsterState_Action
         {
             yield return new WaitForSeconds(jumpDuration);
             hitGround();
+            SpawnClone();
             seePlayer();
             yield return null;
             checkJumpDuration();
@@ -116,5 +120,42 @@ public class Mon004State_Action : MonsterState_Action
         indicatorPos = controller.transform.position + moveSpeed * jumpDuration * transform.forward;
         controller.indicatorCtrl.GetIndicatorTransform().localScale =
             2f * attRange / controller.transform.localScale.x * Vector3.one;
+    }
+    
+    private void SpawnClone()
+    {
+        var generator = GameObject.Find("Mon004Gen").GetComponent<Mon004Generator_C>();
+        
+        Vector3 pos = GetRandomCirclePosition(transform.position, 5f);
+        Quaternion quat = SetGenRotation(pos);
+
+        MonsterController summonedMonsterController = Instantiate(summonMonsterPrefab, pos, quat).GetComponent<MonsterController>();
+        summonedMonsterController.InitEnemy(controller.playerTransform);
+    }
+    
+    private Vector3 GetRandomCirclePosition(Vector3 center, float radius)
+    {
+        float angle = Random.Range(0f, 360f);
+        float radian = angle * Mathf.Deg2Rad;
+
+        float x = Mathf.Cos(radian) * radius;
+        float z = Mathf.Sin(radian) * radius;
+
+        return center + new Vector3(x, 0f, z);
+    }
+    
+    private Quaternion SetGenRotation(Vector3 genPos)
+    {
+        Quaternion quat = Quaternion.LookRotation(controller.playerTransform.position - genPos, Vector3.up);
+
+        float randAngle = (Random.Range(0, 2) * 2 - 1) * Mathf.Pow(Random.Range(0f, 1f), 2f);
+        randAngle *= 30f;
+        if (randAngle < 0f)
+        {
+            randAngle += 360f;
+        }
+
+        quat *= Quaternion.Euler(0f, randAngle, 0f);
+        return quat;
     }
 }

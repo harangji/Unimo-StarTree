@@ -133,8 +133,8 @@ public class User_Data
 
     public string S_DateTime, E_DateTime;
 
-    public int CharCount = 1;
-    public int EQCount = 1;
+    public int selectCharacter = 1;
+    public int selectEngine = 1;
 
     public float BonusRewardCount = 1000.0f;
 
