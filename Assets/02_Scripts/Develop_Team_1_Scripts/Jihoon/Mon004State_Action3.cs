@@ -9,8 +9,8 @@ public class Mon004State_Action3 : MonsterState_Action
     private AudioSource audioSource;
     private int remainJump = 3;
     private float jumpDuration = 10f;
-    private float maxRotation = Mathf.PI * 7f / 18f;
-    private float moveSpeed = 8f;
+    private float maxRotation = Mathf.PI * 0.5f;
+    private float moveSpeed = 6f;
     private float attRange = 2.7f;
     private float attDamage = 2f;
     private Vector3 indicatorPos = Vector3.zero;

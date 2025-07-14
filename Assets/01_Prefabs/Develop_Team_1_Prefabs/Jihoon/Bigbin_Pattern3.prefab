@@ -181,7 +181,7 @@ Animator:
   m_GameObject: {fileID: 1313915641652497427}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 39f6e81b61092034fb3a3380af2c810d, type: 3}
-  m_Controller: {fileID: 9100000, guid: be1a3d396d30b024e824929092167353, type: 2}
+  m_Controller: {fileID: 9100000, guid: 457c698583b7df2418de1d299051e975, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -409,7 +409,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2070413054544012249}
-  m_LocalEulerAnglesHint: {x: -0.3185186, y: 0.09396998, z: 0.10815944}
+  m_LocalEulerAnglesHint: {x: -0.3185181, y: 0.09396952, z: 0.108159065}
 --- !u!1 &3772178826996018179
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,7 +444,7 @@ Transform:
   - {fileID: 7549637499875140657}
   - {fileID: 8466688855100519879}
   m_Father: {fileID: 8971916526506415299}
-  m_LocalEulerAnglesHint: {x: 0.0000031134862, y: -1.5778677e-14, z: -0.000023678289}
+  m_LocalEulerAnglesHint: {x: -10.540631, y: -1.2526138, z: 0.9428841}
 --- !u!1 &4153803385511750451
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,7 +475,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2070413054544012249}
-  m_LocalEulerAnglesHint: {x: -4.4250365e-15, y: -3.872024e-14, z: 0.000027320755}
+  m_LocalEulerAnglesHint: {x: 2.5386687e-14, y: -4.1336406e-13, z: 0.00002755356}
 --- !u!1 &5381999230910700293
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,7 +507,7 @@ Transform:
   m_Children:
   - {fileID: 2070413054544012249}
   m_Father: {fileID: 4741213301584748253}
-  m_LocalEulerAnglesHint: {x: 0.0000034150944, y: -0.000005008956, z: 179.99998}
+  m_LocalEulerAnglesHint: {x: 0.0000031663935, y: -0.0000046441837, z: 179.99998}
 --- !u!1 &9072651477633676676
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,8 +726,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e459e05012a741042859fad9aeab479e, type: 3}
   - {fileID: 8300000, guid: 85b9c227fc4ee6d42bec567b5f1fd2c0, type: 3}
   - {fileID: 8300000, guid: 82efc89ee4e864c4aa08bbdaa995dc69, type: 3}
-  jumpDuration: 10
-  moveSpeed: 40
 --- !u!1 &9208480111255107670
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +756,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2070413054544012249}
-  m_LocalEulerAnglesHint: {x: 0.00000030160837, y: -3.446974e-13, z: 0.000013660379}
+  m_LocalEulerAnglesHint: {x: 0.00000027964407, y: -6.9705873e-13, z: 0.000013776782}
 --- !u!1001 &984121526498542025
 PrefabInstance:
   m_ObjectHideFlags: 0
