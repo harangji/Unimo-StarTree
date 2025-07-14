@@ -23,7 +23,7 @@ public class Data_Manager
     public static SpriteAtlas atlas;
 
     public User_Data UserData = new User_Data();
-    public int[] AltaCount = { 99, 249, 599, 999 };
+    public readonly int[] AltaCount = { 99, 249, 599, 999 }; // 로비의 나무 '알타'의 모습을 결정하는 기준이 되는 int배열
 
     public EXP_DATA exp_data;
 
@@ -239,6 +239,7 @@ public class Data_Manager
         data.Yellow = 0;
         data.Red = 0;
         data.Blue = 0;
+        data.BestStage = 0;
         data.NextLevel_Base = 10;
         data.GetReview = false;
         data.GetOarkTong = false;
