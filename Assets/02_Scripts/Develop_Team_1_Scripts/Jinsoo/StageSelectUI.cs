@@ -73,7 +73,7 @@ public class StageSelectUI : MonoBehaviour
             Debug.Log("잠겨 있어요");
             return;
         }
-
+        
         StageLoader.LoadStage(mCurrentStage);
     }
 }

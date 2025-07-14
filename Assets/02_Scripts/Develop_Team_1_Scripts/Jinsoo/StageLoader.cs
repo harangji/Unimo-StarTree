@@ -15,12 +15,18 @@ public static class StageLoader
         // 보너스 스테이지인지 체크
         bool isBonus = unitDigit == 5;
 
-        // ST002: 보너스 스테이지, ST001: 나머지 (일반/보스)
-        string sceneName = isBonus ? "PlayScene_ST002_Jinsu" : "PlayScene_ST001_Jinsu";
-
-        Debug.Log(sceneName);
+        // 2: 보너스 스테이지, 1: 나머지 (일반/보스)
+        if (isBonus)
+        {
+            WholeSceneController.Instance.ReadyNextScene(2);
+        }
+        else
+        {
+            WholeSceneController.Instance.ReadyNextScene(1);
+        }
         
-        SceneManager.LoadScene(sceneName);
+        Base_Manager.Data.UserData.GamePlay++;
+        Pinous_Flower_Holder.FlowerHolder.Clear();
     }
     
     // EasySaveManager 기반 저장 함수
