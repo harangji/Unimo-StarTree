@@ -4096,10 +4096,8 @@ MonoBehaviour:
   - {fileID: 1148019907}
   scoreTxt: {fileID: 1148019908}
   resultTxt: {fileID: 6151373446196199413}
-  redBloomMultiplyChance: 0.5
-  redBloomMultiplyValue: 1.5
-  yellowBloomMultiplyChance: 0.8
-  yellowBloomMultiplyValue: 2
+  criticalChance: 0
+  criticalMult: 0
 --- !u!114 &1971803517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4338,8 +4336,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5030e6b005171e440a5ea4c37c2dca50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiplier: 8.5
-  areaMultiplier: 9
 --- !u!82 &2031469864
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6479,7 +6475,7 @@ PrefabInstance:
     - target: {fileID: 4876853301105598577, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
       propertyPath: m_Radius
-      value: 1.2
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 4876853301105598578, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
@@ -6546,6 +6542,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4876853301105598587, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876853301105598587, guid: e542909bea402f345a760b7cda46b419,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876853301105598587, guid: e542909bea402f345a760b7cda46b419,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876853301105598587, guid: e542909bea402f345a760b7cda46b419,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -6593,6 +6604,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876853301105598587, guid: e542909bea402f345a760b7cda46b419,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4591606262836753298, guid: e542909bea402f345a760b7cda46b419, type: 3}
