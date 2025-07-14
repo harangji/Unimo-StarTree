@@ -519,11 +519,11 @@ GameObject:
   - component: {fileID: 9072651477633676677}
   - component: {fileID: 9072651477633676682}
   - component: {fileID: 4068707415165029229}
-  - component: {fileID: 987026330244884417}
   - component: {fileID: 9072651477633676679}
   - component: {fileID: 2337977336506616640}
   - component: {fileID: 8479790798906237851}
   - component: {fileID: 6856226161090838571}
+  - component: {fileID: 7526207043438823805}
   m_Layer: 0
   m_Name: StateStorage
   m_TagString: Untagged
@@ -570,23 +570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07d39fb2b98d18d47b0ddf5c82aaaf93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &987026330244884417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9072651477633676676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e147c868418abe4aa7a8254839e511a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slamVFX: {fileID: 3452779220196208324}
-  jumpSFX:
-  - {fileID: 8300000, guid: e459e05012a741042859fad9aeab479e, type: 3}
-  - {fileID: 8300000, guid: 85b9c227fc4ee6d42bec567b5f1fd2c0, type: 3}
-  - {fileID: 8300000, guid: 82efc89ee4e864c4aa08bbdaa995dc69, type: 3}
 --- !u!114 &9072651477633676679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,6 +709,25 @@ MonoBehaviour:
   ratio3D: 1
   minDist: 3
   maxDist: 14
+--- !u!114 &7526207043438823805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072651477633676676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18209fd59a788f149ad9b10bf822938d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slamVFX: {fileID: 3452779220196208324}
+  jumpSFX:
+  - {fileID: 8300000, guid: e459e05012a741042859fad9aeab479e, type: 3}
+  - {fileID: 8300000, guid: 85b9c227fc4ee6d42bec567b5f1fd2c0, type: 3}
+  - {fileID: 8300000, guid: 82efc89ee4e864c4aa08bbdaa995dc69, type: 3}
+  jumpDuration: 10
+  moveSpeed: 40
 --- !u!1 &9208480111255107670
 GameObject:
   m_ObjectHideFlags: 0

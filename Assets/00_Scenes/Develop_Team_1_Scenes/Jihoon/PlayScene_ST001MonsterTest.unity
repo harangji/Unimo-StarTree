@@ -3424,10 +3424,8 @@ MonoBehaviour:
   - {fileID: 1148019907}
   scoreTxt: {fileID: 1148019908}
   resultTxt: {fileID: 6151373446196199413}
-  redBloomMultiplyChance: 0.5
-  redBloomMultiplyValue: 1.5
-  yellowBloomMultiplyChance: 0.8
-  yellowBloomMultiplyValue: 1.8
+  criticalChance: 0
+  criticalMult: 0
 --- !u!114 &1971803517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3645,8 +3643,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5030e6b005171e440a5ea4c37c2dca50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiplier: 8.5
-  areaMultiplier: 9
 --- !u!82 &2031469864
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3938,7 +3934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: 4e9ecec1f16a9774d85e0b297b46fe12, type: 2}
-  monsterPattern1: {fileID: 1313915641652497427, guid: 9856596b3536ec541b4301941f5516d0,
+  monsterPattern1: {fileID: 1313915641652497427, guid: e8410453af08a234d889e0bd14a44b14,
     type: 3}
   monsterPattern2: {fileID: 0}
   monsterPattern3: {fileID: 0}
