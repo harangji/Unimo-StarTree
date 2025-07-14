@@ -56,16 +56,29 @@ public class MonsterController : MonoBehaviour
         {
             if (other.TryGetComponent<PlayerStatManager>(out var player))
             {
-                Vector3
-                    hitpos = transform.position; //other.ClosestPoint(transform.position + new Vector3(0f, 1.5f, 0f))
-                hitpos.y = 0f;
+                Vector3 hitPos = transform.position; //other.ClosestPoint(transform.position + new Vector3(0f, 1.5f, 0f))
+                hitPos.y = 0f;
 
                 //todo 이 부분에서 나중에 컴벳 시스템으로 바꿔야 함 -> 지금은 그냥 Hit 메서드를 변경함
-                player.Hit(collideStunTime, hitpos, GetComponent<Monster>().GetDamage());
+                var monster = GetComponent<IDamageAble>();
+                var playerIDamageAble = GameObject.FindGameObjectWithTag("Player").GetComponent<IDamageAble>();
+
+                CombatEvent combatEvent = new CombatEvent
+                {
+                    Sender = monster,
+                    Receiver = playerIDamageAble,
+                    Damage = (monster as Monster).defaultDamage,
+                    HitPosition = hitPos,
+                    Collider = other
+                };
+
+                CombatSystem.Instance.AddInGameEvent(combatEvent);
+
+                // player.Hit(collideStunTime, hitPos, GetComponent<Monster>().GetDamage());
 
                 Vector3 fxPos = (isExplodeFXAtPlayer)
-                    ? (hitpos + other.transform.position) / 2f + 1.5f * Vector3.up
-                    : hitpos + 1.5f * Vector3.up;
+                    ? (hitPos + other.transform.position) / 2f + 1.5f * Vector3.up
+                    : hitPos + 1.5f * Vector3.up;
                 GameObject obj = Instantiate(explodeFX, fxPos, Quaternion.identity);
 
                 obj.GetComponent<AudioSource>().volume = Sound_Manager.instance._audioSources[1].volume;

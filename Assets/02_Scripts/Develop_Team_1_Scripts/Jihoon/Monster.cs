@@ -1,19 +1,29 @@
+using System;
 using UnityEngine;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour, IDamageAble
 {
     public int stage = 1;
     
-    public int defaultDamage;
-    public int skillDamage;
-
-    //스킬을 사용할 때만 참으로 바뀌며, 데미지를 얼마나 줄지에 대한 논리값
-    public bool bIsSkill = false;
+    public int defaultDamage = 1;
 
     //todo 나중에 여기에 IDamageable 인터페이스 붙이고 메서드 추가하면 됨
+    [SerializeField] private Collider mainCollider;
+    public Collider MainCollider => mainCollider;
+    public GameObject GameObject => gameObject;
 
-    public int GetDamage()
+    private void Start()
     {
-        return bIsSkill ? skillDamage : defaultDamage;
+        CombatSystem.Instance.RegisterMonster(this);
+    }
+
+    public void TakeDamage(CombatEvent combatEvent)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void TakeHeal(HealEvent combatEvent)
+    {
+        throw new System.NotImplementedException();
     }
 }
