@@ -89,9 +89,12 @@ public class PlayerStatManager : MonoBehaviour
         mStat = new UnimoRuntimeStat(mUnimoData.Stat);
         playerMover.SetCharacterStat(mStat);
         hpManager.SetCharacterStat(mStat);
-
+        auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
+        PlaySystemRefStorage.scoreManager.ApplyStatFromCharacter(mStat);
+        
         bEvadeChance = mStat.FinalStat.StunIgnoreChance;
         fStunReduceRate = mStat.FinalStat.StunResistanceRate;
+        Debug.Log($"[PlayerStatManager] 회피확률: {bEvadeChance * 100}% / 스턴저항률: {fStunReduceRate * 100}%");
     }
 
     public UnimoRuntimeStat GetStat()
@@ -123,24 +126,22 @@ public class PlayerStatManager : MonoBehaviour
     {
         if (isInvincible) return;
 
-        //피격 회피 판정
+        // 회피 판정
         if (Random.value < bEvadeChance)
         {
-            Debug.Log(" 피격 회피");
+            Debug.Log("피격 회피: 넉백/스턴/오라 감소 없음, 데미지만 적용");
+
+            // 넉백, 스턴, 오라 감소 없이 데미지만 적용
+            hpManager.TakeDamage(20f);
             return;
         }
 
-        //스턴 시간 감소 적용
+        // 회피 실패 → 스턴 및 전체 피격 처리
         stun = Mathf.Max(stun * (1f - fStunReduceRate), 0.2f);
         hitPos.y = 0;
 
-        //스턴 연출 시작
         stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
-
-        //경험치 손실
         PlaySystemRefStorage.harvestLvController.LossExp(stun);
-
-        //데미지 고정 적용
         hpManager.TakeDamage(20f);
     }
     
