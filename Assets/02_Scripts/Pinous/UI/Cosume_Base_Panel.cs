@@ -16,7 +16,7 @@ public class Cosume_Base_Panel : MonoBehaviour
         switch(costumer)
         {
             case CharCostumer.Charcater:
-                if (Base_Manager.Data.UserData.GetCharacterData[index])
+                if (Base_Manager.Data.UserData.HasCharacterData[index])
                 {
                     Destroy(LockObj);
                 }
@@ -26,7 +26,7 @@ public class Cosume_Base_Panel : MonoBehaviour
                 }
                 break;
             case CharCostumer.EQ:
-                if (Base_Manager.Data.UserData.GetEQData[index])
+                if (Base_Manager.Data.UserData.HasEnginData[index])
                 {
                     Destroy(LockObj);
                 }

@@ -76,16 +76,16 @@ public class UI_Reward : UI_Base
                 switch(costumer)
                 {
                     case CharCostumer.Charcater:
-                        Debug.Log(charIdx + " : " + Base_Manager.Data.UserData.GetCharacterData.Length);
-                        Base_Manager.Data.UserData.GetCharacterData[charIdx] = true;
+                        Debug.Log(charIdx + " : " + Base_Manager.Data.UserData.HasCharacterData.Length);
+                        Base_Manager.Data.UserData.HasCharacterData[charIdx] = true;
                         if(charIdx < 13)
                         {
-                            Base_Manager.Data.UserData.GetEQData[charIdx] = true;
+                            Base_Manager.Data.UserData.HasEnginData[charIdx] = true;
                         }
                         Land.instance.GetCharacter(charIdx);
                         break;
                     case CharCostumer.EQ:
-                        Base_Manager.Data.UserData.GetEQData[eqIdx] = true;
+                        Base_Manager.Data.UserData.HasEnginData[eqIdx] = true;
                         break;
                 }
                 CurrentCharReward.instance.Init(costumer, charIdx+1, eqIdx+1);
@@ -94,13 +94,13 @@ public class UI_Reward : UI_Base
 
         int character = 0;
         int eq = 0;
-        for(int i = 0; i < Base_Manager.Data.UserData.GetCharacterData.Length; i++)
+        for(int i = 0; i < Base_Manager.Data.UserData.HasCharacterData.Length; i++)
         {
-            if (Base_Manager.Data.UserData.GetCharacterData[i] == true) character++;
+            if (Base_Manager.Data.UserData.HasCharacterData[i] == true) character++;
         }
-        for(int i = 0; i < Base_Manager.Data.UserData.GetEQData.Length; i++)
+        for(int i = 0; i < Base_Manager.Data.UserData.HasEnginData.Length; i++)
         {
-            if (Base_Manager.Data.UserData.GetEQData[i] == true) eq++;
+            if (Base_Manager.Data.UserData.HasEnginData[i] == true) eq++;
         }
         Base_Manager.Analytics.RecordCustomEventWithParameters("Character", character);
         Base_Manager.Analytics.RecordCustomEventWithParameters("EQ", eq);

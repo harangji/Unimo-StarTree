@@ -202,11 +202,11 @@ public class Data_Manager
                     UserData.GetRePlay = false;
                 }
 
-                if(UserData.GetCharacterData.Length <= 12)
+                if(UserData.HasCharacterData.Length <= 12)
                 {
                     bool[] charDatas = { true, false, false, false, false, false, false, false, false, false, false, false, false };
 
-                    UserData.GetCharacterData = charDatas;
+                    UserData.HasCharacterData = charDatas;
                 }
             }
             
@@ -257,8 +257,8 @@ public class Data_Manager
         bool[] charDatas = { true, false, false, false, false, false, false, false, false, false, false, false, false };
         bool[] EqDatas = { true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
 
-        data.GetCharacterData = charDatas;
-        data.GetEQData = EqDatas;
+        data.HasCharacterData = charDatas;
+        data.HasEnginData = EqDatas;
 
         data.DailyAccount = 1;
         data.GamePlay = 0;
@@ -271,7 +271,7 @@ public class Data_Manager
         data.GetArchivements = archive;
 
         data.IAP = 0;
-        data.ADSBuy = false;
+        data.ADSBuy = true;
 
         data.GetDaily = false;
         data.GetGamePlay = false;

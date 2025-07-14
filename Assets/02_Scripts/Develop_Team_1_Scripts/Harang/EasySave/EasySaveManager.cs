@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EasySaveManager : MonoBehaviour
 {
@@ -26,13 +27,13 @@ public class EasySaveManager : MonoBehaviour
         UserDataES3File = new ES3File(UserDataSettings);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            CommitBuffered();
-        }
-    }
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.S))
+    //     {
+    //         CommitBuffered();
+    //     }
+    // }
     // ES3Settings 즉시 저장 //위험해서 안씀
     // public void Save<T>(string key, T value)
     // {
@@ -95,17 +96,21 @@ public class User_Data
     public double Yellow, Red, Blue; //별꿀
     public int BestStage = 0; //최고 클리어 스테이지
 
+    //?????
     public float[] BuffFloating = new float[3];
 
-    public bool[] GetCharacterData = { true, false, false, false, false, false, false, false, false, false, false, false, false };
-    public bool[] GetEQData = { true, false, false, false, false, false, false, false, false, false, false, false, false , false, false , false, false, false, false , false, false, false, false};
+    //보유한 캐릭터 true, 미보유 false
+    public bool[] HasCharacterData = { true, false, false, false, false, false, false, false, false, false, false, false, false };
+    
+    //보유한 붕붕엔진 true, 미보유 false
+    public bool[] HasEnginData = { true, false, false, false, false, false, false, false, false, false, false, false, false , false, false , false, false, false, false , false, false, false, false};
 
     public double BestScoreGameOne, BestScoreGameTwo;
 
     public int IAP = 0;
 
-    public bool ADSBuy = false;
-    public bool ADS_Inter_Buy = false;
+    //광고제거 상품 구매 여부
+    public bool ADSBuy = false; 
 
     public int DailyAccount = 1;
     public int GamePlay;
@@ -115,13 +120,15 @@ public class User_Data
     public int TimeItem;
     public int RePlay;
 
-    public bool GetDaily;
-    public bool GetGamePlay;
-    public bool GetADS;
-    public bool GetTouch;
-    public bool GetTimeItem;
-    public bool GetRePlay;
+    // 미션 완료 여부 (데일리)
+    public bool GetDaily; // 출석
+    public bool GetGamePlay; // 게임 플레이하기
+    public bool GetADS; // 광고보기
+    public bool GetTouch; // 유니모 터치하기
+    public bool GetTimeItem; //게 임 내에서 타이머 증가 아이템 먹기
+    public bool GetRePlay; // 두 배 보상
 
+    //업적 완료 여부
     public bool[] GetArchivements = { false, false, false, false, false, false, false, false, false };
 
     public string S_DateTime, E_DateTime;
