@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,8 +17,16 @@ public class StageSelectUI : MonoBehaviour
 
     private void Start()
     {
-        mMaxClearedStage = StageLoader.GetLastClearedStage();
         UpdateUI();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            mMaxClearedStage++;
+            Debug.Log($"마지막 스테이지 증가 ::: {mMaxClearedStage}");
+        }
     }
 
     // 왼쪽 화살표 눌렀을 때, 스테이지 감소
@@ -55,6 +64,7 @@ public class StageSelectUI : MonoBehaviour
     // 시작버튼 눌렀을 때, 스테이지 진입
     public void OnClick_StartGame()
     {
+        mMaxClearedStage = StageLoader.GetLastClearedStage();
         // 잠긴 스테이지는 시작 불가
         if (mCurrentStage > mMaxClearedStage + 1)
         {
@@ -63,7 +73,7 @@ public class StageSelectUI : MonoBehaviour
             Debug.Log("잠겨 있어요");
             return;
         }
-
+        
         StageLoader.LoadStage(mCurrentStage);
     }
 }

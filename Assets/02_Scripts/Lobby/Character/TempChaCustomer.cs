@@ -6,43 +6,43 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class TempChaCustomer : MonoBehaviour
 {
-    private int currentChar = 1;
-    private int currentEq = 1;
+    private int currentcharacter = 1;
+    private int currentengine = 1;
     private GameObject eqObj;
     private GameObject chObj;
     private void Start()
     {
-        currentChar = Base_Manager.Data.UserData.CharCount;
-        currentEq = Base_Manager.Data.UserData.EQCount;
+        currentcharacter = Base_Manager.Data.UserData.selectCharacter;
+        currentengine = Base_Manager.Data.UserData.selectEngine;
 
-        GameManager.Instance.ChaIdx = currentChar;
-        GameManager.Instance.EqIdx = currentEq;
+        GameManager.Instance.ChaIdx = currentcharacter;
+        GameManager.Instance.EqIdx = currentengine;
         makePreviewObj();
     }
     public void ChangeCharacter(int diff)
     {
-        currentChar = diff;
-        Base_Manager.Data.UserData.CharCount = currentChar;
-        GameManager.Instance.ChaIdx = currentChar;
+        currentcharacter = diff;
+        Base_Manager.Data.UserData.selectCharacter = currentcharacter;
+        GameManager.Instance.ChaIdx = currentcharacter;
         makePreviewObj();
     }
     public void ChangeEquip(int diff)
     {
-        currentEq = diff;
-        Base_Manager.Data.UserData.EQCount = currentEq;
-        GameManager.Instance.EqIdx = currentEq;
+        currentengine = diff;
+        Base_Manager.Data.UserData.selectEngine = currentengine;
+        GameManager.Instance.EqIdx = currentengine;
         makePreviewObj();
     }
     public void makePreviewObj()
     {
         if (chObj != null) { Addressables.ReleaseInstance(chObj); }
         if (eqObj != null) { Addressables.ReleaseInstance(eqObj); }
-        Addressables.InstantiateAsync(AddressableKeyCtrl.EqAssetKey_Lobby(currentEq), transform).Completed += (op) =>
+        Addressables.InstantiateAsync(AddressableKeyCtrl.EqAssetKey_Lobby(currentengine), transform).Completed += (op) =>
         {
             if (op.Status != AsyncOperationStatus.Succeeded) { return; }
 
             eqObj = op.Result.gameObject;
-            eqObj.GetComponent<Equip_ChaSetter>().InstCharacterAsync(AddressableKeyCtrl.ChaAssetKey_Lobby(currentChar), null, null);
+            eqObj.GetComponent<Equip_ChaSetter>().InstCharacterAsync(AddressableKeyCtrl.ChaAssetKey_Lobby(currentcharacter), null, null);
         };
     }
 }

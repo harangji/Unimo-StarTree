@@ -3,8 +3,11 @@ using UnityEngine;
 // 인게임 Stage 난이도 관리.
 public class StageManager : MonoBehaviour
 {
+    [SerializeField] private ScoreGaugeController mScoreGauge;
+    
     private StageData mStageData;
     private bool mbStageEnded = false;
+    private float mTargetScore = 0f; // 목표 점수 저장
 
     private void Start()
     {
@@ -17,42 +20,77 @@ public class StageManager : MonoBehaviour
         Debug.Log($" - 목표 점수 : {mStageData.TargetScore}");
         Debug.Log($" - 최대 꽃 개수 : {mStageData.MaxFlowerCount}");
         Debug.Log($" - 보스 스테이지 여부 : {mStageData.IsBossStage}");
+        
+        // 제한 시간 설정 (기존 PlayTimeManager에 전달)
+        PlaySystemRefStorage.playTimeManager.SetStageTimeLimit(mStageData.TimeLimit);
+        
+        // 꽃 최대 갯수 제한
+        FlowerGenerator_ST001.maxFlowers = mStageData.MaxFlowerCount;
+        
+        // 목표 점수 설정
+        mTargetScore = mStageData.TargetScore;
+        
+        // 스코어 게이지 연결
+        mScoreGauge.SetTargetScore(mTargetScore);
+        
+        // 점수 갱신 감시 이벤트 구독
+        PlaySystemRefStorage.scoreManager.OnScoreChanged += HandleScoreChanged;
+        
+        // 게임 오버 이벤트
+        PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(OnTimeOver);
 
         // 여기서 필요한 매니저들에 난이도 등 전달 가능
         // 예: MonsterGenerator.SetDifficulty(mStageData.DifficultyValue);
     }
 
-    private void Update()
+    // 목표 점수 도달 시 바로 클리어 처리
+    private void HandleScoreChanged(double currentScore)
     {
         if (mbStageEnded) return;
 
-        float elapsedTime = PlaySystemRefStorage.playTimeManager.LapseTime;
-        // float fillAmount = GrowthGaugeManager.Instance.FillAmount;
-
-        if (elapsedTime >= mStageData.TimeLimit)
+        mScoreGauge.SetCurrentScore(currentScore);
+        
+        if (currentScore >= mTargetScore)
         {
             mbStageEnded = true;
 
-            // if (fillAmount >= 1f)
-            //     StageClear();
-            // else
-            //     StageFail();
+            Debug.Log("목표 점수 도달! 스테이지 클리어 처리");
+            PlaySystemRefStorage.playTimeManager.StopTimer(); // 타이머 정지
+
+            StageClear();
         }
+    }
+
+    // 타임 오버 시 호출됨
+    private void OnTimeOver()
+    {
+        if (mbStageEnded) return;
+
+        mbStageEnded = true;
+
+        Debug.Log("시간 종료! 스테이지 실패 처리");
+        StageFail();
     }
 
     private void StageClear()
     {
-        Debug.Log("스테이지 클리어");
-        
-        // 클리어된 스테이지 저장
-        StageLoader.SaveClearedStage(mStageData.StageNumber);
-        
-        // UI_StageResult.Instance.Open(true);
+        Debug.Log("스테이지 클리어!");
+        StageLoader.SaveClearedStage(mStageData.StageNumber); // 다음 스테이지 오픈 저장
+        // 결과 UI 열기
+        // UI_StageResult.Instance.Open(true); ← 추후 연동
     }
 
     private void StageFail()
     {
-        Debug.Log("스테이지 실패");
-        // UI_StageResult.Instance.Open(false);
+        Debug.Log("스테이지 실패!");
+        // 결과 UI 열기
+        // UI_StageResult.Instance.Open(false); ← 추후 연동
+    }
+    
+    private void OnDestroy()
+    {
+        // 이벤트 해제
+        if (PlaySystemRefStorage.scoreManager != null)
+            PlaySystemRefStorage.scoreManager.OnScoreChanged -= HandleScoreChanged;
     }
 }

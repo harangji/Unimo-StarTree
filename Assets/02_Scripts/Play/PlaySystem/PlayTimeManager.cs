@@ -8,13 +8,29 @@ public class PlayTimeManager : MonoBehaviour
 {
     public float LapseTime { get; private set; } = 0f;
     [SerializeField] private bool isInfinite = false;
-    [SerializeField] private float maxTime = 60f;
+    [SerializeField] private float maxTime;
     [SerializeField] private float reduceIncTime = 120f;
-    private float remainTime = 60f;
+    private float remainTime;
     private float minReduce = 1f;
     private bool isPaused = true;
     private ItemGenerator itemGenerator;
     [SerializeField] private TimeGaugeController timerGauge;
+    
+    private bool mbTimerStopped = false;
+    
+    // 외부에서 제한 시간을 설정할 수 있게 함
+    public void SetStageTimeLimit(float time)
+    {
+        maxTime = time;
+        remainTime = time;
+        timerGauge.SetGauge(remainTime / maxTime);
+    }
+    
+    public void StopTimer()
+    {
+        mbTimerStopped = true;
+    }
+    
     void Awake()
     {
         PlaySystemRefStorage.playTimeManager = this;
@@ -26,12 +42,20 @@ public class PlayTimeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isPaused) { return; }
+        if (isPaused || mbTimerStopped) { return; }
         LapseTime += Time.deltaTime;
-        float rate = calcReduceRate(LapseTime);
-        itemGenerator.DecreaseTick(Time.deltaTime * rate);
-        ChangeTimer(-Time.deltaTime * rate);
+        itemGenerator.DecreaseTick(Time.deltaTime);
+        ChangeTimer(-Time.deltaTime);
     }
+    
+    // void Update()
+    // {
+    //     if (isPaused) { return; }
+    //     LapseTime += Time.deltaTime;
+    //     float rate = calcReduceRate(LapseTime);
+    //     itemGenerator.DecreaseTick(Time.deltaTime * rate);
+    //     ChangeTimer(-Time.deltaTime * rate);
+    // }
     
     public void InitTimer()
     {

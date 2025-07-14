@@ -1,11 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Random = UnityEngine.Random;
 
 public class ScoreManager : MonoBehaviour
 {
+    // 점수 갱신 시 이벤트 알림
+    public event Action<double> OnScoreChanged;
+    
     [SerializeField] private List<TextMeshProUGUI> specialResourceTxts;
     [SerializeField] private TextMeshProUGUI scoreTxt;
     [SerializeField] private TextMeshProUGUI resultTxt;
@@ -16,6 +21,7 @@ public class ScoreManager : MonoBehaviour
     
     [SerializeField] private float criticalChance; // 크리티컬 확률 (예시값)
     [SerializeField] private float criticalMult;   // 크리티컬 배율 (예시값)
+    
     
     private void Awake()
     {
@@ -60,20 +66,21 @@ public class ScoreManager : MonoBehaviour
     {
         if (idx == 1) // 빨간 꽃
         {
-            int baseReward = CalculateReward(Base_Manager.Data.UserData.Level);
+            // int baseReward = CalculateReward(Base_Manager.Data.UserData.Level);
 
             if (Random.value < criticalChance)
             {
-                baseReward = Mathf.FloorToInt(baseReward * criticalMult);
-                Debug.Log($"[ScoreManager]  빨간 꽃 크리티컬 발동! x{criticalMult} → {baseReward}");
+                score = Mathf.FloorToInt(score * criticalMult);
+                Debug.Log($"[ScoreManager]  빨간 꽃 크리티컬 발동! x{criticalMult} → {score}");
             }
 
-            gatheredResources[idx] += baseReward;
+            gatheredResources[idx] += score;
+            this.score += score;
         }
         else if (idx == 0) // 노란 꽃
         {
-            double gain = Base_Manager.Data.UserData.Second_Base *
-                          (Base_Manager.Data.UserData.BuffFloating[1] > 0.0f ? 2.0f : 1.0f);
+            // double gain = score * (Base_Manager.Data.UserData.BuffFloating[1] > 0.0f ? 2.0f : 1.0f);
+            float gain = score;
 
             if (Random.value < criticalChance)
             {
@@ -91,6 +98,10 @@ public class ScoreManager : MonoBehaviour
         }
 
         scoreTxt.text = StringMethod.ToCurrencyString(gatheredResources[0]);
+        
+        // 점수 갱신 이벤트 호출
+        OnScoreChanged?.Invoke(this.score);
+        Debug.Log(this.score);
     }
     
     
