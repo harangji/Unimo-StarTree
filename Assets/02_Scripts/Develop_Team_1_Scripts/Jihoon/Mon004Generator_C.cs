@@ -22,8 +22,8 @@ public class Mon004Generator_C : MonsterGenerator
 
     protected override MonsterController generateEnemy()
     {
-        var rate = Random.Range(0, 90);
-
+        var rate = Random.Range(90, 100);
+        
         if (rate < 70)
         {
             Debug.Log("패턴 1");
@@ -39,7 +39,11 @@ public class Mon004Generator_C : MonsterGenerator
         else
         {
             Debug.Log("패턴 3");
-            // StartPattern3();
+            
+            Vector3 pos = findGenPosition();
+            Quaternion quat = setGenRotation(pos);
+            MonsterController controller = Instantiate(monsterPattern3, pos, quat).GetComponent<MonsterController>();
+            controller.InitEnemy(playerTransform);
         }
 
         return null;

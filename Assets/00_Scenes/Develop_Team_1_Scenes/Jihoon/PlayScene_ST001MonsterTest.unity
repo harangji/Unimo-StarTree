@@ -3934,10 +3934,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: 4e9ecec1f16a9774d85e0b297b46fe12, type: 2}
-  monsterPattern1: {fileID: 1313915641652497427, guid: e8410453af08a234d889e0bd14a44b14,
+  monsterPattern1: {fileID: 1313915641652497427, guid: 9856596b3536ec541b4301941f5516d0,
     type: 3}
   monsterPattern2: {fileID: 0}
-  monsterPattern3: {fileID: 0}
+  monsterPattern3: {fileID: 1313915641652497427, guid: e8410453af08a234d889e0bd14a44b14,
+    type: 3}
 --- !u!222 &33501478476362097
 CanvasRenderer:
   m_ObjectHideFlags: 0
