@@ -27,7 +27,7 @@ public class StageData
         if (IsBonusStage)
         {
             TimeLimit = 60;
-            TargetScore = 0;
+            TargetScore = 400 + ((BonusStageNumber / 5) * 100);
             DifficultyValue = 0;
             MaxFlowerCount = 20;
         }
@@ -40,7 +40,7 @@ public class StageData
             DifficultyValue = Mathf.Min(60, Mathf.RoundToInt((float)difficulty));
             if (IsBossStage) DifficultyValue += 5;
 
-            MaxFlowerCount = 10 + (stageNum - 1) / 50;
+            MaxFlowerCount = 10 + (stageNum - 1) / 25;
         }
     }
 }

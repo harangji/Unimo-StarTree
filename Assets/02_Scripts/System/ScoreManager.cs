@@ -1,11 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Random = UnityEngine.Random;
 
 public class ScoreManager : MonoBehaviour
 {
+    // 점수 갱신 시 이벤트 알림
+    public event Action<double> OnScoreChanged;
+    
     [SerializeField] private List<TextMeshProUGUI> specialResourceTxts;
     [SerializeField] private TextMeshProUGUI scoreTxt;
     [SerializeField] private TextMeshProUGUI resultTxt;
@@ -16,6 +21,7 @@ public class ScoreManager : MonoBehaviour
     
     [SerializeField] private float criticalChance; // 크리티컬 확률 (예시값)
     [SerializeField] private float criticalMult;   // 크리티컬 배율 (예시값)
+    
     
     private void Awake()
     {
@@ -91,6 +97,10 @@ public class ScoreManager : MonoBehaviour
         }
 
         scoreTxt.text = StringMethod.ToCurrencyString(gatheredResources[0]);
+        
+        // 점수 갱신 이벤트 호출
+        OnScoreChanged?.Invoke(this.score);
+        Debug.Log(this.score);
     }
     
     
