@@ -22,7 +22,7 @@ public class Mon004Generator_C : MonsterGenerator
 
     protected override MonsterController generateEnemy()
     {
-        var rate = Random.Range(90, 100);
+        var rate = Random.Range(0, 100);
         
         if (rate < 70)
         {
