@@ -17,7 +17,6 @@ public class StageSelectUI : MonoBehaviour
 
     private void Start()
     {
-        mMaxClearedStage = StageLoader.GetLastClearedStage();
         UpdateUI();
     }
 
@@ -65,6 +64,7 @@ public class StageSelectUI : MonoBehaviour
     // 시작버튼 눌렀을 때, 스테이지 진입
     public void OnClick_StartGame()
     {
+        mMaxClearedStage = StageLoader.GetLastClearedStage();
         // 잠긴 스테이지는 시작 불가
         if (mCurrentStage > mMaxClearedStage + 1)
         {

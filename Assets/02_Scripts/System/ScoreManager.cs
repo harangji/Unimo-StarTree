@@ -66,7 +66,8 @@ public class ScoreManager : MonoBehaviour
     {
         if (idx == 1) // »¡°£ ²É
         {
-            int baseReward = CalculateReward(Base_Manager.Data.UserData.Level);
+            int baseReward = 10;
+            // int baseReward = CalculateReward(Base_Manager.Data.UserData.Level);
 
             if (Random.value < criticalChance)
             {
@@ -75,6 +76,7 @@ public class ScoreManager : MonoBehaviour
             }
 
             gatheredResources[idx] += baseReward;
+            this.score += baseReward;
         }
         else if (idx == 0) // ³ë¶õ ²É
         {
