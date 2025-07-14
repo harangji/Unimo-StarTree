@@ -20,6 +20,8 @@ public class PlayerMover : MonoBehaviour
     protected AudioSource moveAudio;
     protected float moveSoundMax;
     // Start is called before the first frame update
+    
+    
     protected void Start()
     {
         playerTransform = transform;
@@ -50,6 +52,7 @@ public class PlayerMover : MonoBehaviour
     public void SetCharacterStat(UnimoRuntimeStat stat)
     {
         moveSpeed = stat.FinalStat.MoveSpd;
+        Debug.Log($"[PlayerMover] 이동속도 설정됨: {moveSpeed}");
         // 향후 확장 가능 예시
         // pushSpeed = stat.FinalStat.AuraStr * 2f;
         // Debug.Log($"[PlayerMover] 이동속도 설정됨: {moveSpeed}");

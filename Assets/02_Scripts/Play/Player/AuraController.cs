@@ -24,12 +24,25 @@ public class AuraController : MonoBehaviour
     //CSV로부터 오라 크기(range)를 능동적으로 받아서 조절,
     //AuraController, 해당 스크립트에서 실질적인 크기를 담당
     //해당 로직을 작성하는 것이 책임 분리(SRP)와 응집도 측면에서 가장 적절.
-    public void InitAura(float range)
+    
+    
+    public void InitAura(float range, float auraStrength)
     {
         transform.localScale = range * Vector3.one;
         originalScale = transform.localScale;
+
+        originalGrowth = 12f * auraStrength; // 기본 성장 속도 × 배율
         growthperSec = originalGrowth;
+        Debug.Log($"[AuraController] 아우라 초기화됨 → Range: {range}, Scale: {transform.localScale}, Growth: {growthperSec}");
     }
+    
+    //원본 코드. 정현식
+    //public void InitAura(float range)
+    //{
+    //    transform.localScale = range * Vector3.one;
+    //    originalScale = transform.localScale;
+    //    growthperSec = originalGrowth;
+    //}
     
     
     public void Shrink()
