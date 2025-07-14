@@ -10,8 +10,8 @@ public class Mon004State_Action3 : MonsterState_Action
     private int remainJump = 3;
     private float jumpDuration = 10f;
     private float maxRotation = Mathf.PI * 7f / 18f;
-    private float moveSpeed = 6f;
-    private float attRange = 1.8f;
+    private float moveSpeed = 8f;
+    private float attRange = 2.7f;
     private float attDamage = 2f;
     private Vector3 indicatorPos = Vector3.zero;
     private float lapseForIndicator = 0f;
