@@ -75,8 +75,8 @@ GameObject:
   m_Component:
   - component: {fileID: 807850950759452507}
   - component: {fileID: 807850950759452500}
+  - component: {fileID: 4458354116093459155}
   - component: {fileID: 807850950759452503}
-  - component: {fileID: 7804366411722894041}
   - component: {fileID: 807850950759452505}
   - component: {fileID: 807850950759452504}
   m_Layer: 6
@@ -113,6 +113,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e6894efa8ea2f24bbc758925a776590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4458354116093459155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807850950759452506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 644dacae5a8417b4cb50cb5482fbd6e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectiles:
+  - {fileID: 878872202919454926}
+  - {fileID: 878872203067691029}
+  - {fileID: 878872203307631721}
+  - {fileID: 878872204082521460}
+  bombFX: {fileID: 2845618596426184591, guid: 0d4308366fdaf2344afe5f8528daa6c6, type: 3}
+  canBomb: 1
 --- !u!114 &807850950759452503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,24 +144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a499bd7c9be102e4f8cd6fa2764a8f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7804366411722894041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 807850950759452506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb52856dad47ac24ea18908a0fc782af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectiles:
-  - {fileID: 878872202919454926}
-  - {fileID: 878872203067691029}
-  - {fileID: 878872203307631721}
-  - {fileID: 878872204082521460}
-  bombFX: {fileID: 2845618596426184591, guid: 0d4308366fdaf2344afe5f8528daa6c6, type: 3}
 --- !u!114 &807850950759452505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,7 +217,7 @@ GameObject:
   - component: {fileID: 7332321771827351207}
   - component: {fileID: 6533020907287779115}
   m_Layer: 9
-  m_Name: MON003_Bungpeo
+  m_Name: MON003_Bungpeo_C
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

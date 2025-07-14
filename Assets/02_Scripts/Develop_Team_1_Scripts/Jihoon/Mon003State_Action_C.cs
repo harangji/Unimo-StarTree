@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mon003State_Action : MonsterState_Action
+public class Mon003State_Action_C : MonsterState_Action
 {
     [SerializeField] private List<Mon003mislActivator> projectiles;
     [SerializeField] private GameObject bombFX;
@@ -11,19 +11,33 @@ public class Mon003State_Action : MonsterState_Action
     private float lapseTime = 0f;
     private float bombRadius = 5f;
     private bool hasBomb;
-    
+
+    public bool canBomb = true;
+
     public override void TransitionAction(MonsterController controller)
     {
         base.TransitionAction(controller);
-        controller.enemyAnimator.SetTrigger("action");
-        controller.enemyAnimator.SetFloat("speed", 2f/ chargeTime);
+        if (canBomb)
+        {
+            OnTriggerAction();
+        }
+        controller.enemyAnimator.SetFloat("speed", 2f / chargeTime);
         controller.indicatorCtrl.GetIndicatorTransform().localScale = 2f * bombRadius * Vector3.one;
         controller.GetComponent<AudioSource>().enabled = true;
     }
+
     public override void UpdateAction()
     {
-        if (hasBomb) { return; }
-        
+        if (hasBomb)
+        {
+            return;
+        }
+
+        if (!canBomb)
+        {
+            return;
+        }
+
         lapseTime += Time.deltaTime;
         float ratio = Mathf.Pow(lapseTime / chargeTime, 0.75f);
         controller.indicatorCtrl.ControlIndicator(ratio);
@@ -32,15 +46,17 @@ public class Mon003State_Action : MonsterState_Action
             bomb();
         }
     }
+
     private void bomb()
     {
         hasBomb = true;
-        Instantiate(bombFX,transform.position + Vector3.up, Quaternion.identity);
+        Instantiate(bombFX, transform.position + Vector3.up, Quaternion.identity);
         for (int i = 0; i < projectiles.Count; i++)
         {
-            projectiles[i].transform.SetParent(null,true);
-            projectiles[i].ActivateMissle(controller.playerTransform,controller.transform.position);
+            projectiles[i].transform.SetParent(null, true);
+            projectiles[i].ActivateMissle(controller.playerTransform, controller.transform.position);
         }
+
         Vector3 playerdiff = controller.transform.position - controller.playerTransform.position;
         if (playerdiff.magnitude < bombRadius)
         {
@@ -49,7 +65,13 @@ public class Mon003State_Action : MonsterState_Action
                 player.Hit(bombDamage, controller.transform.position);
             }
         }
+
         controller.DeactiveEnemy();
         controller.DestroyEnemy();
+    }
+
+    public void OnTriggerAction()
+    {
+        controller.enemyAnimator.SetTrigger("action");
     }
 }
