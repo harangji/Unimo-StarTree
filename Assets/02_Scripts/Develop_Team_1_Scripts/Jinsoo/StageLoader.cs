@@ -36,7 +36,7 @@ public static class StageLoader
     // 불러오기
     public static int GetLastClearedStage()
     {
-        return PlayerPrefs.GetInt(LastClearedStageKey, 200); // 기본값 0 (아무 스테이지도 클리어 안함)
+        return PlayerPrefs.GetInt(LastClearedStageKey, 500); // 기본값 0 (아무 스테이지도 클리어 안함)
     }
     
     public static void ResetProgress()

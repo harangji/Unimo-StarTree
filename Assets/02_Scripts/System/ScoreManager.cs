@@ -1,11 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Random = UnityEngine.Random;
 
 public class ScoreManager : MonoBehaviour
 {
+    // 점수 갱신 시 이벤트 알림
+    public event Action<double> OnScoreChanged;
+    
     [SerializeField] private List<TextMeshProUGUI> specialResourceTxts;
     [SerializeField] private TextMeshProUGUI scoreTxt;
     [SerializeField] private TextMeshProUGUI resultTxt;
@@ -19,6 +24,7 @@ public class ScoreManager : MonoBehaviour
     
     [SerializeField] private float yellowBloomMultiplyChance = 0.8f; // 노란 꽃 확률 (예시)
     [SerializeField] private float yellowBloomMultiplyValue = 1.8f;
+    
     
     private void Awake()
     {
@@ -84,6 +90,10 @@ public class ScoreManager : MonoBehaviour
         }
 
         scoreTxt.text = StringMethod.ToCurrencyString(gatheredResources[0]);
+        
+        // 점수 갱신 이벤트 호출
+        OnScoreChanged?.Invoke(this.score);
+        Debug.Log(this.score);
     }
     
     // 원본 코드. 정현식

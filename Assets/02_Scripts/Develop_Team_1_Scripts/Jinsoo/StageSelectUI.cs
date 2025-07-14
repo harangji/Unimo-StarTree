@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,15 @@ public class StageSelectUI : MonoBehaviour
     {
         mMaxClearedStage = StageLoader.GetLastClearedStage();
         UpdateUI();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            mMaxClearedStage++;
+            Debug.Log($"마지막 스테이지 증가 ::: {mMaxClearedStage}");
+        }
     }
 
     // 왼쪽 화살표 눌렀을 때, 스테이지 감소
