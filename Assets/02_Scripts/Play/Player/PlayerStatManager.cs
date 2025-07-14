@@ -157,7 +157,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     
         stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
         PlaySystemRefStorage.harvestLvController.LossExp(stun);
-        hpManager.TakeDamage(20f);
+        // hpManager.TakeDamage(20f);
     }
     //원본 Hit 코드. 정현식
     //public void Hit(float stun, Vector3 hitPos)
@@ -199,7 +199,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         PlaySystemRefStorage.harvestLvController.LossExp(stun);
 
         // HPManager를 통해 데미지 처리
-        hpManager.TakeDamage(20f);
+        // hpManager.TakeDamage(20f);
     }
 
     private void stopPlay()
@@ -268,10 +268,17 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         hitPos.y = 0;
         stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
         
+        Debug.Log($"맞기전 피: {currentHP}");
+        
         //데미지 처리
         var reducedDamage = combatEvent.Damage * (1f - mStat.BaseStat.Armor);
         currentHP -= reducedDamage;
         hpGauge.SetGauge(currentHP / mStat.BaseStat.Health);
+        
+        Debug.Log($"맞은 후 피: {currentHP}");
+        Debug.Log($"최대 체력: {mStat.BaseStat.Health}");
+        Debug.Log($"비율: {currentHP / mStat.BaseStat.Health}");
+        
         
         //사망 체크
         if (currentHP <= 0)
