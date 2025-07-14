@@ -16,7 +16,7 @@ public class AccountInitializer : MonoBehaviour
             instance = this;
         }
     }
-    [SerializeField] private GameObject typeSetter;
+    // [SerializeField] private GameObject typeSetter;
     [SerializeField] private GameObject nameSetter;
     [SerializeField] private TMP_InputField inputField;
 

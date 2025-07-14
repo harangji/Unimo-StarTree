@@ -32,14 +32,14 @@ public static class UnimoDatabase
         {
             MoveSpd = 8.2f,
             CharSize = new Vector2Int(120, 120),
-            Health = 250,
-            HealthRegen = 1,
-            HealingMult = 1f,
-            Armor = 0.05f,
+            Health = 250, // 利侩
+            HealthRegen = 1, // 利侩
+            HealingMult = 1f, // 利侩
+            Armor = 0.05f, // 利侩
             StunIgnoreChance = 0f,
             StunResistanceRate = 0f,
             CriticalChance = 0f,
-            CriticalMult = 0f,
+            CriticalMult = 0f, 
             YFGainMult = 1.3f,
             OFGainMult = 1.5f,
             AuraRange = 6.92f,

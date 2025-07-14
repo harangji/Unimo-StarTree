@@ -39,32 +39,6 @@ public class Mon005Generator : MonsterGenerator
         return pos;
     }
 
-    protected override IEnumerator exPatternCoroutine()
-    {
-        isExtreme = true;
-        yield return new WaitForSeconds(2f);
-        float angle;
-        Vector3 center = playerTransform.position;
-        if (center.magnitude > PlaySystemRefStorage.mapSetter.MaxRange - 7.2f)
-        {
-            center *= (PlaySystemRefStorage.mapSetter.MaxRange - 7.2f) / center.magnitude;
-        }
-
-        for (int i = 0; i < 8; i++)
-        {
-            angle = 1f / 4f * Mathf.PI * i;
-            Vector3 pos = center + 6.5f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
-            Quaternion quat = Quaternion.LookRotation(center - pos, Vector3.up);
-            MonsterController controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
-            controller.InitEnemy(playerTransform);
-        }
-
-        yield return new WaitForSeconds(2f);
-        isPaused = false;
-        isExtreme = false;
-        yield break;
-    }
-
     protected override MonsterController generateEnemy()
     {
         //todo 난이도 점유 기능 추가해야 함 -> 나중에 게임 매니저 만들어지면 하면 됨

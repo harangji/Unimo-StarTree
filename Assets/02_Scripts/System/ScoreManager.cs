@@ -19,11 +19,8 @@ public class ScoreManager : MonoBehaviour
     // private PlayHoneyGainCalculator honeyCalculator;
     private GameRecordManager recordManager;
     
-    [SerializeField] private float redBloomMultiplyChance = 0.5f; // 빨간 꽃 확률
-    [SerializeField] private float redBloomMultiplyValue = 1.5f;
-    
-    [SerializeField] private float yellowBloomMultiplyChance = 0.8f; // 노란 꽃 확률 (예시)
-    [SerializeField] private float yellowBloomMultiplyValue = 1.8f;
+    [SerializeField] private float criticalChance; // 크리티컬 확률 (예시값)
+    [SerializeField] private float criticalMult;   // 크리티컬 배율 (예시값)
     
     
     private void Awake()
@@ -32,40 +29,49 @@ public class ScoreManager : MonoBehaviour
         gatheredResources = new List<double> { 0, 0 };
         score = 0;
     }
+    
     private void Start()
-         {
-             //ToDo :: recordManager 대신 Easy Save사용하기 하랑
-             // recordManager = FindAnyObjectByType<GameRecordManager>();
-             // honeyCalculator = GetComponent<PlayHoneyGainCalculator>();
-             
-             for (int i = 1; i < gatheredResources.Count; i++)
-             {
-                 specialResourceTxts[i-1].text = gatheredResources[i].ToString();
-             }
-             PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(() => 
-             {
-                 for (int i = 1; i < gatheredResources.Count; i++)
-                 {
-                     specialResourceTxts[i-1].text = gatheredResources[i].ToString();
-                 }
-     
-                 scoreTxt.text = StringMethod.ToCurrencyString(gatheredResources[0]);
-                 resultTxt.text = StringMethod.ToCurrencyString(gatheredResources[0]);
-                 checkBest();
-             });
-             Debug.Log("??");
-         }
+    {
+        //ToDo :: recordManager 대신 Easy Save사용하기 하랑
+        // recordManager = FindAnyObjectByType<GameRecordManager>();
+        // honeyCalculator = GetComponent<PlayHoneyGainCalculator>();
+        
+        for (int i = 1; i < gatheredResources.Count; i++)
+        {
+            specialResourceTxts[i-1].text = gatheredResources[i].ToString();
+        }
+        PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(() => 
+        {
+            for (int i = 1; i < gatheredResources.Count; i++)
+            {
+                specialResourceTxts[i-1].text = gatheredResources[i].ToString();
+            }
+    
+            scoreTxt.text = StringMethod.ToCurrencyString(gatheredResources[0]);
+            resultTxt.text = StringMethod.ToCurrencyString(gatheredResources[0]);
+            checkBest();
+        });
+        Debug.Log("??");
+    }
+    
+    public void ApplyStatFromCharacter(UnimoRuntimeStat stat)
+    {
+        criticalChance = stat.FinalStat.CriticalChance;
+        criticalMult = stat.FinalStat.CriticalMult;
+
+        Debug.Log($"[ScoreManager] 스탯 적용됨 ▶ 크리티컬 확률 = {criticalChance}, 배율 = {criticalMult}");
+    }
+    
     public void AddBloomScore(int idx, float score)
     {
-        if (idx == 1)
+        if (idx == 1) // 빨간 꽃
         {
             int baseReward = CalculateReward(Base_Manager.Data.UserData.Level);
-            
-            // 일정 확률로 배수 적용
-            if (Random.value < redBloomMultiplyChance)
+
+            if (Random.value < criticalChance)
             {
-                baseReward = Mathf.FloorToInt(baseReward * redBloomMultiplyValue);
-                Debug.Log($"[ScoreManager] 빨간 꽃 배수 발동! x{redBloomMultiplyValue} → {baseReward}");
+                baseReward = Mathf.FloorToInt(baseReward * criticalMult);
+                Debug.Log($"[ScoreManager]  빨간 꽃 크리티컬 발동! x{criticalMult} → {baseReward}");
             }
 
             gatheredResources[idx] += baseReward;
@@ -74,16 +80,17 @@ public class ScoreManager : MonoBehaviour
         {
             double gain = Base_Manager.Data.UserData.Second_Base *
                           (Base_Manager.Data.UserData.BuffFloating[1] > 0.0f ? 2.0f : 1.0f);
-            // 노란 꽃 배수 확률 적용
-            if (Random.value < yellowBloomMultiplyChance)
+
+            if (Random.value < criticalChance)
             {
-                gain *= yellowBloomMultiplyValue;
-                Debug.Log($"[ScoreManager]  노란 꽃 배수 발동! x{yellowBloomMultiplyValue} → {gain}");
+                gain *= criticalMult;
+                Debug.Log($"[ScoreManager]  노란 꽃 크리티컬 발동! x{criticalMult} → {gain}");
             }
-            
+
             gatheredResources[idx] += gain;
             this.score += gain;
         }
+
         if (idx != 0)
         {
             specialResourceTxts[idx - 1].text = gatheredResources[idx].ToString();
@@ -96,19 +103,39 @@ public class ScoreManager : MonoBehaviour
         Debug.Log(this.score);
     }
     
-    // 원본 코드. 정현식
+    
+    
     //public void AddBloomScore(int idx, float score)
     //{
+    //    double addedAmount = 0;
+    //
     //    if (idx == 1)
     //    {
-    //        gatheredResources[idx] += CalculateReward(Base_Manager.Data.UserData.Level);
+    //        int reward = CalculateReward(Base_Manager.Data.UserData.Level);
+    //        gatheredResources[idx] += reward;
+    //        addedAmount = reward;
+    //
+    //        Debug.Log($"[ScoreManager] 빨간 꽃 수집: 보상 = {reward}");
     //    }
     //    else
     //    {
-    //        gatheredResources[idx] += (Base_Manager.Data.UserData.Second_Base * (Base_Manager.Data.UserData.BuffFloating[1] > 0.0f ? 2.0f : 1.0f));
+    //        double gain = Base_Manager.Data.UserData.Second_Base *
+    //                      (Base_Manager.Data.UserData.BuffFloating[1] > 0.0f ? 2.0f : 1.0f);
+    //        gatheredResources[idx] += gain;
+    //        addedAmount = gain;
+    //
+    //        Debug.Log($"[ScoreManager] 노란 꽃 수집: 수익 = {gain}");
     //    }
-    //    this.score += (Base_Manager.Data.UserData.Second_Base * (Base_Manager.Data.UserData.BuffFloating[1] > 0.0f ? 2.0f : 1.0f));
-    //    if (idx != 0) { specialResourceTxts[idx-1].text = gatheredResources[idx].ToString(); }
+    //
+    //    double deltaScore = Base_Manager.Data.UserData.Second_Base *
+    //                        (Base_Manager.Data.UserData.BuffFloating[1] > 0.0f ? 2.0f : 1.0f);
+    //    this.score += deltaScore;
+    //
+    //    Debug.Log($"[ScoreManager] 누적 점수(score) 증가량 = {deltaScore}");
+    //
+    //    if (idx != 0)
+    //        specialResourceTxts[idx - 1].text = gatheredResources[idx].ToString();
+    //
     //    scoreTxt.text = StringMethod.ToCurrencyString(gatheredResources[0]);
     //}
     

@@ -7,10 +7,11 @@ public class HPManager : MonoBehaviour
 
     [SerializeField] private HPGaugeController hpGauge;
 
-    [Header("회복 설정")]
-    [SerializeField] private float regenAmountPerSecond = 5f; // 초당 회복량
-    [SerializeField] private float fKeyHealAmount = 20f;       // F 키 회복량
-    
+    [Header("스탯 설정")]
+    [SerializeField] private float regenAmountPerSecond; // 초당 회복량
+    [SerializeField] private float fKeyHealAmount;       // F 키 회복량
+    private float armor;              // 데미지 감소율
+    private float healingMultiplier;  // 회복 배수
     
     private bool bIsDead = false;
     
@@ -45,12 +46,13 @@ public class HPManager : MonoBehaviour
     {
         if (bIsDead) return;
 
-        currentHP -= damage;
+        float reducedDamage = damage * (1f - armor); // 방어력 적용
+        currentHP -= reducedDamage;
         currentHP = Mathf.Max(currentHP, 0f);
         hpGauge.SetGauge(currentHP / maxHP);
 
-        Debug.Log($"플레이어가 {damage}의 피해를 입었습니다. 현재 HP: {currentHP}");
-        
+        Debug.Log($"플레이어가 {reducedDamage:F1} 피해를 입었습니다. (원래 {damage}, 방어력 {armor * 100:F0}%)");
+
         if (currentHP <= 0f)
         {
             bIsDead = true;
@@ -63,9 +65,11 @@ public class HPManager : MonoBehaviour
     {
         if (bIsDead) return;
 
-        currentHP += amount;
+        float actualHeal = amount * healingMultiplier;
+        currentHP += actualHeal;
         currentHP = Mathf.Min(currentHP, maxHP);
         hpGauge.SetGauge(currentHP / maxHP);
+        
     }
     
     //캐릭터 스탯 적용. 정현식
@@ -75,9 +79,14 @@ public class HPManager : MonoBehaviour
         currentHP = maxHP;
 
         regenAmountPerSecond = stat.FinalStat.HealthRegen;
+        healingMultiplier = stat.FinalStat.HealingMult;
+        armor = stat.FinalStat.Armor;
         hpGauge.SetGauge(1f);
         
-        Debug.Log($"[HPManager] 체력 설정됨. HP: {maxHP}, 회복/초: {regenAmountPerSecond}");
+        Debug.Log($"[HPManager] 체력 설정됨. HP: {maxHP}," +
+                  $" 회복/초: {regenAmountPerSecond}," +
+                  $" 방어력: {armor}," +
+                  $" 힐배수: {healingMultiplier}");
     }
     
 }

@@ -23,6 +23,7 @@ public class Mon003State_Action : MonsterState_Action
     public override void UpdateAction()
     {
         if (hasBomb) { return; }
+        
         lapseTime += Time.deltaTime;
         float ratio = Mathf.Pow(lapseTime / chargeTime, 0.75f);
         controller.indicatorCtrl.ControlIndicator(ratio);

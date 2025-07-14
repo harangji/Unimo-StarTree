@@ -8,7 +8,9 @@ public class Mon001Indicator : MonsterIndicatorCtrl
     private float minRotate = 0.1f;
     private float maxRotate = 1.16f;
     private float currentRatio = 0f;
-    private float range = 3.7f;
+    // 이게 보이는 범위
+    [SerializeField] private float range = 3.7f;
+    // 이게 인지 범위 인거 같은데?
     private float indicatorScale = 3.7f;
     private float transitTime = 0.4f;
     private Coroutine transitCoroutine;

@@ -6,7 +6,7 @@ public class Mon001State_Preaction : MonsterState_Preaction
 {
     protected float moveSpeed = 2.5f;
     protected float existTime = 4.3f;
-    private float detectionRange = 3.7f;
+    [SerializeField] private float detectionRange = 3.7f;
     private float playerSize = 0f;
     private float detectionAngle = Mathf.PI / 6f;
     public override void TransitionAction(MonsterController controller)
