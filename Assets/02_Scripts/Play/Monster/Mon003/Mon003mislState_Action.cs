@@ -16,6 +16,7 @@ public class Mon003mislState_Action : MonsterState_Action
     private float lapseTime = 0f;
     private float bombRadius;
     private bool hasBomb;
+
     public override void TransitionAction(MonsterController controller)
     {
         base.TransitionAction(controller);
@@ -24,18 +25,24 @@ public class Mon003mislState_Action : MonsterState_Action
         setTargetPos();
         calculateParabola();
         rigidBody.useGravity = true;
-        controller.indicatorCtrl.GetIndicatorTransform().SetPositionAndRotation(targetPos,Quaternion.identity);
+        controller.indicatorCtrl.GetIndicatorTransform().SetPositionAndRotation(targetPos, Quaternion.identity);
         controller.indicatorCtrl.GetIndicatorTransform().SetParent(null, true);
-        controller.indicatorCtrl.GetIndicatorTransform().localScale = 2*bombRadius * Vector3.one;
+        controller.indicatorCtrl.GetIndicatorTransform().localScale = 2 * bombRadius * Vector3.one;
     }
+
     public override void FixedUpdateAction()
     {
         rigidBody.AddForce(AddGravitySTATIC);
         controller.transform.forward = rigidBody.linearVelocity.normalized;
     }
+
     public override void UpdateAction()
     {
-        if (hasBomb) { return; }
+        if (hasBomb)
+        {
+            return;
+        }
+
         lapseTime += Time.deltaTime;
         float ratio = Mathf.Pow(lapseTime / flightTime, 0.75f);
         controller.indicatorCtrl.ControlIndicator(ratio);
@@ -44,10 +51,12 @@ public class Mon003mislState_Action : MonsterState_Action
             bomb();
         }
     }
+
     public void SetCenterPos(Vector3 pos)
     {
         centerPos = pos;
     }
+
     private void setTargetPos()
     {
         Vector3 projForward = controller.transform.forward;
@@ -58,18 +67,22 @@ public class Mon003mislState_Action : MonsterState_Action
         diffVec.y = 0;
         flightDist = diffVec.magnitude;
     }
+
     private void calculateParabola()
     {
         float angle = Mathf.Acos(Vector3.Dot(controller.transform.forward, Vector3.up));
-        float speed = flightDist * Mathf.Sqrt((Physics.gravity+ AddGravitySTATIC).magnitude / (controller.transform.position.y * Mathf.Sin(angle) + flightDist * Mathf.Cos(angle)))
-            /Mathf.Sqrt(2*Mathf.Sin(angle));
+        float speed = flightDist * Mathf.Sqrt((Physics.gravity + AddGravitySTATIC).magnitude /
+                                              (controller.transform.position.y * Mathf.Sin(angle) +
+                                               flightDist * Mathf.Cos(angle)))
+                      / Mathf.Sqrt(2 * Mathf.Sin(angle));
         rigidBody.linearVelocity = speed * controller.transform.forward;
         flightTime = flightDist / speed / Mathf.Sin(angle);
     }
+
     private void bomb()
     {
         hasBomb = true;
-        Instantiate(bombFX, transform.position + 0.7f*Vector3.up, Quaternion.identity);
+        Instantiate(bombFX, transform.position + 0.7f * Vector3.up, Quaternion.identity);
         Vector3 playerdiff = controller.transform.position - controller.playerTransform.position;
         if (playerdiff.magnitude < bombRadius)
         {
@@ -90,6 +103,7 @@ public class Mon003mislState_Action : MonsterState_Action
                 CombatSystem.Instance.AddInGameEvent(combatEvent);
             }
         }
+
         controller.DeactiveEnemy();
         controller.DestroyEnemy();
     }
