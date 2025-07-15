@@ -26,7 +26,6 @@ public class CombatEvent : InGameEvent
 
 public class HealEvent : InGameEvent
 {
-    public int Heal { get; set; }
-    public Vector3 Position { get; set; }
+    public float Heal { get; set; }
     public override EventType Type => EventType.Heal;
 }

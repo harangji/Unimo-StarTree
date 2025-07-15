@@ -51,6 +51,10 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         playerMover = GetComponent<PlayerMover>();
         visualCtrl = GetComponent<PlayerVisualController>();
+        //auraController = FindAnyObjectByType<AuraController>();
+        //playerMover.FindAuraCtrl(auraController);
+        //auraController.gameObject.SetActive(false);
+
         if (isTestModel)
         {
             visualCtrl.test_InitModeling(equipPrefab, chaPrefab);
@@ -75,10 +79,16 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         auraController = FindAnyObjectByType<AuraController>();
         playerMover.FindAuraCtrl(auraController);
         auraController.gameObject.SetActive(false);
+
         PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(stopPlay);
 
+        hpGauge.SetGauge(1f);
 
-        InitCharacter(unimoID);
+        int selectedID = GameManager.Instance.SelectedUnimoID > 0
+            ? GameManager.Instance.SelectedUnimoID
+            : unimoID;  
+        
+        InitCharacter(selectedID);
         
         //최대 체력으로 hp 초기화
         currentHP = mStat.BaseStat.Health;
@@ -97,6 +107,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         }
 
         mStat = new UnimoRuntimeStat(mUnimoData.Stat);
+        
         playerMover.SetCharacterStat(mStat);
         auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
         PlaySystemRefStorage.scoreManager.ApplyStatFromCharacter(mStat);
@@ -215,8 +226,10 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         }
     }
 
-    public void TakeHeal(HealEvent combatEvent)
+    public void TakeHeal(HealEvent healEvent)
     {
-        throw new System.NotImplementedException();
+        currentHP = Mathf.Min(currentHP + healEvent.Heal, mStat.BaseStat.Health);
+        
+        hpGauge.SetGauge(currentHP / mStat.BaseStat.Health);
     }
 }

@@ -6,8 +6,8 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class TempChaCustomer : MonoBehaviour
 {
-    private int currentcharacter = 1;
-    private int currentengine = 1;
+    private int currentcharacter;
+    private int currentengine;
     private GameObject eqObj;
     private GameObject chObj;
     private void Start()
@@ -15,15 +15,34 @@ public class TempChaCustomer : MonoBehaviour
         currentcharacter = Base_Manager.Data.UserData.selectCharacter;
         currentengine = Base_Manager.Data.UserData.selectEngine;
 
+        // 마지막 선택된 캐릭터 ID 불러오기
+        int selectedUnimoID = PlayerPrefs.GetInt("LastSelectedUnimoID", 10101);
+
+        Debug.Log($"[TempChaCustomer] 마지막 선택된 캐릭터 ID : {selectedUnimoID}");
+
+        // GameManager로 넘겨서 인게임에서 사용할 수 있도록만 설정
+        GameManager.Instance.SelectedUnimoID = selectedUnimoID;
+
         GameManager.Instance.ChaIdx = currentcharacter;
         GameManager.Instance.EqIdx = currentengine;
+
         makePreviewObj();
     }
+    
     public void ChangeCharacter(int diff)
     {
         currentcharacter = diff;
         Base_Manager.Data.UserData.selectCharacter = currentcharacter;
         GameManager.Instance.ChaIdx = currentcharacter;
+        
+        //  인덱스를 유닛ID로 변환 후 저장해야 합니다.
+        int unitID = UnitIDMapping.GetUnitID(currentcharacter);
+        
+        // 선택 인덱스를 실제 유닛 ID로 변환하여 저장해야 합니다.
+        PlayerPrefs.SetInt("LastSelectedUnimoID", unitID); 
+        GameManager.Instance.SelectedUnimoID = unitID; // 유닛 ID 저장
+
+        
         makePreviewObj();
     }
     public void ChangeEquip(int diff)
@@ -31,6 +50,11 @@ public class TempChaCustomer : MonoBehaviour
         currentengine = diff;
         Base_Manager.Data.UserData.selectEngine = currentengine;
         GameManager.Instance.EqIdx = currentengine;
+        
+        // 캐릭터+장비 조합으로 유닛 ID 만들고 저장 (선택사항)
+        //int unitID = UnitIDMapping.GetUnitID(currentcharacter, currentengine);
+        //GameManager.Instance.SelectedUnimoID = unitID;
+        
         makePreviewObj();
     }
     public void makePreviewObj()
