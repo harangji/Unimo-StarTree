@@ -192,7 +192,7 @@ public class ADS_Manager
     public void ShowInterstitialAds()
     {
 
-        if (Base_Manager.Data.UserData.ADSBuy || Base_Manager.Data.UserData.ADS_Inter_Buy)
+        if (Base_Manager.Data.UserData.ADSBuy) //광고제거상품 구매여부 검사
         {
             if (_interstitialCallback != null)
             {
