@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-public enum Mission_State { Daily, Achievements }
+public enum Mission_State { Daily, Achievements } //Daily : 미션, Achievements : 업적
 
 public class UI_Mission : UI_Base
 {
@@ -32,7 +32,7 @@ public class UI_Mission : UI_Base
         TrophyObject.SetActive(!Daily);
         DailyBar.enabled = Daily;
         TrophyBar.enabled = !Daily;
-        GetMission(Daily ? Mission_State.Daily : Mission_State.Achievements);
+        GetMission(Daily ? Mission_State.Daily : Mission_State.Achievements); //미션, 업적 판별
     }
 
     

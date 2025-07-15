@@ -57,6 +57,11 @@ public class Base_Manager : MonoBehaviour
                 Data.SaveUserData(); //15초마다 저장
             }
 
+            if (Input.GetKeyDown(KeyCode.C)) //즉시 저장 테스트용
+            {
+                Data.SaveUserData();
+            }
+            
             if (Data.UserData.BonusRewardCount < 1000.0f)
             {
                 Data.UserData.BonusRewardCount += Time.deltaTime;
@@ -102,6 +107,7 @@ public class Base_Manager : MonoBehaviour
 
         return timeCount;
     }
+    
     public GameObject Instantiate_Path(string path)
     {
         return Instantiate(Resources.Load<GameObject>(path));

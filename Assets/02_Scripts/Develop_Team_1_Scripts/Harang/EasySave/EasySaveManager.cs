@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EasySaveManager : MonoBehaviour
 {
@@ -22,60 +23,60 @@ public class EasySaveManager : MonoBehaviour
             Destroy(gameObject);
         }
         
-        UserDataSettings = new ES3Settings("UserData.es3"); //ES3Settings ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
+        UserDataSettings = new ES3Settings("UserData.es3"); //ES3Settings ÀÎ½ºÅÏ½º »ı¼º
         UserDataES3File = new ES3File(UserDataSettings);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            CommitBuffered();
-        }
-    }
-    // ES3Settings ì¦‰ì‹œ ì €ì¥ //ìœ„í—˜í•´ì„œ ì•ˆì”€
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.S))
+    //     {
+    //         CommitBuffered();
+    //     }
+    // }
+    // ES3Settings Áï½Ã ÀúÀå //À§ÇèÇØ¼­ ¾È¾¸
     // public void Save<T>(string key, T value)
     // {
     //     ES3.Save<T>(key, value, UserDataSettings);
     // }
 
-    // ES3File ë²„í¼ì— ì§€ì—° ì €ì¥ - CommitBuffered() ì‹œ í•œë²ˆì—
+    // ES3File ¹öÆÛ¿¡ Áö¿¬ ÀúÀå - CommitBuffered() ½Ã ÇÑ¹ø¿¡
     public void SaveBuffered<T>(string key, T value)
     {
-        MyDebug.Log("ì €ì¥ ìŠ¤íƒ ìŒ“ì„");
+        MyDebug.Log("ÀúÀå ½ºÅÃ ½×ÀÓ");
         UserDataES3File.Save<T>(key, value);
     }
 
-    // ES3File ë²„í¼ì— ìŒ“ì¸ valueë¥¼ ì €ì¥
+    // ES3File ¹öÆÛ¿¡ ½×ÀÎ value¸¦ ÀúÀå
     public void CommitBuffered()
     {
-        MyDebug.Log("ìŒ“ì¸ ìŠ¤íƒ ì €ì¥ ì™„ë£Œ");
+        MyDebug.Log("½×ÀÎ ½ºÅÃ ÀúÀå ¿Ï·á");
         UserDataES3File.Sync();
     }
     
-    // ë¶ˆëŸ¬ì˜¤ê¸°
+    // ºÒ·¯¿À±â
     public bool TryLoad<T>(string key, out T tValue)
     {
-        UserDataES3FileLoaded = new ES3File(UserDataSettings); //ë°›ì•„ì˜¬ ë•Œ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ìƒì„±í•˜ëŠ”ê²ƒì´ ì•ˆì „
+        UserDataES3FileLoaded = new ES3File(UserDataSettings); //¹Ş¾Æ¿Ã ¶§ ÀÎ½ºÅÏ½º¸¦ »ı¼ºÇÏ´Â°ÍÀÌ ¾ÈÀü
         
-        if (UserDataES3FileLoaded.KeyExists(key)) // ì•ˆì „í•˜ê²Œ í‚¤ê°€ ìˆëŠ”ì§€ ë¯¸ë¦¬ ê²€ìƒ‰
+        if (UserDataES3FileLoaded.KeyExists(key)) // ¾ÈÀüÇÏ°Ô Å°°¡ ÀÖ´ÂÁö ¹Ì¸® °Ë»ö
         {
-            tValue = UserDataES3FileLoaded.Load<T>(key); //ìˆë‹¤ë©´ valueë¥¼
+            tValue = UserDataES3FileLoaded.Load<T>(key); //ÀÖ´Ù¸é value¸¦
             return true; // out T tValue
         }
         
-        tValue = default; //ì—†ë‹¤ë©´ T defaultê°’ì„
+        tValue = default; //¾ø´Ù¸é T default°ªÀ»
         return false;
     }
 
-    // ì‚­ì œ
+    // »èÁ¦
     public void Delete(string key)
     {
         if (ES3.KeyExists(key, UserDataSettings.path))
             ES3.DeleteKey(key, UserDataSettings);
     }
 
-    // ì „ì²´ ì‚­ì œ
+    // ÀüÃ¼ »èÁ¦
     public void DeleteAll()
     {
         ES3.DeleteFile(UserDataSettings.path);
@@ -88,24 +89,28 @@ public class User_Data
 {
     public string UserName = "";
 
-    public float EXP = 0; // í˜„ì¬ ê²½í—˜ì¹˜
-    public int Level = 0; // í˜„ì¬ ë ˆë²¨
-    public double Second_Base = 5; // ì‹œì„¤ ì´ˆë‹¹ ë³„ê¿€ ìƒì‚°ëŸ‰
-    public double NextLevel_Base = 5; // ë ˆë²¨ì—… ë¹„ìš©
-    public double Yellow, Red, Blue; //ë³„ê¿€
-    public int BestStage = 0; //ìµœê³  í´ë¦¬ì–´ ìŠ¤í…Œì´ì§€
+    public float EXP = 0; // ÇöÀç °æÇèÄ¡
+    public int Level = 0; // ÇöÀç ·¹º§
+    public double Second_Base = 5; // ½Ã¼³ ÃÊ´ç º°²Ü »ı»ê·®
+    public double NextLevel_Base = 5; // ·¹º§¾÷ ºñ¿ë
+    public double Yellow, Red, Blue; //º°²Ü
+    public int BestStage = 0; //ÃÖ°í Å¬¸®¾î ½ºÅ×ÀÌÁö
 
+    //?????
     public float[] BuffFloating = new float[3];
 
-    public bool[] GetCharacterData = { true, false, false, false, false, false, false, false, false, false, false, false, false };
-    public bool[] GetEQData = { true, false, false, false, false, false, false, false, false, false, false, false, false , false, false , false, false, false, false , false, false, false, false};
+    //º¸À¯ÇÑ Ä³¸¯ÅÍ true, ¹Ìº¸À¯ false
+    public bool[] HasCharacterData = { true, false, false, false, false, false, false, false, false, false, false, false, false };
+    
+    //º¸À¯ÇÑ ºØºØ¿£Áø true, ¹Ìº¸À¯ false
+    public bool[] HasEnginData = { true, false, false, false, false, false, false, false, false, false, false, false, false , false, false , false, false, false, false , false, false, false, false};
 
     public double BestScoreGameOne, BestScoreGameTwo;
 
     public int IAP = 0;
 
-    public bool ADSBuy = false;
-    public bool ADS_Inter_Buy = false;
+    //±¤°íÁ¦°Å »óÇ° ±¸¸Å ¿©ºÎ
+    public bool ADSBuy = false; 
 
     public int DailyAccount = 1;
     public int GamePlay;
@@ -115,13 +120,15 @@ public class User_Data
     public int TimeItem;
     public int RePlay;
 
-    public bool GetDaily;
-    public bool GetGamePlay;
-    public bool GetADS;
-    public bool GetTouch;
-    public bool GetTimeItem;
-    public bool GetRePlay;
+    // ¹Ì¼Ç ¿Ï·á ¿©ºÎ (µ¥ÀÏ¸®)
+    public bool GetDaily; // Ãâ¼®
+    public bool GetGamePlay; // °ÔÀÓ ÇÃ·¹ÀÌÇÏ±â
+    public bool GetADS; // ±¤°íº¸±â
+    public bool GetTouch; // À¯´Ï¸ğ ÅÍÄ¡ÇÏ±â
+    public bool GetTimeItem; //°Ô ÀÓ ³»¿¡¼­ Å¸ÀÌ¸Ó Áõ°¡ ¾ÆÀÌÅÛ ¸Ô±â
+    public bool GetRePlay; // µÎ ¹è º¸»ó
 
+    //¾÷Àû ¿Ï·á ¿©ºÎ
     public bool[] GetArchivements = { false, false, false, false, false, false, false, false, false };
 
     public string S_DateTime, E_DateTime;

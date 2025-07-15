@@ -75,7 +75,19 @@ public class Mon003mislState_Action : MonsterState_Action
         {
             if (controller.playerTransform.TryGetComponent<PlayerStatManager>(out var player))
             {
-                player.Hit(bombDamage, controller.transform.position);
+                var monster = GetComponentInParent<IDamageAble>();
+                var playerIDamageAble = GameObject.FindGameObjectWithTag("Player").GetComponent<IDamageAble>();
+
+                CombatEvent combatEvent = new CombatEvent
+                {
+                    Sender = monster,
+                    Receiver = playerIDamageAble,
+                    Damage = (monster as Monster).skillDamage,
+                    HitPosition = controller.transform.position,
+                    Collider = null,
+                };
+
+                CombatSystem.Instance.AddInGameEvent(combatEvent);
             }
         }
         controller.DeactiveEnemy();

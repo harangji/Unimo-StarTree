@@ -12,7 +12,7 @@ public class Mission_Base : MonoBehaviour
     public Slider m_Slider;
     public Image m_Reward, m_TitleImage;
     public Button button;
-    public GameObject InProgress;
+    public GameObject InProgress; // 미션 완료 완료 표시 UI (Text)
     public CharCostumer m_CharCostumer;
     public int index;
 
@@ -132,9 +132,9 @@ public class Mission_Base : MonoBehaviour
             case "IAP": return Base_Manager.Data.UserData.IAP;
             case "Collection":
                 int a = 0;
-                for(int i = 0; i < Base_Manager.Data.UserData.GetCharacterData.Length; i++)
+                for(int i = 0; i < Base_Manager.Data.UserData.HasCharacterData.Length; i++)
                 {
-                    if (Base_Manager.Data.UserData.GetCharacterData[i] == true)
+                    if (Base_Manager.Data.UserData.HasCharacterData[i] == true)
                     {
                         a++;
                     }
@@ -142,9 +142,9 @@ public class Mission_Base : MonoBehaviour
                 return a;
             case "Collection_EQ":
                 int b = 0;
-                for(int i = 0; i < Base_Manager.Data.UserData.GetEQData.Length; i++)
+                for(int i = 0; i < Base_Manager.Data.UserData.HasEnginData.Length; i++)
                 {
-                    if (Base_Manager.Data.UserData.GetEQData[i] == true)
+                    if (Base_Manager.Data.UserData.HasEnginData[i] == true)
                     {
                         b++;
                     }

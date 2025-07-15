@@ -46,7 +46,7 @@ public class Mon006State_Action : MonsterState_Action
         {
             if (controller.playerTransform.TryGetComponent<PlayerStatManager>(out var player))
             {
-                player.Hit(Mathf.Max(remainDuration, 0.3f) + 0.5f, laserPivot.position + projectedVec);
+                // player.Hit(Mathf.Max(remainDuration, 0.3f) + 0.5f, laserPivot.position + projectedVec);
             }
         }
     }

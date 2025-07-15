@@ -31,7 +31,7 @@ public class TempRotationStuner : MonoBehaviour
         prevRot = newangle;
         if (Mathf.Abs(accumRotation) > stunRotation)
         {
-            statManager.Hit(rotStunTime, transform.position);
+            // statManager.Hit(rotStunTime, transform.position);
             accumRotation = 0f;
         }
     }

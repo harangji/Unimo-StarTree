@@ -477,9 +477,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stage: 1
-  defaultDamage: 1
-  skillDamage: 1
-  bIsSkill: 0
+  defaultDamage: 40
+  skillDamage: 0
+  mainCollider: {fileID: 5199713861795064894}
 --- !u!1 &3260216871704132355
 GameObject:
   m_ObjectHideFlags: 0
