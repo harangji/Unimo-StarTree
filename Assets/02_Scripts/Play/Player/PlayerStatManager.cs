@@ -18,9 +18,6 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
     private GameObject renderCam;
 
-    // HP 매니저 추가.
-    [SerializeField] private HPManager hpManager;
-
     private bool isInvincible = false;
     private Coroutine stunCoroutine;
 
@@ -101,7 +98,6 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         mStat = new UnimoRuntimeStat(mUnimoData.Stat);
         playerMover.SetCharacterStat(mStat);
-        hpManager.SetCharacterStat(mStat);
         auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
         PlaySystemRefStorage.scoreManager.ApplyStatFromCharacter(mStat);
 

@@ -28,11 +28,14 @@ public class HPGaugeController : MonoBehaviour
     {
         cautionAudio = GetComponent<AudioSource>();
         maxWidth = timerRect.transform.parent.GetComponent<RectTransform>().rect.width;
+        
         height = timerRect.rect.height;
-        SetGauge(1f);
+        
         PlaySystemRefStorage.playProcessController.SubscribePauseAction(stopCaution);
         PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(stopCaution);
         PlaySystemRefStorage.playProcessController.SubscribeResumeAction(startCaution);
+
+        SetGauge(1f);
     }
 
     public void SetGauge(float ratio)
