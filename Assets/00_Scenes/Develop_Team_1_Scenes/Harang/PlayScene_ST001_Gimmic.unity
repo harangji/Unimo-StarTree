@@ -1801,6 +1801,60 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4876853301214706921}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &691075662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 691075664}
+  - component: {fileID: 691075663}
+  m_Layer: 0
+  m_Name: GimmickManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &691075663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691075662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81715860a9283542b77bbb414b64885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  specialGimmicks:
+  - {fileID: 1047742197}
+  warningPopup: {fileID: 0}
+  modeText: []
+  modeIcon: []
+  bgmSource: {fileID: 0}
+  modeBGM: {fileID: 0}
+  goodModeTxtColor: {r: 0, g: 0, b: 0, a: 0}
+  goodModeImgColor: {r: 0, g: 0, b: 0, a: 0}
+  testBool: 1
+--- !u!4 &691075664
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691075662}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.714047, y: -5.01861, z: 7.0631166}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &694364964
 GameObject:
   m_ObjectHideFlags: 0
@@ -2118,12 +2172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f31080a13697794fb80e26f21bf98f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &981523620 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 4876853301105598590, guid: e542909bea402f345a760b7cda46b419,
-    type: 3}
-  m_PrefabInstance: {fileID: 4876853301214706921}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1047742194
 GameObject:
   m_ObjectHideFlags: 0
@@ -2171,14 +2219,14 @@ MonoBehaviour:
   gimmickName: "\uBE14\uB799\uD640"
   gimmickIcon: {fileID: 0}
   gimmickDuration: 100
-  gimmickEffectDuration: 0
-  gimmickCost: 0
-  gimmickWeight: 
+  gimmickEffectValue1: 10
+  gimmickEffectValue2: 0
+  gimmickCosts: 0a0000000c0000000f00000012000000
+  gimmickWeights: 3c000000320000001e0000000a000000
   gimmickGrade: 0
-  gravityStrength: 15
+  gravityStrength: 8
   effectiveRange: 5
   effectiveCenterRange: 0.7
-  playerRigidbody: {fileID: 981523620}
 --- !u!1 &1054359516
 GameObject:
   m_ObjectHideFlags: 0
@@ -9533,6 +9581,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8154152756091356633, guid: ac489365de73c49409bf6f658517302d,
+        type: 3}
+      propertyPath: unimoPrefab
+      value: 
+      objectReference: {fileID: 307905777}
     - target: {fileID: 8154152756091356634, guid: ac489365de73c49409bf6f658517302d,
         type: 3}
       propertyPath: m_Name
@@ -10100,3 +10153,4 @@ SceneRoots:
   - {fileID: 1730400164}
   - {fileID: 540869492}
   - {fileID: 1047742196}
+  - {fileID: 691075664}

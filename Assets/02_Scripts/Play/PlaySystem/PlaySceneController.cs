@@ -1,9 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class PlaySceneController : MonoBehaviour
 {
+    public static PlaySceneController Instance;
+
+    public void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
+
     public void ResetScene()
     {
         Sound_Manager.instance.Play(Sound.Effect, "Click_01");
@@ -41,6 +50,20 @@ public class PlaySceneController : MonoBehaviour
         PlaySystemRefStorage.playProcessController.GameResumed();
         Time.timeScale = 1f;
     }
+    
+    
+    public void PauseGameSingleton() //게임 멈추기
+    {
+        PlaySystemRefStorage.playProcessController.GamePaused();
+        Time.timeScale = 0f;
+    }
+
+    public void ResumeGameSingleton() //게임 실행
+    {
+        PlaySystemRefStorage.playProcessController.GameResumed();
+        Time.timeScale = 1f;
+    }
+    
     public void LoadLobby()
     {
         PlayerPrefs.SetInt("GetRewardCount", PlayerPrefs.GetInt("GetRewardCount") - 1);
