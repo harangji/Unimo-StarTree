@@ -6,11 +6,7 @@ using UnityEngine;
 
 public class Mon002Generator_C : MonsterGenerator
 {
-    private class PatternGroup
-    {
-        public int Remaining;
-        public int Cost;
-    }
+    private class PatternGroup { public int Remaining; public int Cost; }
     private List<PatternGroup> _activeGroups = new List<PatternGroup>();
     
     [SerializeField] private GameObject focusingObj;
@@ -34,9 +30,9 @@ public class Mon002Generator_C : MonsterGenerator
         //todo 난이도 점유 기능 추가해야 함 -> 나중에 게임 매니저 만들어지면 하면 됨
         int cost;
         var rate = Random.Range(0, 100);
-        if (rate < 70) cost = 1;
-        else if (rate < 90) cost = 3;
-        else cost = 5;
+        if (rate < 70) cost = 3;
+        else if (rate < 90) cost = 5;
+        else cost = 7;
 
         var stageMgr = PlaySystemRefStorage.stageManager;
         if (stageMgr == null || !stageMgr.TryConsumeDifficulty(cost))
@@ -44,32 +40,45 @@ public class Mon002Generator_C : MonsterGenerator
             Debug.Log("할당할 난이도 수치가 부족합니다."); return null;
         }
         
+        int spawnCount = rate < 70 ? 1 : (rate < 90 ? 6 : 12);
+        var group = new PatternGroup { Remaining = spawnCount, Cost = cost };
+        _activeGroups.Add(group);
+        
         if (rate < 70)
         {
             Debug.Log("패턴 1");
-
-            StartPattern1();
+            var ctrl = StartPattern1();
+            RegisterDestroyCallback(ctrl, group);
         }
         else if (rate < 90)
         {
             Debug.Log("패턴 2");
-
-            if (!isPattern2Active)
-            {
-                StartCoroutine(StartPattern2Coroutine());
-            }
+            if (isPattern2Active) return null;
+            StartCoroutine(StartPattern2Coroutine(group));
         }
         else
         {
             Debug.Log("패턴 3");
-
-            if (!isPattern3Active)
-            {
-                StartCoroutine(StartPattern3Coroutine());
-            }
+            if (isPattern3Active) return null;
+            StartCoroutine(StartPattern3Coroutine(group));
         }
 
         return null;
+    }
+    
+    private void RegisterDestroyCallback(MonsterController ctrl, PatternGroup group)
+    {
+        ctrl.OnDestroyed += (monster) =>
+        {
+            group.Remaining--;
+            if (group.Remaining == 0)
+            {
+                PlaySystemRefStorage.stageManager.RestoreDifficulty(group.Cost);
+                _activeGroups.Remove(group);
+                // isPattern2Active = false;
+                // isPattern3Active = false;
+            }
+        };
     }
 
     protected override Vector3 findGenPosition()
@@ -91,17 +100,28 @@ public class Mon002Generator_C : MonsterGenerator
         Quaternion quat = Quaternion.LookRotation(newIndicatorPos - genPos, Vector3.up);
         return quat;
     }
-
-    private void StartPattern1()
+    
+    private MonsterController StartPattern1()
     {
-        MonsterController controller = base.generateEnemy();
+        var controller = base.generateEnemy();
+        controller.InitEnemy(playerTransform);
         Transform indicator = controller.indicatorCtrl.GetIndicatorTransform();
         Vector3 indicatorPos = newIndicatorPos + new Vector3(0f, indicator.position.y, 0f);
         indicator.position = indicatorPos;
         indicator.parent = transform;
+        return controller;
     }
 
-    private IEnumerator StartPattern2Coroutine()
+    // private void StartPattern1()
+    // {
+    //     MonsterController controller = base.generateEnemy();
+    //     Transform indicator = controller.indicatorCtrl.GetIndicatorTransform();
+    //     Vector3 indicatorPos = newIndicatorPos + new Vector3(0f, indicator.position.y, 0f);
+    //     indicator.position = indicatorPos;
+    //     indicator.parent = transform;
+    // }
+
+    private IEnumerator StartPattern2Coroutine(PatternGroup group)
     {
         // 중심 위치를 원점 기준 반지름 5 범위 내 랜덤 위치로 설정
         isPattern2Active = true;
@@ -122,7 +142,7 @@ public class Mon002Generator_C : MonsterGenerator
             newIndicatorPos = center + 4.5f * new Vector3(Mathf.Cos(angleStep + 1f / 6f * Mathf.PI), 0f, Mathf.Sin(angleStep + 1f / 6f * Mathf.PI));
             Quaternion quat = Quaternion.LookRotation(newIndicatorPos - pos, Vector3.up);
 
-            MonsterController controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
+            var controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
 
             Transform indicator = controller.indicatorCtrl.GetIndicatorTransform();
@@ -130,8 +150,8 @@ public class Mon002Generator_C : MonsterGenerator
             indicator.position = indicatorPos;
             indicator.parent = transform;
 
-            AudioSource audio = controller.GetComponent<AudioSource>();
-            audio.volume = 0.25f;
+            controller.GetComponent<AudioSource>().volume = 0.25f;
+            RegisterDestroyCallback(controller, group);
         }
 
         yield return new WaitForSeconds(3.5f);
@@ -139,14 +159,14 @@ public class Mon002Generator_C : MonsterGenerator
         isPattern2Active = false;
     }
 
-    private IEnumerator StartPattern3Coroutine()
+    private IEnumerator StartPattern3Coroutine(PatternGroup group)
     {
         isPattern3Active = true;
 
         for (int i = 0; i < 12; i++)
         {
-            StartPattern1();
-
+            var ctrl = StartPattern1();
+            RegisterDestroyCallback(ctrl, group);
             yield return pattern3Wait;
         }
 

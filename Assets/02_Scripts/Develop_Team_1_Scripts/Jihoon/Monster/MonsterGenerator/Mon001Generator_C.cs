@@ -5,12 +5,7 @@ using UnityEngine;
 
 public class Mon001Generator_C : MonsterGenerator
 {
-    private class PatternGroup
-    {
-        public int Remaining;
-        public int Cost;
-    }
-    
+    private class PatternGroup { public int Remaining; public int Cost; }
     private List<PatternGroup> _activeGroups = new List<PatternGroup>();
     
     private float genRadius = 20f; //3 times of wanted peak radius
@@ -67,8 +62,8 @@ public class Mon001Generator_C : MonsterGenerator
         int cost;
         
         // 패턴 별 코스트 비용
-        if (rate < 70) cost = 1;
-        else if (rate < 90) cost = 3;
+        if (rate < 70) cost = 2;
+        else if (rate < 90) cost = 4;
         else cost = 5;
         
         // 정해진 코스트를 소모할 자원이 남아있는지 StageManager의 함수를 통해서 확인
@@ -87,29 +82,29 @@ public class Mon001Generator_C : MonsterGenerator
         var prefab = rate < 70 ? monsterPattern1 : (rate < 90 ? monsterPattern1 : monsterPattern3);
         float offset = rate < 90 ? 6.5f : 7.5f;
 
-        for (int i = 0; i < spawnCount; i++)
+        if (spawnCount == 1)
         {
-            Vector3 pos = (spawnCount == 1)
-                ? playerTransform.position
-                : GetSpawnPosition(offset, i);
-            Quaternion rot = Quaternion.LookRotation(playerTransform.position - pos, Vector3.up);
-
-            var ctrl = Instantiate(prefab, pos, rot).GetComponent<MonsterController>();
+            var ctrl = base.generateEnemy(); 
             ctrl.InitEnemy(playerTransform);
-            Debug.Log("몬스터 추가");
+            RegisterDestroyCallback(ctrl, group); 
+            primary = ctrl;
+        }
+        else
+        {
+            Vector3 center = playerTransform.position;
+            float max = PlaySystemRefStorage.mapSetter.MaxRange - 7.2f;
+            if (center.magnitude > max) center = center.normalized * max;
 
-            // 해당 그룹의 Remaining 감소 콜백 등록
-            ctrl.OnDestroyed += (monster) =>
+            for (int i = 0; i < 8; i++)
             {
-                group.Remaining--;
-                if (group.Remaining == 0)
-                {
-                    PlaySystemRefStorage.stageManager.RestoreDifficulty(group.Cost);
-                    _activeGroups.Remove(group);
-                }
-            };
-
-            if (primary == null) primary = ctrl;
+                float angle = Mathf.PI / 4f * i;
+                Vector3 pos = center + offset * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+                Quaternion rot = Quaternion.LookRotation(center - pos, Vector3.up);
+                var ctrl = Instantiate(prefab, pos, rot).GetComponent<MonsterController>();
+                ctrl.InitEnemy(playerTransform); 
+                RegisterDestroyCallback(ctrl, group);
+                if (primary == null) primary = ctrl;
+            }
         }
 
         return primary;
@@ -161,14 +156,17 @@ public class Mon001Generator_C : MonsterGenerator
         // }
     }
     
-    private Vector3 GetSpawnPosition(float radiusOffset, int index)
+    private void RegisterDestroyCallback(MonsterController ctrl, PatternGroup group)
     {
-        Vector3 center = playerTransform.position;
-        float max = PlaySystemRefStorage.mapSetter.MaxRange - 7.2f;
-        if (center.magnitude > max) center = center.normalized * max;
-
-        float angle = Mathf.PI / 4f * index;
-        return center + radiusOffset * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+        ctrl.OnDestroyed += (monster) =>
+        {
+            group.Remaining--;
+            if (group.Remaining == 0)
+            {
+                PlaySystemRefStorage.stageManager.RestoreDifficulty(group.Cost);
+                _activeGroups.Remove(group);
+            }
+        };
     }
 
     // protected override IEnumerator exPatternCoroutine()
