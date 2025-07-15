@@ -88,6 +88,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(stopPlay);
 
+        hpGauge.SetGauge(1f);
 
         InitCharacter(unimoID);
         
@@ -227,8 +228,10 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         }
     }
 
-    public void TakeHeal(HealEvent combatEvent)
+    public void TakeHeal(HealEvent healEvent)
     {
-        throw new System.NotImplementedException();
+        currentHP = Mathf.Min(currentHP + healEvent.Heal, mStat.BaseStat.Health);
+        
+        hpGauge.SetGauge(currentHP / mStat.BaseStat.Health);
     }
 }
