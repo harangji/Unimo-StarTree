@@ -121,6 +121,13 @@ public class Mon5PatternController : MonoBehaviour
         isStop = true;
 
         yield return new WaitForSeconds(1f);
+        
+        var children = GetComponentsInChildren<MonsterController>();
+        foreach (var child in children)
+        {
+            child.DestroyEnemy();
+        }
+        
         Destroy(gameObject);
     }
 }

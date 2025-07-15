@@ -4,20 +4,14 @@ using UnityEngine;
 
 public class Mon003Generator_C : MonsterGenerator
 {
+    private class PatternGroup { public int Remaining; public int Cost; }
+    private List<PatternGroup> _activeGroups = new List<PatternGroup>();
+    
     private float innerRadius = 2.5f;
     private float outerRadius = 8f;
 
-    // Start is called before the first frame update
-    new void OnEnable()
-    {
-        base.OnEnable();
-    }
-
-    // Update is called once per frame
-    new void Update()
-    {
-        base.Update();
-    }
+    new void OnEnable() { base.OnEnable(); }
+    new void Update()   { base.Update();   }
 
     protected override MonsterController generateEnemy()
     {
@@ -28,27 +22,58 @@ public class Mon003Generator_C : MonsterGenerator
         //
         // return controller;
 
+        int cost;
         var rate = Random.Range(0, 100);
+        if (rate < 70) cost = 2;
+        else if (rate < 90) cost = 4;
+        else cost = 7;
+        
+        // 난이도 소비
+        var stageMgr = PlaySystemRefStorage.stageManager;
+        if (stageMgr == null || !stageMgr.TryConsumeDifficulty(cost))
+        {
+            Debug.Log("할당할 난이도 수치가 부족합니다.");
+            return null;
+        }
+        
+        // 그룹 생성
+        int spawnCount = rate < 70 ? 1 : (rate < 90 ? 5 : 8);
+        var group = new PatternGroup { Remaining = spawnCount, Cost = cost };
+        _activeGroups.Add(group);
 
         if (rate < 70)
         {
             Debug.Log("패턴 1");
-
-            base.generateEnemy();
+            var ctrl = base.generateEnemy();
+            ctrl.InitEnemy(playerTransform);
+            RegisterDestroyCallback(ctrl, group);
+            return ctrl;
         }
         else if (rate < 90)
         {
             Debug.Log("패턴 2");
-
-            StartPattern2();
+            StartPattern2(group);
         }
         else
         {
             Debug.Log("패턴 3");
-            StartPattern3();
+            StartPattern3(group);
         }
 
         return null;
+    }
+    
+    private void RegisterDestroyCallback(MonsterController ctrl, PatternGroup group)
+    {
+        ctrl.OnDestroyed += (monster) =>
+        {
+            group.Remaining--;
+            if (group.Remaining == 0)
+            {
+                PlaySystemRefStorage.stageManager.RestoreDifficulty(group.Cost);
+                _activeGroups.Remove(group);
+            }
+        };
     }
 
     protected override Vector3 findGenPosition()
@@ -76,7 +101,7 @@ public class Mon003Generator_C : MonsterGenerator
         return quat;
     }
 
-    private void StartPattern2()
+    private void StartPattern2(PatternGroup group)
     {
         float angle;
         Vector3 center = playerTransform.position;
@@ -92,10 +117,11 @@ public class Mon003Generator_C : MonsterGenerator
             MonsterController controller = Instantiate(monsterPattern1, pos, Quaternion.identity)
                 .GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
+            RegisterDestroyCallback(controller, group);
         }
     }
 
-    private void StartPattern3()
+    private void StartPattern3(PatternGroup group)
     {
         int firstBombCount = 0;
         Vector3 center = playerTransform.position;
@@ -111,13 +137,14 @@ public class Mon003Generator_C : MonsterGenerator
             new Vector3(-2f, 0, -4f), // 뒤왼
             new Vector3(-4f, 0, 2f) // 왼앞
         };
-        List<Mon003State_Action_C> actions = new List<Mon003State_Action_C>();
+        var actions = new List<Mon003State_Action_C>();
         
         foreach (var spawnOffset in spawnOffsets)
         {
             var obj = Instantiate(monsterPattern1, center + spawnOffset, Quaternion.identity);
             MonsterController controller = obj.GetComponent<MonsterController>();
             controller.InitEnemy(playerTransform);
+            RegisterDestroyCallback(controller, group);
 
             if (firstBombCount < 4)
             {

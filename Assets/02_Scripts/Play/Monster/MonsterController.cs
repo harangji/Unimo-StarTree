@@ -36,6 +36,8 @@ public class MonsterController : MonoBehaviour
 
     public Patterns pattern;
 
+    public event Action<MonsterController> OnDestroyed;
+
     private void Update()
     {
         existTime += Time.deltaTime;
@@ -130,6 +132,7 @@ public class MonsterController : MonoBehaviour
     public void DestroyEnemy()
     {
         MonGeneratorManager.AllMonsterListSTATIC.Remove(this);
+        OnDestroyed?.Invoke(this);
         Destroy(gameObject);
     }
 

@@ -5,48 +5,74 @@ using UnityEngine;
 
 public class Mon004Generator_C : MonsterGenerator
 {
+    private class PatternGroup { public int Remaining; public int Cost; }
+    private List<PatternGroup> _activeGroups = new List<PatternGroup>();
+    
     private float genRadius = 14f; //3 times of wanted peak radius
     private float randDirAngle = 30f;
 
-    // Start is called before the first frame update
-    new void OnEnable()
-    {
-        base.OnEnable();
-    }
-
-    // Update is called once per frame
-    new void Update()
-    {
-        base.Update();
-    }
+    new void OnEnable() { base.OnEnable(); }
+    new void Update()   { base.Update();   }
 
     protected override MonsterController generateEnemy()
     {
+        int cost;
         var rate = Random.Range(0, 100);
+        if (rate < 70) {cost = 1;}
+        else if (rate < 90) cost = 3;
+        else cost = 5;
+        
+        var stageMgr = PlaySystemRefStorage.stageManager;
+        if (stageMgr == null || !stageMgr.TryConsumeDifficulty(cost))
+        {
+            Debug.Log("할당할 난이도 수치가 부족합니다.");
+            return null;
+        }
+
+        int spawnCount;
+        if (rate < 70) {spawnCount = 1;}
+        else if (rate < 90) spawnCount = 5;
+        else spawnCount = 1;
+        
+        var group = new PatternGroup { Remaining = spawnCount, Cost = cost };
+        _activeGroups.Add(group);
         
         if (rate < 70)
         {
             Debug.Log("패턴 1");
-
-            base.generateEnemy();
+            var ctrl = base.generateEnemy();
+            ctrl.InitEnemy(playerTransform);
+            RegisterDestroyCallback(ctrl, group);
         }
         else if (rate < 90)
         {
             Debug.Log("패턴 2");
-
-            StartCoroutine(StartPattern2());
+            StartCoroutine(StartPattern2(group));
         }
         else
         {
             Debug.Log("패턴 3");
-            
             Vector3 pos = findGenPosition();
             Quaternion quat = setGenRotation(pos);
-            MonsterController controller = Instantiate(monsterPattern3, pos, quat).GetComponent<MonsterController>();
-            controller.InitEnemy(playerTransform);
+            var ctrl = Instantiate(monsterPattern3, pos, quat).GetComponent<MonsterController>();
+            ctrl.InitEnemy(playerTransform);
+            RegisterDestroyCallback(ctrl, group);
         }
 
         return null;
+    }
+    
+    private void RegisterDestroyCallback(MonsterController ctrl, PatternGroup group)
+    {
+        ctrl.OnDestroyed += (monster) =>
+        {
+            group.Remaining--;
+            if (group.Remaining == 0)
+            {
+                PlaySystemRefStorage.stageManager.RestoreDifficulty(group.Cost);
+                _activeGroups.Remove(group);
+            }
+        };
     }
 
     protected override Vector3 findGenPosition()
@@ -80,13 +106,12 @@ public class Mon004Generator_C : MonsterGenerator
         return quat;
     }
 
-    private IEnumerator StartPattern2()
+    private IEnumerator StartPattern2(PatternGroup group)
     {
-        float angle;
         float angleOffset = Random.Range(0f, 2f * Mathf.PI);
         for (int i = 0; i < 5; i++)
         {
-            angle = 1f / 6.5f * Mathf.PI * i + angleOffset;
+            var angle = 1f / 6.5f * Mathf.PI * i + angleOffset;
             Vector3 center = playerTransform.position;
             if (center.magnitude > PlaySystemRefStorage.mapSetter.MaxRange - 6f)
             {
@@ -95,8 +120,9 @@ public class Mon004Generator_C : MonsterGenerator
 
             Vector3 pos = center + 5f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
             Quaternion quat = Quaternion.LookRotation(playerTransform.position - pos, Vector3.up);
-            MonsterController controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
-            controller.InitEnemy(playerTransform);
+            var ctrl = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
+            ctrl.InitEnemy(playerTransform);
+            RegisterDestroyCallback(ctrl, group);
             yield return new WaitForSeconds(0.33f);
         }
     }
