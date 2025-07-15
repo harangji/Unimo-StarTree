@@ -17,8 +17,6 @@ public class HPManager : MonoBehaviour
     
     void Awake()
     {
-        currentHP = maxHP;
-        hpGauge.SetGauge(1f);
     }
 
     void Update()
@@ -88,5 +86,4 @@ public class HPManager : MonoBehaviour
                   $" 방어력: {armor}," +
                   $" 힐배수: {healingMultiplier}");
     }
-    
 }

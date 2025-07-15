@@ -90,9 +90,9 @@ public class MissionFinder : MonoBehaviour
             case "IAP": return Base_Manager.Data.UserData.IAP;
             case "Collection":
                 int a = 0;
-                for (int i = 0; i < Base_Manager.Data.UserData.GetCharacterData.Length; i++)
+                for (int i = 0; i < Base_Manager.Data.UserData.HasCharacterData.Length; i++)
                 {
-                    if (Base_Manager.Data.UserData.GetCharacterData[i] == true)
+                    if (Base_Manager.Data.UserData.HasCharacterData[i] == true)
                     {
                         a++;
                     }
@@ -100,9 +100,9 @@ public class MissionFinder : MonoBehaviour
                 return a;
             case "Collection_EQ":
                 int b = 0;
-                for (int i = 0; i < Base_Manager.Data.UserData.GetEQData.Length; i++)
+                for (int i = 0; i < Base_Manager.Data.UserData.HasEnginData.Length; i++)
                 {
-                    if (Base_Manager.Data.UserData.GetEQData[i] == true)
+                    if (Base_Manager.Data.UserData.HasEnginData[i] == true)
                     {
                         b++;
                     }

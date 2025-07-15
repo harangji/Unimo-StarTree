@@ -90,7 +90,7 @@ public class UI_Shop : UI_Base
 
         for (int i = 0; i < Characters.Length; i++)
         {
-            if (Base_Manager.Data.UserData.GetCharacterData[Character_valueCounts[i]])
+            if (Base_Manager.Data.UserData.HasCharacterData[Character_valueCounts[i]])
             {
                 Characters[i].transform.GetChild(0).gameObject.SetActive(true);
                 Characters[i].transform.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -102,7 +102,7 @@ public class UI_Shop : UI_Base
         }
         for(int i = 0; i < EQs.Length; i++)
         {
-            if (Base_Manager.Data.UserData.GetEQData[Eq_valueCounts[i]])
+            if (Base_Manager.Data.UserData.HasEnginData[Eq_valueCounts[i]])
             {
                 EQs[i].transform.GetChild(0).gameObject.SetActive(true);
                 EQs[i].transform.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -123,7 +123,7 @@ public class UI_Shop : UI_Base
     {
         Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
-        if (Base_Manager.Data.UserData.GetCharacterData[value]) return;
+        if (Base_Manager.Data.UserData.HasCharacterData[value]) return;
         if (Base_Manager.Data.UserData.Red < 100000)
         {
             Canvas_Holder.instance.Get_Toast("NM");
@@ -144,7 +144,7 @@ public class UI_Shop : UI_Base
     {
         Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
-        if (Base_Manager.Data.UserData.GetCharacterData[value]) return;
+        if (Base_Manager.Data.UserData.HasCharacterData[value]) return;
         if (Base_Manager.Data.UserData.Red < 75000)
         {
             Canvas_Holder.instance.Get_Toast("NM");
@@ -165,7 +165,7 @@ public class UI_Shop : UI_Base
     {
         Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
-        if (Base_Manager.Data.UserData.GetCharacterData[value]) return;
+        if (Base_Manager.Data.UserData.HasCharacterData[value]) return;
         if (Base_Manager.Data.UserData.Red < 150000)
         {
             Canvas_Holder.instance.Get_Toast("NM");
@@ -187,7 +187,7 @@ public class UI_Shop : UI_Base
     {
         Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
-        if (Base_Manager.Data.UserData.GetCharacterData[value]) return;
+        if (Base_Manager.Data.UserData.HasCharacterData[value]) return;
 
         if (Base_Manager.Data.UserData.Red < 50000)
         {
@@ -209,7 +209,7 @@ public class UI_Shop : UI_Base
     {
         Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
-        if (Base_Manager.Data.UserData.GetEQData[value]) return;
+        if (Base_Manager.Data.UserData.HasEnginData[value]) return;
 
         if (Base_Manager.Data.UserData.Red < 50000)
         {
@@ -231,7 +231,7 @@ public class UI_Shop : UI_Base
     {
         Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
-        if (Base_Manager.Data.UserData.GetEQData[value]) return;
+        if (Base_Manager.Data.UserData.HasEnginData[value]) return;
 
         if (Base_Manager.Data.UserData.Red < 25000)
         {

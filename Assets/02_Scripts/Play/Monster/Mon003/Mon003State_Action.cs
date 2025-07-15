@@ -46,7 +46,7 @@ public class Mon003State_Action : MonsterState_Action
         {
             if (controller.playerTransform.TryGetComponent<PlayerStatManager>(out var player))
             {
-                player.Hit(bombDamage, controller.transform.position);
+                // player.Hit(bombDamage, controller.transform.position);
             }
         }
         controller.DeactiveEnemy();

@@ -75,9 +75,9 @@ public class Land : MonoBehaviour
                 }
             }
         }
-        for(int i = 0; i < Base_Manager.Data.UserData.GetCharacterData.Length; i++)
+        for(int i = 0; i < Base_Manager.Data.UserData.HasCharacterData.Length; i++)
         {
-            if (Base_Manager.Data.UserData.GetCharacterData[i] == true)
+            if (Base_Manager.Data.UserData.HasCharacterData[i] == true)
             {
                 GetCharacter(i);
             }

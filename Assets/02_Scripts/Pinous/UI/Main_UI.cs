@@ -26,7 +26,7 @@ public class Main_UI : MonoBehaviour
         Text_Check();
         RectADSCheck();
 
-        if(Base_Manager.Data.UserData.GetOarkTong == false && Base_Manager.Data.UserData.GetEQData[13] == false)
+        if(Base_Manager.Data.UserData.GetOarkTong == false && Base_Manager.Data.UserData.HasEnginData[13] == false)
         {
             Base_Manager.Data.UserData.GetOarkTong = true;
 

@@ -42,9 +42,9 @@ public class FlowerGenerator_Lobby : MonoBehaviour
     private int CharacterCount()
     {
         int value = 0;
-        for(int i = 0; i< Base_Manager.Data.UserData.GetCharacterData.Length; i++)
+        for(int i = 0; i< Base_Manager.Data.UserData.HasCharacterData.Length; i++)
         {
-            if (Base_Manager.Data.UserData.GetCharacterData[i] == true) value++;
+            if (Base_Manager.Data.UserData.HasCharacterData[i] == true) value++;
         }
         return value;
     }

@@ -28,7 +28,7 @@ public class Mon003Generator_C : MonsterGenerator
         //
         // return controller;
 
-        var rate = Random.Range(90, 100);
+        var rate = Random.Range(0, 100);
 
         if (rate < 70)
         {
