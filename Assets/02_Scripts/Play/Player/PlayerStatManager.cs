@@ -29,8 +29,8 @@ public class PlayerStatManager : MonoBehaviour
 
     // 임시로 작성.정현식
     // 회피, 스턴 저항 (스탯 반영 예정)
-    [SerializeField] [Range(0f, 1f)] private float bEvadeChance = 0.5f;
-    [SerializeField] [Range(0f, 1f)] private float fStunReduceRate = 0.5f;
+    [SerializeField] [Range(0f, 1f)] private float bEvadeChance;
+    [SerializeField] [Range(0f, 1f)] private float fStunReduceRate;
     
     private int hp = 10;
     
@@ -44,9 +44,19 @@ public class PlayerStatManager : MonoBehaviour
         transform.position = -1000f * Vector3.one;
         renderCam = GameObject.Find("RenderCam");
         renderCam.SetActive(false);
-        
+
         playerMover = GetComponent<PlayerMover>();
         visualCtrl = GetComponent<PlayerVisualController>();
+        auraController = FindAnyObjectByType<AuraController>();
+        playerMover.FindAuraCtrl(auraController);
+        auraController.gameObject.SetActive(false);
+
+        int selectedID = GameManager.Instance.SelectedUnimoID > 0
+            ? GameManager.Instance.SelectedUnimoID
+            : unimoID;
+
+        InitCharacter(selectedID);  // 스탯 적용 (컴포넌트 준비된 후 호출)
+
         if (isTestModel)
         {
             visualCtrl.test_InitModeling(equipPrefab, chaPrefab);
@@ -65,14 +75,10 @@ public class PlayerStatManager : MonoBehaviour
                 StartCoroutine(CoroutineExtensions.DelayedActionCall(() => { ActivePlayer(); }, PlayProcessController.InitTimeSTATIC));
             });
         }
-        auraController = FindAnyObjectByType<AuraController>();
-        playerMover.FindAuraCtrl(auraController);
-        auraController.gameObject.SetActive(false);
+
         PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(stopPlay);
-        
-        
-        InitCharacter(unimoID);
     }
+    
     
     // 스탯 추가.정현식
     public void InitCharacter(int id)
@@ -87,6 +93,7 @@ public class PlayerStatManager : MonoBehaviour
         }
 
         mStat = new UnimoRuntimeStat(mUnimoData.Stat);
+        
         playerMover.SetCharacterStat(mStat);
         hpManager.SetCharacterStat(mStat);
         auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
@@ -184,7 +191,7 @@ public class PlayerStatManager : MonoBehaviour
         PlaySystemRefStorage.harvestLvController.LossExp(stun);
             
         // HPManager를 통해 데미지 처리
-        hpManager.TakeDamage(20f);
+        hpManager.TakeDamage(damage);
     }
     
     private void stopPlay()
