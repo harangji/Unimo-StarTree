@@ -245,6 +245,36 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
+  - m_Index: 20
+    m_Metrics:
+      m_Width: 25.96875
+      m_Height: 70
+      m_HorizontalBearingX: 0.96875
+      m_HorizontalBearingY: 70
+      m_HorizontalAdvance: 31.203125
+    m_GlyphRect:
+      m_X: 10
+      m_Y: 133
+      m_Width: 27
+      m_Height: 70
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 27
+    m_Metrics:
+      m_Width: 40.59375
+      m_Height: 71.46875
+      m_HorizontalBearingX: 2.90625
+      m_HorizontalBearingY: 70.671875
+      m_HorizontalAdvance: 46.40625
+    m_GlyphRect:
+      m_X: 10
+      m_Y: 222
+      m_Width: 42
+      m_Height: 72
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   m_CharacterTable:
   - m_ElementType: 1
     m_Unicode: 8230
@@ -265,6 +295,14 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 54
     m_GlyphIndex: 25
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 49
+    m_GlyphIndex: 20
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 56
+    m_GlyphIndex: 27
     m_Scale: 1
   m_AtlasTextures:
   - {fileID: 28933816116536082}
@@ -297,6 +335,14 @@ MonoBehaviour:
     m_Y: 33
     m_Width: 61
     m_Height: 91
+  - m_X: 0
+    m_Y: 123
+    m_Width: 46
+    m_Height: 89
+  - m_X: 0
+    m_Y: 212
+    m_Width: 61
+    m_Height: 91
   m_FreeGlyphRects:
   - m_X: 189
     m_Y: 0
@@ -310,18 +356,26 @@ MonoBehaviour:
     m_Y: 30
     m_Width: 6
     m_Height: 993
-  - m_X: 0
-    m_Y: 124
-    m_Width: 1023
-    m_Height: 899
-  - m_X: 0
-    m_Y: 123
-    m_Width: 61
-    m_Height: 900
   - m_X: 122
     m_Y: 91
     m_Width: 901
     m_Height: 932
+  - m_X: 0
+    m_Y: 303
+    m_Width: 1023
+    m_Height: 720
+  - m_X: 46
+    m_Y: 124
+    m_Width: 977
+    m_Height: 88
+  - m_X: 61
+    m_Y: 124
+    m_Width: 962
+    m_Height: 899
+  - m_X: 46
+    m_Y: 123
+    m_Width: 15
+    m_Height: 89
   m_FontFeatureTable:
     m_MultipleSubstitutionRecords: []
     m_LigatureSubstitutionRecords: []

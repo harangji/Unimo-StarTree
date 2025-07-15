@@ -95,7 +95,7 @@ public class Mon003mislState_Action : MonsterState_Action
                 {
                     Sender = monster,
                     Receiver = playerIDamageAble,
-                    Damage = (monster as Monster).skillDamage,
+                    Damage = (monster as Monster).skillDamage1,
                     HitPosition = controller.transform.position,
                     Collider = null,
                 };

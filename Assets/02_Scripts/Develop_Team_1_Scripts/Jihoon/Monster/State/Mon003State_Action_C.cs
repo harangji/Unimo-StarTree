@@ -69,7 +69,7 @@ public class Mon003State_Action_C : MonsterState_Action
                 {
                     Sender = monster,
                     Receiver = playerIDamageAble,
-                    Damage = (monster as Monster).skillDamage,
+                    Damage = (monster as Monster).skillDamage1,
                     HitPosition = controller.transform.position,
                     Collider = monster.MainCollider,
                 };
