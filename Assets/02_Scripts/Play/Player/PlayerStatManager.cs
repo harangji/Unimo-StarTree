@@ -136,72 +136,6 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         gameObject.SetActive(false);
     }
 
-    // Hit 수정 버전. 정현식
-    public void Hit(float stun, Vector3 hitPos)
-    {
-        if (isInvincible) return;
-    
-        // 회피 판정
-        if (Random.value < bEvadeChance)
-        {
-            Debug.Log("피격 회피: 넉백/스턴/오라 감소 없음, 데미지만 적용");
-    
-            // 넉백, 스턴, 오라 감소 없이 데미지만 적용
-            hpManager.TakeDamage(20f);
-            return;
-        }
-    
-        // 회피 실패 → 스턴 및 전체 피격 처리
-        stun = Mathf.Max(stun * (1f - fStunReduceRate), 0.2f);
-        hitPos.y = 0;
-    
-        stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
-        PlaySystemRefStorage.harvestLvController.LossExp(stun);
-        // hpManager.TakeDamage(20f);
-    }
-    //원본 Hit 코드. 정현식
-    //public void Hit(float stun, Vector3 hitPos)
-    //{
-    //    stun = Mathf.Max(stun, 0.2f);
-    //    
-    //    if (isInvincible) { return; }
-    //    else
-    //    {
-    //        hitPos.y = 0;
-    //        stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
-    //        PlaySystemRefStorage.harvestLvController.LossExp(stun);
-    //    }
-    //}
-
-    // 오라 작아짐 + 스턴 애니메이션 + 무적 판정 + 데미지 적용
-    //임시로 만듦. 컴벳 시스템의 피격 메서드를 대체하고 있음.
-    public void Hit(float stun, Vector3 hitPos, int damage)
-    {
-        if (isInvincible)
-        {
-            return;
-        }
-
-        //  피격 회피 판정
-        if (Random.value < bEvadeChance)
-        {
-            Debug.Log("피격 회피");
-            return;
-        }
-
-        //  스턴 시간 감소 적용
-        stun = Mathf.Max(stun * (1f - fStunReduceRate), 0.2f);
-
-        //스턴 로직
-        hitPos.y = 0;
-        stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
-
-        PlaySystemRefStorage.harvestLvController.LossExp(stun);
-
-        // HPManager를 통해 데미지 처리
-        // hpManager.TakeDamage(20f);
-    }
-
     private void stopPlay()
     {
         if (isInvincible)
@@ -268,17 +202,15 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         hitPos.y = 0;
         stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
         
-        Debug.Log($"맞기전 피: {currentHP}");
-        
         //데미지 처리
         var reducedDamage = combatEvent.Damage * (1f - mStat.BaseStat.Armor);
         currentHP -= reducedDamage;
+        
         hpGauge.SetGauge(currentHP / mStat.BaseStat.Health);
         
-        Debug.Log($"맞은 후 피: {currentHP}");
-        Debug.Log($"최대 체력: {mStat.BaseStat.Health}");
-        Debug.Log($"비율: {currentHP / mStat.BaseStat.Health}");
-        
+        Debug.Log($"Combat System: 피해량: {reducedDamage}");
+        Debug.Log($"Combat System: 현재 체력: {currentHP} / {mStat.BaseStat.Health}");
+        Debug.Log($"Combat System: 비율: {currentHP / mStat.BaseStat.Health}");
         
         //사망 체크
         if (currentHP <= 0)
