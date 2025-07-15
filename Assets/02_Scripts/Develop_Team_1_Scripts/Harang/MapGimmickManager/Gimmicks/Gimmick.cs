@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using TMPro;
 using Unity.VisualScripting;
@@ -37,16 +38,25 @@ public abstract class Gimmick : MonoBehaviour
 
     [ReadOnly] public Grade gimmickGrade; // 동적으로 설정할 기믹 등급
 
-    public abstract void InitializeGimmick();
+    private void Awake()
+    {
+        InitializeGimmick();
+    }
+
+    protected virtual void InitializeGimmick()
+    {
+        SetGrade();
+    }
+    
     public abstract void ExcuteGimmick();
+
+    public void SetGrade()
+    {
+        
+    }
     
     public void SetModeName(TextMeshProUGUI modeTxt) // Tmp를 받아서 text를 기믹이름으로 설정
     {
         modeTxt.text = gimmickName;
-    }
-
-    public void SetGrade(int currentStage)
-    {
-        
     }
 }
