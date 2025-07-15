@@ -40,7 +40,8 @@ public class TempChaCustomer : MonoBehaviour
         
         // 선택 인덱스를 실제 유닛 ID로 변환하여 저장해야 합니다.
         PlayerPrefs.SetInt("LastSelectedUnimoID", unitID); 
-        GameManager.Instance.SelectedUnimoID = unitID;
+        GameManager.Instance.SelectedUnimoID = unitID; // 유닛 ID 저장
+
         
         makePreviewObj();
     }

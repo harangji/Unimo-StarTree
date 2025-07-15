@@ -18,6 +18,8 @@ public static class UnitIDMapping
         { 11, 10403 }, // 도베르만(머핀)
         { 12, 10401 }, // 쿠(마틸다)
         { 13, 10201 }, // 토스터
+
+        // 필요하면 계속 추가
     };
 
     public static int GetUnitID(int charIndex)
@@ -26,6 +28,6 @@ public static class UnitIDMapping
             return unitID;
 
         Debug.LogError($"캐릭터 인덱스 {charIndex}에 해당하는 유닛 ID를 찾을 수 없습니다.");
-        return 10101;  // 예비 기본값 (리비)
+        return 10101;  // 기본값
     }
 }

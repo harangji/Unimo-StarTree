@@ -55,12 +55,6 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         playerMover.FindAuraCtrl(auraController);
         auraController.gameObject.SetActive(false);
 
-        int selectedID = GameManager.Instance.SelectedUnimoID > 0
-            ? GameManager.Instance.SelectedUnimoID
-            : unimoID;
-
-        InitCharacter(selectedID);  // 스탯 적용 (컴포넌트 준비된 후 호출)
-
         if (isTestModel)
         {
             visualCtrl.test_InitModeling(equipPrefab, chaPrefab);
@@ -90,7 +84,11 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         hpGauge.SetGauge(1f);
 
-        InitCharacter(unimoID);
+        int selectedID = GameManager.Instance.SelectedUnimoID > 0
+            ? GameManager.Instance.SelectedUnimoID
+            : unimoID;  
+        
+        InitCharacter(selectedID);
         
         //최대 체력으로 hp 초기화
         currentHP = mStat.BaseStat.Health;
