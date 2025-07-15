@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Mon001Generator_C : MonsterGenerator
 {
+    private class PatternGroup { public int Remaining; public int Cost; }
+    private List<PatternGroup> _activeGroups = new List<PatternGroup>();
+    
     private float genRadius = 20f; //3 times of wanted peak radius
     private float randDirAngle = 40f;
 
@@ -55,57 +59,114 @@ public class Mon001Generator_C : MonsterGenerator
         //todo 난이도 점유 기능 추가해야 함 -> 나중에 게임 매니저 만들어지면 하면 됨
 
         var rate = Random.Range(0, 100);
-
-        if (rate < 70)
+        int cost;
+        
+        // 패턴 별 코스트 비용
+        if (rate < 70) cost = 2;
+        else if (rate < 90) cost = 4;
+        else cost = 5;
+        
+        // 정해진 코스트를 소모할 자원이 남아있는지 StageManager의 함수를 통해서 확인
+        var stageMgr = PlaySystemRefStorage.stageManager;
+        if (stageMgr == null || !stageMgr.TryConsumeDifficulty(cost))
         {
-            Debug.Log("패턴 1");
-
-            base.generateEnemy();
+            Debug.Log("할당할 난이도 수치가 부족합니다.");
+            return null; // 남은 난이도 부족 → 소환 취소
         }
-        else if (rate < 90)
+
+        int spawnCount = rate < 70 ? 1 : 8;
+        var group = new PatternGroup { Remaining = spawnCount, Cost = cost };
+        _activeGroups.Add(group);
+
+        MonsterController primary = null;
+        var prefab = rate < 70 ? monsterPattern1 : (rate < 90 ? monsterPattern1 : monsterPattern3);
+        float offset = rate < 90 ? 6.5f : 7.5f;
+
+        if (spawnCount == 1)
         {
-            Debug.Log("패턴 2");
-
-            float angle;
-            Vector3 center = playerTransform.position;
-            
-            if (center.magnitude > PlaySystemRefStorage.mapSetter.MaxRange - 7.2f)
-            {
-                center *= (PlaySystemRefStorage.mapSetter.MaxRange - 7.2f) / center.magnitude;
-            }
-
-            for (int i = 0; i < 8; i++)
-            {
-                angle = 1f / 4f * Mathf.PI * i;
-                Vector3 pos = center + 6.5f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
-                Quaternion quat = Quaternion.LookRotation(center - pos, Vector3.up);
-                MonsterController controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
-                controller.InitEnemy(playerTransform);
-            }
+            var ctrl = base.generateEnemy(); 
+            ctrl.InitEnemy(playerTransform);
+            RegisterDestroyCallback(ctrl, group); 
+            primary = ctrl;
         }
         else
         {
-            Debug.Log("패턴 3");
-
-            float angle;
             Vector3 center = playerTransform.position;
-            
-            if (center.magnitude > PlaySystemRefStorage.mapSetter.MaxRange - 7.2f)
-            {
-                center *= (PlaySystemRefStorage.mapSetter.MaxRange - 7.2f) / center.magnitude;
-            }
+            float max = PlaySystemRefStorage.mapSetter.MaxRange - 7.2f;
+            if (center.magnitude > max) center = center.normalized * max;
 
             for (int i = 0; i < 8; i++)
             {
-                angle = 1f / 4f * Mathf.PI * i;
-                Vector3 pos = center + 7.5f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
-                Quaternion quat = Quaternion.LookRotation(center - pos, Vector3.up);
-                MonsterController controller = Instantiate(monsterPattern3, pos, quat).GetComponent<MonsterController>();
-                controller.InitEnemy(playerTransform);
+                float angle = Mathf.PI / 4f * i;
+                Vector3 pos = center + offset * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+                Quaternion rot = Quaternion.LookRotation(center - pos, Vector3.up);
+                var ctrl = Instantiate(prefab, pos, rot).GetComponent<MonsterController>();
+                ctrl.InitEnemy(playerTransform); 
+                RegisterDestroyCallback(ctrl, group);
+                if (primary == null) primary = ctrl;
             }
         }
 
-        return null;
+        return primary;
+        // else if (rate < 90)
+        // {
+        //     Debug.Log("패턴 2");
+        //
+        //     float angle;
+        //     Vector3 center = playerTransform.position;
+        //     
+        //     if (center.magnitude > PlaySystemRefStorage.mapSetter.MaxRange - 7.2f)
+        //     {
+        //         center *= (PlaySystemRefStorage.mapSetter.MaxRange - 7.2f) / center.magnitude;
+        //     }
+        //
+        //     for (int i = 0; i < 8; i++)
+        //     {
+        //         angle = 1f / 4f * Mathf.PI * i;
+        //         Vector3 pos = center + 6.5f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+        //         Quaternion quat = Quaternion.LookRotation(center - pos, Vector3.up);
+        //         controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
+        //         controller.InitEnemy(playerTransform);
+        //         Debug.Log("패턴 2 : 몇 번 실행되나요");
+        //         controller.SetDifficultyCost(cost);
+        //     }
+        // }
+        // else
+        // {
+        //     Debug.Log("패턴 3");
+        //
+        //     float angle;
+        //     Vector3 center = playerTransform.position;
+        //     
+        //     if (center.magnitude > PlaySystemRefStorage.mapSetter.MaxRange - 7.2f)
+        //     {
+        //         center *= (PlaySystemRefStorage.mapSetter.MaxRange - 7.2f) / center.magnitude;
+        //     }
+        //
+        //     for (int i = 0; i < 8; i++)
+        //     {
+        //         angle = 1f / 4f * Mathf.PI * i;
+        //         Vector3 pos = center + 7.5f * new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+        //         Quaternion quat = Quaternion.LookRotation(center - pos, Vector3.up);
+        //         controller = Instantiate(monsterPattern3, pos, quat).GetComponent<MonsterController>();
+        //         controller.InitEnemy(playerTransform);
+        //         Debug.Log("패턴 3 : 몇 번 실행되나요");
+        //         controller.SetDifficultyCost(cost);
+        //     }
+        // }
+    }
+    
+    private void RegisterDestroyCallback(MonsterController ctrl, PatternGroup group)
+    {
+        ctrl.OnDestroyed += (monster) =>
+        {
+            group.Remaining--;
+            if (group.Remaining == 0)
+            {
+                PlaySystemRefStorage.stageManager.RestoreDifficulty(group.Cost);
+                _activeGroups.Remove(group);
+            }
+        };
     }
 
     // protected override IEnumerator exPatternCoroutine()

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 // 인게임 Stage 난이도 관리.
@@ -8,6 +9,14 @@ public class StageManager : MonoBehaviour
     private StageData mStageData;
     private bool mbStageEnded = false;
     private float mTargetScore = 0f; // 목표 점수 저장
+    
+    private int mMaxDifficulty;
+    private int mCurrentDifficulty;
+
+    private void Awake()
+    {
+        PlaySystemRefStorage.stageManager = this; // 전역 레퍼런스 설정
+    }
 
     private void Start()
     {
@@ -41,8 +50,30 @@ public class StageManager : MonoBehaviour
 
         // 여기서 필요한 매니저들에 난이도 등 전달 가능
         // 예: MonsterGenerator.SetDifficulty(mStageData.DifficultyValue);
+        mMaxDifficulty = mStageData.DifficultyValue;
+        mCurrentDifficulty = mMaxDifficulty;
     }
 
+    // 풀 소모 시도
+    public bool TryConsumeDifficulty(int cost)
+    {
+        if (mCurrentDifficulty >= cost)
+        {
+            mCurrentDifficulty -= cost;
+            Debug.Log($"[StageManager] 비용 사용 : {cost} → 현재 난이도 : {mCurrentDifficulty}");
+            return true;
+        }
+        Debug.Log($"cost가 부족합니다. 현재 cost => {mCurrentDifficulty}, 사용됐어야 할 cost => {cost}");
+        return false;
+    }
+
+    // 몬스터 소멸 시 복구
+    public void RestoreDifficulty(int cost)
+    {
+        mCurrentDifficulty = Mathf.Min(mCurrentDifficulty + cost, mMaxDifficulty);
+        Debug.Log($"[StageManager] 비용 복구 : {cost} → 현재 난이도 : {mCurrentDifficulty}");
+    }
+    
     // 목표 점수 도달 시 바로 클리어 처리
     private void HandleScoreChanged(double currentScore)
     {
