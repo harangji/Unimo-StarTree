@@ -2446,79 +2446,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &1099027723
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2933521365371308141, guid: 06984631c48981341a6ac1b2cdc87ada,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2933521365371308141, guid: 06984631c48981341a6ac1b2cdc87ada,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2933521365371308141, guid: 06984631c48981341a6ac1b2cdc87ada,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2933521365371308141, guid: 06984631c48981341a6ac1b2cdc87ada,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2933521365371308141, guid: 06984631c48981341a6ac1b2cdc87ada,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2933521365371308141, guid: 06984631c48981341a6ac1b2cdc87ada,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2933521365371308141, guid: 06984631c48981341a6ac1b2cdc87ada,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2933521365371308141, guid: 06984631c48981341a6ac1b2cdc87ada,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2933521365371308141, guid: 06984631c48981341a6ac1b2cdc87ada,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2933521365371308141, guid: 06984631c48981341a6ac1b2cdc87ada,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663591102486114024, guid: 06984631c48981341a6ac1b2cdc87ada,
-        type: 3}
-      propertyPath: m_Name
-      value: BossMonster
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663591102486114024, guid: 06984631c48981341a6ac1b2cdc87ada,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 06984631c48981341a6ac1b2cdc87ada, type: 3}
 --- !u!1001 &1148019905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4018,11 +3945,11 @@ MonoBehaviour:
   - {fileID: 622374550}
   - {fileID: 326843635}
   activateTime:
-  - 5
-  - 1000
-  - 1500
-  - 2000
-  - 2500
+  - 1000000
+  - 1000000
+  - 1000000
+  - 1000000
+  - 1000000
   extreamTime: 1000000
   extreamCoolTime: 1000000
 --- !u!1 &1887724576
@@ -10222,4 +10149,3 @@ SceneRoots:
   - {fileID: 1730400164}
   - {fileID: 540869492}
   - {fileID: 941526163}
-  - {fileID: 1099027723}
