@@ -2118,6 +2118,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f31080a13697794fb80e26f21bf98f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &981523620 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 4876853301105598590, guid: e542909bea402f345a760b7cda46b419,
+    type: 3}
+  m_PrefabInstance: {fileID: 4876853301214706921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1047742194
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,9 +2133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1047742196}
-  - component: {fileID: 1047742195}
   - component: {fileID: 1047742197}
-  - component: {fileID: 1047742198}
   m_Layer: 0
   m_Name: BlackHole
   m_TagString: Untagged
@@ -2137,7 +2141,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1047742195
+--- !u!4 &1047742196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047742194}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -2.52, y: 0, z: 7.69}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1047742197
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2151,78 +2170,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gimmickName: "\uBE14\uB799\uD640"
   gimmickIcon: {fileID: 0}
-  gimmickDuration: 50
+  gimmickDuration: 100
   gimmickEffectDuration: 0
-  gimmickCost: 10
-  gimmickWeight: 10
+  gimmickCost: 0
+  gimmickWeight: 
   gimmickGrade: 0
-  gravityStrength: 20
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
---- !u!4 &1047742196
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1047742194}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 5.19, y: 0, z: -2.06}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1047742197
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1047742194}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &1047742198
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1047742194}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  gravityStrength: 15
+  effectiveRange: 5
+  effectiveCenterRange: 0.7
+  playerRigidbody: {fileID: 981523620}
 --- !u!1 &1054359516
 GameObject:
   m_ObjectHideFlags: 0
