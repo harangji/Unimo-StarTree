@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PlaySystemRefStorage : MonoBehaviour
 {
-    static public ScoreManager scoreManager;
-    static public MapRangeSetter mapSetter;
-    static public PlayTimeManager playTimeManager;
-    static public PlayProcessController playProcessController;
-    static public PlayerStatManager playerStatManager;
-    static public HarvestLevelController harvestLvController;
+    public static ScoreManager scoreManager;
+    public static MapRangeSetter mapSetter;
+    public static PlayTimeManager playTimeManager;
+    public static PlayProcessController playProcessController;
+    public static PlayerStatManager playerStatManager;
+    public static HarvestLevelController harvestLvController;
+    public static StageManager stageManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,5 +20,6 @@ public class PlaySystemRefStorage : MonoBehaviour
         if (playProcessController == null) { Debug.Log("process Ctrl not found."); }
         if (playerStatManager == null) { Debug.Log("player not found."); }
         if (harvestLvController == null) { Debug.Log("harvest Lv ctrl not found."); }
+        if (scoreManager == null) { Debug.Log("ScoreManager not found."); }
     }
 }

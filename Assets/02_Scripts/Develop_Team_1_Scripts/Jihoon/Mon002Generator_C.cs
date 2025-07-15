@@ -6,6 +6,13 @@ using UnityEngine;
 
 public class Mon002Generator_C : MonsterGenerator
 {
+    private class PatternGroup
+    {
+        public int Remaining;
+        public int Cost;
+    }
+    private List<PatternGroup> _activeGroups = new List<PatternGroup>();
+    
     [SerializeField] private GameObject focusingObj;
     private float genRadius = 35f;
     private float targetRadius = 3f;
@@ -17,33 +24,26 @@ public class Mon002Generator_C : MonsterGenerator
     private WaitForSeconds pattern3Wait = new WaitForSeconds(0.5f);
 
     // Start is called before the first frame update
-    new void OnEnable()
-    {
-        base.OnEnable();
-    }
+    new void OnEnable() { base.OnEnable(); }
 
     // Update is called once per frame
-    new void Update()
-    {
-        base.Update();
-    }
-    // protected override MonsterController generateEnemy()
-    // {
-    //     MonsterController controller = base.generateEnemy();
-    //     Transform indicator = controller.indicatorCtrl.GetIndicatorTransform();
-    //     Vector3 indicatorPos = newIndicatorPos + new Vector3(0f, indicator.position.y, 0f);
-    //     indicator.position = indicatorPos;
-    //     indicator.parent = transform;
-    //
-    //     return controller;
-    // }
-
+    new void Update() { base.Update(); }
+    
     protected override MonsterController generateEnemy()
     {
         //todo 난이도 점유 기능 추가해야 함 -> 나중에 게임 매니저 만들어지면 하면 됨
-
+        int cost;
         var rate = Random.Range(0, 100);
+        if (rate < 70) cost = 1;
+        else if (rate < 90) cost = 3;
+        else cost = 5;
 
+        var stageMgr = PlaySystemRefStorage.stageManager;
+        if (stageMgr == null || !stageMgr.TryConsumeDifficulty(cost))
+        {
+            Debug.Log("할당할 난이도 수치가 부족합니다."); return null;
+        }
+        
         if (rate < 70)
         {
             Debug.Log("패턴 1");
@@ -189,4 +189,15 @@ public class Mon002Generator_C : MonsterGenerator
         focusingObj.SetActive(false);
         yield break;
     }
+    
+    // protected override MonsterController generateEnemy()
+    // {
+    //     MonsterController controller = base.generateEnemy();
+    //     Transform indicator = controller.indicatorCtrl.GetIndicatorTransform();
+    //     Vector3 indicatorPos = newIndicatorPos + new Vector3(0f, indicator.position.y, 0f);
+    //     indicator.position = indicatorPos;
+    //     indicator.parent = transform;
+    //
+    //     return controller;
+    // }
 }
