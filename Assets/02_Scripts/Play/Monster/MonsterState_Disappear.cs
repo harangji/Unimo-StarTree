@@ -22,7 +22,7 @@ public class MonsterState_Disappear : MonsterState
         controller.DeactiveEnemy();
         controller.enemyAnimator.SetTrigger("disappear"); 
         StartCoroutine(CoroutineExtensions.DelayedActionCall(() =>
-        { hasTriggerDisappear = true; }, 0.26f));
+        { hasTriggerDisappear = true; }, 1f));
     }
     protected void CallEnemyDestroy()
     {
