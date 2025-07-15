@@ -51,9 +51,9 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         playerMover = GetComponent<PlayerMover>();
         visualCtrl = GetComponent<PlayerVisualController>();
-        auraController = FindAnyObjectByType<AuraController>();
-        playerMover.FindAuraCtrl(auraController);
-        auraController.gameObject.SetActive(false);
+        //auraController = FindAnyObjectByType<AuraController>();
+        //playerMover.FindAuraCtrl(auraController);
+        //auraController.gameObject.SetActive(false);
 
         if (isTestModel)
         {
