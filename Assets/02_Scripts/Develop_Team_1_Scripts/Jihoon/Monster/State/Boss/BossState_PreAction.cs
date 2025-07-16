@@ -14,8 +14,6 @@ public class BossState_PreAction : MonsterState_Preaction
     //============= 아래는 내부 함수 =============//
     private void RotateMonster()
     {
-        Debug.Log("회전 중");
-
         var obj = controller.gameObject;
         
         Vector3 targetPos = controller.playerTransform.position;
