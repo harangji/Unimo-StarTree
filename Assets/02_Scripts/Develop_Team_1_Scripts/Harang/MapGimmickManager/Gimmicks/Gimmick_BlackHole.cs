@@ -1,42 +1,40 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Gimmick_BlackHole : Gimmick
 {
-    [Header("중력 세기")]
+    [Header("블랙홀 설정")]
+    
+    [Space]
+    [LabelText("끌어당기는 힘")] [Tooltip("블랙홀이 끌어당기는 정도")] [Required]
     public float gravityStrength = 10f;
 
-    [Header("중력 적용 반경")]
+    [Space]
+    [LabelText("블랙홀 크기")] [Tooltip("중력 영향을 받지 않는 폭풍의 눈 구역")] [Required]
     public float effectiveRange = 5f;
     
-    [Header("중심 반경")]
+    [Space]
+    [LabelText("블랙홀 중심 안전 구역")] [Tooltip("중력 영향을 받지 않는 폭풍의 눈 구역")] [Required]
     public float effectiveCenterRange = 0.2f;
     
-    // public GameObject player;
-    public Rigidbody playerRigidbody;
-    private float timeElapsed;
+    private Rigidbody PlayerRigidbody {get; set;}
+    private float TimeElapsed {get; set;}
 
     private void Start()
     {
-        timeElapsed = 0f;
+        TimeElapsed = 0f;
 
-        // // Rigidbody 캐시
-        // if (player != null)
-        // {
-        //     playerRigidbody = player.GetComponent<Rigidbody>();
-        //     if (playerRigidbody == null)
-        //         Debug.LogWarning("Player에 Rigidbody가 없습니다.");
-        // }
-        // else
-        // {
-        //     Debug.LogWarning("Player 참조가 없습니다.");
-        // }
+        if (GameManager.Instance != null)
+        {
+            PlayerRigidbody = GameManager.Instance.unimoPrefab.GetComponent<Collider>().attachedRigidbody;
+        }
     }
 
     private void Update()
     {
-        timeElapsed += Time.deltaTime;
-        if (timeElapsed >= gimmickDuration)
+        TimeElapsed += Time.deltaTime;
+        if (TimeElapsed >= gimmickDuration)
         {
             Destroy(gameObject);
             return;
@@ -45,24 +43,20 @@ public class Gimmick_BlackHole : Gimmick
 
     private void FixedUpdate()
     {
-        if (playerRigidbody == null) return;
+        if (PlayerRigidbody == null) return;
 
-        float distance = Vector3.Distance(transform.position, playerRigidbody.position);
-        if (distance <= effectiveRange && distance > effectiveCenterRange) // effectiveRange 범위 안에 플레이어가 있음 & 중심점보다는 멀게 존재
+        float distance = Vector3.Distance(transform.position, PlayerRigidbody.position); //끌어당길 방향 설정 (플레이어가 블랙홀을 바라보는 방향)
+        
+        if (distance <= effectiveRange && distance > effectiveCenterRange) // 블랙홀 내부 && 중심 구역보다는 바깥쪽에 위치
         {
-            Debug.Log("Player In");
-            Vector3 direction = (transform.position - playerRigidbody.position).normalized;
-            playerRigidbody.AddForce(direction * gravityStrength, ForceMode.Acceleration);
+            MyDebug.Log("Player In");
+            Vector3 direction = (transform.position - PlayerRigidbody.position).normalized;
+            PlayerRigidbody.AddForce(direction * gravityStrength, ForceMode.Acceleration);
         }
-        else if (distance <= effectiveCenterRange) //중심점 내에 존재
+        else if(distance <= effectiveCenterRange || distance > effectiveRange) //블랙홀 중심 구역에 위치 or 블랙홀 빠져나감
         {
-            Debug.Log("Player In Center");
-            playerRigidbody.linearVelocity = Vector3.zero;
-        }
-        else if(distance > effectiveRange) //효과 범위 바깥에 존재
-        {
-            Debug.Log("Player Out");
-            playerRigidbody.linearVelocity = Vector3.zero;
+            MyDebug.Log("Player Out");
+            PlayerRigidbody.linearVelocity = Vector3.zero;
         }
     }
 

@@ -48,4 +48,12 @@ public class CSVReader
         }
         return list;
     }
+    
+    public static int ParseInt(object obj)
+    {
+        if (obj is int i) return i;
+        if (obj is float f) return Mathf.RoundToInt(f);
+        if (obj is string s && int.TryParse(s, out int result)) return result;
+        return 0;
+    }
 }
