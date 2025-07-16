@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 6176562422317411765}
   - component: {fileID: 4962783415059772227}
   - component: {fileID: 5526928168580600287}
+  - component: {fileID: 330673150623990505}
   m_Layer: 0
   m_Name: BossMonster
   m_TagString: Untagged
@@ -252,6 +253,23 @@ MonoBehaviour:
   skillDamage2: 0
   skillDamage3: 0
   skillDamage4: 0
+--- !u!114 &330673150623990505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5663591102486114024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a7abd1356707e42a0982fe5b424338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillCoolTime:
+  - 10
+  - 15
+  - 15
+  - 20
 --- !u!1 &7571725496404719269
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,7 +367,7 @@ GameObject:
   - component: {fileID: 2517951941609952266}
   - component: {fileID: 8349863689753045329}
   - component: {fileID: 8630073390903662835}
-  - component: {fileID: 1453948639579580000}
+  - component: {fileID: 4154348888968138004}
   - component: {fileID: 4697006477032758487}
   - component: {fileID: 3772137402204495030}
   m_Layer: 0
@@ -399,7 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 4.2
---- !u!114 &1453948639579580000
+--- !u!114 &4154348888968138004
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -408,7 +426,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7751605546476978420}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66288d395910add4faa57510d6e1c61c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2473773b6abbe1d488a23ef156d62697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &4697006477032758487
