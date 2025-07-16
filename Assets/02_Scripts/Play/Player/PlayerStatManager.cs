@@ -30,6 +30,10 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     [SerializeField] [Range(0f, 1f)] private float bEvadeChance = 0.5f;
     [SerializeField] [Range(0f, 1f)] private float fStunReduceRate = 0.5f;
 
+    private float regenAmountPerSecond;  // 초당 자연 회복
+    private float armor;                 // 방어력 (데미지 감소율)
+    private float healingMultiplier;     // 회복 배수
+    
     //컴벳 시스템에 사용하는 내용
     [SerializeField] private Collider mainCollider;
     public Collider MainCollider => mainCollider;
@@ -51,10 +55,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         playerMover = GetComponent<PlayerMover>();
         visualCtrl = GetComponent<PlayerVisualController>();
-        //auraController = FindAnyObjectByType<AuraController>();
-        //playerMover.FindAuraCtrl(auraController);
-        //auraController.gameObject.SetActive(false);
-
+        
         if (isTestModel)
         {
             visualCtrl.test_InitModeling(equipPrefab, chaPrefab);
@@ -114,7 +115,12 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         bEvadeChance = mStat.FinalStat.StunIgnoreChance;
         fStunReduceRate = mStat.FinalStat.StunResistanceRate;
+        regenAmountPerSecond = mStat.FinalStat.HealthRegen;
+        armor = mStat.FinalStat.Armor;
+        healingMultiplier = mStat.FinalStat.HealingMult;
+
         Debug.Log($"[PlayerStatManager] 회피확률: {bEvadeChance * 100}% / 스턴저항률: {fStunReduceRate * 100}%");
+        Debug.Log($"[PlayerStatManager] 방어력: {armor}, 자연회복: {regenAmountPerSecond}, 회복배수: {healingMultiplier}");
     }
 
     public UnimoRuntimeStat GetStat()
@@ -122,6 +128,17 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         return mStat;
     }
 
+    void Update()
+    {
+        if (currentHP > 0f && currentHP < mStat.BaseStat.Health)
+        {
+            var regenHeal = regenAmountPerSecond * Time.deltaTime * healingMultiplier;
+            var healEvent = new HealEvent { Heal = regenHeal };
+
+            TakeHeal(healEvent);
+        }
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<ItemController>(out var item))
