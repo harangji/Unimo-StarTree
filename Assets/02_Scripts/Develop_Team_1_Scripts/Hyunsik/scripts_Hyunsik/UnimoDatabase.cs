@@ -38,26 +38,27 @@ public static class UnimoDatabase
         Name = "리비",
         Rarity = "Normal",
         ModelID = "CH001",
-        Stat = new SCharacterStat
+        Stat = UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat
         {
             MoveSpd = 8.2f,
             CharSize = new Vector2Int(120, 120),
-            Health = 250, // 적용
-            HealthRegen = 1, // 적용
-            HealingMult = 1f, // 적용
-            Armor = 0.05f, // 적용
+            Health = 250,
+            HealthRegen = 1,
+            HealingMult = 1f,
+            Armor = 0.05f,
             StunIgnoreChance = 0f,
             StunResistanceRate = 0f,
             CriticalChance = 0f,
-            CriticalMult = 0f, 
+            CriticalMult = 1.1f,
             YFGainMult = 1.3f,
             OFGainMult = 1.5f,
             AuraRange = 6.92f,
             AuraStr = 1f
-        },
-        Grade = new EStatGradeSet { MoveSpd = EStatGrade.C /* 생략 */ }
-    };
+        }, 10101),
 
+        Grade = new EStatGradeSet { MoveSpd = EStatGrade.C }
+    };
+    
     // 곰곰
     private static UnimoData CreateUnimo_Gomgom() => new UnimoData
     {
@@ -65,7 +66,7 @@ public static class UnimoDatabase
         Name = "곰곰",
         Rarity = "Normal",
         ModelID = "CH003",
-        Stat = new SCharacterStat
+        Stat =  UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat
         {
             MoveSpd = 7.5f,
             CharSize = new Vector2Int(130, 130),
@@ -76,13 +77,14 @@ public static class UnimoDatabase
             StunIgnoreChance = 0f,
             StunResistanceRate = 0f,
             CriticalChance = 0f,
-            CriticalMult = 0f, 
+            CriticalMult = 1.1f, 
             YFGainMult = 1.5f,
             OFGainMult = 2f,
             AuraRange = 8.73f,
             AuraStr = 1.2f
-        },
-        Grade = new EStatGradeSet { MoveSpd = EStatGrade.C /* 생략 */ }
+        }, 10102),
+        
+        Grade = new EStatGradeSet { MoveSpd = EStatGrade.C }
     };
     
     
@@ -93,7 +95,7 @@ public static class UnimoDatabase
         Name = "토스터",
         Rarity = "Rare",
         ModelID = "CH013",
-        Stat = new SCharacterStat
+        Stat = UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat
         {
             MoveSpd = 9f,
             CharSize = new Vector2Int(120, 120),
@@ -104,12 +106,13 @@ public static class UnimoDatabase
             StunIgnoreChance = 0.07f,
             StunResistanceRate = 0.3f,
             CriticalChance = 0.1f,
-            CriticalMult = 0.1f,
+            CriticalMult = 1.35f,
             YFGainMult = 1.5f,
             OFGainMult = 2f,
             AuraRange = 8.73f,
             AuraStr = 1.2f
-        },
+        }, 10201),
+        
         Grade = new EStatGradeSet { MoveSpd = EStatGrade.B /* 생략 */ }
     };
     
@@ -120,7 +123,7 @@ public static class UnimoDatabase
         Name = "너구리",
         Rarity = "Rare",
         ModelID = "CH012",
-        Stat = new SCharacterStat
+        Stat = UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat
         {
             MoveSpd = 9.5f,
             CharSize = new Vector2Int(115, 115),
@@ -131,12 +134,13 @@ public static class UnimoDatabase
             StunIgnoreChance = 0f,
             StunResistanceRate = 0.2f,
             CriticalChance = 0.13f,
-            CriticalMult = 0.15f,
+            CriticalMult = 1.4f,
             YFGainMult = 1.5f,
             OFGainMult = 2f,
             AuraRange = 4.20f,
             AuraStr = 1.5f
-        },
+        }, 010202),
+        
         Grade = new EStatGradeSet { MoveSpd = EStatGrade.B }  // 예시
     };
     
@@ -147,7 +151,7 @@ public static class UnimoDatabase
         Name = "알",
         Rarity = "Rare",
         ModelID = "CH009",
-        Stat = new SCharacterStat
+        Stat = UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat
         {
             MoveSpd = 7.5f,
             CharSize = new Vector2Int(120, 120),
@@ -158,12 +162,12 @@ public static class UnimoDatabase
             StunIgnoreChance = 0f,
             StunResistanceRate = 0f,
             CriticalChance = 0f,
-            CriticalMult = 0f,
+            CriticalMult = 1.1f,
             YFGainMult = 1.5f,
             OFGainMult = 2f,
             AuraRange = 9.57f,
             AuraStr = 1.2f
-        },
+        },10203),
         Grade = new EStatGradeSet { MoveSpd = EStatGrade.B }  // 예시로 Rare 캐릭터는 B로 설정
     };
     
@@ -174,7 +178,7 @@ public static class UnimoDatabase
         Name = "점분이",
         Rarity = "Rare",
         ModelID = "CH004",
-        Stat = new SCharacterStat
+        Stat = UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat
         {
             MoveSpd = 9.5f,
             CharSize = new Vector2Int(115, 115),
@@ -185,12 +189,12 @@ public static class UnimoDatabase
             StunIgnoreChance = 0f,
             StunResistanceRate = 0.4f,
             CriticalChance = 0.16f,
-            CriticalMult = 0.1f,
+            CriticalMult = 1.35f,
             YFGainMult = 1.3f,
             OFGainMult = 2f,
             AuraRange = 5.04f,
             AuraStr = 1.2f
-        },
+        },10204),
         Grade = new EStatGradeSet { MoveSpd = EStatGrade.B }  // Rare 캐릭터라면 예시로 B 적용
     };
     
@@ -201,7 +205,7 @@ public static class UnimoDatabase
         Name = "둠둠",
         Rarity = "Rare",
         ModelID = "CH007",
-        Stat = new SCharacterStat
+        Stat = UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat
         {
             MoveSpd = 9.0f,
             CharSize = new Vector2Int(120, 120),
@@ -212,12 +216,12 @@ public static class UnimoDatabase
             StunIgnoreChance = 0.1f,
             StunResistanceRate = 0.3f,
             CriticalChance = 0f,
-            CriticalMult = 0f,
+            CriticalMult = 1.1f,
             YFGainMult = 1.5f,
             OFGainMult = 2f,
             AuraRange = 8.73f,
             AuraStr = 1.2f
-        },
+        },10205),
         Grade = new EStatGradeSet { MoveSpd = EStatGrade.B }  // Rare 등급 예시
     };
     
@@ -228,7 +232,7 @@ public static class UnimoDatabase
         Name = "고등어",
         Rarity = "Unique",
         ModelID = "CH005",
-        Stat = new SCharacterStat
+        Stat = UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat
         {
             MoveSpd = 9.0f,
             CharSize = new Vector2Int(120, 120),
@@ -239,12 +243,12 @@ public static class UnimoDatabase
             StunIgnoreChance = 0.07f,
             StunResistanceRate = 0f,
             CriticalChance = 0.1f,
-            CriticalMult = 0.1f,
+            CriticalMult = 1.35f,
             YFGainMult = 1.5f,
             OFGainMult = 2f,
             AuraRange = 8.73f,
             AuraStr = 1.2f
-        },
+        }, 10301),
         Grade = new EStatGradeSet { MoveSpd = EStatGrade.A }  // Unique 등급 예시로 A 설정
     };
     
@@ -255,7 +259,7 @@ public static class UnimoDatabase
         Name = "아우구스투스",
         Rarity = "Unique",
         ModelID = "CH008",
-        Stat = new SCharacterStat
+        Stat = UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat
         {
             MoveSpd = 9.5f,
             CharSize = new Vector2Int(120, 120),
@@ -266,12 +270,12 @@ public static class UnimoDatabase
             StunIgnoreChance = 0.1f,
             StunResistanceRate = 0.3f,
             CriticalChance = 0.1f,
-            CriticalMult = 0.1f,
+            CriticalMult = 1.35f,
             YFGainMult = 2f,
             OFGainMult = 3f,
             AuraRange = 6.92f,
             AuraStr = 1f
-        },
+        }, 10302),
         Grade = new EStatGradeSet { MoveSpd = EStatGrade.A }  // Unique 등급 예시
     };
     
@@ -282,7 +286,7 @@ public static class UnimoDatabase
         Name = "소포",
         Rarity = "Unique",
         ModelID = "CH002",
-        Stat = new SCharacterStat
+        Stat = UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat
         {
             MoveSpd = 7.0f,
             CharSize = new Vector2Int(110, 110),
@@ -293,12 +297,12 @@ public static class UnimoDatabase
             StunIgnoreChance = 0.15f,
             StunResistanceRate = 0.4f,
             CriticalChance = 0.1f,
-            CriticalMult = 0.1f,
+            CriticalMult = 1.35f,
             YFGainMult = 1.3f,
             OFGainMult = 1.5f,
             AuraRange = 5.04f,
             AuraStr = 0.8f
-        },
+        },10303),
         Grade = new EStatGradeSet { MoveSpd = EStatGrade.A }  // Unique 등급 예시
     };
     
@@ -309,7 +313,7 @@ public static class UnimoDatabase
         Name = "쿠",
         Rarity = "Legend",
         ModelID = "CH006",
-        Stat = new SCharacterStat
+        Stat = UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat
         {
             MoveSpd = 10.0f,
             CharSize = new Vector2Int(120, 120),
@@ -320,12 +324,12 @@ public static class UnimoDatabase
             StunIgnoreChance = 0.15f,
             StunResistanceRate = 0.3f,
             CriticalChance = 0.13f,
-            CriticalMult = 0.1f,
+            CriticalMult = 1.35f,
             YFGainMult = 1.5f,
             OFGainMult = 2f,
             AuraRange = 9.57f,
             AuraStr = 1.5f
-        },
+        }, 10401),
         Grade = new EStatGradeSet { MoveSpd = EStatGrade.S }  // Legend 등급 예시
     };
     
@@ -336,7 +340,7 @@ public static class UnimoDatabase
         Name = "프리모",
         Rarity = "Legend",
         ModelID = "CH010",
-        Stat = new SCharacterStat
+        Stat = UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat
         {
             MoveSpd = 9.5f,
             CharSize = new Vector2Int(120, 120),
@@ -347,12 +351,12 @@ public static class UnimoDatabase
             StunIgnoreChance = 0.15f,
             StunResistanceRate = 0.3f,
             CriticalChance = 0.13f,
-            CriticalMult = 0.1f,
+            CriticalMult = 1.35f,
             YFGainMult = 1.5f,
             OFGainMult = 2f,
             AuraRange = 11.84f,
             AuraStr = 2f
-        },
+        }, 10402),
         Grade = new EStatGradeSet { MoveSpd = EStatGrade.S }  // Legend 등급 예시
     };
  
@@ -363,7 +367,7 @@ public static class UnimoDatabase
         Name = "도베르만",
         Rarity = "Legend",
         ModelID = "CH011",
-        Stat = new SCharacterStat
+        Stat = UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat
         {
             MoveSpd = 9.5f,
             CharSize = new Vector2Int(100, 100),
@@ -374,12 +378,12 @@ public static class UnimoDatabase
             StunIgnoreChance = 0.3f,
             StunResistanceRate = 0.3f,
             CriticalChance = 0.16f,
-            CriticalMult = 0.15f,
+            CriticalMult = 1.4f,
             YFGainMult = 3f,
             OFGainMult = 4f,
             AuraRange = 8.73f,
             AuraStr = 1.2f
-        },
+        }, 10403),
         Grade = new EStatGradeSet { MoveSpd = EStatGrade.S }  // Legend 등급 예시
     };
     

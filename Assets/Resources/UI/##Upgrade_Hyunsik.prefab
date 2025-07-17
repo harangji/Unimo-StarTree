@@ -37,9 +37,9 @@ RectTransform:
   - {fileID: 3278004498258171410}
   m_Father: {fileID: 1276435633579130864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 929, y: -414.24826}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 606, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &516506649246781846
@@ -354,9 +354,9 @@ RectTransform:
   - {fileID: 6270993133135595896}
   m_Father: {fileID: 661078947564487540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 303, y: -414.24826}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 606, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6030881268675845149
@@ -517,7 +517,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 720, y: -2161.2412}
-  m_SizeDelta: {x: 1212, y: 828.4965}
+  m_SizeDelta: {x: 0, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8150499671286198722
 MonoBehaviour:
@@ -1093,8 +1093,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -1595,9 +1595,9 @@ RectTransform:
   - {fileID: 3833616198938462229}
   m_Father: {fileID: 7010115564755965144}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 303, y: -414.24826}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 606, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1970405043144672083
@@ -1758,9 +1758,9 @@ RectTransform:
   - {fileID: 2074913733764574685}
   m_Father: {fileID: 4818753983780867333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 909, y: -414.24826}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 606, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1670147180122431676
@@ -2781,9 +2781,9 @@ RectTransform:
   - {fileID: 6979060463253217344}
   m_Father: {fileID: 7378340069347287126}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 303, y: -414.24826}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 606, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4842559637010488436
@@ -3689,9 +3689,9 @@ RectTransform:
   - {fileID: 8170659739277476452}
   m_Father: {fileID: 661078947564487540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 909, y: -414.24826}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 606, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7161747488753503839
@@ -4757,8 +4757,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -5017,9 +5017,9 @@ RectTransform:
   - {fileID: 7328138852200054583}
   m_Father: {fileID: 8225884365164571482}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 303, y: -414.24826}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 606, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3532368918608302100
@@ -5402,8 +5402,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -6434,8 +6434,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -7450,8 +7450,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -7888,9 +7888,9 @@ RectTransform:
   - {fileID: 4574077156165027365}
   m_Father: {fileID: 4677503816203236541}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 303, y: -414.24826}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 606, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6084851449479529772
@@ -8226,8 +8226,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -9130,8 +9130,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -9796,8 +9796,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -11488,8 +11488,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -11957,8 +11957,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -12965,8 +12965,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: GetEQ
         m_Mode: 1
         m_Arguments:
@@ -13014,7 +13014,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 720, y: -444.24826}
-  m_SizeDelta: {x: 1232, y: 828.4965}
+  m_SizeDelta: {x: 0, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1378712408164319098
 MonoBehaviour:
@@ -13405,7 +13405,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 720, y: -4736.7305}
-  m_SizeDelta: {x: 1212, y: 828.4965}
+  m_SizeDelta: {x: 0, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8508706530362241126
 MonoBehaviour:
@@ -13659,8 +13659,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -13844,9 +13844,9 @@ RectTransform:
   - {fileID: 5741442004109103096}
   m_Father: {fileID: 8225884365164571482}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 929, y: -414.24826}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 606, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1733698063791217682
@@ -14702,8 +14702,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -16922,8 +16922,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -17408,8 +17408,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -17646,8 +17646,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -18097,9 +18097,9 @@ RectTransform:
   - {fileID: 6005592895724693263}
   m_Father: {fileID: 4677503816203236541}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 909, y: -414.24826}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 606, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6282064580557526662
@@ -18360,8 +18360,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -18583,8 +18583,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: GetUnimo
         m_Mode: 1
         m_Arguments:
@@ -19173,8 +19173,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -19336,8 +19336,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -19894,8 +19894,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -21038,9 +21038,9 @@ RectTransform:
   - {fileID: 2783509619224669121}
   m_Father: {fileID: 4818753983780867333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 303, y: -414.24826}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 606, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1027947209575480614
@@ -21700,8 +21700,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -22088,8 +22088,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -22589,9 +22589,9 @@ RectTransform:
   - {fileID: 3449985222250373216}
   m_Father: {fileID: 7378340069347287126}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 909, y: -414.24826}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 606, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1538140650689530188
@@ -23894,9 +23894,9 @@ RectTransform:
   - {fileID: 2618415794131889542}
   m_Father: {fileID: 1276435633579130864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 303, y: -414.24826}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 606, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7177221346630551394
@@ -24157,8 +24157,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:
@@ -24700,7 +24700,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 720, y: -3019.7378}
-  m_SizeDelta: {x: 1212, y: 828.4965}
+  m_SizeDelta: {x: 0, y: 828.4965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5620937043935532682
 MonoBehaviour:
@@ -25076,8 +25076,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Costume, Assembly-CSharp
+      - m_Target: {fileID: 5283338722261803667}
+        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
         m_MethodName: EQChange
         m_Mode: 3
         m_Arguments:

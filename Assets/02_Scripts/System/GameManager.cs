@@ -10,6 +10,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public GameObject unimoPrefab;
     
     public int SelectedUnimoID { get; set; } = 10101;
+    public int SelectedEngineID { get; set; } = 20101;  // ¶óºñ
 
     new private void Awake()
     {
