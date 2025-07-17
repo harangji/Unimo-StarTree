@@ -55,7 +55,7 @@ public class HPManager : MonoBehaviour
         {
             bIsDead = true;
             Debug.Log("플레이어 사망!");
-            PlaySystemRefStorage.playProcessController.TimeUp();
+            PlaySystemRefStorage.playProcessController.GameOver();
         }
     }
 
