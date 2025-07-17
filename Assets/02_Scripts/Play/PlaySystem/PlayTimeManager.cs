@@ -99,6 +99,6 @@ public class PlayTimeManager : MonoBehaviour
     private void timeUp()
     {
         isPaused = true;
-        PlaySystemRefStorage.playProcessController.TimeUp();
+        PlaySystemRefStorage.playProcessController.GameOver();
     }
 }
