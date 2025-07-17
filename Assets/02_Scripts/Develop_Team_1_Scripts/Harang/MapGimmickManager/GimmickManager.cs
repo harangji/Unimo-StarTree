@@ -27,7 +27,7 @@ public class GimmickManager : MonoBehaviour
     [LabelText("기믹 아이콘들")][SerializeField] 
     private List<Image> modeIcon;
     
-    [LabelText("기믹 출현 BGM 실행할 소스")][SerializeField] 
+    [LabelText("기믹 출현 BGM 실행할 소스")][ReadOnly] 
     private AudioSource bgmSource; 
     
     [LabelText("기믹 출현 BGM")][SerializeField] 
@@ -61,7 +61,8 @@ public class GimmickManager : MonoBehaviour
 
     public void InitializeGimmickManager()
     {
-        currentStage = Base_Manager.Data.UserData.BestStage + 100; //스테이지 int 캐싱 //최소 1
+        
+        currentStage = Base_Manager.Data.UserData.BestStage + 100; //스테이지 int 캐싱 //최소 1 (테스트 100)
         currentCost = SetComplexityScoreWithStageNumber(currentStage); //currentStage로 복잡도 점수 반환
         readyGimmicks = new Gimmick[SetGimmicCountByStageNumber(currentStage)]; //currentStage로 스테이지에 등장할 기믹 갯수 설정
         if(readyGimmicks.Length == 0) return;
