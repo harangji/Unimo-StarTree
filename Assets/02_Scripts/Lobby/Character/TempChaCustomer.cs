@@ -50,13 +50,14 @@ public class TempChaCustomer : MonoBehaviour
         currentengine = diff;
         Base_Manager.Data.UserData.selectEngine = currentengine;
         GameManager.Instance.EqIdx = currentengine;
-        
-        // 캐릭터+장비 조합으로 유닛 ID 만들고 저장 (선택사항)
-        //int unitID = UnitIDMapping.GetUnitID(currentcharacter, currentengine);
-        //GameManager.Instance.SelectedUnimoID = unitID;
-        
+
+        int engineID = EngineIDMapping.GetEngineID(currentengine);
+        GameManager.Instance.SelectedEngineID = engineID;  // 실제 엔진 ID 저장
+
         makePreviewObj();
     }
+    
+    
     public void makePreviewObj()
     {
         if (chObj != null) { Addressables.ReleaseInstance(chObj); }

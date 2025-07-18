@@ -8,19 +8,24 @@ public class VirtualJoystickCtrl_ST001 : MonoBehaviour
     private PlayerMover_ST001 mover;
     private VitualStickImager virtualStick;
     private Vector2 stickCenterPos;
-    private float controlRadius = 140;
+    private RectTransform virtualStickRectTransform;
+    private const float CONTROL_RADIUS = 140;
     private bool isStopControl = false;
+    
     private void Start()
     {
         mover = GetComponent<PlayerMover_ST001>();
         virtualStick = FindAnyObjectByType<VitualStickImager>();
-        virtualStick.setStickImgSizes(2f * controlRadius, 2f * controlRadius);
+        virtualStick.setStickImgSizes(2f * CONTROL_RADIUS, 2f * CONTROL_RADIUS);
         virtualStick.gameObject.SetActive(false);
 
-        PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(stopControl);
-        PlaySystemRefStorage.playProcessController.SubscribePauseAction(stopControl);
-        PlaySystemRefStorage.playProcessController.SubscribeResumeAction(resumeControl);
+        PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(StopControl);
+        PlaySystemRefStorage.playProcessController.SubscribePauseAction(StopControl);
+        PlaySystemRefStorage.playProcessController.SubscribeResumeAction(ResumeControl);
+        
+        virtualStickRectTransform = virtualStick.GetComponent<RectTransform>();
     }
+    
     // Update is called once per frame
     void Update()
     {
@@ -38,39 +43,43 @@ public class VirtualJoystickCtrl_ST001 : MonoBehaviour
         }
         else if (touch.phase == TouchPhase.Began)
         {
-            virtualStick.GetComponent<RectTransform>().position= touch.position;
+            virtualStickRectTransform.position= touch.position;
             stickCenterPos = touch.position;
             virtualStick.gameObject.SetActive(true);
         }
         else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary) 
         {
-            Vector2 dir = convertToDirection(touch.position);
-            mover.SetDirection(dir);
+            Vector2 dir = ConvertToDirection(touch.position);
+            mover.SetDirection(ConvertToDirection(touch.position));
             virtualStick.setStickPos(dir);
         }
     }
+    
     private void OnDisable()
     {
         if (virtualStick == null) { return; }
         if (virtualStick.gameObject.activeSelf == true) { virtualStick.gameObject.SetActive(false); }
     }
-    private Vector2 convertToDirection(Vector2 inputPos)
+    
+    private Vector2 ConvertToDirection(Vector2 inputPos)
     {
         Vector2 diff = inputPos - stickCenterPos;
-        diff /= controlRadius;
+        diff /= CONTROL_RADIUS;
         float radius = Mathf.Clamp01(diff.magnitude);
         float angle = diff.AngleInXZ();
         Vector2 dir = radius * new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
         return dir;
     }
-    private void stopControl()
+    
+    private void StopControl()
     {  
         isStopControl = true;
         mover.SetDirection(Vector2.zero); 
         virtualStick.gameObject.SetActive(false);
     }
-    private void resumeControl()
+    
+    private void ResumeControl()
     {
         isStopControl = false;
     }
