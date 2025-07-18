@@ -162,7 +162,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
     private void stopPlay()
     {
-        if (isInvincible)
+        if (isInvincible && !PlaySystemRefStorage.stageManager.GetBonusStage())
         {
             StopCoroutine(stunCoroutine);
         }
@@ -239,6 +239,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         //사망 체크
         if (currentHP <= 0)
         {
+            if (PlaySystemRefStorage.stageManager.GetBonusStage()) { return; }
             PlaySystemRefStorage.playProcessController.GameOver();
         }
     }

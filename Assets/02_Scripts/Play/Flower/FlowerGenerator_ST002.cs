@@ -5,7 +5,7 @@ using UnityEngine;
 public class FlowerGenerator_ST002 : FlowerGenerator
 {
     private MapRangeSetter mapSetter;
-    private float oriGenRate = 0.5f; // 우선 보너스 스테이지 클리어를 위해 꽃 생성 시간 임시로 확 줄여놨음 (김진수)
+    private float oriGenRate = 2f;
     private float rateDecayingStandard = 20;
     new protected void Awake()
     {

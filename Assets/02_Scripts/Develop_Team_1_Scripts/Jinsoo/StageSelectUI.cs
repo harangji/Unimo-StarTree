@@ -22,8 +22,20 @@ public class StageSelectUI : MonoBehaviour
         Debug.Log($"{Base_Manager.Data.UserData.BestStage} ¿‘¥œ¥Ÿ.");
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            int NextStage = mNextStage + 1;
+            StageLoader.SaveClearedStage(NextStage);
+            mNextStage = NextStage;
+            UpdateUI();
+        }
+    }
+
     private void UpdateUI()
     {
+        mNextStage = Mathf.Min(mNextStage, MaxStage);
         mStageNumberText.text = $"{mNextStage} Stage";
     }
 
