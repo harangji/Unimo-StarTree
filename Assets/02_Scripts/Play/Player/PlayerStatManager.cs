@@ -83,7 +83,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(stopPlay);
 
-        hpGauge.SetGauge(1f);
+        hpGauge?.SetGauge(1f);
 
         int selectedID = GameManager.Instance.SelectedUnimoID > 0
             ? GameManager.Instance.SelectedUnimoID
@@ -256,7 +256,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         var reducedDamage = combatEvent.Damage * (1f - mStat.BaseStat.Armor);
         currentHP -= reducedDamage;
         
-        hpGauge.SetGauge(currentHP / mStat.BaseStat.Health);
+        hpGauge?.SetGauge(currentHP / mStat.BaseStat.Health);
         
         Debug.Log($"Combat System: 피해량: {reducedDamage}");
         Debug.Log($"Combat System: 현재 체력: {currentHP} / {mStat.BaseStat.Health}");
@@ -274,6 +274,6 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     {
         currentHP = Mathf.Min(currentHP + healEvent.Heal, mStat.BaseStat.Health);
         
-        hpGauge.SetGauge(currentHP / mStat.BaseStat.Health);
+        hpGauge?.SetGauge(currentHP / mStat.BaseStat.Health);
     }
 }
