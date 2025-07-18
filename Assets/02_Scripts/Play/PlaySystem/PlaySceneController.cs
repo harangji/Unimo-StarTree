@@ -51,6 +51,12 @@ public class PlaySceneController : MonoBehaviour
         Time.timeScale = 1f;
     }
     
+    public void NextGame()
+    {
+        int mNextStage = Base_Manager.Data.UserData.BestStage + 1;
+        StageLoader.LoadStage(mNextStage);
+    }
+    
     
     public void PauseGameSingleton() //∞‘¿” ∏ÿ√ﬂ±‚
     {

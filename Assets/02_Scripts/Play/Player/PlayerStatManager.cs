@@ -100,15 +100,41 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     {
         Debug.Log($"[PlayerStatManager] InitCharacter 호출됨: ID = {id}");
         mUnimoData = UnimoDatabase.GetUnimoData(id);
-        Debug.Log($"[PlayerStatManager] 불러온 체력 = {mUnimoData.Stat.Health}");
+
         if (mUnimoData == null)
         {
             Debug.LogError($"[PlayerStatManager] 잘못된 Unimo ID: {id}");
             return;
         }
 
-        mStat = new UnimoRuntimeStat(mUnimoData.Stat);
-        
+        // 🔽 기본 스탯 가져오기
+        var baseStat = mUnimoData.Stat;
+
+        // 🔽 붕붕엔진 스탯 적용
+        var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
+
+        if (engineData != null)
+        {
+            var engineStat = engineData.StatBonus;
+
+            baseStat.MoveSpd += engineStat.MoveSpd;
+            baseStat.Health += engineStat.Health;
+            baseStat.Armor += engineStat.Armor;
+            baseStat.AuraRange += engineStat.AuraRange;
+            baseStat.AuraStr += engineStat.AuraStr;
+            baseStat.CriticalChance += engineStat.CriticalChance;
+            baseStat.CriticalMult += engineStat.CriticalMult;
+            baseStat.HealingMult += engineStat.HealingMult;
+            baseStat.HealthRegen += engineStat.HealthRegen;
+            baseStat.YFGainMult += engineStat.YFGainMult;
+            baseStat.OFGainMult += engineStat.OFGainMult;
+
+            Debug.Log($"[PlayerStatManager] 붕붕엔진 스탯 적용됨: {engineData.Name}");
+        }
+
+        // 🔽 최종 스탯으로 저장
+        mStat = new UnimoRuntimeStat(baseStat);
+
         playerMover.SetCharacterStat(mStat);
         auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
         PlaySystemRefStorage.scoreManager.ApplyStatFromCharacter(mStat);
@@ -239,7 +265,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         //사망 체크
         if (currentHP <= 0)
         {
-            PlaySystemRefStorage.playProcessController.TimeUp();
+            PlaySystemRefStorage.playProcessController.GameOver();
         }
     }
 

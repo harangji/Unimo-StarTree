@@ -32,13 +32,24 @@ public class PlayProcessController : MonoBehaviour
     {
         resumeAction += action;
     }
-    public void TimeUp()
+
+    public void GameClear()
+    {
+        Debug.Log("gameoverAction 호출 전");
+        if (gameoverAction != null) { gameoverAction.Invoke(); }
+        Debug.Log("gameoverAction 호출 후");
+        gameoverText.SetActive(true);
+        StartCoroutine(CoroutineExtensions.DelayedActionCall(
+            () => { gameResultObjs[0].SetActive(true);
+                gameResultObjs[2].SetActive(true); }, 5f / 3f + 0.5f));
+    }
+    public void GameOver()
     {
         if (gameoverAction != null) { gameoverAction.Invoke(); }
         gameoverText.SetActive(true);
         StartCoroutine(CoroutineExtensions.DelayedActionCall(
-            () => { gameResultObjs[0].SetActive(true);
-                gameResultObjs[1].SetActive(true); }, 5f / 3f + 0.5f));
+            () => { gameResultObjs[1].SetActive(true);
+                gameResultObjs[2].SetActive(true); }, 5f / 3f + 0.5f));
     }
     public void GamePaused()
     {
