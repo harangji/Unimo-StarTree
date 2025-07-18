@@ -107,10 +107,10 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
             return;
         }
 
-        // 🔽 기본 스탯 가져오기
+        //  기본 스탯 가져오기
         var baseStat = mUnimoData.Stat;
 
-        // 🔽 붕붕엔진 스탯 적용
+        //  붕붕엔진 스탯 적용
         var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
 
         if (engineData != null)
@@ -130,9 +130,21 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
             baseStat.OFGainMult += engineStat.OFGainMult;
 
             Debug.Log($"[PlayerStatManager] 붕붕엔진 스탯 적용됨: {engineData.Name}");
+            Debug.Log($"[붕붕엔진 스탯 증가]" +
+                      $"\n▶ 이동속도: +{engineStat.MoveSpd}" +
+                      $"\n▶ 체력: +{engineStat.Health}" +
+                      $"\n▶ 방어력: +{engineStat.Armor}" +
+                      $"\n▶ 오라 범위: +{engineStat.AuraRange}" +
+                      $"\n▶ 오라 강도: +{engineStat.AuraStr}" +
+                      $"\n▶ 크리티컬 확률: +{engineStat.CriticalChance}" +
+                      $"\n▶ 크리티컬 배율: +{engineStat.CriticalMult}" +
+                      $"\n▶ 회복 배수: +{engineStat.HealingMult}" +
+                      $"\n▶ 자연 회복: +{engineStat.HealthRegen}" +
+                      $"\n▶ 노란별꽃 배수(YF): +{engineStat.YFGainMult}" +
+                      $"\n▶ 주황별꽃 배수(OF): +{engineStat.OFGainMult}");
         }
 
-        // 🔽 최종 스탯으로 저장
+        //  최종 스탯으로 저장
         mStat = new UnimoRuntimeStat(baseStat);
 
         playerMover.SetCharacterStat(mStat);
@@ -154,6 +166,19 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         return mStat;
     }
 
+    public void SetStat(UnimoRuntimeStat stat)
+    {
+        mStat = stat;
+
+        // 주요 시스템에 스탯 재적용
+        playerMover.SetCharacterStat(mStat);
+        auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
+        PlaySystemRefStorage.scoreManager.ApplyStatFromCharacter(mStat);
+
+        Debug.Log("[PlayerStatManager] 스탯 갱신 완료");
+    }
+    
+    
     void Update()
     {
         if (currentHP > 0f && currentHP < mStat.BaseStat.Health)
