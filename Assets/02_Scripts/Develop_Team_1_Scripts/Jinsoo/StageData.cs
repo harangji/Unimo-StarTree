@@ -26,7 +26,7 @@ public class StageData
 
         if (IsBonusStage)
         {
-            TimeLimit = 60;
+            TimeLimit = 10;
             TargetScore = 400 + ((BonusStageNumber / 5) * 100);
             DifficultyValue = 0;
             MaxFlowerCount = 20;

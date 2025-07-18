@@ -216,7 +216,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10.2}
+  m_AnchoredPosition: {x: 0, y: -10.200012}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9687775
@@ -3310,6 +3310,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1242819726}
     m_Modifications:
+    - target: {fileID: 1951268219486976824, guid: b6b2aa04fd7b9a5429c95b5af40f5185,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 16375
+      objectReference: {fileID: 0}
     - target: {fileID: 8409811821023838986, guid: b6b2aa04fd7b9a5429c95b5af40f5185,
         type: 3}
       propertyPath: m_Pivot.x
@@ -4721,7 +4726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character: 0
   Motor: 0
-  Local_Count: Restart
+  Local_Count: NextStage
   Semi_Data: 
   Get_Format: 0
   Foramt_Count: 
@@ -4745,7 +4750,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Reintentar
+  m_text: Next Stage
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5e994e850b8324b18a58aa8c049a7865, type: 2}
   m_sharedMaterial: {fileID: -676856466882600281, guid: 5e994e850b8324b18a58aa8c049a7865,
@@ -4773,7 +4778,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50.3
+  m_fontSize: 62
   m_fontSizeBase: 90
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4950,9 +4955,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 159835809}
         m_TargetAssemblyTypeName: PlaySceneController, Assembly-CSharp
-        m_MethodName: ResetScene
+        m_MethodName: NextGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7800,7 +7805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character: 0
   Motor: 0
-  Local_Count: GameExit
+  Local_Count: GameClear
   Semi_Data: 
   Get_Format: 0
   Foramt_Count: 
@@ -7824,7 +7829,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Fin del Juego
+  m_text: Game Clear
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5e994e850b8324b18a58aa8c049a7865, type: 2}
   m_sharedMaterial: {fileID: -676856466882600281, guid: 5e994e850b8324b18a58aa8c049a7865,
@@ -8456,7 +8461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1813277866
 Transform:
   m_ObjectHideFlags: 0
@@ -9517,6 +9522,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1242819726}
     m_Modifications:
+    - target: {fileID: 6314431376538104937, guid: 4e4e62dcbdcea114db92b1596c233ba9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6680839830493902628, guid: 4e4e62dcbdcea114db92b1596c233ba9,
         type: 3}
       propertyPath: m_Pivot.x
@@ -9631,6 +9641,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas_Info_TimeOver
+      objectReference: {fileID: 0}
+    - target: {fileID: 6680839830493902631, guid: 4e4e62dcbdcea114db92b1596c233ba9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10995,7 +11010,7 @@ PrefabInstance:
     - target: {fileID: 4876853301105598581, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4876853301105598584, guid: e542909bea402f345a760b7cda46b419,
         type: 3}

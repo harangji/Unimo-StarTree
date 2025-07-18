@@ -14,6 +14,11 @@ public class StageManager : MonoBehaviour
     private int mMaxDifficulty;
     private int mCurrentDifficulty;
 
+    public bool GetBonusStage()
+    {
+        return mStageData.IsBonusStage;
+    }
+    
     private void Awake()
     {
         PlaySystemRefStorage.stageManager = this; // 전역 레퍼런스 설정
@@ -110,6 +115,12 @@ public class StageManager : MonoBehaviour
         if (mbStageEnded) return;
 
         mbStageEnded = true;
+        
+        if (mStageData.IsBonusStage)
+        {
+            StageClear();
+            return;
+        }
 
         Debug.Log("시간 종료! 스테이지 실패 처리");
         StageFail();
@@ -126,15 +137,7 @@ public class StageManager : MonoBehaviour
     private void StageFail()
     {
         Debug.Log("스테이지 실패!");
-        // 결과 UI 열기
-        if (mStageData.IsBonusStage)
-        {
-            StageClear();
-        }
-        else
-        {
-            PlaySystemRefStorage.playProcessController.GameOver();
-        }
+        PlaySystemRefStorage.playProcessController.GameOver();
     }
     
     private void OnDestroy()

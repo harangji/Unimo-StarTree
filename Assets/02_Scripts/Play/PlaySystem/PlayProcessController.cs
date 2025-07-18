@@ -35,9 +35,9 @@ public class PlayProcessController : MonoBehaviour
 
     public void GameClear()
     {
-        Debug.Log("gameoverAction 호출 전");
+        Debug.Log("GameClear ::: gameoverAction 호출 전");
         if (gameoverAction != null) { gameoverAction.Invoke(); }
-        Debug.Log("gameoverAction 호출 후");
+        Debug.Log("GameClear ::: gameoverAction 호출 후");
         gameoverText.SetActive(true);
         StartCoroutine(CoroutineExtensions.DelayedActionCall(
             () => { gameResultObjs[0].SetActive(true);
