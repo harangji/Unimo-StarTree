@@ -372,6 +372,9 @@ GameObject:
   - component: {fileID: 4697006477032758487}
   - component: {fileID: 3772137402204495030}
   - component: {fileID: 1072663244566414916}
+  - component: {fileID: 7909966956196934023}
+  - component: {fileID: 3993867442085086691}
+  - component: {fileID: 8553566960014259852}
   m_Layer: 0
   m_Name: StateStorage
   m_TagString: Untagged
@@ -421,9 +424,9 @@ MonoBehaviour:
   moveSpeed: 4.2
   skillCoolTime:
   - 10
-  - 0
-  - 0
-  - 0
+  - 15
+  - 15
+  - 20
 --- !u!114 &4154348888968138004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,6 +473,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1277ca8dc06a4c389d20f9f7e1967a7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7909966956196934023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7751605546476978420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced7291ccd4fe0540a724cd9e8f40ecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3993867442085086691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7751605546476978420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1475ebe2fc320dc42a89e274bb70d990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8553566960014259852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7751605546476978420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f64844184ac83544a7cd85932e8e982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8826167083515561372

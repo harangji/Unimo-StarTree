@@ -18,7 +18,7 @@ public class BossState_PreAction : MonsterState_Preaction
 
     private void Start()
     {
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 4; i++)
         {
             currentTime[i] = 0;
         }
@@ -27,7 +27,7 @@ public class BossState_PreAction : MonsterState_Preaction
     private void Update()
     {
         //시간 추가 로직
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 4; i++)
         {
             currentTime[i] += Time.deltaTime;
         }
@@ -82,6 +82,8 @@ public class BossState_PreAction : MonsterState_Preaction
 
     private IEnumerator WaitForNextPattern()
     {
+        canPattern = false;
+        
         yield return new WaitForSeconds(2);
 
         canPattern = true;
