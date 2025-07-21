@@ -8,6 +8,7 @@ public class BossController : MonsterController
     public override void InitEnemy(Transform targetPlayer)
     {
         playerTransform = targetPlayer;
+        
         enemyAnimator = GetComponent<Animator>();
         machine = GetComponent<MonsterMachine>();
         enemyCollider = GetComponent<Collider>();
@@ -15,7 +16,6 @@ public class BossController : MonsterController
 
         enemyAppear = GetComponentInChildren<MonsterState_Appear>();
         enemyPreact = GetComponentInChildren<MonsterState_Preaction>();
-        enemyAction = GetComponentInChildren<MonsterState_Action>();
         enemyDiappear = GetComponentInChildren<MonsterState_Disappear>();
         enemyExplode = GetComponentInChildren<MonsterState_Explode>();
 
