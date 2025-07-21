@@ -3888,7 +3888,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334deac6809b7b84ab445bb25dcc37ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MonsterGeneratorObject: {fileID: 1813277865}
   generators:
   - {fileID: 2044775334}
   - {fileID: 1803579855}
@@ -6816,6 +6815,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4876853301105598578, guid: e542909bea402f345a760b7cda46b419,
+        type: 3}
+      propertyPath: hpGauge
+      value: 
+      objectReference: {fileID: 2096227952}
     - target: {fileID: 4876853301105598578, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
       propertyPath: chaPrefab
