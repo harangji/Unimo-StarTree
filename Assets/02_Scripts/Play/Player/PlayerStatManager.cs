@@ -270,12 +270,15 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
             return;
         }
 
-        //  스턴 시간 감소 적용
-        stun = Mathf.Max(stun * (1f - fStunReduceRate), 0.2f);
+        if (!combatEvent.Sender.GameObject.gameObject.name.Equals("Pattern1Bullet"))
+        {
+            //  스턴 시간 감소 적용
+            stun = Mathf.Max(stun * (1f - fStunReduceRate), 0.2f);
         
-        //스턴 처리 로직
-        hitPos.y = 0;
-        stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
+            //스턴 처리 로직
+            hitPos.y = 0;
+            stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
+        }
         
         //데미지 처리
         var reducedDamage = combatEvent.Damage * (1f - mStat.BaseStat.Armor);

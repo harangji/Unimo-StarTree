@@ -9,7 +9,6 @@ public class PatternSpawner : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             Debug.Log("패턴 1 실행");
-            Instantiate(pattern1,  transform.position, Quaternion.identity);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
