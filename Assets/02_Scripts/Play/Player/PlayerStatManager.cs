@@ -238,7 +238,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         //사망 체크
         if (currentHP <= 0)
         {
-            PlaySystemRefStorage.playProcessController.TimeUp();
+            PlaySystemRefStorage.playProcessController.GameOver();
         }
     }
 

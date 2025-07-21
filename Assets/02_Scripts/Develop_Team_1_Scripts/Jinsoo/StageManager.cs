@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 // 인게임 Stage 난이도 관리.
 public class StageManager : MonoBehaviour
@@ -80,6 +81,11 @@ public class StageManager : MonoBehaviour
         if (mbStageEnded) return;
 
         mScoreGauge.SetCurrentScore(currentScore);
+
+        if (mStageData.IsBonusStage)
+        {
+            BonusStageStarCheck(currentScore);
+        }
         
         if (currentScore >= mTargetScore)
         {
@@ -90,6 +96,12 @@ public class StageManager : MonoBehaviour
 
             StageClear();
         }
+    }
+
+    private void BonusStageStarCheck(double currentScore)
+    {
+        var ratio = (float)currentScore / mStageData.TargetScore;
+        
     }
 
     // 타임 오버 시 호출됨
@@ -108,14 +120,21 @@ public class StageManager : MonoBehaviour
         Debug.Log("스테이지 클리어!");
         StageLoader.SaveClearedStage(mStageData.StageNumber); // 다음 스테이지 오픈 저장
         // 결과 UI 열기
-        // UI_StageResult.Instance.Open(true); ← 추후 연동
+        PlaySystemRefStorage.playProcessController.GameClear();
     }
 
     private void StageFail()
     {
         Debug.Log("스테이지 실패!");
         // 결과 UI 열기
-        // UI_StageResult.Instance.Open(false); ← 추후 연동
+        if (mStageData.IsBonusStage)
+        {
+            StageClear();
+        }
+        else
+        {
+            PlaySystemRefStorage.playProcessController.GameOver();
+        }
     }
     
     private void OnDestroy()

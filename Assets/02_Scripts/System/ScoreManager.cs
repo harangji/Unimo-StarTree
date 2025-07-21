@@ -49,7 +49,7 @@ public class ScoreManager : MonoBehaviour
     
             scoreTxt.text = StringMethod.ToCurrencyString(gatheredResources[0]);
             resultTxt.text = StringMethod.ToCurrencyString(gatheredResources[0]);
-            checkBest();
+            // checkBest();
         });
         Debug.Log("??");
     }
@@ -140,41 +140,41 @@ public class ScoreManager : MonoBehaviour
     //    scoreTxt.text = StringMethod.ToCurrencyString(gatheredResources[0]);
     //}
     
-    int CalculateReward(int level)
-    {
-        // 로그 스케일 적용
-        float normalizedLevel = Mathf.Log(level);  // 로그 적용으로 초반 급상승
-        if (level >= 1000) normalizedLevel = Mathf.Log(1000);
-        float maxLogLevel = Mathf.Log(1000);   // 최대 레벨 1000의 로그 값
-
-        // 리워드 비율 계산 후 int로 변환
-        int reward = Mathf.FloorToInt(Mathf.Lerp(1, 50, normalizedLevel / maxLogLevel));
-
-        return reward;
-    }
-    private void checkBest()
-    {
-        double best = recordManager.GetBestRecord(getGameIndex());
-        switch(getGameIndex())
-        {
-            case 0:
-                if(Base_Manager.Data.UserData.BestScoreGameOne <= score)
-                {
-                    Base_Manager.Data.UserData.BestScoreGameOne = best;
-                }
-                break;
-            case 1:
-                if (Base_Manager.Data.UserData.BestScoreGameTwo <= score)
-                {
-                    Base_Manager.Data.UserData.BestScoreGameTwo = best;
-                }
-                break;
-        }
-        if (score > best)
-        {
-            recordManager.SetBestRecord(score, getGameIndex());
-        }
-    }
+    // int CalculateReward(int level)
+    // {
+    //     // 로그 스케일 적용
+    //     float normalizedLevel = Mathf.Log(level);  // 로그 적용으로 초반 급상승
+    //     if (level >= 1000) normalizedLevel = Mathf.Log(1000);
+    //     float maxLogLevel = Mathf.Log(1000);   // 최대 레벨 1000의 로그 값
+    //
+    //     // 리워드 비율 계산 후 int로 변환
+    //     int reward = Mathf.FloorToInt(Mathf.Lerp(1, 50, normalizedLevel / maxLogLevel));
+    //
+    //     return reward;
+    // }
+    // private void checkBest()
+    // {
+    //     double best = recordManager.GetBestRecord(getGameIndex());
+    //     switch(getGameIndex())
+    //     {
+    //         case 0:
+    //             if(Base_Manager.Data.UserData.BestScoreGameOne <= score)
+    //             {
+    //                 Base_Manager.Data.UserData.BestScoreGameOne = best;
+    //             }
+    //             break;
+    //         case 1:
+    //             if (Base_Manager.Data.UserData.BestScoreGameTwo <= score)
+    //             {
+    //                 Base_Manager.Data.UserData.BestScoreGameTwo = best;
+    //             }
+    //             break;
+    //     }
+    //     if (score > best)
+    //     {
+    //         recordManager.SetBestRecord(score, getGameIndex());
+    //     }
+    // }
     private int getGameIndex()
     {
         string scnName = SceneManager.GetActiveScene().name;
