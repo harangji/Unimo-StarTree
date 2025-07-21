@@ -17,11 +17,15 @@ public class TempChaCustomer : MonoBehaviour
 
         // 마지막 선택된 캐릭터 ID 불러오기
         int selectedUnimoID = PlayerPrefs.GetInt("LastSelectedUnimoID", 10101);
-
         Debug.Log($"[TempChaCustomer] 마지막 선택된 캐릭터 ID : {selectedUnimoID}");
 
+        // 마지막 선택된 엔진 ID 불러오기
+        int selectedEngineID = PlayerPrefs.GetInt("LastSelectedEngineID", 21101);  
+        Debug.Log($"[TempChaCustomer] 마지막 선택된 엔진 ID : {selectedEngineID}");
+        
         // GameManager로 넘겨서 인게임에서 사용할 수 있도록만 설정
         GameManager.Instance.SelectedUnimoID = selectedUnimoID;
+        GameManager.Instance.SelectedEngineID = selectedEngineID;
 
         GameManager.Instance.ChaIdx = currentcharacter;
         GameManager.Instance.EqIdx = currentengine;
@@ -52,7 +56,10 @@ public class TempChaCustomer : MonoBehaviour
         GameManager.Instance.EqIdx = currentengine;
 
         int engineID = EngineIDMapping.GetEngineID(currentengine);
-        GameManager.Instance.SelectedEngineID = engineID;  // 실제 엔진 ID 저장
+        GameManager.Instance.SelectedEngineID = engineID;
+
+        // 선택된 엔진 ID 저장
+        PlayerPrefs.SetInt("LastSelectedEngineID", engineID);
 
         makePreviewObj();
     }

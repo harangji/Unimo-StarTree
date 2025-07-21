@@ -34,7 +34,7 @@ public static class StageLoader
     {
         Debug.Log($"이전 최고 스테이지 : {Base_Manager.Data.UserData.BestStage}");
         var userData = Base_Manager.Data.UserData;
-        if (clearedStage > userData.BestStage)
+        if (clearedStage > userData.BestStage && userData.BestStage < 1000)
         {
             userData.BestStage = clearedStage;
             Base_Manager.Data.SaveUserData(); // 최고스테이지가 바뀌었으니 저장 한번 실행.
