@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class Mon5PatternController : MonoBehaviour
 {
-    [Header("기본 설정")] 
-    [SerializeField] private float moveSpeed;
+    [Header("기본 설정")] [SerializeField] private float moveSpeed;
 
-    [Header("패턴 3 추가 설정")] 
-    [SerializeField] [Tooltip("초당 진동 횟수")]
+    [Header("패턴 3 추가 설정")] [SerializeField] [Tooltip("초당 진동 횟수")]
     private float waveFrequency = 2f;
 
     [SerializeField] [Tooltip("진폭(= 세로 크기)")]
@@ -26,7 +24,9 @@ public class Mon5PatternController : MonoBehaviour
 
     private float patternTime = 0f;
     private float existTime = 6f;
-    
+
+    private bool isStop = false;
+
     private IEnumerator Start()
     {
         currentPattern = GetComponentInChildren<MonsterController>().pattern;
@@ -38,7 +38,7 @@ public class Mon5PatternController : MonoBehaviour
         SetRotation();
 
         yield return new WaitForSeconds(1f);
-        
+
         StartCoroutine(DelayDestroy());
         patternTime = 0f;
         canMove = true;
@@ -47,7 +47,8 @@ public class Mon5PatternController : MonoBehaviour
     private void Update()
     {
         if (!canMove) return;
-
+        if (isStop) return;
+        
         switch (currentPattern)
         {
             case Patterns.Pattern1:
@@ -117,6 +118,9 @@ public class Mon5PatternController : MonoBehaviour
     private IEnumerator DelayDestroy()
     {
         yield return new WaitForSeconds(existTime);
+        isStop = true;
+
+        yield return new WaitForSeconds(1f);
         
         var children = GetComponentsInChildren<MonsterController>();
         foreach (var child in children)

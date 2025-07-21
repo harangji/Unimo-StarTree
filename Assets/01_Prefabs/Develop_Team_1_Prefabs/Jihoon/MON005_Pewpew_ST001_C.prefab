@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -5513798927557929869}
   - component: {fileID: -6918510194173504982}
   m_Layer: 9
-  m_Name: MON005_Pewpew_ST002_C
+  m_Name: MON005_Pewpew_ST001_C
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,6 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stage: 1
   defaultDamage: 20
+  skillDamage: 0
   mainCollider: {fileID: 1072457946450581015}
 --- !u!114 &-6918510194173504982
 MonoBehaviour:

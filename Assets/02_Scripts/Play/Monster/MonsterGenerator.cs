@@ -21,6 +21,7 @@ public class MonsterGenerator : MonoBehaviour
     protected bool isPaused = false;
     protected bool isExtreme = false;
     protected Coroutine specialPatternCoroutine;
+    
     // Start is called before the first frame update
     protected void OnEnable()
     {
@@ -79,7 +80,7 @@ public class MonsterGenerator : MonoBehaviour
 
         return controller;
     }
-    virtual protected Vector3 findGenPosition()
+    protected virtual Vector3 findGenPosition()
     {
         return Vector3.zero;
     }

@@ -1963,6 +1963,55 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 50057956}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &851115843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 851115844}
+  - component: {fileID: 851115845}
+  m_Layer: 0
+  m_Name: BossGen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &851115844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851115843}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1813277866}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &851115845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851115843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f728a6ffb9b4fb146a38e0da783e51f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monGenCalculator: {fileID: 11400000, guid: cea42b4abbd7a8549956fc07a95b4d2d, type: 2}
+  monsterPattern1: {fileID: 5663591102486114024, guid: 06984631c48981341a6ac1b2cdc87ada,
+    type: 3}
+  monsterPattern2: {fileID: 0}
+  monsterPattern3: {fileID: 0}
 --- !u!1 &877649382
 GameObject:
   m_ObjectHideFlags: 0
@@ -3874,6 +3923,7 @@ Transform:
   - {fileID: 622374549}
   - {fileID: 326843634}
   - {fileID: 1398289741}
+  - {fileID: 851115844}
   m_Father: {fileID: 877649383}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1813277867
@@ -3889,17 +3939,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   generators:
-  - {fileID: 622374550}
   - {fileID: 1398289742}
   - {fileID: 2044775334}
   - {fileID: 1803579855}
+  - {fileID: 622374550}
   - {fileID: 326843635}
   activateTime:
-  - 5
-  - 10
-  - 15
-  - 20
-  - 25
+  - 1000000
+  - 1000000
+  - 1000000
+  - 1000000
+  - 1000000
   extreamTime: 1000000
   extreamCoolTime: 1000000
 --- !u!1 &1887724576
