@@ -45,6 +45,8 @@ public class HPGaugeController : MonoBehaviour
         setImageColors(ratio);
         timerRect.sizeDelta = new Vector2(ratio * maxWidth, height);
     }
+    
+    
     private void checkClockShake(float ratio)
     {
         if (!canCaution) 
