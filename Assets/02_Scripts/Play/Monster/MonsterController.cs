@@ -15,22 +15,22 @@ public class MonsterController : MonoBehaviour
 {
     static private float MONmaxLifeTimeSTATIC = 12f;
 
-    public Transform playerTransform { get; private set; }
-    public Animator enemyAnimator { get; private set; }
-    public MonsterIndicatorCtrl indicatorCtrl { get; private set; }
-    public Collider enemyCollider { get; private set; }
+    public Transform playerTransform { get; protected set; }
+    public Animator enemyAnimator { get; protected set; }
+    public MonsterIndicatorCtrl indicatorCtrl { get; protected set; }
+    public Collider enemyCollider { get; protected set; }
 
     [SerializeField] private float collideStunTime = 0.8f;
     [SerializeField] private bool isExplode = true;
     [SerializeField] private GameObject explodeFX;
     [SerializeField] private bool isExplodeFXAtPlayer = true;
 
-    private MonsterMachine machine;
-    private MonsterState_Appear enemyAppear;
-    private MonsterState_Preaction enemyPreact;
-    private MonsterState_Action enemyAction;
-    private MonsterState_Disappear enemyDiappear;
-    private MonsterState_Explode enemyExplode;
+    protected MonsterMachine machine;
+    protected MonsterState_Appear enemyAppear;
+    protected MonsterState_Preaction enemyPreact;
+    protected MonsterState_Action enemyAction;
+    protected MonsterState_Disappear enemyDiappear;
+    protected MonsterState_Explode enemyExplode;
 
     private float existTime = 0f;
 
@@ -95,7 +95,7 @@ public class MonsterController : MonoBehaviour
         }
     }
 
-    public void InitEnemy(Transform targetPlayer)
+    public virtual void InitEnemy(Transform targetPlayer)
     {
         playerTransform = targetPlayer;
         enemyAnimator = GetComponent<Animator>();
