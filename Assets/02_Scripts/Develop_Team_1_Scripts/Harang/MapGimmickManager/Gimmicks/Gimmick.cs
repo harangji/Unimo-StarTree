@@ -7,7 +7,7 @@ using UnityEngine.Localization;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Serialization;
 
-public enum Grade
+public enum GimmickGrade
 {
     Nomal,
     Enhanced,
@@ -15,55 +15,56 @@ public enum Grade
     Legendary,
 }
 
+public class ToTsvGimmickData
+{
+    //CsvHelper는 정적인 프로퍼티만 자동 매핑할 수 있다.
+    public string GimmickName { get; set; }
+    public string GimmickID { get; set; }
+    public int[] Costs { get; set; }
+    public int[] Weights { get; set; }
+    public int[] Durations_s { get; set; }
+    public float[] EffectValue1 { get; set; }
+    public float[] EffectValue2 { get; set; }
+}
+
 public abstract class Gimmick : MonoBehaviour
 {
     [Header("기믹 세팅")] 
     
-    [LabelText("기믹 이름")] [Tooltip("기믹 출현 시 UI에 표현할 기믹 이름.")] [Required]
+    [LabelText("기믹 이름"), Tooltip("기믹 출현 시 UI에 표현할 기믹 이름."), Required]
     public string gimmickName;
 
-    [LabelText("기믹 아이콘")] [Tooltip("기믹 출현 시 UI에 표현할 아이콘.")] [Required]
+    [LabelText("기믹 아이콘"), Tooltip("기믹 출현 시 UI에 표현할 아이콘."), Required]
     public Sprite gimmickIcon;
-
-    [LabelText("기믹 유지 시간")] [Tooltip("기믹이 유지되는 시간입니다. 활성화 시간 또는 버프 시간")] [Required]
-    public float gimmickDuration;
-
-    [LabelText("기믹 효과 수치 1")]
-    public float gimmickEffectValue1;
     
-    [LabelText("기믹 효과 수치 2")]
-    public float gimmickEffectValue2;
-    
-    [LabelText("기믹 비용")][Tooltip("기믹 사용 결정 시 비용 소모. 남은 비용으로 시전할 수 있는 기믹을 찾고 그 안에서 가중치로 랜덤 선택")] [Required]
-    public int[] gimmickCosts;
-
-    [LabelText("가중치들")] [Tooltip("기믹을 랜덤으로 결정할 때 쓰이는 값")] [Required]
-    public int[] gimmickWeights;
-
     //ReadOnly
-    [LabelText("기믹 등급")][Tooltip("기믹을 설정할 때 동적으로 할당되는 기믹의 등급")][ReadOnly]
-    public Grade gimmickGrade; // 동적으로 설정할 기믹 등급
+    [LabelText("기믹 등급"), Tooltip("기믹을 설정할 때 동적으로 할당되는 기믹의 등급"), ReadOnly]
+    protected GimmickGrade ebGimmickGrade { get; set; } // 동적으로 설정할 기믹 등급
     
-    [LabelText("초기화 완료 여부")][ReadOnly]
-    protected bool GimmickInitialize = false; // 동적으로 설정할 기믹 등급
+    [LabelText("기믹 지속 시간"), ReadOnly] 
+    protected int bGimmickCost { get; set; }
     
-    private void Start()
-    {
-        InitializeGimmick();
-        GimmickInitialize = true;
-    }
+    [LabelText("기믹 지속 시간"), ReadOnly] 
+    protected int bGimmickDuration { get; set; }
+    
+    [LabelText("기믹 효과 수치 1"), ReadOnly]
+    protected float bGimmickEffectValue1 { get; set; }
+    
+    [LabelText("기믹 효과 수치 2"), ReadOnly]
+    protected float bGimmickEffectValue2 { get; set; }
+    
+    [LabelText("초기화 완료 여부"), ReadOnly] 
+    protected bool mbGimmickInitialize { get; set; } = false; // 기믹 초기화 여부
 
-    protected abstract void InitializeGimmick();
-    
-    public abstract void ExcuteGimmick();
-    
-    public void SetGrade(Grade grade)
+    public abstract void Activate();
+
+    public void InitializeGimmick(GimmickInitializer.GimmickInitializerData gimmickFactoryData, GimmickGrade gimmickGrade)
     {
-        gimmickGrade = grade;
-    }
-    
-    public void SetModeName(TextMeshProUGUI modeTxt) // Tmp를 받아서 text를 기믹이름으로 설정
-    {
-        modeTxt.text = gimmickName;
+        ebGimmickGrade = gimmickGrade;
+        bGimmickCost = gimmickFactoryData.Costs[(int)gimmickGrade];
+        bGimmickDuration = gimmickFactoryData.Durations_s[(int)gimmickGrade];
+        bGimmickEffectValue1 = gimmickFactoryData.EffectValue1[(int)gimmickGrade];
+        bGimmickEffectValue2 = gimmickFactoryData.EffectValue2[(int)gimmickGrade];
+        mbGimmickInitialize = true;
     }
 }

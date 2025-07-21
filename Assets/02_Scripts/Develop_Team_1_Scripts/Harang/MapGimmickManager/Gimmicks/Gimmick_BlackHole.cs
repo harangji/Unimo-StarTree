@@ -34,7 +34,7 @@ public class Gimmick_BlackHole : Gimmick
     private void Update()
     {
         TimeElapsed += Time.deltaTime;
-        if (TimeElapsed >= gimmickDuration)
+        if (TimeElapsed >= bGimmickDuration)
         {
             Destroy(gameObject);
             return;
@@ -66,7 +66,8 @@ public class Gimmick_BlackHole : Gimmick
         Gizmos.DrawWireSphere(transform.position, effectiveRange);
     }
 
-    protected override void InitializeGimmick() { }
+    public override void Activate()
+    {
 
-    public override void ExcuteGimmick() { }
+    }
 }
