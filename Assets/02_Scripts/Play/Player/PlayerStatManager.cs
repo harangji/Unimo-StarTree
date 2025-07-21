@@ -135,7 +135,11 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         hpGauge?.SetGauge(1f);
 
-        InitCharacter(unimoID);
+        int selectedID = GameManager.Instance.SelectedUnimoID > 0
+            ? GameManager.Instance.SelectedUnimoID
+            : unimoID;  
+        
+        InitCharacter(selectedID);
         
         //최대 체력으로 hp 초기화
         currentHP = mStat.BaseStat.Health;
