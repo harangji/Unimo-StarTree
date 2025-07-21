@@ -30,6 +30,10 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     [SerializeField] [Range(0f, 1f)] private float bEvadeChance = 0.5f;
     [SerializeField] [Range(0f, 1f)] private float fStunReduceRate = 0.5f;
 
+    private float regenAmountPerSecond;  // 초당 자연 회복
+    private float armor;                 // 방어력 (데미지 감소율)
+    private float healingMultiplier;     // 회복 배수
+    
     //컴벳 시스템에 사용하는 내용
     [SerializeField] private Collider mainCollider;
     public Collider MainCollider => mainCollider;
@@ -51,6 +55,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         playerMover = GetComponent<PlayerMover>();
         visualCtrl = GetComponent<PlayerVisualController>();
+        
         if (isTestModel)
         {
             visualCtrl.test_InitModeling(equipPrefab, chaPrefab);
@@ -68,16 +73,67 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
                 FindAnyObjectByType<PlayTimeManager>().InitTimer();
                 renderCam.SetActive(true);
                 StartCoroutine(CoroutineExtensions.DelayedActionCall(() => { ActivePlayer(); },
-                    PlayProcessController.InitTimeSTATIC));
+         //컴벳 시스템에 사용하는 내용
+         [SerializeField] private Collider mainCollider;
+         public Collider MainCollider => mainCollider;
+         public GameObject GameObject => gameObject;
+         private float currentHP;
+         [SerializeField] private HPGaugeController hpGauge;
+         
+         private void Awake()
+         {
+             PlaySystemRefStorage.playerStatManager = this;
+         }
+     
+         // Start is called before the first frame update
+         void Start()
+         {
+             transform.position = -1000f * Vector3.one;
+             renderCam = GameObject.Find("RenderCam");
+             renderCam.SetActive(false);
+     
+             playerMover = GetComponent<PlayerMover>();
+             visualCtrl = GetComponent<PlayerVisualController>();
+             if (isTestModel)
+             {
+                 visualCtrl.test_InitModeling(equipPrefab, chaPrefab);
+                 transform.position = Vector3.zero;
+                 FindAnyObjectByType<PlayTimeManager>().InitTimer();
+                 renderCam.SetActive(true);
+                 StartCoroutine(CoroutineExtensions.DelayedActionCall(() => { ActivePlayer(); },
+                     PlayProcessController.InitTimeSTATIC));
+             }
+             else
+             {
+                 visualCtrl.InitModelingAsync(PlayProcessController.InitTimeSTATIC, () =>
+                 {
+                     transform.position = Vector3.zero;
+                     FindAnyObjectByType<PlayTimeManager>().InitTimer();
+                     renderCam.SetActive(true);
+                     StartCoroutine(CoroutineExtensions.DelayedActionCall(() => { ActivePlayer(); },
+                         PlayProcessController.InitTimeSTATIC));
+                 });
+             }
+     
+             auraController = FindAnyObjectByType<AuraController>();
+             playerMover.FindAuraCtrl(auraController);
+             auraController.gameObject.SetActive(false);
+             PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(stopPlay);
+     
+             hpGauge.SetGauge(1f);
+     
+             InitCharacter(unimoID);
+               PlayProcessController.InitTimeSTATIC));
             });
         }
 
         auraController = FindAnyObjectByType<AuraController>();
         playerMover.FindAuraCtrl(auraController);
         auraController.gameObject.SetActive(false);
+
         PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(stopPlay);
 
-        hpGauge.SetGauge(1f);
+        hpGauge?.SetGauge(1f);
 
         InitCharacter(unimoID);
         
@@ -90,21 +146,65 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     {
         Debug.Log($"[PlayerStatManager] InitCharacter 호출됨: ID = {id}");
         mUnimoData = UnimoDatabase.GetUnimoData(id);
-        Debug.Log($"[PlayerStatManager] 불러온 체력 = {mUnimoData.Stat.Health}");
+
         if (mUnimoData == null)
         {
             Debug.LogError($"[PlayerStatManager] 잘못된 Unimo ID: {id}");
             return;
         }
 
-        mStat = new UnimoRuntimeStat(mUnimoData.Stat);
+        //  기본 스탯 가져오기
+        var baseStat = mUnimoData.Stat;
+
+        //  붕붕엔진 스탯 적용
+        var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
+
+        if (engineData != null)
+        {
+            var engineStat = engineData.StatBonus;
+
+            baseStat.MoveSpd += engineStat.MoveSpd;
+            baseStat.Health += engineStat.Health;
+            baseStat.Armor += engineStat.Armor;
+            baseStat.AuraRange += engineStat.AuraRange;
+            baseStat.AuraStr += engineStat.AuraStr;
+            baseStat.CriticalChance += engineStat.CriticalChance;
+            baseStat.CriticalMult += engineStat.CriticalMult;
+            baseStat.HealingMult += engineStat.HealingMult;
+            baseStat.HealthRegen += engineStat.HealthRegen;
+            baseStat.YFGainMult += engineStat.YFGainMult;
+            baseStat.OFGainMult += engineStat.OFGainMult;
+
+            Debug.Log($"[PlayerStatManager] 붕붕엔진 스탯 적용됨: {engineData.Name}");
+            Debug.Log($"[붕붕엔진 스탯 증가]" +
+                      $"\n▶ 이동속도: +{engineStat.MoveSpd}" +
+                      $"\n▶ 체력: +{engineStat.Health}" +
+                      $"\n▶ 방어력: +{engineStat.Armor}" +
+                      $"\n▶ 오라 범위: +{engineStat.AuraRange}" +
+                      $"\n▶ 오라 강도: +{engineStat.AuraStr}" +
+                      $"\n▶ 크리티컬 확률: +{engineStat.CriticalChance}" +
+                      $"\n▶ 크리티컬 배율: +{engineStat.CriticalMult}" +
+                      $"\n▶ 회복 배수: +{engineStat.HealingMult}" +
+                      $"\n▶ 자연 회복: +{engineStat.HealthRegen}" +
+                      $"\n▶ 노란별꽃 배수(YF): +{engineStat.YFGainMult}" +
+                      $"\n▶ 주황별꽃 배수(OF): +{engineStat.OFGainMult}");
+        }
+
+        //  최종 스탯으로 저장
+        mStat = new UnimoRuntimeStat(baseStat);
+
         playerMover.SetCharacterStat(mStat);
         auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
         PlaySystemRefStorage.scoreManager.ApplyStatFromCharacter(mStat);
 
         bEvadeChance = mStat.FinalStat.StunIgnoreChance;
         fStunReduceRate = mStat.FinalStat.StunResistanceRate;
+        regenAmountPerSecond = mStat.FinalStat.HealthRegen;
+        armor = mStat.FinalStat.Armor;
+        healingMultiplier = mStat.FinalStat.HealingMult;
+
         Debug.Log($"[PlayerStatManager] 회피확률: {bEvadeChance * 100}% / 스턴저항률: {fStunReduceRate * 100}%");
+        Debug.Log($"[PlayerStatManager] 방어력: {armor}, 자연회복: {regenAmountPerSecond}, 회복배수: {healingMultiplier}");
     }
 
     public UnimoRuntimeStat GetStat()
@@ -112,6 +212,30 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         return mStat;
     }
 
+    public void SetStat(UnimoRuntimeStat stat)
+    {
+        mStat = stat;
+
+        // 주요 시스템에 스탯 재적용
+        playerMover.SetCharacterStat(mStat);
+        auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
+        PlaySystemRefStorage.scoreManager.ApplyStatFromCharacter(mStat);
+
+        Debug.Log("[PlayerStatManager] 스탯 갱신 완료");
+    }
+    
+    
+    void Update()
+    {
+        if (currentHP > 0f && currentHP < mStat.BaseStat.Health)
+        {
+            var regenHeal = regenAmountPerSecond * Time.deltaTime * healingMultiplier;
+            var healEvent = new HealEvent { Heal = regenHeal };
+
+            TakeHeal(healEvent);
+        }
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<ItemController>(out var item))
@@ -135,7 +259,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
     private void stopPlay()
     {
-        if (isInvincible)
+        if (isInvincible && !PlaySystemRefStorage.stageManager.GetBonusStage())
         {
             StopCoroutine(stunCoroutine);
         }
@@ -203,7 +327,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         var reducedDamage = combatEvent.Damage * (1f - mStat.BaseStat.Armor);
         currentHP -= reducedDamage;
         
-        hpGauge.SetGauge(currentHP / mStat.BaseStat.Health);
+        hpGauge?.SetGauge(currentHP / mStat.BaseStat.Health);
         
         Debug.Log($"Combat System: 피해량: {reducedDamage}");
         Debug.Log($"Combat System: 현재 체력: {currentHP} / {mStat.BaseStat.Health}");
@@ -212,7 +336,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         //사망 체크
         if (currentHP <= 0)
         {
-            PlaySystemRefStorage.playProcessController.TimeUp();
+            if (PlaySystemRefStorage.stageManager.GetBonusStage()) { return; }
+            PlaySystemRefStorage.playProcessController.GameOver();
         }
     }
 
@@ -220,6 +345,6 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     {
         currentHP = Mathf.Min(currentHP + healEvent.Heal, mStat.BaseStat.Health);
         
-        hpGauge.SetGauge(currentHP / mStat.BaseStat.Health);
+        hpGauge?.SetGauge(currentHP / mStat.BaseStat.Health);
     }
 }

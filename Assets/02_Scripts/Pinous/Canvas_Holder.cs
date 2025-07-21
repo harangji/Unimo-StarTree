@@ -147,6 +147,20 @@ public class Canvas_Holder : MonoBehaviour
                 PeekCheck = true;
 
                 break;
+            case "##Upgrade":   // ⭐ 새로운 케이스 추가 또는 대체
+                if (bars[5].activeSelf)
+                {
+                    CloseAllPopupUI();
+                    return;
+                }
+                for (int i = 0; i < bars.Length; i++)
+                {
+                    bars[i].SetActive(false);
+                }
+                bars[5].SetActive(true);    
+                PeekCheck = true;
+                break;
+            
             case "##BonusReward":
                 if (Base_Manager.Data.UserData.BonusRewardCount < 900.0f)
                 {

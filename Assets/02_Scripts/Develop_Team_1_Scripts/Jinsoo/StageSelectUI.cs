@@ -8,8 +8,7 @@ public class StageSelectUI : MonoBehaviour
 {
     // 가운데에 적힐 Stage 번호 텍스트
     [SerializeField] private TextMeshProUGUI mStageNumberText;
-    // [SerializeField] private Text mLockText;
-    
+    private int mNextStage;
     private int mCurrentStage = 1;
     private int mMaxClearedStage = 0;
 
@@ -17,63 +16,29 @@ public class StageSelectUI : MonoBehaviour
 
     private void Start()
     {
+        int lastCleared = StageLoader.GetLastClearedStage();
+        mNextStage = lastCleared + 1;
         UpdateUI();
+        Debug.Log($"{Base_Manager.Data.UserData.BestStage} 입니다.");
     }
 
-    private void Update()
+    public void StageUpgrade()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            mMaxClearedStage++;
-            Debug.Log($"마지막 스테이지 증가 ::: {mMaxClearedStage}");
-        }
-    }
-
-    // 왼쪽 화살표 눌렀을 때, 스테이지 감소
-    public void OnClick_LeftArrow()
-    {
-        mCurrentStage = Mathf.Max(1, mCurrentStage - 1);
+        int NextStage = mNextStage + 1;
+        StageLoader.SaveClearedStage(NextStage);
+        mNextStage = NextStage;
         UpdateUI();
-    }
-
-    // 오른쪽 화살표 눌렀을 때, 스테이지 증가
-    public void OnClick_RightArrow()
-    {
-        if (mCurrentStage < Mathf.Min(MaxStage, mMaxClearedStage + 1))
-        {
-            mCurrentStage++;
-            UpdateUI();
-        }
-        else
-        {
-            // 잠긴 스테이지 안내 메시지
-            // if (mLockText != null)
-            //     mLockText.text = "이전 스테이지를 먼저 클리어해야 합니다";
-            Debug.Log("잠겨 있어요");
-        }
     }
 
     private void UpdateUI()
     {
-        mStageNumberText.text = $"Stage {mCurrentStage}";
-        
-        // if (mLockText != null)
-        //     mLockText.text = ""; // 메시지 초기화
+        mNextStage = Mathf.Min(mNextStage, MaxStage);
+        mStageNumberText.text = $"{mNextStage} Stage";
     }
 
     // 시작버튼 눌렀을 때, 스테이지 진입
     public void OnClick_StartGame()
     {
-        mMaxClearedStage = StageLoader.GetLastClearedStage();
-        // 잠긴 스테이지는 시작 불가
-        if (mCurrentStage > mMaxClearedStage + 1)
-        {
-            // if (mLockText != null)
-            //     mLockText.text = "이 스테이지는 잠겨 있습니다";
-            Debug.Log("잠겨 있어요");
-            return;
-        }
-        
-        StageLoader.LoadStage(mCurrentStage);
+        StageLoader.LoadStage(mNextStage);
     }
 }

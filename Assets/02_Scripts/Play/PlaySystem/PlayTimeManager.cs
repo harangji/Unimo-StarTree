@@ -79,6 +79,7 @@ public class PlayTimeManager : MonoBehaviour
         { 
             remainTime = 0f;
             timeUp();
+            mbTimerStopped = true;
         }
         timerGauge.SetGauge(remainTime / maxTime);
     }
@@ -98,7 +99,12 @@ public class PlayTimeManager : MonoBehaviour
     }
     private void timeUp()
     {
+        if (PlaySystemRefStorage.stageManager.GetBonusStage())
+        {
+            PlaySystemRefStorage.playProcessController.GameClear();
+            return;
+        }
         isPaused = true;
-        PlaySystemRefStorage.playProcessController.TimeUp();
+        PlaySystemRefStorage.playProcessController.GameOver();
     }
 }
