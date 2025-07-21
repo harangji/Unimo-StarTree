@@ -1,8 +1,9 @@
 using System;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Gimmick_BlackHole : Gimmick
+public class Gimmick_BlackHoleTween : Gimmick
 {
     [Header("블랙홀 설정")]
     
@@ -20,40 +21,48 @@ public class Gimmick_BlackHole : Gimmick
     
     private Rigidbody PlayerRigidbody {get; set;}
     private float TimeElapsed {get; set;}
+    
+    private Sequence gravitySequence;
 
-    private void Start()
+    private void Awake()
     {
-        TimeElapsed = 0f;
-
         if (GameManager.Instance != null)
         {
             PlayerRigidbody = GameManager.Instance.unimoPrefab.GetComponent<Collider>().attachedRigidbody;
         }
-    }
 
-    private void Update()
+        CreateGravitySequence();
+    }
+    
+    private void CreateGravitySequence()
     {
-        TimeElapsed += Time.deltaTime;
-        if (TimeElapsed >= bGimmickDuration)
+        gravitySequence = DOTween.Sequence().Pause().SetAutoKill(false);
+
+        // 블랙홀 지속 시간 동안 주기적으로 중력 효과 적용
+        gravitySequence.AppendInterval(0.05f); // 50ms 간격으로 체크 (FixedUpdate 대체)
+        gravitySequence.AppendCallback(ApplyGravity);
+        gravitySequence.SetLoops(Mathf.CeilToInt(bGimmickDuration / 0.05f), LoopType.Restart);
+
+        // 끝나면 삭제
+        gravitySequence.OnComplete(() =>
         {
             Destroy(gameObject);
-            return;
-        }
+        });
     }
 
-    private void FixedUpdate()
+    private void ApplyGravity()
     {
         if (PlayerRigidbody == null) return;
 
         float distance = Vector3.Distance(transform.position, PlayerRigidbody.position); //끌어당길 방향 설정 (플레이어가 블랙홀을 바라보는 방향)
-        
-        if (distance <= effectiveRange && distance > effectiveCenterRange) // 블랙홀 내부 && 중심 구역보다는 바깥쪽에 위치
+
+        if (distance <= effectiveRange && distance > effectiveCenterRange)  // 블랙홀 내부 && 중심 구역보다는 바깥쪽에 위치
         {
             MyDebug.Log("Player In");
             Vector3 direction = (transform.position - PlayerRigidbody.position).normalized;
             PlayerRigidbody.AddForce(direction * gravityStrength, ForceMode.Acceleration);
         }
-        else if(distance <= effectiveCenterRange || distance > effectiveRange) //블랙홀 중심 구역에 위치 or 블랙홀 빠져나감
+        else //블랙홀 중심 구역에 위치 or 블랙홀 빠져나감
         {
             MyDebug.Log("Player Out");
             PlayerRigidbody.linearVelocity = Vector3.zero;
@@ -68,11 +77,11 @@ public class Gimmick_BlackHole : Gimmick
 
     public override void ActivateGimmick()
     {
-
+        gravitySequence.Restart();
     }
 
     public override void DeactivateGimmick()
     {
-        throw new NotImplementedException();
+        gravitySequence.Kill();
     }
 }
