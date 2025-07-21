@@ -7,12 +7,18 @@ using UnityEngine.Localization;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Serialization;
 
-public enum GimmickGrade
+public enum eGimmickGrade
 {
     Nomal,
     Enhanced,
     Elite,
     Legendary,
+}
+
+public enum eGimmickType
+{
+    BlackHole,
+    RedZone
 }
 
 public class ToTsvGimmickData
@@ -39,7 +45,7 @@ public abstract class Gimmick : MonoBehaviour
     
     //ReadOnly
     [LabelText("기믹 등급"), Tooltip("기믹을 설정할 때 동적으로 할당되는 기믹의 등급"), ReadOnly]
-    protected GimmickGrade ebGimmickGrade { get; set; } // 동적으로 설정할 기믹 등급
+    protected eGimmickGrade ebGimmickGrade { get; set; } // 동적으로 설정할 기믹 등급
     
     [LabelText("기믹 지속 시간"), ReadOnly] 
     protected int bGimmickCost { get; set; }
@@ -54,17 +60,19 @@ public abstract class Gimmick : MonoBehaviour
     protected float bGimmickEffectValue2 { get; set; }
     
     [LabelText("초기화 완료 여부"), ReadOnly] 
-    protected bool mbGimmickInitialize { get; set; } = false; // 기믹 초기화 여부
+    // protected bool mbGimmickInitialize { get; set; } = false; // 기믹 초기화 여부
 
-    public abstract void Activate();
+    public abstract void ActivateGimmick(); //실행
+    public abstract void DeactivateGimmick(); //정지
 
-    public void InitializeGimmick(GimmickInitializer.GimmickInitializerData gimmickFactoryData, GimmickGrade gimmickGrade)
+    //gimmickGrade로 자기 자신을 초기화 //기믹 생성, 준비 단계
+    public void InitializeGimmick(GimmickInitializer gimmickInitializer, eGimmickGrade gimmickGrade)
     {
         ebGimmickGrade = gimmickGrade;
-        bGimmickCost = gimmickFactoryData.Costs[(int)gimmickGrade];
-        bGimmickDuration = gimmickFactoryData.Durations_s[(int)gimmickGrade];
-        bGimmickEffectValue1 = gimmickFactoryData.EffectValue1[(int)gimmickGrade];
-        bGimmickEffectValue2 = gimmickFactoryData.EffectValue2[(int)gimmickGrade];
-        mbGimmickInitialize = true;
+        bGimmickCost = gimmickInitializer.Costs[(int)gimmickGrade];
+        bGimmickDuration = gimmickInitializer.Durations_s[(int)gimmickGrade];
+        bGimmickEffectValue1 = gimmickInitializer.EffectValue1[(int)gimmickGrade];
+        bGimmickEffectValue2 = gimmickInitializer.EffectValue2[(int)gimmickGrade];
+        // mbGimmickInitialize = true;
     }
 }

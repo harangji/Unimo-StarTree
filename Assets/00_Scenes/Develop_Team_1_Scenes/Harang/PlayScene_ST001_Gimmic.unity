@@ -4441,7 +4441,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 159835809}
         m_TargetAssemblyTypeName: PlaySceneController, Assembly-CSharp
         m_MethodName: LoadLobby
         m_Mode: 1
@@ -4577,60 +4577,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4876853301214706921}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &691075662
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 691075664}
-  - component: {fileID: 691075663}
-  m_Layer: 0
-  m_Name: GimmickManager_Hr
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &691075663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 691075662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c81715860a9283542b77bbb414b64885, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  specialGimmicks:
-  - {fileID: 1047742197}
-  warningPopup: {fileID: 0}
-  modeText: []
-  modeIcon: []
-  modeBGM: {fileID: 0}
-  goodModeTxtColor: {r: 0.13679248, g: 0.74624586, b: 1, a: 0}
-  goodModeImgColor: {r: 0.42232418, g: 1, b: 0, a: 0}
-  testBool: 1
---- !u!4 &691075664
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 691075662}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.714047, y: -5.01861, z: 7.0631166}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1047742196}
-  m_Father: {fileID: 877649383}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &694364964
 GameObject:
   m_ObjectHideFlags: 0
@@ -5023,6 +4969,61 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -200}
   m_SizeDelta: {x: 352.7622, y: 118.9906}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &709971288
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 709971290}
+  - component: {fileID: 709971289}
+  m_Layer: 0
+  m_Name: BlackHole_Hr
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &709971289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709971288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fc25c5c1c2c0a04c95af3eff3fbf607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gimmickName: "\uBE14\uB799\uD640"
+  gimmickIcon: {fileID: 0}
+  gimmickDuration: 100
+  gimmickEffectValue1: 10
+  gimmickEffectValue2: 0
+  gimmickCosts: 0a0000000c0000000f00000012000000
+  gimmickWeights: 3c000000320000001e0000000a000000
+  gimmickGrade: 0
+  gravityStrength: 8
+  effectiveRange: 5
+  effectiveCenterRange: 0.7
+--- !u!4 &709971290
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709971288}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -2.52, y: 0, z: 7.69}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &749429214
 GameObject:
   m_ObjectHideFlags: 0
@@ -5668,7 +5669,7 @@ Transform:
   - {fileID: 1971803515}
   - {fileID: 93051893}
   - {fileID: 1337893009}
-  - {fileID: 691075664}
+  - {fileID: 1639946464}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &877649385
@@ -6118,61 +6119,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1030639198}
   m_CullTransparentMesh: 1
---- !u!1 &1047742194
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1047742196}
-  - component: {fileID: 1047742197}
-  m_Layer: 0
-  m_Name: BlackHole_Hr
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1047742196
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1047742194}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 1.194047, y: 5.01861, z: 0.6268835}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 691075664}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1047742197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1047742194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fc25c5c1c2c0a04c95af3eff3fbf607, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gimmickName: "\uBE14\uB799\uD640"
-  gimmickIcon: {fileID: 0}
-  gimmickDuration: 100
-  gimmickEffectValue1: 10
-  gimmickEffectValue2: 0
-  gimmickCosts: 0a0000000c0000000f00000012000000
-  gimmickWeights: 3c000000320000001e0000000a000000
-  gimmickGrade: 0
-  gravityStrength: 8
-  effectiveRange: 5
-  effectiveCenterRange: 0.7
 --- !u!1 &1059449177
 GameObject:
   m_ObjectHideFlags: 0
@@ -8404,7 +8350,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 159835809}
         m_TargetAssemblyTypeName: PlaySceneController, Assembly-CSharp
         m_MethodName: LoadLobby
         m_Mode: 1
@@ -8956,6 +8902,59 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &1639946463
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1639946464}
+  - component: {fileID: 1639946465}
+  m_Layer: 0
+  m_Name: GimmickManager_Hr
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1639946464
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639946463}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 877649383}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1639946465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639946463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81715860a9283542b77bbb414b64885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  specialGimmicks:
+  - {fileID: 0}
+  warningPopup: {fileID: 0}
+  modeText: []
+  modeIcon: []
+  modeBGM: {fileID: 0}
+  goodModeTxtColor: {r: 0.13679248, g: 0.74624586, b: 1, a: 0}
+  goodModeImgColor: {r: 0.42232418, g: 1, b: 0, a: 0}
+  testBool: 1
 --- !u!1 &1686138775
 GameObject:
   m_ObjectHideFlags: 0
@@ -13565,3 +13564,4 @@ SceneRoots:
   - {fileID: 1730400164}
   - {fileID: 540869492}
   - {fileID: 472919499}
+  - {fileID: 709971290}
