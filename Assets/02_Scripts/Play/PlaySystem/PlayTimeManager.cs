@@ -18,6 +18,11 @@ public class PlayTimeManager : MonoBehaviour
     
     private bool mbTimerStopped = false;
     
+    public float GetRemainTime() => remainTime;
+    public bool GetTimerStopped() => mbTimerStopped;
+    public float GetMaxTime() => maxTime;
+    public float GetRemainTimeRatio() => remainTime / maxTime;
+    
     // 외부에서 제한 시간을 설정할 수 있게 함
     public void SetStageTimeLimit(float time)
     {
@@ -82,14 +87,6 @@ public class PlayTimeManager : MonoBehaviour
             mbTimerStopped = true;
         }
         timerGauge.SetGauge(remainTime / maxTime);
-    }
-    public float GetMaxTime()
-    {
-        return maxTime;
-    }
-    public float GetRemainTimeRatio()
-    {
-        return remainTime / maxTime;
     }
     private float calcReduceRate(float lapse)
     {

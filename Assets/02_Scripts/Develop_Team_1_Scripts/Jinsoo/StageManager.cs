@@ -130,6 +130,49 @@ public class StageManager : MonoBehaviour
     {
         Debug.Log("스테이지 클리어!");
         StageLoader.SaveClearedStage(mStageData.StageNumber); // 다음 스테이지 오픈 저장
+        // 보너스 스테이지 별 저장 처리
+        if (mStageData.IsBonusStage)
+        {
+            int stageNum = mStageData.StageNumber;
+            float ratio = (float)(mScoreGauge.GetScoreRatio());
+            int newStars = 0;
+            if (ratio >= 1.0f) newStars = 3;
+            else if (ratio >= 0.66f) newStars = 2;
+            else if (ratio >= 0.33f) newStars = 1;
+
+            var userData = Base_Manager.Data.UserData;
+
+            int oldFlags = 0;
+            userData.BonusStageStars.TryGetValue(stageNum, out oldFlags);
+
+            int rewardFlags = 0;
+
+            for (int i = 1; i <= newStars; i++)
+            {
+                int bit = 1 << (i - 1);
+                if ((oldFlags & bit) == 0)
+                {
+                    // 보상 지급
+                    switch (i)
+                    {
+                        case 1: Base_Manager.Data.UserData.Yellow += 25; break;
+                        case 2: Base_Manager.Data.UserData.Yellow += 50; break;
+                        case 3: Base_Manager.Data.UserData.Red += 10; break;
+                    }
+                    rewardFlags |= bit;
+                }
+            }
+
+            // 새로운 별 획득이 있었을 경우만 저장
+            if (rewardFlags != 0 || newStars > CountBits(oldFlags))
+            {
+                int updatedFlag = oldFlags | rewardFlags;
+                userData.BonusStageStars[stageNum] = updatedFlag;
+                Base_Manager.Data.SaveUserData();
+            }
+            Debug.Log("별 저장됐습니다.");
+            Debug.Log(userData.BonusStageStars[stageNum]);
+        }
         // 결과 UI 열기
         PlaySystemRefStorage.playProcessController.GameClear();
     }
@@ -138,6 +181,20 @@ public class StageManager : MonoBehaviour
     {
         Debug.Log("스테이지 실패!");
         PlaySystemRefStorage.playProcessController.GameOver();
+    }
+    
+    // 비트 수 카운트 유틸
+    private int CountBits(int value)
+    {
+        var count = 0;
+        for (var i = 0; i < 3; i++) // 최대 3비트
+            if ((value & (1 << i)) != 0) count++;
+        return count;
+    }
+    
+    private float GetScoreRatio()
+    {
+        return (float)(mScoreGauge.GetCurrentScore() / mScoreGauge.GetTargetScore());
     }
     
     private void OnDestroy()
