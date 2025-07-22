@@ -18,7 +18,7 @@ public class FlowerGenerator_ST002_Jinsu : FlowerGenerator
 
     protected new void Start()
     {
-        mRemain = PlaySystemRefStorage.playTimeManager.GetRemainTime();
+        mRemain = PlaySystemRefStorage.playTimeManager.LapseTime;
         AllFlowers = new();
         StartCoroutine(generateCoroutine());
     }
@@ -34,8 +34,8 @@ public class FlowerGenerator_ST002_Jinsu : FlowerGenerator
 
         while (true)
         {
-            mRemain = PlaySystemRefStorage.playTimeManager.GetRemainTime();
-            var isSTS02 = mRemain <= 30f;
+            mRemain = PlaySystemRefStorage.playTimeManager.LapseTime;
+            var isSTS02 = mRemain >= 30f;
             var period = (isSTS02 || mCycleCount >= 3) ? 0.5f : 1f;
             var rareCount = isSTS02 ? 2 : 1;
 
