@@ -47,6 +47,15 @@ public static class StageLoader
     {
         return Base_Manager.Data.UserData.BestStage;
     }
+    
+    // 임시 Stage 낮추기 함수
+    public static void StageDownSave()
+    {
+        Debug.Log($"이전 최고 스테이지 : {Base_Manager.Data.UserData.BestStage}");
+        var userData = Base_Manager.Data.UserData;
+        userData.BestStage--;
+        Debug.Log($"바뀐 최고 스테이지 : {Base_Manager.Data.UserData.BestStage}");
+    }
 
     public static void ResetProgress()
     {

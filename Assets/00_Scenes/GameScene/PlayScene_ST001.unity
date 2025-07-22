@@ -3373,7 +3373,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &546730707
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4441,7 +4441,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 159835809}
         m_TargetAssemblyTypeName: PlaySceneController, Assembly-CSharp
         m_MethodName: LoadLobby
         m_Mode: 1
@@ -8294,7 +8294,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 159835809}
         m_TargetAssemblyTypeName: PlaySceneController, Assembly-CSharp
         m_MethodName: LoadLobby
         m_Mode: 1
@@ -9546,8 +9546,8 @@ MonoBehaviour:
   - {fileID: 1398289742}
   - {fileID: 2044775334}
   - {fileID: 1803579855}
+  - {fileID: 622374550}
   - {fileID: 326843635}
-  - {fileID: 1398289742}
   activateTime:
   - 5
   - 10

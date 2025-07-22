@@ -12,7 +12,11 @@ public class FlowerGenerator : MonoBehaviour
 
     protected void Awake()
     {
-        if (flowerObjs.Count != appearRatios.Count) { Debug.Log("Wrong set flower generator."); }
+        if (flowerObjs.Count != appearRatios.Count) 
+        { 
+            Debug.Log("Wrong set flower generator.");
+            return;
+        }
         float appearAcc = 0f;
         appearAccProb = new List<float>();
         foreach (float ratio in appearRatios)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -94,7 +95,10 @@ public class User_Data
     public double Second_Base = 5; // 시설 초당 별꿀 생산량
     public double NextLevel_Base = 5; // 레벨업 비용
     public double Yellow, Red, Blue; //별꿀
+    
+    // 스테이지 관련 (담당 : 김진수)
     public int BestStage = 0; //최고 클리어 스테이지
+    public Dictionary<int, int> BonusStageStars = new Dictionary<int, int>();
 
     //?????
     public float[] BuffFloating = new float[3];

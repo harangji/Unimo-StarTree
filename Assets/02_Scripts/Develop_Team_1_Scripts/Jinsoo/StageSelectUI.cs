@@ -30,6 +30,14 @@ public class StageSelectUI : MonoBehaviour
         UpdateUI();
     }
 
+    public void StageDowngrade()
+    {
+        if (mNextStage <= 1) return;
+        StageLoader.StageDownSave();
+        mNextStage--;
+        UpdateUI();
+    }
+
     private void UpdateUI()
     {
         mNextStage = Mathf.Min(mNextStage, MaxStage);

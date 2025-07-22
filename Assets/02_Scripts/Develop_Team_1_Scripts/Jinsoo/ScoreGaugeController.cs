@@ -13,6 +13,10 @@ public class ScoreGaugeController : MonoBehaviour
 
     private double mCurrentScore = 0;
     private double mTargetScore;
+    
+    public double GetCurrentScore() => mCurrentScore;
+    public double GetTargetScore() => mTargetScore;
+    public float GetScoreRatio() => (float)(mCurrentScore / mTargetScore);
 
     private void Start()
     {
@@ -53,6 +57,8 @@ public class ScoreGaugeController : MonoBehaviour
                 mStarImages[0].sprite = mFilledStarImage.sprite;
                 break;
         }
+        
+        Debug.Log($"현재 점수 : {mCurrentScore}, 타겟 점수  : {mTargetScore}");
 
         // if (scoreText != null)
         // {
