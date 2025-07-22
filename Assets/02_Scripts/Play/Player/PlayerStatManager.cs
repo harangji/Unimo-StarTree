@@ -270,15 +270,22 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
             return;
         }
 
-        if (!combatEvent.Sender.GameObject.gameObject.name.Equals("Pattern1Bullet"))
-        {
-            //  스턴 시간 감소 적용
-            stun = Mathf.Max(stun * (1f - fStunReduceRate), 0.2f);
+        // if (!combatEvent.Sender.GameObject.gameObject.name.Equals("Pattern1Bullet"))
+        // {
+        //     //  스턴 시간 감소 적용
+        //     stun = Mathf.Max(stun * (1f - fStunReduceRate), 0.2f);
+        //
+        //     //스턴 처리 로직
+        //     hitPos.y = 0;
+        //     stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
+        // }
         
-            //스턴 처리 로직
-            hitPos.y = 0;
-            stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
-        }
+        //  스턴 시간 감소 적용
+        stun = Mathf.Max(stun * (1f - fStunReduceRate), 0.2f);
+        
+        //스턴 처리 로직
+        hitPos.y = 0;
+        stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
         
         //데미지 처리
         var reducedDamage = combatEvent.Damage * (1f - mStat.BaseStat.Armor);
@@ -286,9 +293,9 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         
         hpGauge?.SetGauge(currentHP / mStat.BaseStat.Health);
         
-        Debug.Log($"Combat System: 피해량: {reducedDamage}");
-        Debug.Log($"Combat System: 현재 체력: {currentHP} / {mStat.BaseStat.Health}");
-        Debug.Log($"Combat System: 비율: {currentHP / mStat.BaseStat.Health}");
+        Debug.Log($"[Combat System] 피해량: {reducedDamage}");
+        Debug.Log($"[Combat System] 현재 체력: {currentHP} / {mStat.BaseStat.Health}");
+        Debug.Log($"[Combat System] 비율: {currentHP / mStat.BaseStat.Health}");
         
         //사망 체크
         if (currentHP <= 0)

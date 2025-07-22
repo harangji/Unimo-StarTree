@@ -11,8 +11,6 @@ public class Pattern1Bullet : MonoBehaviour, IDamageAble
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("무언가와 충돌 중");
-        
         if (other.CompareTag("Player"))
         {
             if (other.TryGetComponent<PlayerStatManager>(out var player))
