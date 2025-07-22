@@ -67,12 +67,11 @@ public class MonsterController : MonoBehaviour
 
                 //todo 이 부분에서 나중에 컴벳 시스템으로 바꿔야 함 -> 지금은 그냥 Hit 메서드를 변경함
                 var monster = GetComponent<IDamageAble>();
-                var playerIDamageAble = GameObject.FindGameObjectWithTag("Player").GetComponent<IDamageAble>();
 
                 CombatEvent combatEvent = new CombatEvent
                 {
                     Sender = monster,
-                    Receiver = playerIDamageAble,
+                    Receiver = player,
                     Damage = (monster as Monster).defaultDamage,
                     HitPosition = hitPos,
                     Collider = other

@@ -8,7 +8,7 @@ public class Pattern1Bullet : MonoBehaviour, IDamageAble
 
     public Collider MainCollider => mainCollider;
     public GameObject GameObject => gameObject;
-    
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("무언가와 충돌 중");
@@ -20,30 +20,28 @@ public class Pattern1Bullet : MonoBehaviour, IDamageAble
                 Vector3
                     hitPos = transform.position; //other.ClosestPoint(transform.position + new Vector3(0f, 1.5f, 0f))
                 hitPos.y = 0f;
-
-                //todo 이 부분에서 나중에 컴벳 시스템으로 바꿔야 함 -> 지금은 그냥 Hit 메서드를 변경함
-                var playerIDamageAble = GameObject.FindGameObjectWithTag("Player").GetComponent<IDamageAble>();
-
+    
                 CombatEvent combatEvent = new CombatEvent
                 {
                     Sender = this,
-                    Receiver = playerIDamageAble,
+                    Receiver = player,
                     Damage = damage,
                     HitPosition = hitPos,
                     Collider = other
                 };
-
+    
                 CombatSystem.Instance.AddInGameEvent(combatEvent);
-            }
             
             Destroy(gameObject);
+            }
         }
     }
-    
+
     public void TakeDamage(CombatEvent combatEvent)
     {
         throw new NotImplementedException();
     }
+
     public void TakeHeal(HealEvent combatEvent)
     {
         throw new NotImplementedException();
