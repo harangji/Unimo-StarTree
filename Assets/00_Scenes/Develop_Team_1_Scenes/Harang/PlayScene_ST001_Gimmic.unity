@@ -1969,6 +1969,51 @@ MonoBehaviour:
   monsterPattern2: {fileID: 0}
   monsterPattern3: {fileID: 1313915641652497427, guid: e8410453af08a234d889e0bd14a44b14,
     type: 3}
+--- !u!1 &332699470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 332699471}
+  - component: {fileID: 332699472}
+  m_Layer: 0
+  m_Name: BlackHoleGimmickInitializer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &332699471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332699470}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1639946464}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &332699472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332699470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad689bce92e54e842a78e025260977e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blackHole: {fileID: 0}
 --- !u!1 &358636101
 GameObject:
   m_ObjectHideFlags: 0
@@ -2006,7 +2051,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 12.400024, y: 700.0001}
+  m_AnchoredPosition: {x: 12.4001465, y: 700.0001}
   m_SizeDelta: {x: 570.00037, y: 104}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &358636103
@@ -5000,15 +5045,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gimmickName: "\uBE14\uB799\uD640"
   gimmickIcon: {fileID: 0}
-  gimmickDuration: 100
-  gimmickEffectValue1: 10
-  gimmickEffectValue2: 0
-  gimmickCosts: 0a0000000c0000000f00000012000000
-  gimmickWeights: 3c000000320000001e0000000a000000
-  gimmickGrade: 0
-  gravityStrength: 8
-  effectiveRange: 5
-  effectiveCenterRange: 0.7
+  <OuterSuctionGravityStrength>k__BackingField:
+  - 10
+  - 12
+  - 15
+  - 20
+  <InnerSuctionGravityStrength>k__BackingField:
+  - 15
+  - 20
+  - 25
+  - 30
+  <EffectiveRange>k__BackingField: 5
+  <EffectiveCenterRange>k__BackingField: 0.2
 --- !u!4 &709971290
 Transform:
   m_ObjectHideFlags: 0
@@ -5061,7 +5109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0.00012207031}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &749429216
@@ -8760,7 +8808,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0.00012207031}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1628869254
@@ -8931,7 +8979,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 332699471}
+  - {fileID: 1936151399}
   m_Father: {fileID: 877649383}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1639946465
@@ -8946,15 +8996,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81715860a9283542b77bbb414b64885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  specialGimmicks:
-  - {fileID: 0}
   warningPopup: {fileID: 0}
   modeText: []
   modeIcon: []
+  bgmSource: {fileID: 0}
   modeBGM: {fileID: 0}
   goodModeTxtColor: {r: 0.13679248, g: 0.74624586, b: 1, a: 0}
   goodModeImgColor: {r: 0.42232418, g: 1, b: 0, a: 0}
-  testBool: 1
+  gimmickInitializers:
+  - {fileID: 332699472}
+  - {fileID: 1936151400}
 --- !u!1 &1686138775
 GameObject:
   m_ObjectHideFlags: 0
@@ -10228,6 +10279,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928446051}
   m_CullTransparentMesh: 1
+--- !u!1 &1936151398
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1936151399}
+  - component: {fileID: 1936151400}
+  m_Layer: 0
+  m_Name: RedZoneGimmickInitializer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1936151399
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936151398}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1639946464}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1936151400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936151398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1b00f83d2bc6a14b89405e8673a6b51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redZone: {fileID: 0}
 --- !u!1 &1967205765
 GameObject:
   m_ObjectHideFlags: 0
