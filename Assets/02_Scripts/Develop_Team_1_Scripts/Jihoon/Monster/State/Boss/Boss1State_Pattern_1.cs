@@ -4,7 +4,7 @@ using UnityEngine;
 public class Boss1State_Pattern_1 : BossState_Pattern
 {
     [SerializeField] private GameObject pattern1;
-    
+
     public override void TransitionAction(MonsterController controller)
     {
         base.TransitionAction(controller);
@@ -12,17 +12,27 @@ public class Boss1State_Pattern_1 : BossState_Pattern
 
         StartCoroutine(Pattern());
     }
+
     public override void UpdateAction()
     {
-        base.UpdateAction();
+        RotateMonster();
     }
+
+    #region 내부 함수
 
     private IEnumerator Pattern()
     {
-        Instantiate(pattern1,  transform.position + transform.forward * 2f, Quaternion.identity);
-        
-        yield return new WaitForSeconds(2);
-        
+        for (int i = 0; i < 4; i++)
+        {
+            Instantiate(pattern1, transform.position + transform.forward * 5f, Quaternion.identity);
+
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        yield return new WaitForSeconds(1f);
+
         controller.EnemyPreaction();
     }
+
+    #endregion
 }

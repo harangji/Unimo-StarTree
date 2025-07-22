@@ -25,7 +25,8 @@ public class Pattern1Bullet : MonoBehaviour, IDamageAble
                     Receiver = player,
                     Damage = damage,
                     HitPosition = hitPos,
-                    Collider = other
+                    Collider = other,
+                    CanBeStunned = true,
                 };
     
                 CombatSystem.Instance.AddInGameEvent(combatEvent);

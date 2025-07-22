@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BossPattern1 : MonoBehaviour
@@ -8,6 +9,7 @@ public class BossPattern1 : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(DestroyDelay());
         SetDirection();
     }
 
@@ -32,5 +34,12 @@ public class BossPattern1 : MonoBehaviour
     private void Move()
     {
         transform.position += transform.forward * (moveSpeed * Time.deltaTime);
+    }
+
+    private IEnumerator DestroyDelay()
+    {
+        yield return new WaitForSeconds(12f);
+        
+        Destroy(gameObject);
     }
 }
