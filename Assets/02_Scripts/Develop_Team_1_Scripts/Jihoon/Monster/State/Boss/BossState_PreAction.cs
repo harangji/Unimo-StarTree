@@ -37,7 +37,7 @@ public class BossState_PreAction : MonsterState_Preaction
 
     public override void TransitionAction(MonsterController controller)
     {
-        base.TransitionAction(controller);
+        this.controller = controller;
         StartCoroutine(WaitForNextPattern());
     }
     

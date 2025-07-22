@@ -14,9 +14,8 @@ public class Mon005State_Preaction : MonsterState_Preaction
 
     public override void TransitionAction(MonsterController controller)
     {
-        base.TransitionAction(controller);
+        this.controller = controller;
         setMoveDirVector();
-        //moveSpeed *= Random.Range(0.75f, 1.2f);
     }
 
     public override void UpdateAction()
