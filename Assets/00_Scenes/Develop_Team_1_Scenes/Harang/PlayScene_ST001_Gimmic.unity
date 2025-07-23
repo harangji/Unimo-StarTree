@@ -547,8 +547,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 64308019}
+  - component: {fileID: 64308020}
   m_Layer: 0
-  m_Name: GameDataSO
+  m_Name: GameDataSOHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -569,6 +570,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &64308020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64308018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f5ec48831d3064d9c56a9b13c78974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <GimmicParsingDataSo>k__BackingField: {fileID: 11400000, guid: 534e3a35002638e43b398cbb20e323d2,
+    type: 2}
 --- !u!1 &70759445
 GameObject:
   m_ObjectHideFlags: 0
