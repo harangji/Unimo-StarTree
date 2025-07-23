@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5151961250483517453}
   - component: {fileID: 8907579332177793533}
   - component: {fileID: 8347894322877044238}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7111030466533999021}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 6738410232002274175}
   - component: {fileID: 2974390664964934264}
   - component: {fileID: 1537566843305208144}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 6772387745374819913}
   - component: {fileID: 6224119267922469066}
   - component: {fileID: 7338363940480837404}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: indicatorSafe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 4962783415059772227}
   - component: {fileID: 5526928168580600287}
   - component: {fileID: 4402490621870776639}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BossMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,6 +342,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2517951941609952266}
+  - {fileID: 7816215264227575132}
   - {fileID: 6527452247818940188}
   - {fileID: 7111030466533999021}
   - {fileID: 4220699690280377205}
@@ -454,6 +455,94 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indicatorObj: {fileID: 8000684824576046668}
+--- !u!1 &7093913082881990927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7816215264227575132}
+  - component: {fileID: 2297473824803847087}
+  m_Layer: 9
+  m_Name: Boss_Pattern3_Indicator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7816215264227575132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7093913082881990927}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 2.5}
+  m_LocalScale: {x: 1, y: 5, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2933521365371308141}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!212 &2297473824803847087
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7093913082881990927}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
+    type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.078431375}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &7571725496404719269
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,7 +554,7 @@ GameObject:
   - component: {fileID: 238718584879400145}
   - component: {fileID: 952728636557166393}
   - component: {fileID: 3336280618244780895}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -557,7 +646,7 @@ GameObject:
   - component: {fileID: 7909966956196934023}
   - component: {fileID: 3993867442085086691}
   - component: {fileID: 8553566960014259852}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: StateStorage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -672,6 +761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1475ebe2fc320dc42a89e274bb70d990, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  indicator: {fileID: 7093913082881990927}
 --- !u!114 &8553566960014259852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,7 +783,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6527452247818940188}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Boss_Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -728,7 +818,7 @@ GameObject:
   - component: {fileID: 1450998584771633286}
   - component: {fileID: 8235271899288872920}
   - component: {fileID: 8801033878897831484}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -821,6 +911,16 @@ PrefabInstance:
       propertyPath: lengthInSec
       value: 0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 2406356296441275134, guid: adc9f61ef640e5f4e9261ea0f591828d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3997202016695774717, guid: adc9f61ef640e5f4e9261ea0f591828d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7543651097898661888, guid: adc9f61ef640e5f4e9261ea0f591828d,
         type: 3}
       propertyPath: m_RootOrder
@@ -900,6 +1000,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_MON000_BlackPortal
+      objectReference: {fileID: 0}
+    - target: {fileID: 8087840629484875825, guid: adc9f61ef640e5f4e9261ea0f591828d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

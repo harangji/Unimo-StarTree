@@ -18,8 +18,6 @@ public class Boss1State_Pattern_1 : BossState_Pattern
         RotateMonster();
     }
 
-    #region 내부 함수
-
     private IEnumerator Pattern()
     {
         for (int i = 0; i < 4; i++)
@@ -33,6 +31,4 @@ public class Boss1State_Pattern_1 : BossState_Pattern
 
         controller.EnemyPreaction();
     }
-
-    #endregion
 }
