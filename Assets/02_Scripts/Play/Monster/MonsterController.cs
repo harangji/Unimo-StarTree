@@ -97,6 +97,7 @@ public class MonsterController : MonoBehaviour
     public virtual void InitEnemy(Transform targetPlayer)
     {
         playerTransform = targetPlayer;
+        
         enemyAnimator = GetComponent<Animator>();
         machine = GetComponent<MonsterMachine>();
         enemyCollider = GetComponent<Collider>();

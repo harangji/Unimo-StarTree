@@ -19,7 +19,9 @@ public class Boss1State_Pattern_4 : BossState_Pattern
     {
         foreach (var position in spawnPositions)
         {
-            Instantiate(suicideBomberPrefab, position.position, Quaternion.identity);
+            var monster = Instantiate(suicideBomberPrefab, position.position, Quaternion.identity);
+            var ctrl = monster.GetComponent<MonsterController>();
+            ctrl.InitEnemy(controller.playerTransform);
         }
 
         yield return new WaitForSeconds(1);
