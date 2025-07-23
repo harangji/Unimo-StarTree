@@ -1110,6 +1110,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mScoreGauge: {fileID: 1119609315}
+  mStageText: {fileID: 0}
+  mLevelText: {fileID: 0}
+  mFlowerCount: {fileID: 0}
 --- !u!1 &168655306
 GameObject:
   m_ObjectHideFlags: 0
@@ -7426,6 +7429,7 @@ MonoBehaviour:
   - {fileID: 1148019907}
   scoreTxt: {fileID: 1148019908}
   resultTxt: {fileID: 6151373446196199413}
+  triggerManager: {fileID: 0}
   criticalChance: 0
   criticalMult: 0
 --- !u!114 &1971803517
