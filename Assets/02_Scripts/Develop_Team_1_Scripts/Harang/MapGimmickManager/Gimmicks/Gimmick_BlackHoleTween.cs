@@ -28,7 +28,7 @@ public class Gimmick_BlackHoleTween : Gimmick
     {
         if (GameManager.Instance != null)
         {
-            PlayerRigidbody = GameManager.Instance.unimoPrefab.GetComponent<Collider>().attachedRigidbody;
+            PlayerRigidbody = GimmickManager.Instance.unimoPrefab.GetComponent<Collider>().attachedRigidbody;
         }
 
         CreateGravitySequence();

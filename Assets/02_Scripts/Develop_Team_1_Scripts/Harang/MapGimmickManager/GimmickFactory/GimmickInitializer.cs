@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class GimmickInitializer : MonoBehaviour
@@ -13,7 +14,7 @@ public abstract class GimmickInitializer : MonoBehaviour
         
     private bool mGimmickInitialized = false;
     
-    public void InitializeGimmickInitializer(ToTsvGimmickData gimmickData)
+    public void GimmickInitializerSetting(ToTsvGimmickData gimmickData)
     {
         GimmickID = gimmickData.Key;
         GimmickName = gimmickData.GimmickName;

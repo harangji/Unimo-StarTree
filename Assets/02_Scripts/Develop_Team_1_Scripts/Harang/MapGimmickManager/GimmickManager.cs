@@ -15,7 +15,6 @@ using Random = UnityEngine.Random;
 
 public class GimmickManager : MonoBehaviour
 {    
-    
     //경고 연출s
     [LabelText("경고 팝업창"), SerializeField]
     private GameObject warningPopup;
@@ -45,21 +44,38 @@ public class GimmickManager : MonoBehaviour
     private bool bIsReadyGimmiks = false;
     
     //ReadOnly
-    [LabelText("현재 스테이지 캐싱"), ReadOnly]
+    [LabelText("현재 스테이지 캐싱"), ShowInInspector, ReadOnly]
     private int currentStage;
     
-    [LabelText("복잡도 점수"), ReadOnly]
+    [LabelText("복잡도 점수"), ShowInInspector, ReadOnly]
     private int currentCost;
     
-    [LabelText("골라진 기믹들"), ReadOnly]
+    [LabelText("골라진 기믹들"), ShowInInspector, ReadOnly]
     private List<Gimmick> readyGimmicks = new List<Gimmick>();
 
-    private List<eGimmickGrade> canSelectAbleGrades = new List<eGimmickGrade>();
+    private List<eGimmickGrade> canSelectAbleGrades = new List<eGimmickGrade>(); //등장 가능한 기믹 등급
     
     private Dictionary<eGimmickGrade, List<Gimmick>> canSelectedGimmicksDictionary = new Dictionary<eGimmickGrade, List<Gimmick>>(); //예비군
     
     private int gimmickCount = 0;
     
+    [field: SerializeField] public GameObject unimoPrefab { get; private set; }
+    
+    public static GimmickManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
     void Start()
     {
         InitializeGimmickManager();
@@ -71,8 +87,8 @@ public class GimmickManager : MonoBehaviour
         
         if (SetGimmicCountByStageNumber(currentStage)) //스테이지 수에 따른 설정들 - false일 경우 기믹 갯수가 0이므로 실행 안함
         {
-            List<GimmickSample> canSelectAbleGimmickSamples = GetCanSelectAbleGimmickSamplesByGrade(canSelectAbleGrades); //선택될 수 있는 
-            PickGimmickSamples(canSelectAbleGimmickSamples, gimmickCount);
+            List<GimmickSample> canSelectAbleGimmickSamples = GetCanSelectAbleGimmickSamplesByGrade(canSelectAbleGrades); //기믹 껍데기 반환
+            PickGimmickSamples(canSelectAbleGimmickSamples, gimmickCount); //기믹 껍데기 기반으로 생성
             
             bIsReadyGimmiks = true;
         }
@@ -95,7 +111,7 @@ public class GimmickManager : MonoBehaviour
             
             case <= 50:
                 currentCost = 10;
-                probabilities = new[] { 100, 0, 0, 0 };
+                probabilities = new[] { 100, 0, 0, 0 }; //갯수 확률 설정
             
                 canSelectAbleGrades.Add(eGimmickGrade.Nomal); //고를 수 있는 기믹 등급 리스트 설정
                 break;
@@ -174,49 +190,25 @@ public class GimmickManager : MonoBehaviour
         }
 
         return selectedGimmickSampless;
-        
-        // for (int i = 0; i < readyGimmicks.Length; i++) //readyGimmicks 길이만큼
-        // {
-        //     float rand = Random.Range(0f, totalWeight);
-        //     float cumulative = 0f;
-        //     
-        //     foreach (var canSelectGimmick in canSelectedGimmicksDictionary) //딕셔너리 순회
-        //     {
-        //         foreach (var gimmick in canSelectGimmick.Value) //기믹 리스트
-        //         {
-        //             cumulative += gimmick.gimmickWeights[(int)canSelectGimmick.Key];
-        //             if (rand < cumulative || testBool) //추첨 성공  //
-        //             {
-        //                 readyGimmicks[i] = gimmick; //준비된 기믹에 추가
-        //                 readyGimmicks[i].SetGrade(canSelectGimmick.Key); //grade 세팅
-        //                 
-        //                 MyDebug.Log($"Tlqkf : {readyGimmicks[i].gimmickName}");
-        //                 //ToDo : 중복제거?
-        //             }
-        //         }
-        //     }
-        // }
     } 
     
     //기믹 미리 준비하기
     public void PickGimmickSamples(List<GimmickSample> source, int count)
     {
-        List<GimmickSample> pool = new List<GimmickSample>();
-        
-        List<eGimmickType> cashGimmickTypes = new List<eGimmickType>();
+        List<eGimmickType> cashGimmickTypes = new List<eGimmickType>();  //중복방지
         
         for (int i = 0; i < count; i++) //count 번 실행 // && pool.Count > 0
         {
             // 아직 남은 후보가 없으면 중단
             // 이미 뽑은 기믹 타입을 제외
-            List<GimmickSample> filteredPool = pool
+            List<GimmickSample> filteredPool = source
                 .Where(x => !cashGimmickTypes.Contains(x.GimmickInitializer.GimmickType))
                 .ToList();
 
             if (filteredPool.Count == 0)
                 break;
             
-            float totalWeight = pool.Sum(e => e.GimmickWeight);
+            float totalWeight = source.Sum(e => e.GimmickWeight);
             int rand = (int)Random.Range(0, totalWeight);
 
             float cumulative = 0;
@@ -231,7 +223,7 @@ public class GimmickManager : MonoBehaviour
                     
                     cashGimmickTypes.Add(entry.GimmickInitializer.GimmickType); // 뽑은 타입을 추가, 중복방지
                     
-                    // 순회 중인 자료구조의 구조가 바뀔 경우 위험을 초래하므로, if 비교를 매번 하도록 변경
+                    // 순회 중인 자료구조의 구조가 바뀔 경우 위험을 초래하므로 변경
                     // pool.Remove(entry); //순회 리스트에서 제거로 중복 방지 - foreach에서는 불가능
                     //타입이 일치하지 않는 기믹만 리스트에 새로 담기 = 중복 방지
                     // pool = pool.Where(x => x.GimmickInitializer.GimmickType != entry.GimmickInitializer.GimmickType).ToList();

@@ -25,7 +25,7 @@ public class AI_Move : MonoBehaviour
         StartCoroutine(findFlowerCoroutine());
         agent.speed = 2.5f;
     }
-    private void startFindingFlower()
+    private void startFindingFlower() // 로비 필드에서 생성된 꽃을 찾는 스크립트
     {
         if(Pinous_Flower_Holder.FlowerHolder.Count <= 0)
         {
