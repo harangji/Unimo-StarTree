@@ -15,15 +15,16 @@ public class IntArrayConverter : ITypeConverter
 
     public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
     {
-        return text.Split(',').Select(int.Parse).ToArray();
+        return text.Split(',').Select(s =>int.Parse(s.Trim())).ToArray();
     }
+    //
 }
 
 public class FloatArrayConverter : ITypeConverter
 {
     public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
     {
-        if (value is int[] array)
+        if (value is float[] array)
             return string.Join(",", array);
         return string.Empty;
     }

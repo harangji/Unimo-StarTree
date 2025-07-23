@@ -41,7 +41,7 @@ public class Gimmick_BlackHole : Gimmick
 
         if (GameManager.Instance != null)
         {
-            bPlayerRigidbody = GameManager.Instance.unimoPrefab.GetComponent<Collider>().attachedRigidbody;
+            bPlayerRigidbody = GimmickManager.Instance.unimoPrefab.GetComponent<Collider>().attachedRigidbody;
         }
         else
         {
