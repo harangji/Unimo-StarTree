@@ -20,7 +20,9 @@ public class FlowerController : MonoBehaviour
     public void InitFlower(FlowerGenerator generator)
     {
         flowerGenerator = generator;
-        if (flowerGenerator != null) { flowerGenerator.AllFlowers.Add(this); }
+        if (flowerGenerator != null) { flowerGenerator.AllFlowers.Add(this);
+            PlaySystemRefStorage.stageManager.DeleteText();
+        }
         StartCoroutine(CoroutineExtensions.DelayedActionCall(ActivateFlower, 0.5f));
     }
     virtual public void AuraAffectFlower(float affection)

@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,11 @@ using UnityEngine.UI;
 public class StageManager : MonoBehaviour
 {
     [SerializeField] private ScoreGaugeController mScoreGauge;
+    [SerializeField] private TextMeshProUGUI mStageText;
+    
+    // 지울 변수
+    [SerializeField] private TextMeshProUGUI mLevelText;
+    [SerializeField] private FlowerGenerator mFlowerCount;
     
     private StageData mStageData;
     private bool mbStageEnded = false;
@@ -58,6 +64,19 @@ public class StageManager : MonoBehaviour
         // 예: MonsterGenerator.SetDifficulty(mStageData.DifficultyValue);
         mMaxDifficulty = mStageData.DifficultyValue;
         mCurrentDifficulty = mMaxDifficulty;
+        
+        // 스테이지 표시 Text
+        mStageText.text = mStageData.StageNumber.ToString();
+        
+        DeleteText();
+    }
+    
+    // 나중에 지울 함수
+    public void DeleteText()
+    {
+        mLevelText.text = mScoreGauge.GetCurrentScore() + " / " + mScoreGauge.GetTargetScore() + "\n"
+                          + mCurrentDifficulty + " / " + mMaxDifficulty + "\n"
+                          + mFlowerCount.AllFlowers.Count + " / " + mStageData.MaxFlowerCount;
     }
 
     // 풀 소모 시도
@@ -66,6 +85,7 @@ public class StageManager : MonoBehaviour
         if (mCurrentDifficulty >= cost)
         {
             mCurrentDifficulty -= cost;
+            DeleteText();
             Debug.Log($"[StageManager] 비용 사용 : {cost} → 현재 난이도 : {mCurrentDifficulty}");
             return true;
         }
@@ -77,6 +97,7 @@ public class StageManager : MonoBehaviour
     public void RestoreDifficulty(int cost)
     {
         mCurrentDifficulty = Mathf.Min(mCurrentDifficulty + cost, mMaxDifficulty);
+        DeleteText();
         Debug.Log($"[StageManager] 비용 복구 : {cost} → 현재 난이도 : {mCurrentDifficulty}");
     }
     
@@ -86,6 +107,7 @@ public class StageManager : MonoBehaviour
         if (mbStageEnded) return;
 
         mScoreGauge.SetCurrentScore(currentScore);
+        DeleteText();
 
         if (mStageData.IsBonusStage)
         {
@@ -170,7 +192,7 @@ public class StageManager : MonoBehaviour
                 userData.BonusStageStars[stageNum] = updatedFlag;
                 Base_Manager.Data.SaveUserData();
             }
-            Debug.Log("별 저장됐습니다.");
+            Debug.Log($"[보너스 저장] Stage {stageNum} - New Stars: {newStars}, Saved Flag: {userData.BonusStageStars[stageNum]}");
             Debug.Log(userData.BonusStageStars[stageNum]);
         }
         // 결과 UI 열기

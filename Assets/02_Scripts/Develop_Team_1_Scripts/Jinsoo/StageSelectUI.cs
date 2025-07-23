@@ -41,7 +41,7 @@ public class StageSelectUI : MonoBehaviour
     private void UpdateUI()
     {
         mNextStage = Mathf.Min(mNextStage, MaxStage);
-        mStageNumberText.text = $"{mNextStage} Stage";
+        mStageNumberText.text = $"{mNextStage}  Play";
     }
 
     // 시작버튼 눌렀을 때, 스테이지 진입
