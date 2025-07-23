@@ -5,7 +5,7 @@ public class Boss1State_Pattern_3 : BossState_Pattern
 {
     [SerializeField] private GameObject indicator;
 
-    private const float DASH_SPEED = 30f;
+    private const float DASH_SPEED = 24f;
     private const float ARENA_RADIUS = 16f;
     private const float INDICATOR_ALPHA = 20f / 255f;
     private const float INDICATOR_DURATION = 1.5f;
@@ -50,28 +50,36 @@ public class Boss1State_Pattern_3 : BossState_Pattern
         indicator.SetActive(true);
 
         var spriteRenderer = indicator.GetComponent<SpriteRenderer>();
-        Vector3 startScale = new Vector3(0f, 1f, 1f);
-        Vector3 endScale = new Vector3(1f, 1f, 1f);
+        Vector3 originalScale = indicator.transform.localScale;
+        float startX = 0f;
+        float endX = 1f;
 
         Color startColor = new Color(1f, 1f, 1f, INDICATOR_ALPHA);
         Color endColor = new Color(1f, 0f, 0f, INDICATOR_ALPHA);
 
-        indicator.transform.localScale = startScale;
+        // 초기 상태 설정
+        indicator.transform.localScale = new Vector3(startX, originalScale.y, originalScale.z);
         spriteRenderer.color = startColor;
 
         while (elapsed < INDICATOR_DURATION)
         {
             float t = elapsed / INDICATOR_DURATION;
-            indicator.transform.localScale = Vector3.Lerp(startScale, endScale, t);
+
+            // X만 보간, YZ는 고정
+            float newX = Mathf.Lerp(startX, endX, t);
+            indicator.transform.localScale = new Vector3(newX, originalScale.y, originalScale.z);
+
             spriteRenderer.color = Color.Lerp(startColor, endColor, t);
 
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        indicator.transform.localScale = endScale;
+        // 보정
+        indicator.transform.localScale = new Vector3(endX, originalScale.y, originalScale.z);
         spriteRenderer.color = endColor;
     }
+
 
     private IEnumerator EnableDashAfterDelay()
     {
