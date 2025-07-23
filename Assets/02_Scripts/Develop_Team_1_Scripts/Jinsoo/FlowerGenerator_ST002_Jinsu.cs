@@ -35,9 +35,12 @@ public class FlowerGenerator_ST002_Jinsu : FlowerGenerator
         while (true)
         {
             mRemain = PlaySystemRefStorage.playTimeManager.LapseTime;
-            var isSTS02 = mRemain >= 30f;
-            var period = (isSTS02 || mCycleCount >= 3) ? 0.5f : 1f;
+            var isSTS02 = (mRemain >= 30f || mCycleCount >= 3);
+            var period = isSTS02 ? 0.5f : 1f;
             var rareCount = isSTS02 ? 2 : 1;
+            
+            mCycleCount++;
+            Debug.Log($"싸이클 초기화 : {mRemain}, {mCycleCount}, 현재 상태 : {isSTS02}");
 
             for (var i = 0; i < 10; i++)
             {
@@ -70,8 +73,6 @@ public class FlowerGenerator_ST002_Jinsu : FlowerGenerator
 
             // 싸이클 초기화
             rareSpawned = false;
-            mCycleCount++;
-            Debug.Log($"싸이클 초기화 : {mRemain}, {mCycleCount}");
         }
     }
     

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 // 남은 플레이 시간 관리를 담당
@@ -13,7 +14,7 @@ public class PlayTimeManager : MonoBehaviour
     private float remainTime;
     private float minReduce = 1f;
     private bool isPaused = true;
-    private ItemGenerator itemGenerator;
+    [CanBeNull] private ItemGenerator itemGenerator;
     [SerializeField] private TimeGaugeController timerGauge;
     
     private bool mbTimerStopped = false;
@@ -49,7 +50,7 @@ public class PlayTimeManager : MonoBehaviour
     {
         if (isPaused || mbTimerStopped) { return; }
         LapseTime += Time.deltaTime;
-        itemGenerator.DecreaseTick(Time.deltaTime);
+        itemGenerator?.DecreaseTick(Time.deltaTime);
         ChangeTimer(-Time.deltaTime);
     }
     
