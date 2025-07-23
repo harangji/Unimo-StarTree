@@ -49,7 +49,8 @@ public abstract class AParsingData<T> : ScriptableObject where T : class, IKeyed
         using (var reader = new StringReader(TsvAsset.text))
         using (var csv = new CsvReader(reader, config))
         {
-            csv.Context.TypeConverterCache.AddConverter<int[]>(new IntArrayConverter()); //int배열 파싱
+            csv.Context.TypeConverterCache.AddConverter<int[]>(new IntArrayConverter()); //int 배열 파싱
+            csv.Context.TypeConverterCache.AddConverter<float[]>(new FloatArrayConverter()); //float 배열 파싱
             
             var records = csv.GetRecords<T>(); //CsvHelper가 자동으로 헤더명과 클래스의 속성명을 연결해 객체 리스트를 생성
             bRecordsArray = records.ToArray();
