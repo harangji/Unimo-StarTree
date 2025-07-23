@@ -40,6 +40,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     public GameObject GameObject => gameObject;
     private float currentHP;
     [SerializeField] private HPGaugeController hpGauge;
+   
+    private bool bExternalInvincibility = false;
     
     private void Awake()
     {
@@ -82,8 +84,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         auraController.gameObject.SetActive(false);
 
         PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(stopPlay);
-
-        hpGauge?.SetGauge(1f);
+        
+        //hpGauge?.SetGauge(1f);
 
         int selectedID = GameManager.Instance.SelectedUnimoID > 0
             ? GameManager.Instance.SelectedUnimoID
@@ -93,6 +95,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         
         //최대 체력으로 hp 초기화
         currentHP = mStat.BaseStat.Health;
+        hpGauge?.SetGauge(1f);
     }
 
     // 스탯 추가.정현식
@@ -190,6 +193,11 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         }
     }
     
+    public float GetCurrentHP()
+    {
+        return currentHP;
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<ItemController>(out var item))
@@ -247,18 +255,53 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         auraController.Resume();
         visualCtrl.SetStunAnim(false);
 
+        // 스턴 종료 직후 버프 발동 트리거
+        TriggerEngineEffect_OnStunEnd();
+        
         yield return new WaitForSeconds(invincibleTime);
         isInvincible = false;
         yield break;
     }
+    
+    private void TriggerEngineEffect_OnStunEnd()
+    {
+        var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
 
+        Debug.Log($"[디버그] engineEffectController Null? : {PlaySystemRefStorage.engineEffectController == null}");
+        Debug.Log($"[디버그] engineData Null? : {engineData == null} (EngineID : {GameManager.Instance.SelectedEngineID})");
+
+        if (engineData != null && PlaySystemRefStorage.engineEffectController != null)
+        {
+            PlaySystemRefStorage.engineEffectController.ActivateEffect(engineData.SkillID);
+            Debug.Log($"[PlayerStatManager] 스턴 해제 후 엔진 스킬 발동 ▶ SkillID : {engineData.SkillID}");
+        }
+        else
+        {
+            Debug.LogWarning("[PlayerStatManager] 엔진 스킬 발동 실패: 컨트롤러 또는 엔진 데이터가 null");
+        }
+    }
+    
+    public void SetTemporaryInvincibility(bool isActive)
+    {
+        bExternalInvincibility = isActive;
+    }
+
+    public bool IsInvincible()
+    {
+        return isInvincible || bExternalInvincibility;
+    }
+    
+    public AuraController GetAuraController()
+    {
+        return auraController;
+    }
+    
     public void TakeDamage(CombatEvent combatEvent)
     {
         var stun = 0.8f;
         var hitPos = combatEvent.HitPosition;
         
-        //피격 무적
-        if (isInvincible)
+        if (IsInvincible())   // 외부 무적 포함해서 처리
         {
             return;
         }
@@ -286,6 +329,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         Debug.Log($"Combat System: 피해량: {reducedDamage}");
         Debug.Log($"Combat System: 현재 체력: {currentHP} / {mStat.BaseStat.Health}");
         Debug.Log($"Combat System: 비율: {currentHP / mStat.BaseStat.Health}");
+        
+        PlaySystemRefStorage.engineEffectTriggerManager.OnTakeDamage();
         
         //사망 체크
         if (currentHP <= 0)

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlaySystemRefStorage : MonoBehaviour
 {
+    public static BoomBoomEngineEffectController engineEffectController;
+    public static EngineEffectTriggerManager engineEffectTriggerManager;
     public static ScoreManager scoreManager;
     public static MapRangeSetter mapSetter;
     public static PlayTimeManager playTimeManager;
@@ -21,5 +23,6 @@ public class PlaySystemRefStorage : MonoBehaviour
         if (playerStatManager == null) { Debug.Log("player not found."); }
         if (harvestLvController == null) { Debug.Log("harvest Lv ctrl not found."); }
         if (scoreManager == null) { Debug.Log("ScoreManager not found."); }
+        if (engineEffectTriggerManager == null) { Debug.Log("EngineEffectTriggerManager not found."); }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using CsvHelper.Configuration.Attributes;
 using Sirenix.OdinInspector;
 using TMPro;
 using Unity.VisualScripting;
@@ -21,17 +22,21 @@ public enum eGimmickType
     RedZone
 }
 
-public class ToTsvGimmickData
+[Serializable]
+public class ToTsvGimmickData : IKeyedData
 {
     //CsvHelper는 정적인 프로퍼티만 자동 매핑할 수 있다.
+    public string Key { get; set;}
     public string GimmickName { get; set; }
-    public string GimmickID { get; set; }
-    public int[] Costs { get; set; }
-    public int[] Weights { get; set; }
-    public int[] Durations_s { get; set; }
-    public float[] EffectValue1 { get; set; }
-    public float[] EffectValue2 { get; set; }
+    
+    [TypeConverter(typeof(IntArrayConverter))] public int[] Costs { get; set; }
+    [TypeConverter(typeof(IntArrayConverter))] public int[] Weights { get; set; }
+    [TypeConverter(typeof(FloatArrayConverter))] public float[] Durations_s { get; set; }
+    [TypeConverter(typeof(FloatArrayConverter))] public float[] EffectValue1 { get; set; }
+    [TypeConverter(typeof(FloatArrayConverter))] public float[] EffectValue2 { get; set; }
 }
+
+
 
 public abstract class Gimmick : MonoBehaviour
 {
@@ -51,7 +56,7 @@ public abstract class Gimmick : MonoBehaviour
     protected int bGimmickCost { get; set; }
     
     [LabelText("기믹 지속 시간"), ReadOnly] 
-    protected int bGimmickDuration { get; set; }
+    protected float bGimmickDuration { get; set; }
     
     [LabelText("기믹 효과 수치 1"), ReadOnly]
     protected float bGimmickEffectValue1 { get; set; }

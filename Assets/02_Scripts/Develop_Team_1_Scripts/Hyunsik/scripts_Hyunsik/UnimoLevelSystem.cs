@@ -14,8 +14,8 @@ public static class UnimoLevelSystem
         MoveSpd = 0,
         Health,
         Armor,
-        AuraRange,
         AuraStr,
+        AuraRange,
         CriticalChance
     }
 

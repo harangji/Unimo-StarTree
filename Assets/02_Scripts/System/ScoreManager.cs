@@ -14,6 +14,8 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private List<TextMeshProUGUI> specialResourceTxts;
     [SerializeField] private TextMeshProUGUI scoreTxt;
     [SerializeField] private TextMeshProUGUI resultTxt;
+    [SerializeField] private EngineEffectTriggerManager triggerManager;
+    
     private List<double> gatheredResources;
     private double score;
     // private PlayHoneyGainCalculator honeyCalculator;
@@ -22,6 +24,8 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private float criticalChance; // 크리티컬 확률 (예시값)
     [SerializeField] private float criticalMult;   // 크리티컬 배율 (예시값)
     
+    private int orangeFlowerCount = 0;
+    private int yellowFlowerCount = 0;
     
     private void Awake()
     {
@@ -69,10 +73,14 @@ public class ScoreManager : MonoBehaviour
         if (idx == 1) // 빨간 꽃
         {
             gainMultiplier = PlaySystemRefStorage.playerStatManager.GetStat().FinalStat.OFGainMult;
+            orangeFlowerCount++;
+            triggerManager.OnOrangeFlowerCollected();
         }
         else if (idx == 0) // 노란 꽃
         {
             gainMultiplier = PlaySystemRefStorage.playerStatManager.GetStat().FinalStat.YFGainMult;
+            yellowFlowerCount++;
+            triggerManager.OnYellowFlowerCollected();
         }
 
         float gain = score * gainMultiplier;

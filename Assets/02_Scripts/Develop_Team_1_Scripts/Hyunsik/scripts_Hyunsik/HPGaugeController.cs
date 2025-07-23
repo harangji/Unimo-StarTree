@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro; 
 
 // hp바 컨트론 관련
 public class HPGaugeController : MonoBehaviour
@@ -23,6 +24,9 @@ public class HPGaugeController : MonoBehaviour
     float maxWidth = 450;
     float height = 48;
 
+    [SerializeField] private TextMeshProUGUI hpText;
+    [SerializeField] private PlayerStatManager playerStatManager;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +42,15 @@ public class HPGaugeController : MonoBehaviour
         SetGauge(1f);
     }
 
+    private void Update()
+    {
+        if (playerStatManager != null)
+        {
+            float currentHP = playerStatManager.GetCurrentHP();
+            hpText.text = Mathf.CeilToInt(currentHP).ToString();
+        }
+    }
+    
     public void SetGauge(float ratio)
     {
         ratio = Mathf.Clamp01(ratio);
