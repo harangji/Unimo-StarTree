@@ -3,7 +3,8 @@ using UnityEngine;
 public class EngineEffectTriggerManager : MonoBehaviour
 {
     [SerializeField] private BoomBoomEngineEffectController effectController;
-
+    [SerializeField] private ShieldEffect shieldEffect;
+    
     private int orangeFlowerCount = 0;
     private int yellowFlowerCount = 0;
     private float inactiveSkillTime = 0f;
@@ -14,9 +15,20 @@ public class EngineEffectTriggerManager : MonoBehaviour
         PlaySystemRefStorage.engineEffectTriggerManager = this;
     }
 
+    private void Start()
+    {
+        var skillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
+        if (skillID == 305 && shieldEffect != null)
+        {
+            Debug.Log("[EngineTrigger] 305번 엔진 감지됨 → 실드 생성 타이머 시작");
+            shieldEffect.ExecuteEffect();
+        }
+    }
+    
     private void Update()
     {
-        int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
+        int selectedSkillID = BoomBoomEngineDatabase.GetEngineData
+            (GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
 
         if (bSkillInactiveTimer)
         {
@@ -35,7 +47,17 @@ public class EngineEffectTriggerManager : MonoBehaviour
             }
         }
     }
+    
+    // 추가로, 향후 피격 외 조건에 따라 실드 재생성 트리거 가능
+    public void TryForceShield()
+    {
+        if (shieldEffect != null)
+        {
+            shieldEffect.ExecuteEffect();
+        }
+    }
 
+    
     public void OnOrangeFlowerCollected()
     {
         orangeFlowerCount++;

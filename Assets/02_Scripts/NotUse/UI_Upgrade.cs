@@ -49,19 +49,17 @@ public class UI_Upgrade : UI_Base
     public void CharacterChange(int value)
     {
         int charIndex = value + 1;
-        Costumer.ChangeCharacter(charIndex);
-
+        Costumer.ChangeCharacter(charIndex, isPreviewOnly: true); // ÇÁ¸®ºä ¾È ¹Ù²ñ
         int unitID = UnitIDMapping.GetUnitID(charIndex);
-        ShowUpgradePopup(unitID); 
+        ShowUpgradePopup(unitID);
     }
 
     public void EQChange(int value)
     {
         int equipIndex = value + 1;
-        Costumer.ChangeEquip(equipIndex);
-
+        Costumer.ChangeEquip(equipIndex, isPreviewOnly: true); // ÇÁ¸®ºä ¾È ¹Ù²ñ
         int unitID = UnitIDMapping.GetUnitID(equipIndex);
-        ShowUpgradePopup(unitID); 
+        ShowUpgradePopup(unitID);
     }
 
     public void GetUnimo()

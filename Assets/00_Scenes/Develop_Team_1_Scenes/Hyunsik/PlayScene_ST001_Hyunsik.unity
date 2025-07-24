@@ -1063,6 +1063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectController: {fileID: 872065066}
+  shieldEffect: {fileID: 1198909782}
 --- !u!4 &113798971
 Transform:
   m_ObjectHideFlags: 0
@@ -6102,6 +6103,7 @@ MonoBehaviour:
   beeTailEffect: {fileID: 1198909779}
   auraRangeEffect: {fileID: 1198909778}
   criticalEffect: {fileID: 1198909781}
+  shieldEffect: {fileID: 1198909782}
 --- !u!4 &872065067
 Transform:
   m_ObjectHideFlags: 0
@@ -7633,6 +7635,7 @@ GameObject:
   - component: {fileID: 1198909779}
   - component: {fileID: 1198909778}
   - component: {fileID: 1198909781}
+  - component: {fileID: 1198909782}
   m_Layer: 0
   m_Name: activeName
   m_TagString: Untagged
@@ -7695,6 +7698,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 10
+--- !u!114 &1198909782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198909777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dad70c76a94c7f84e97fbd22d1ec9596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldCooldown: 10
 --- !u!1 &1217114930
 GameObject:
   m_ObjectHideFlags: 0

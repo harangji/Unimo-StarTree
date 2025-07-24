@@ -6,7 +6,7 @@ public class BoomBoomEngineEffectController : MonoBehaviour
     [SerializeField] private BeeTailInvincibilityEffect beeTailEffect;
     [SerializeField] private AuraRangeBoostEffect auraRangeEffect;
     [SerializeField] private CriticalChanceBoostEffect criticalEffect;
-    //[SerializeField] private ShieldEffect shieldEffect;
+    [SerializeField] private ShieldEffect shieldEffect;
     
     private void Awake()
     {
@@ -28,6 +28,7 @@ public class BoomBoomEngineEffectController : MonoBehaviour
                 if (beeTailEffect != null)
                 {
                     beeTailEffect.ExecuteEffect();
+                    Debug.Log("[EffectController] BeeTailEffect 버프 발동");
                 }
                 else
                 {
@@ -59,12 +60,16 @@ public class BoomBoomEngineEffectController : MonoBehaviour
                 }
                 break;
 
-            case 305:
-                Debug.Log("[EffectController] 방어막 생성 버프 발동 (미구현)");
-                break;
-
-            default:
-                Debug.LogWarning($"[EffectController] 등록되지 않은 스킬ID: {skillID}");
+            case 305: // 알 엔진 (실드 생성)
+                if (shieldEffect != null)
+                {
+                    shieldEffect.ExecuteEffect();
+                    Debug.Log("[EffectController] 실드 버프 발동");
+                }
+                else
+                {
+                    Debug.LogWarning("[EffectController] ShieldEffect 연결 안됨");
+                }
                 break;
         }
     }

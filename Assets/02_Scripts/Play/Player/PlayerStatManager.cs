@@ -43,6 +43,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     [SerializeField] private HPGaugeController hpGauge;
    
     private bool bExternalInvincibility = false;
+    private ShieldEffect mShieldEffect;
     
     private void Awake()
     {
@@ -235,6 +236,11 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         StartCoroutine(CoroutineExtensions.DelayedActionCall(() => { DeactivePlayer(); }, 4f));
     }
 
+    public void RegisterShield(ShieldEffect shield)
+    {
+        mShieldEffect = shield;
+    }
+    
     private IEnumerator StunCoroutine(float duration, Vector3 hitPos)
     {
         playerMover.IsStop = true;
@@ -307,6 +313,13 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
             return;
         }
 
+        // 실드가 있다면 피해 무효화 + 리턴
+        if (mShieldEffect != null && mShieldEffect.TryConsumeShield())
+        {
+            Debug.Log("[PlayerStatManager] 실드로 인해 피해 무효화됨");
+            return;
+        }
+        
         //  피격 회피 판정
         if (Random.value < bEvadeChance)
         {
