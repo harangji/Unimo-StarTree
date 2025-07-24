@@ -17,28 +17,38 @@ public class EngineEffectTriggerManager : MonoBehaviour
 
     private void Start()
     {
-        var skillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
+        var skillID = BoomBoomEngineDatabase.GetEngineData
+            (GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
         if (skillID == 305 && shieldEffect != null)
         {
             Debug.Log("[EngineTrigger] 305번 엔진 감지됨 → 실드 생성 타이머 시작");
             shieldEffect.ExecuteEffect();
+            
         }
+        // 마술모자(317) 엔진이면 반드시 타이머 시작
+        if (skillID == 317)
+        {
+            Debug.Log("[EngineTrigger] 317번(마술모자) 엔진 감지됨 → 비활성화 타이머 시작");
+            StartSkillInactiveTimer();
+        }
+        
     }
     
-    private void Update()
+    void Update()
     {
         int selectedSkillID = BoomBoomEngineDatabase.GetEngineData
             (GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
-
         if (bSkillInactiveTimer)
         {
+            
             inactiveSkillTime += Time.deltaTime;
 
-            if (inactiveSkillTime >= 8f)
+            if (inactiveSkillTime >= 7f)
             {
-                // 305번 실드 스킬만 쿨다운으로 발동
-                if (selectedSkillID == 305)
+                Debug.Log("[TriggerManager] 마술모자 효과 발동 시도");
+                if (selectedSkillID == 317)
                 {
+                    Debug.Log("[TriggerManager] TryActivateSkill 호출");
                     TryActivateSkill();
                 }
 
@@ -64,7 +74,7 @@ public class EngineEffectTriggerManager : MonoBehaviour
 
         int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
 
-        if (selectedSkillID == 303 && orangeFlowerCount >= 2)
+        if (selectedSkillID == 303 && orangeFlowerCount >= 5)
         {
             TryActivateSkill();
             orangeFlowerCount = 0;

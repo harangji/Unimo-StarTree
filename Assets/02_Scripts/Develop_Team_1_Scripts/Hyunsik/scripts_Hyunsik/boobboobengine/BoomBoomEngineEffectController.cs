@@ -7,6 +7,9 @@ public class BoomBoomEngineEffectController : MonoBehaviour
     [SerializeField] private AuraRangeBoostEffect auraRangeEffect;
     [SerializeField] private CriticalChanceBoostEffect criticalEffect;
     [SerializeField] private ShieldEffect shieldEffect;
+    [SerializeField] private TimedInvincibilityEffect timedInvincibleEffect;
+    [SerializeField] private MagicHatEffect magicHatEffect;
+
     
     private void Awake()
     {
@@ -60,17 +63,30 @@ public class BoomBoomEngineEffectController : MonoBehaviour
                 }
                 break;
 
-            case 305: // 알 엔진 (실드 생성)
+            case 305: // 실드 엔진
                 if (shieldEffect != null)
                 {
                     shieldEffect.ExecuteEffect();
-                    Debug.Log("[EffectController] 실드 버프 발동");
-                }
-                else
-                {
-                    Debug.LogWarning("[EffectController] ShieldEffect 연결 안됨");
+                    Debug.Log("[EffectController] 실드 엔진 발동");
                 }
                 break;
+            
+            case 310:
+                if (timedInvincibleEffect != null)
+                {
+                    timedInvincibleEffect.ExecuteEffect();
+                    Debug.Log("[EffectController] 310 무적 스킬 발동");
+                }
+                break;
+         
+            case 317: // 마술 모자
+                if (magicHatEffect != null)
+                {
+                    magicHatEffect.ExecuteEffect();
+                    Debug.Log("[EffectController] 마술모자 버프 발동");
+                }
+                break;
+            
         }
     }
 }

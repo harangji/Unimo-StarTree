@@ -14,6 +14,7 @@ public class ShieldEffect : MonoBehaviour
         StartCoroutine(Initialize());
     }
 
+
     private IEnumerator Initialize()
     {
         yield return new WaitUntil(() => PlaySystemRefStorage.playerStatManager != null);
