@@ -7,7 +7,7 @@ public class Boss1State_Pattern_2 : BossState_Pattern
     private float chargeTime = 5f;
     
     private float lapseTime;
-    private float radius = 2.5f;
+    private float radius = 25f;
     
     private bool hasBomb;
 
@@ -51,10 +51,10 @@ public class Boss1State_Pattern_2 : BossState_Pattern
         hasBomb = true;
 
         Vector3 playerDist = controller.transform.position - controller.playerTransform.position;
-        var safeZone = radius * 0.62 * 8;
+        var safeZone = radius * 0.42;
         
         //지금은 더비 프리팹이라 스케일 곱해줬음 나중에 바꿔야 함
-        if (safeZone < playerDist.magnitude && playerDist.magnitude < radius * 8)
+        if (safeZone < playerDist.magnitude && playerDist.magnitude < radius)
         {
             if (controller.playerTransform.TryGetComponent<PlayerStatManager>(out var player))
             {

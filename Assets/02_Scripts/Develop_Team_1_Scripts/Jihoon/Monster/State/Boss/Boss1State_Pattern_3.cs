@@ -52,7 +52,7 @@ public class Boss1State_Pattern_3 : BossState_Pattern
         var spriteRenderer = indicator.GetComponent<SpriteRenderer>();
         Vector3 originalScale = indicator.transform.localScale;
         float startX = 0f;
-        float endX = 1f;
+        float endX = 6f;
 
         Color startColor = new Color(1f, 1f, 1f, INDICATOR_ALPHA);
         Color endColor = new Color(1f, 0f, 0f, INDICATOR_ALPHA);

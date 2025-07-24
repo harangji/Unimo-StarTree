@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BossIndicator : MonsterIndicatorCtrl
 {
-    private float minScale = 0.63f;
+    private float minScale = 0.42f;
     private float maxScale = 1f;
     
     public override void InitIndicator()
