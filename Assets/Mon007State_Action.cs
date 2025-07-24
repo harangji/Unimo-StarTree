@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Mon007State_Action : MonsterState_Action
