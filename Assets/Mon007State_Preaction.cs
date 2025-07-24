@@ -23,15 +23,23 @@ public class Mon007State_Preaction : MonsterState_Preaction
     
     private void RotateMonster()
     {
-        var obj = controller.gameObject;
-        
-        Vector3 targetPos = controller.playerTransform.position;
-        targetPos.y = transform.position.y; // 수직 높이 고정
-        obj.transform.LookAt(targetPos);
+        Vector3 toPlayer = controller.playerTransform.position - controller.transform.position;
+        toPlayer.y = 0f;
+
+        if (toPlayer != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(toPlayer);
+            controller.transform.rotation = targetRotation;
+        }
     }
+
 
     private void MoveMonster()
     {
-        controller.transform.position += moveSpeed * Time.deltaTime * transform.forward;
+        Vector3 direction = transform.forward;
+        direction.y = 0f;
+        direction.Normalize();
+
+        controller.transform.position += moveSpeed * Time.deltaTime * direction;
     }
 }
