@@ -3,7 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// 인게임 Stage 난이도 관리.
+/// <summary>
+/// 인게임 Stage 난이도 관리 Class
+/// </summary>
 public class StageManager : MonoBehaviour
 {
     [SerializeField] private ScoreGaugeController mScoreGauge;
@@ -35,12 +37,12 @@ public class StageManager : MonoBehaviour
         // 현재 선택된 스테이지 정보 가져오기
         mStageData = new StageData(StageLoader.CurrentStageNumber);
 
-        Debug.Log($"[StageManager] 스테이지 {mStageData.StageNumber} 시작");
-        Debug.Log($" - 제한 시간: {mStageData.TimeLimit}s");
-        Debug.Log($" - 난이도 수치: {mStageData.DifficultyValue}");
-        Debug.Log($" - 목표 점수 : {mStageData.TargetScore}");
-        Debug.Log($" - 최대 꽃 개수 : {mStageData.MaxFlowerCount}");
-        Debug.Log($" - 보스 스테이지 여부 : {mStageData.IsBossStage}");
+        // Debug.Log($"[StageManager] 스테이지 {mStageData.StageNumber} 시작");
+        // Debug.Log($" - 제한 시간: {mStageData.TimeLimit}s");
+        // Debug.Log($" - 난이도 수치: {mStageData.DifficultyValue}");
+        // Debug.Log($" - 목표 점수 : {mStageData.TargetScore}");
+        // Debug.Log($" - 최대 꽃 개수 : {mStageData.MaxFlowerCount}");
+        // Debug.Log($" - 보스 스테이지 여부 : {mStageData.IsBossStage}");
         
         // 제한 시간 설정 (기존 PlayTimeManager에 전달)
         PlaySystemRefStorage.playTimeManager.SetStageTimeLimit(mStageData.TimeLimit);
@@ -61,7 +63,6 @@ public class StageManager : MonoBehaviour
         PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(OnTimeOver);
 
         // 여기서 필요한 매니저들에 난이도 등 전달 가능
-        // 예: MonsterGenerator.SetDifficulty(mStageData.DifficultyValue);
         mMaxDifficulty = mStageData.DifficultyValue;
         mCurrentDifficulty = mMaxDifficulty;
         
@@ -71,7 +72,7 @@ public class StageManager : MonoBehaviour
         DeleteText();
     }
     
-    // 나중에 지울 함수
+    // 나중에 지울 함수 (기획팀이 밸런스 패치를 위해 화면에 띄울 난이도 Text 함수)
     public void DeleteText()
     {
         mLevelText.text = mScoreGauge.GetCurrentScore() + " / " + mScoreGauge.GetTargetScore() + "\n"
@@ -168,6 +169,8 @@ public class StageManager : MonoBehaviour
             userData.BonusStageStars.TryGetValue(stageNum, out oldFlags);
 
             int rewardFlags = 0;
+            int redReward = 0;
+            int blueReward = 0;
 
             for (int i = 1; i <= newStars; i++)
             {
@@ -177,13 +180,30 @@ public class StageManager : MonoBehaviour
                     // 보상 지급
                     switch (i)
                     {
-                        case 1: Base_Manager.Data.UserData.Yellow += 25; break;
-                        case 2: Base_Manager.Data.UserData.Yellow += 50; break;
-                        case 3: Base_Manager.Data.UserData.Red += 10; break;
+                        case 1: 
+                            Base_Manager.Data.UserData.Red += 50;
+                            redReward += 50;
+                            Debug.Log("별 달성 추가 보상 지급 : 50 Red"); 
+                            break;
+                        case 2: 
+                            Base_Manager.Data.UserData.Red += 100; 
+                            redReward += 100;
+                            Debug.Log("별 달성 추가 보상 지급 : 100 Red"); 
+                            break;
+                        case 3: 
+                            Base_Manager.Data.UserData.Blue += 50; 
+                            blueReward += 50;
+                            Debug.Log("별 달성 추가 보상 지급 : 50 Blue"); 
+                            break;
                     }
                     rewardFlags |= bit;
                 }
             }
+
+            if (mScoreGauge.mNewStarAddRedReward != null)
+                mScoreGauge.mNewStarAddRedReward.SetText(redReward.ToString());
+            if (mScoreGauge.mNewStarAddBlueReward != null)
+                mScoreGauge.mNewStarAddBlueReward.SetText(blueReward.ToString());
 
             // 새로운 별 획득이 있었을 경우만 저장
             if (rewardFlags != 0 || newStars > CountBits(oldFlags))

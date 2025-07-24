@@ -16,18 +16,38 @@ public class BonusStageSlot : MonoBehaviour
         stageNum = stage;
         stageText.text = $"{stage} Play";
 
+        var starCount = 0;
         for (int i = 0; i < starImages.Length; i++)
         {
             int bit = 1 << i;
             bool isFilled = (starFlag & bit) != 0;
             starImages[i].sprite = isFilled ? filledStar : emptyStar;
+            if (isFilled) starCount++;
         }
 
         playButton.onClick.RemoveAllListeners();
-        playButton.onClick.AddListener(() =>
+        if (starCount >= 3)
         {
-            // 해당 스테이지로 진입 넣기
-            StageLoader.LoadStage(stageNum);
-        });
+            // 별 3개 → 재진입 불가
+            playButton.interactable = false;
+
+            // 버튼 색상 변경 (회색 처리)
+            var colors = playButton.colors;
+            colors.normalColor = new Color(0.6f, 0.6f, 0.6f); // 연한 회색
+            playButton.colors = colors;
+        }
+        else
+        {
+            // 재도전 가능
+            playButton.interactable = true;
+            var colors = playButton.colors;
+            colors.normalColor = Color.white;
+            playButton.colors = colors;
+
+            playButton.onClick.AddListener(() =>
+            {
+                StageLoader.LoadStage(stageNum);
+            });
+        }
     }
 }
