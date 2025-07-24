@@ -25,7 +25,7 @@ public class AI_Move : MonoBehaviour
         StartCoroutine(findFlowerCoroutine());
         agent.speed = 2.5f;
     }
-    private void startFindingFlower()
+    private void startFindingFlower() // 로비 필드에서 생성된 꽃을 찾는 스크립트
     {
         if(Pinous_Flower_Holder.FlowerHolder.Count <= 0)
         {
@@ -49,15 +49,24 @@ public class AI_Move : MonoBehaviour
     }
     IEnumerator moveCoroutine(Vector3 pos)
     {
+        
+        if (agent == null || !agent.isActiveAndEnabled || !agent.isOnNavMesh)
+        {
+            Debug.LogWarning($"[{Name}] NavMeshAgent 비활성 상태이거나 NavMesh에 없음. 이동 불가.");
+            yield break;
+        }
+        
         agent.isStopped = false;
         agent.SetDestination(pos);
         Vector3 velocity = Vector3.zero;
         yield return new WaitForSeconds(0.05f);
-        while (agent.remainingDistance > 1.5f)
+        
+        while (agent.isActiveAndEnabled && agent.isOnNavMesh && agent.remainingDistance > 1.5f)
         {
             transform.position = Vector3.SmoothDamp(transform.position, agent.nextPosition, ref velocity, 0.1f);
             yield return null;
         }
+        
         agent.isStopped = true;
         StartCoroutine(harvestCoroutine());
     }

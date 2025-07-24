@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 // 남은 플레이 시간 관리를 담당
@@ -13,10 +14,15 @@ public class PlayTimeManager : MonoBehaviour
     private float remainTime;
     private float minReduce = 1f;
     private bool isPaused = true;
-    private ItemGenerator itemGenerator;
+    [CanBeNull] private ItemGenerator itemGenerator;
     [SerializeField] private TimeGaugeController timerGauge;
     
     private bool mbTimerStopped = false;
+    
+    public float GetRemainTime() => remainTime;
+    public bool GetTimerStopped() => mbTimerStopped;
+    public float GetMaxTime() => maxTime;
+    public float GetRemainTimeRatio() => remainTime / maxTime;
     
     // 외부에서 제한 시간을 설정할 수 있게 함
     public void SetStageTimeLimit(float time)
@@ -44,7 +50,7 @@ public class PlayTimeManager : MonoBehaviour
     {
         if (isPaused || mbTimerStopped) { return; }
         LapseTime += Time.deltaTime;
-        itemGenerator.DecreaseTick(Time.deltaTime);
+        itemGenerator?.DecreaseTick(Time.deltaTime);
         ChangeTimer(-Time.deltaTime);
     }
     
@@ -82,14 +88,6 @@ public class PlayTimeManager : MonoBehaviour
             mbTimerStopped = true;
         }
         timerGauge.SetGauge(remainTime / maxTime);
-    }
-    public float GetMaxTime()
-    {
-        return maxTime;
-    }
-    public float GetRemainTimeRatio()
-    {
-        return remainTime / maxTime;
     }
     private float calcReduceRate(float lapse)
     {

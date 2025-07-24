@@ -12,7 +12,11 @@ public class FlowerGenerator : MonoBehaviour
 
     protected void Awake()
     {
-        if (flowerObjs.Count != appearRatios.Count) { Debug.Log("Wrong set flower generator."); }
+        if (flowerObjs.Count != appearRatios.Count) 
+        { 
+            Debug.Log("Wrong set flower generator.");
+            return;
+        }
         float appearAcc = 0f;
         appearAccProb = new List<float>();
         foreach (float ratio in appearRatios)
@@ -34,12 +38,12 @@ public class FlowerGenerator : MonoBehaviour
         StartCoroutine(generateCoroutine());
     }
     
-    virtual public void GatherFlower()
+    public virtual void GatherFlower()
     {
         ++gatheredFlowers;
     }
     
-    virtual protected void generateFlower()
+    protected virtual void generateFlower()
     {
         float rand = Random.Range(0f, 1f);
         int idx = 0;
@@ -48,15 +52,15 @@ public class FlowerGenerator : MonoBehaviour
             GetComponent<FlowerController>();
         flower.InitFlower(this);
     }
-    virtual protected Vector3 findPosition()
+    protected virtual Vector3 findPosition()
     {
         return Vector3.zero;
     }
-    virtual protected Quaternion setRotation()
+    protected virtual Quaternion setRotation()
     {
         return Quaternion.identity;
     }
-    virtual protected IEnumerator generateCoroutine()
+    protected virtual IEnumerator generateCoroutine()
     {
         yield break;
     }

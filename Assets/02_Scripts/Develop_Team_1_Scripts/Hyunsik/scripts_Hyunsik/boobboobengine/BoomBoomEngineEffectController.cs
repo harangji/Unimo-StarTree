@@ -1,35 +1,71 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 붕붕엔진 효과 관리 컨트롤러
-/// </summary>
 public class BoomBoomEngineEffectController : MonoBehaviour
 {
+    [Header("붕붕엔진 버프 클래스 연결")]
+    [SerializeField] private BeeTailInvincibilityEffect beeTailEffect;
     [SerializeField] private AuraRangeBoostEffect auraRangeEffect;
-
-    private Dictionary<int, IBoomBoomEngineEffect> mEffectTable;
-
+    [SerializeField] private CriticalChanceBoostEffect criticalEffect;
+    //[SerializeField] private ShieldEffect shieldEffect;
+    
     private void Awake()
     {
-        // SkillID 별 효과 매핑
-        mEffectTable = new Dictionary<int, IBoomBoomEngineEffect>
+        if (PlaySystemRefStorage.engineEffectController == null)
         {
-            { 303, auraRangeEffect }
-            // 필요하면 추가 등록
-        };
+            PlaySystemRefStorage.engineEffectController = this;
+            Debug.Log("[EffectController] 초기화 완료");
+        }
     }
-
+    
+    /// <summary>
+    /// SkillID에 따라 대응하는 버프 실행
+    /// </summary>
     public void ActivateEffect(int skillID)
     {
-        if (mEffectTable.TryGetValue(skillID, out var effect))
+        switch (skillID)
         {
-            Debug.Log($"[엔진효과] SkillID {skillID} 효과 실행");
-            effect.ExecuteEffect();
-        }
-        else
-        {
-            Debug.LogWarning($"[엔진효과] SkillID {skillID} 등록된 효과 없음");
+            case 301:  // 리비 엔진 (무적 버프)
+                if (beeTailEffect != null)
+                {
+                    beeTailEffect.ExecuteEffect();
+                }
+                else
+                {
+                    Debug.LogWarning("[EffectController] BeeTailEffect 연결 안됨");
+                }
+                break;
+
+            case 303:  // 5초 Aura_Range 증가
+                if (auraRangeEffect != null)
+                {
+                    auraRangeEffect.ExecuteEffect();
+                    Debug.Log("[EffectController] Aura Range 버프 발동");
+                }
+                else
+                {
+                    Debug.LogWarning("[EffectController] AuraRangeEffect 연결 안됨");
+                }
+                break;
+
+            case 304: // 너구리 엔진 (크리티컬 확률 100%)
+                if (criticalEffect != null)
+                {
+                    criticalEffect.ExecuteEffect();
+                    Debug.Log("[EffectController] 크리티컬 버프 발동");
+                }
+                else
+                {
+                    Debug.LogWarning("[EffectController] CriticalEffect 연결 안됨");
+                }
+                break;
+
+            case 305:
+                Debug.Log("[EffectController] 방어막 생성 버프 발동 (미구현)");
+                break;
+
+            default:
+                Debug.LogWarning($"[EffectController] 등록되지 않은 스킬ID: {skillID}");
+                break;
         }
     }
 }

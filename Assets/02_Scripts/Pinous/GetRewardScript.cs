@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 
@@ -7,10 +8,10 @@ public class GetRewardScript : MonoBehaviour
     public TextMeshProUGUI YellowText, RedText;
     public TextMeshProUGUI ScoreText;
 
-    public GameObject ADSButton;
+    [CanBeNull] public GameObject ADSButton;
     private void Start()
     {
-        ADSButton.SetActive(true);
+        if(ADSButton != null) ADSButton.SetActive(true);
 
         Base_Manager.Data.UserData.Red += double.Parse(texts[0].text.ToString());
         Base_Manager.Data.UserData.Yellow += StringMethod.ToCurrencyDouble(texts[1].text);

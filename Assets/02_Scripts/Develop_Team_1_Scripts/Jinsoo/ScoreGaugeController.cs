@@ -13,12 +13,17 @@ public class ScoreGaugeController : MonoBehaviour
 
     private double mCurrentScore = 0;
     private double mTargetScore;
+    
+    public double GetCurrentScore() => mCurrentScore;
+    public double GetTargetScore() => mTargetScore;
+    public float GetScoreRatio() => (float)(mCurrentScore / mTargetScore);
 
     private void Start()
     {
         for (int i = 0; i < mStarImages.Length; i++)
         {
             mStarImages[i].sprite = mEmptyStarImage.sprite;
+            mStarImages[i].color = new Color(0.7f, 0.7f, 0.7f);
         }
     }
 
@@ -45,14 +50,19 @@ public class ScoreGaugeController : MonoBehaviour
         {
             case >= 1.0f:
                 mStarImages[2].sprite = mFilledStarImage.sprite;
+                mStarImages[2].color = new Color(1f, 1f, 1f);
                 break;
             case >= 0.66f:
                 mStarImages[1].sprite = mFilledStarImage.sprite;
+                mStarImages[1].color = new Color(1f, 1f, 1f);
                 break;
             case >= 0.33f:
                 mStarImages[0].sprite = mFilledStarImage.sprite;
+                mStarImages[0].color = new Color(1f, 1f, 1f);
                 break;
         }
+        
+        //Debug.Log($"현재 점수 : {mCurrentScore}, 타겟 점수  : {mTargetScore}");
 
         // if (scoreText != null)
         // {

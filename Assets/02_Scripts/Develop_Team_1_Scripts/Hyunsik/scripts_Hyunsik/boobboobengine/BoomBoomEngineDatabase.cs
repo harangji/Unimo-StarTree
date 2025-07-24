@@ -52,7 +52,7 @@ public static class BoomBoomEngineDatabase
     // 기존 메서드 생략 (301 ~ 313)
     private static BoomBoomEngineData CreateEngine_BeeTail() => new BoomBoomEngineData
     {
-        // n초 동안 몬스터로 부터 피격을 받지 않음
+        // 몬스터한테 타격 받은 이후 3초 동안 몬스터로 부터 피격을 받지 않음
         EngineID = 20101,
         Name = "리비",
         Rarity = "Normal",
