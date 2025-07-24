@@ -5,7 +5,7 @@ public class BoomBoomEngineEffectController : MonoBehaviour
     [Header("붕붕엔진 버프 클래스 연결")]
     [SerializeField] private BeeTailInvincibilityEffect beeTailEffect;
     [SerializeField] private AuraRangeBoostEffect auraRangeEffect;
-    //[SerializeField] private CriticalChanceBoostEffect criticalEffect;
+    [SerializeField] private CriticalChanceBoostEffect criticalEffect;
     //[SerializeField] private ShieldEffect shieldEffect;
     
     private void Awake()
@@ -47,8 +47,16 @@ public class BoomBoomEngineEffectController : MonoBehaviour
                 }
                 break;
 
-            case 304:
-                Debug.Log("[EffectController] 크리티컬 버프 발동 (미구현)");
+            case 304: // 너구리 엔진 (크리티컬 확률 100%)
+                if (criticalEffect != null)
+                {
+                    criticalEffect.ExecuteEffect();
+                    Debug.Log("[EffectController] 크리티컬 버프 발동");
+                }
+                else
+                {
+                    Debug.LogWarning("[EffectController] CriticalEffect 연결 안됨");
+                }
                 break;
 
             case 305:

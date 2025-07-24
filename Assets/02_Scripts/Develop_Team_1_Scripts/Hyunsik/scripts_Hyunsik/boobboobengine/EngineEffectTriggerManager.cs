@@ -16,13 +16,20 @@ public class EngineEffectTriggerManager : MonoBehaviour
 
     private void Update()
     {
+        int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
+
         if (bSkillInactiveTimer)
         {
             inactiveSkillTime += Time.deltaTime;
 
             if (inactiveSkillTime >= 8f)
             {
-                TryActivateSkill();   // 선택된 엔진으로 발동
+                // 305번 실드 스킬만 쿨다운으로 발동
+                if (selectedSkillID == 305)
+                {
+                    TryActivateSkill();
+                }
+
                 bSkillInactiveTimer = false;
                 inactiveSkillTime = 0f;
             }
@@ -32,9 +39,12 @@ public class EngineEffectTriggerManager : MonoBehaviour
     public void OnOrangeFlowerCollected()
     {
         orangeFlowerCount++;
-        if (orangeFlowerCount >= 2)
+
+        int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
+
+        if (selectedSkillID == 303 && orangeFlowerCount >= 2)
         {
-            TryActivateSkill();  // 선택된 엔진으로 발동
+            TryActivateSkill();
             orangeFlowerCount = 0;
         }
     }
@@ -42,9 +52,12 @@ public class EngineEffectTriggerManager : MonoBehaviour
     public void OnYellowFlowerCollected()
     {
         yellowFlowerCount++;
-        if (yellowFlowerCount >= 5)
+
+        int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
+
+        if (selectedSkillID == 304 && yellowFlowerCount >= 5)
         {
-            TryActivateSkill();  // 선택된 엔진으로 발동
+            TryActivateSkill();
             yellowFlowerCount = 0;
         }
     }
@@ -60,7 +73,13 @@ public class EngineEffectTriggerManager : MonoBehaviour
 
     public void OnTakeDamage()
     {
-        TryActivateSkill();  // 선택된 엔진으로 발동
+        int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
+
+        // 예: 301 리비 엔진 (무적)만 피격으로 발동
+        if (selectedSkillID == 301)
+        {
+            TryActivateSkill();
+        }
     }
 
     /// <summary>

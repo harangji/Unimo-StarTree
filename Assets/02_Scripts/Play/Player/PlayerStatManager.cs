@@ -6,6 +6,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 {
     private static readonly float invincibleTime = 0.5f;
 
+    
     // 스탯 추가. 정현식
     [Header("유닛 ID로 선택")] [SerializeField] private int unimoID = 10101;
     private UnimoData mUnimoData;
