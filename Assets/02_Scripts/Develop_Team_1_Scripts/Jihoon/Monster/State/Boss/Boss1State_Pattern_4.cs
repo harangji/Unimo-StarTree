@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Boss1State_Pattern_4 : BossState_Pattern
 {
+    private static readonly int PATTERN4 = Animator.StringToHash("Pattern4");
     [SerializeField] private GameObject suicideBomberPrefab;
 
     [SerializeField] private Transform[] spawnPositions;
@@ -17,6 +18,8 @@ public class Boss1State_Pattern_4 : BossState_Pattern
 
     private IEnumerator Pattern()
     {
+        controller.enemyAnimator.SetTrigger(PATTERN4);
+        
         foreach (var position in spawnPositions)
         {
             var monster = Instantiate(suicideBomberPrefab, position.position, Quaternion.identity);

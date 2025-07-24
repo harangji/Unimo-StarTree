@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Boss1State_Pattern_3 : BossState_Pattern
 {
+    private static readonly int PATTERN3 = Animator.StringToHash("Pattern3");
     [SerializeField] private GameObject indicator;
 
     private const float DASH_SPEED = 24f;
@@ -12,6 +13,7 @@ public class Boss1State_Pattern_3 : BossState_Pattern
     private const float DASH_DELAY = 5f;
 
     private bool canDash;
+    private bool hasDashed; 
 
     public override void TransitionAction(MonsterController controller)
     {
@@ -19,6 +21,8 @@ public class Boss1State_Pattern_3 : BossState_Pattern
         Debug.Log("[Boss Pattern] ÆÐÅÏ 3");
 
         canDash = false;
+        hasDashed = false;
+        
         StartCoroutine(AnimateIndicator());
         StartCoroutine(EnableDashAfterDelay());
     }
@@ -31,6 +35,12 @@ public class Boss1State_Pattern_3 : BossState_Pattern
         {
             RotateMonster();
             return;
+        }
+
+        if (!hasDashed)
+        {
+            controller.enemyAnimator.SetBool(PATTERN3, true);
+            hasDashed = true; // µü ÇÑ ¹ø¸¸ ½ÇÇàµÊ
         }
 
         controller.transform.position += controller.transform.forward * (DASH_SPEED * Time.deltaTime);
@@ -90,6 +100,7 @@ public class Boss1State_Pattern_3 : BossState_Pattern
     private IEnumerator AfterDashRoutine()
     {
         indicator.SetActive(false);
+        controller.enemyAnimator.SetBool(PATTERN3, false);
         yield return new WaitForSeconds(1f);
         controller.EnemyPreaction();
     }

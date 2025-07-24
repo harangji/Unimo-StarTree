@@ -1289,6 +1289,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mScoreGauge: {fileID: 788380613}
+  mStageText: {fileID: 0}
+  mLevelText: {fileID: 0}
+  mFlowerCount: {fileID: 0}
 --- !u!1 &177006985
 GameObject:
   m_ObjectHideFlags: 0
@@ -9818,7 +9821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: cea42b4abbd7a8549956fc07a95b4d2d, type: 2}
-  monsterPattern1: {fileID: 5663591102486114024, guid: 06984631c48981341a6ac1b2cdc87ada,
+  monsterPattern1: {fileID: 7924961332280952870, guid: 9c234d2068f6eb14da321d03ea512c0a,
     type: 3}
   monsterPattern2: {fileID: 0}
   monsterPattern3: {fileID: 0}
@@ -10702,6 +10705,7 @@ MonoBehaviour:
   - {fileID: 1148019907}
   scoreTxt: {fileID: 1148019908}
   resultTxt: {fileID: 252200100}
+  triggerManager: {fileID: 0}
   criticalChance: 0
   criticalMult: 0
 --- !u!114 &1971803517

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Boss1State_Pattern_2 : BossState_Pattern
 {
+    private static readonly int PATTERN2 = Animator.StringToHash("Pattern2");
     private float safeZoneChargeTime = 2f;
     private float chargeTime = 5f;
     
@@ -53,7 +54,10 @@ public class Boss1State_Pattern_2 : BossState_Pattern
         Vector3 playerDist = controller.transform.position - controller.playerTransform.position;
         var safeZone = radius * 0.42;
         
-        //지금은 더비 프리팹이라 스케일 곱해줬음 나중에 바꿔야 함
+        controller.enemyAnimator.SetTrigger(PATTERN2);
+        
+        yield return new WaitForSeconds(0.2f);
+
         if (safeZone < playerDist.magnitude && playerDist.magnitude < radius)
         {
             if (controller.playerTransform.TryGetComponent<PlayerStatManager>(out var player))
