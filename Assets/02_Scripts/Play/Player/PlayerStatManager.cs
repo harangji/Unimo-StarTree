@@ -5,8 +5,10 @@ using UnityEngine;
 public class PlayerStatManager : MonoBehaviour, IDamageAble
 {
     private static readonly float invincibleTime = 0.5f;
-
-
+    
+    [SerializeField][Range(0.01f,1f)] private float revivePercent = 0.05f; // 30% (인스펙터에서 조절)
+    private bool bReviveUsed = false; // 1회 한정 부활이라면
+    
     // 스탯 추가. 정현식
     [Header("유닛 ID로 선택")] [SerializeField] private int unimoID = 10101;
     private UnimoData mUnimoData;
@@ -31,10 +33,10 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     [SerializeField] [Range(0f, 1f)] private float bEvadeChance = 0.5f;
     [SerializeField] [Range(0f, 1f)] private float fStunReduceRate = 0.5f;
 
-    private float regenAmountPerSecond; // 초당 자연 회복
-    private float armor; // 방어력 (데미지 감소율)
-    private float healingMultiplier; // 회복 배수
-
+    private float regenAmountPerSecond;  // 초당 자연 회복
+    private float armor;                 // 방어력 (데미지 감소율)
+    private float healingMultiplier;     // 회복 배수
+    
     //컴벳 시스템에 사용하는 내용
     [SerializeField] private Collider mainCollider;
     public Collider MainCollider => mainCollider;
@@ -43,7 +45,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     [SerializeField] private HPGaugeController hpGauge;
 
     private bool bExternalInvincibility = false;
-
+    private ShieldEffect mShieldEffect;
+    
     private void Awake()
     {
         PlaySystemRefStorage.playerStatManager = this;
@@ -174,6 +177,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     {
         mStat = stat;
 
+        Debug.Log($"[SetStat] 최종 이동속도:{mStat.FinalStat.MoveSpd}, 오라범위:{mStat.FinalStat.AuraRange}, 재생률:{mStat.FinalStat.HealthRegen}");
+        
         // 주요 시스템에 스탯 재적용
         playerMover.SetCharacterStat(mStat);
         auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
@@ -235,6 +240,11 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         StartCoroutine(CoroutineExtensions.DelayedActionCall(() => { DeactivePlayer(); }, 4f));
     }
 
+    public void RegisterShield(ShieldEffect shield)
+    {
+        mShieldEffect = shield;
+    }
+    
     private IEnumerator StunCoroutine(float duration, Vector3 hitPos, float pushPower = 1f)
     {
         playerMover.IsStop = true;
@@ -269,8 +279,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
 
         Debug.Log($"[디버그] engineEffectController Null? : {PlaySystemRefStorage.engineEffectController == null}");
-        Debug.Log(
-            $"[디버그] engineData Null? : {engineData == null} (EngineID : {GameManager.Instance.SelectedEngineID})");
+        Debug.Log($"[디버그] engineData Null? : {engineData == null} (EngineID : {GameManager.Instance.SelectedEngineID})");
 
         if (engineData != null && PlaySystemRefStorage.engineEffectController != null)
         {
@@ -308,6 +317,13 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
             return;
         }
 
+        // 실드가 있다면 피해 무효화 + 리턴
+        if (mShieldEffect != null && mShieldEffect.TryConsumeShield())
+        {
+            Debug.Log("[PlayerStatManager] 실드로 인해 피해 무효화됨");
+            return;
+        }
+        
         //  피격 회피 판정
         if (Random.value < bEvadeChance)
         {
@@ -353,15 +369,34 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         //사망 체크
         if (currentHP <= 0)
         {
-            if (PlaySystemRefStorage.stageManager.GetBonusStage())
+            int skillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
+            if (skillID == 313 && !bReviveUsed)
             {
-                return;
+                float maxHp = mStat.BaseStat.Health;
+                float reviveHp = Mathf.Max(1f, maxHp * revivePercent);
+                currentHP = reviveHp;
+                hpGauge?.SetGauge(currentHP / maxHp);
+                bReviveUsed = true; // 1회 부활만 허용하려면
+                Debug.Log($"[도베르만 엔진] 부활! 체력 {currentHP}/{maxHp} ({revivePercent * 100}%)");
+                // 부활 이펙트/애니메이션/사운드 추가 가능
+                return; // 사망 처리 막음
             }
 
+            // 일반 사망 처리
+            if (PlaySystemRefStorage.stageManager.GetBonusStage()) { return; }
             PlaySystemRefStorage.playProcessController.GameOver();
         }
+        
     }
 
+    // 강제 체력 회복용 메서드 추가
+    public void ForceRevive(float reviveHp)
+    {
+        currentHP = reviveHp;
+        hpGauge?.SetGauge(currentHP / mStat.BaseStat.Health);
+        // 추가 이펙트, 무적 등 연출
+    }
+    
     public void TakeHeal(HealEvent healEvent)
     {
         currentHP = Mathf.Min(currentHP + healEvent.Heal, mStat.BaseStat.Health);

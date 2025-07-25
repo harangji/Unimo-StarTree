@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -8,38 +9,24 @@ public class Gimmick_BlackHole : Gimmick
     
     //SerializeField
     [field: SerializeField, LabelText("끌어당기는 힘"), Tooltip("블랙홀이 끌어당기는 정도"), Required, Space]
-    private float[] OuterSuctionGravityStrength { get; set; } =
-    {
-        10f,
-        12f,
-        15f,
-        20f
-    };
+    private float[] OuterSuctionGravityStrength { get; set; } = { 10.0f, 12.0f, 15.0f, 20.0f };
 
     [field: SerializeField, LabelText("안쪽 끌어당기는 힘"), Tooltip("블랙홀이 끌어당기는 정도"), Required, Space]
-    private float[] InnerSuctionGravityStrength { get; set; } =
-    {
-        15f,
-        20f,
-        25f,
-        30f
-    };
+    private float[] InnerSuctionGravityStrength { get; set; } = { 15.0f, 20.0f, 25.0f, 30.0f };
     
     [field: SerializeField, LabelText("블랙홀 크기"), Tooltip("중력 영향을 받지 않는 폭풍의 눈 구역"), Required, Space]
-    private float EffectiveRange { get; set; } = 5f;
+    private float EffectiveRange { get; set; } = 5.0f;
 
     [field: SerializeField, LabelText("블랙홀 중심 안전 구역"), Tooltip("중력 영향을 받지 않는 폭풍의 눈 구역"), Required, Space]
     private float EffectiveCenterRange { get; set; } = 0.2f;
 
     //private
     private Rigidbody bPlayerRigidbody { get; set; }
-    private float bTimeElapsed { get; set; }
+    private float bTimeElapsed { get; set; } = 0f;
 
-    private void OnEnable()
+    private void Start()
     {
-        bTimeElapsed = 0f;
-
-        if (GameManager.Instance != null)
+        if (GimmickManager.Instance != null)
         {
             bPlayerRigidbody = GimmickManager.Instance.unimoPrefab.GetComponent<Collider>().attachedRigidbody;
         }
@@ -49,13 +36,17 @@ public class Gimmick_BlackHole : Gimmick
         }
     }
 
+    private void OnEnable()
+    {
+        bTimeElapsed = 0f; //블랙홀 시간 초기화
+    }
+
     private void Update()
     {
         bTimeElapsed += Time.deltaTime;
-        if (bTimeElapsed >= bGimmickDuration)
+        if (bTimeElapsed >= bGimmickDuration) //지속 시간 경과 시 비활성
         {
-            Destroy(gameObject);
-            return;
+            DeactivateGimmick();
         }
     }
 
@@ -101,6 +92,26 @@ public class Gimmick_BlackHole : Gimmick
 
     public override void DeactivateGimmick()
     {
-        gameObject.SetActive(false);
+        FadeOutAll(1f);
+        // gameObject.SetActive(false);
+    }
+    
+    void FadeOutAll(float duration)
+    {
+        Renderer[] renderers = gameObject.transform.GetComponentsInChildren<Renderer>();
+        
+        foreach (var rend in renderers)
+        {
+            Material mat = rend.material;
+            Color color = mat.color;
+            DOTween.To(() => color.a, x => {
+                color.a = x;
+                mat.color = color;
+            }, 0f, duration).OnComplete(() =>
+            {
+                MyDebug.Log("Fade Out Complete");
+                gameObject.SetActive(false);
+            });
+        }
     }
 }

@@ -3,7 +3,8 @@ using UnityEngine;
 public class EngineEffectTriggerManager : MonoBehaviour
 {
     [SerializeField] private BoomBoomEngineEffectController effectController;
-
+    [SerializeField] private ShieldEffect shieldEffect;
+    
     private int orangeFlowerCount = 0;
     private int yellowFlowerCount = 0;
     private float inactiveSkillTime = 0f;
@@ -14,19 +15,40 @@ public class EngineEffectTriggerManager : MonoBehaviour
         PlaySystemRefStorage.engineEffectTriggerManager = this;
     }
 
-    private void Update()
+    private void Start()
     {
-        int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
-
+        var skillID = BoomBoomEngineDatabase.GetEngineData
+            (GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
+        if (skillID == 305 && shieldEffect != null)
+        {
+            Debug.Log("[EngineTrigger] 305번 엔진 감지됨 → 실드 생성 타이머 시작");
+            shieldEffect.ExecuteEffect();
+            
+        }
+        // 마술모자(317) 엔진이면 반드시 타이머 시작
+        if (skillID == 317)
+        {
+            Debug.Log("[EngineTrigger] 317번(마술모자) 엔진 감지됨 → 비활성화 타이머 시작");
+            StartSkillInactiveTimer();
+        }
+        
+    }
+    
+    void Update()
+    {
+        int selectedSkillID = BoomBoomEngineDatabase.GetEngineData
+            (GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
         if (bSkillInactiveTimer)
         {
+            
             inactiveSkillTime += Time.deltaTime;
 
-            if (inactiveSkillTime >= 8f)
+            if (inactiveSkillTime >= 7f)
             {
-                // 305번 실드 스킬만 쿨다운으로 발동
-                if (selectedSkillID == 305)
+                Debug.Log("[TriggerManager] 마술모자 효과 발동 시도");
+                if (selectedSkillID == 317)
                 {
+                    Debug.Log("[TriggerManager] TryActivateSkill 호출");
                     TryActivateSkill();
                 }
 
@@ -35,14 +57,24 @@ public class EngineEffectTriggerManager : MonoBehaviour
             }
         }
     }
+    
+    // 추가로, 향후 피격 외 조건에 따라 실드 재생성 트리거 가능
+    public void TryForceShield()
+    {
+        if (shieldEffect != null)
+        {
+            shieldEffect.ExecuteEffect();
+        }
+    }
 
+    
     public void OnOrangeFlowerCollected()
     {
         orangeFlowerCount++;
 
         int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
 
-        if (selectedSkillID == 303 && orangeFlowerCount >= 2)
+        if (selectedSkillID == 303 && orangeFlowerCount >= 5)
         {
             TryActivateSkill();
             orangeFlowerCount = 0;
