@@ -21,6 +21,7 @@ public class EngineEffectTriggerManager : MonoBehaviour
     {
         var skillID = BoomBoomEngineDatabase.GetEngineData
             (GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
+
         if (skillID == 305 && shieldEffect != null)
         {
             Debug.Log("[EngineTrigger] 305번 엔진 감지됨 → 실드 생성 타이머 시작");
@@ -33,7 +34,6 @@ public class EngineEffectTriggerManager : MonoBehaviour
             Debug.Log("[EngineTrigger] 317번(마술모자) 엔진 감지됨 → 비활성화 타이머 시작");
             StartSkillInactiveTimer();
         }
-        
     }
     
     void Update()
@@ -146,8 +146,8 @@ public class EngineEffectTriggerManager : MonoBehaviour
         if (skillID == 313 && player != null)
         {
             var reviveEffect = player.GetComponent<DogHouseReviveEffect>();
-            if (reviveEffect != null)
-                return reviveEffect.TryRevive(player); // << 여기!
+            if (reviveEffect != null && !reviveEffect.IsReviveUsed)
+                return reviveEffect.TryRevive(player);
         }
         return false;
     }

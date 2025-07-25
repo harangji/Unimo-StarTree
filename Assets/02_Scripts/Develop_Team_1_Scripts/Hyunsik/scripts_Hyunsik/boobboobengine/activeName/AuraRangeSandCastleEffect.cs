@@ -3,73 +3,70 @@ using System.Collections;
 
 public class AuraRangeSandCastleEffect : MonoBehaviour, IBoomBoomEngineEffect
 {
-    [SerializeField][Range(0.01f, 1f)] private float rangeIncreasePercent = 0.5f; // 예: 50%
-    [SerializeField] private float growDuration = 20f; // 20초 만에 최대치까지 성장
-    [SerializeField] private float maxIncreasePercent = 1.0f; // 최대 누적치 100%
-
+    [SerializeField][Range(0.01f, 1f)] private float rangeIncreasePercent = 0.5f;   // 최종 50% 증가
+    [SerializeField] private float growDuration = 20f; // 20초 만에 최대치
+    private PlayerStatManager mStatManager;
     private Coroutine buffCoroutine;
     private bool isBuffActive = false;
-    private PlayerStatManager mStatManager;
-
-    // 항상 안전하게 접근하는 StatManager 프로퍼티
-    private PlayerStatManager StatManager
-    {
-        get
-        {
-            if (mStatManager == null)
-                mStatManager = PlaySystemRefStorage.playerStatManager;
-            return mStatManager;
-        }
-    }
 
     private void Start()
     {
-        // 혹시 모를 상황 대비 강제 할당
-        mStatManager = PlaySystemRefStorage.playerStatManager;
+        StartCoroutine(Initialize());
     }
+    
+    private IEnumerator Initialize()
+    {
+        // 플레이어 오브젝트 완전히 준비될 때까지 대기
+        yield return new WaitUntil(() => PlaySystemRefStorage.playerStatManager != null);
+        mStatManager = PlaySystemRefStorage.playerStatManager;
 
+        // (엔진 장착 체크 생략 가능. 불필요시 지워도 됨)
+        var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
+        if (engineData != null && engineData.SkillID == 323)
+        {
+            ExecuteEffect();
+        }
+    }
+    
+    /// <summary>
+    /// (실제로는 Start→Initialize에서만 자동 호출)
+    /// </summary>
     public void ExecuteEffect()
     {
+        Debug.Log("[SandCastleEffect] ExecuteEffect: 자동 AuraRange 증가 시작");
         if (buffCoroutine != null)
             StopCoroutine(buffCoroutine);
-
         buffCoroutine = StartCoroutine(RangeBuffRoutine());
     }
 
+    
     // 20초 동안 서서히 아우라 증가
     private IEnumerator RangeBuffRoutine()
     {
         isBuffActive = true;
         float elapsed = 0f;
+
         while (elapsed < growDuration)
         {
             elapsed += Time.deltaTime;
             float percent = Mathf.Clamp01(elapsed / growDuration);
-            float buffPercent = percent * rangeIncreasePercent;
+            float totalBuff = rangeIncreasePercent * percent;
+            float baseAura = mStatManager.GetStat().BaseStat.AuraRange;
+            float newAura = baseAura * (1f + totalBuff);
 
-            var statMan = StatManager;
-            if (statMan == null)
-            {
-                Debug.LogWarning("[SandCastleEffect] PlayerStatManager가 null입니다! 버프 중단");
-                yield break;
-            }
+            mStatManager.SetAuraRange(newAura);
 
-            float baseAura = statMan.GetStat().BaseStat.AuraRange;
-            float buffedAura = baseAura * (1f + buffPercent);
-
-            statMan.SetAuraRange(buffedAura);
-
+            // 실시간 로그
+            // Debug.Log($"[SandCastleEffect] AuraRange 증가 중: {newAura} ({percent * 100:0.#}%)");
             yield return null;
         }
-        // 최대치 도달 후 유지
-        var finalStatMan = StatManager;
-        if (finalStatMan != null)
-        {
-            float baseAura = finalStatMan.GetStat().BaseStat.AuraRange;
-            float buffedAura = baseAura * (1f + rangeIncreasePercent);
-            finalStatMan.SetAuraRange(buffedAura);
-        }
+        // 20초 후 최대치 도달
+        float finalAura = mStatManager.GetStat().BaseStat.AuraRange * (1f + rangeIncreasePercent);
+        mStatManager.SetAuraRange(finalAura);
+
+        Debug.Log("[SandCastleEffect] AuraRange 최대치 도달");
         isBuffActive = false;
+        buffCoroutine = null;
     }
 
     /// <summary>
@@ -77,15 +74,13 @@ public class AuraRangeSandCastleEffect : MonoBehaviour, IBoomBoomEngineEffect
     /// </summary>
     public void ResetBuff()
     {
-        Debug.Log("[SandCastleEffect] ResetBuff 호출됨! 누적 초기화");
+        Debug.Log("[SandCastleEffect] ResetBuff 호출됨 - 오라 크기 복구");
         if (buffCoroutine != null)
             StopCoroutine(buffCoroutine);
 
-        var statMan = StatManager;
-        if (statMan != null)
-        {
-            statMan.SetAuraRange(statMan.GetStat().BaseStat.AuraRange);
-        }
+        float baseAura = mStatManager.GetStat().BaseStat.AuraRange;
+        mStatManager.SetAuraRange(baseAura);
+        buffCoroutine = null;
         isBuffActive = false;
     }
 }

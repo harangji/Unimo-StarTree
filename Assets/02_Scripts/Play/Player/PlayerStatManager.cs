@@ -59,6 +59,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
             Debug.LogWarning("[PlayerStatManager] DogHouseReviveEffect가 플레이어에 없습니다. 자동 추가.");
             mReviveEffect = gameObject.AddComponent<DogHouseReviveEffect>();
         }
+        
+        
     }
 
     // Start is called before the first frame update
@@ -109,8 +111,25 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         //최대 체력으로 hp 초기화
         currentHP = mStat.BaseStat.Health;
         hpGauge?.SetGauge(1f);
+        StartCoroutine(DelayedBuffStart());
     }
 
+    
+    private IEnumerator DelayedBuffStart()
+    {
+        yield return null; // 1프레임 딜레이 (모든 초기화 끝난 후)
+        var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
+        if (engineData != null && engineData.SkillID == 323)
+        {
+            var sandCastleEffect = GetComponent<AuraRangeSandCastleEffect>();
+            if (sandCastleEffect != null)
+            {
+                sandCastleEffect.ExecuteEffect();
+                Debug.Log("[PlayerStatManager] Start 이후 1프레임 → 모래성 AuraRange 누적 자동 시작!");
+            }
+        }
+    }
+    
     // 스탯 추가.정현식
     public void InitCharacter(int id)
     {
@@ -178,16 +197,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         Debug.Log($"[PlayerStatManager] 회피확률: {bEvadeChance * 100}% / 스턴저항률: {fStunReduceRate * 100}%");
         Debug.Log($"[PlayerStatManager] 방어력: {armor}, 자연회복: {regenAmountPerSecond}, 회복배수: {healingMultiplier}");
-       
-        if (engineData != null && engineData.SkillID == 323)
-        {
-            var sandCastleEffect = GetComponent<AuraRangeSandCastleEffect>();
-            if (sandCastleEffect != null)
-            {
-                sandCastleEffect.ExecuteEffect();
-                Debug.Log("[PlayerStatManager] InitCharacter 마지막에서 모래성 AuraRange 자동 시작");
-            }
-        }
+        
         
     }
 
@@ -220,6 +230,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
             TakeHeal(healEvent);
         }
+        
     }
 
     public float GetCurrentHP()
@@ -384,20 +395,14 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         //사망 체크
         if (currentHP <= 0)
         {
-            if (TryReviveExternal() == true) return;
+            if (PlaySystemRefStorage.engineEffectTriggerManager.TryReviveOnDeath(this))
+                return;
 
             // 일반 사망 처리
             if (PlaySystemRefStorage.stageManager.GetBonusStage()) { return; }
             PlaySystemRefStorage.playProcessController.GameOver();
         }
         
-    }
-
-    private bool TryReviveExternal()
-    {
-        if (mReviveEffect != null && !mReviveEffect.IsReviveUsed)
-            return mReviveEffect.TryRevive(this);
-        return false;
     }
     
     public void SetAuraRange(float range)
