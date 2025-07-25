@@ -6104,6 +6104,8 @@ MonoBehaviour:
   auraRangeEffect: {fileID: 1198909778}
   criticalEffect: {fileID: 1198909781}
   shieldEffect: {fileID: 1198909782}
+  timedInvincibleEffect: {fileID: 1198909783}
+  magicHatEffect: {fileID: 1198909784}
 --- !u!4 &872065067
 Transform:
   m_ObjectHideFlags: 0
@@ -7636,6 +7638,8 @@ GameObject:
   - component: {fileID: 1198909778}
   - component: {fileID: 1198909781}
   - component: {fileID: 1198909782}
+  - component: {fileID: 1198909783}
+  - component: {fileID: 1198909784}
   m_Layer: 0
   m_Name: activeName
   m_TagString: Untagged
@@ -7711,6 +7715,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldCooldown: 10
+--- !u!114 &1198909783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198909777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8b60abe45b3cc847b252577e99cd6a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 30
+  invincibleDuration: 5
+  repeatCooldown: 30
+--- !u!114 &1198909784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198909777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 028e984099191b84ba3ad25acc77c88a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffDuration: 7
 --- !u!1 &1217114930
 GameObject:
   m_ObjectHideFlags: 0
@@ -12369,6 +12401,11 @@ PrefabInstance:
       propertyPath: mainCollider
       value: 
       objectReference: {fileID: 4876853301214706922}
+    - target: {fileID: 4876853301105598578, guid: e542909bea402f345a760b7cda46b419,
+        type: 3}
+      propertyPath: revivePercent
+      value: 0.549
+      objectReference: {fileID: 0}
     - target: {fileID: 4876853301105598578, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
       propertyPath: fStunReduceRate
