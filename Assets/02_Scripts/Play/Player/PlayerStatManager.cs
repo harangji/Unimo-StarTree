@@ -6,7 +6,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 {
     private static readonly float invincibleTime = 0.5f;
 
-    
+
     // 스탯 추가. 정현식
     [Header("유닛 ID로 선택")] [SerializeField] private int unimoID = 10101;
     private UnimoData mUnimoData;
@@ -31,19 +31,19 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     [SerializeField] [Range(0f, 1f)] private float bEvadeChance = 0.5f;
     [SerializeField] [Range(0f, 1f)] private float fStunReduceRate = 0.5f;
 
-    private float regenAmountPerSecond;  // 초당 자연 회복
-    private float armor;                 // 방어력 (데미지 감소율)
-    private float healingMultiplier;     // 회복 배수
-    
+    private float regenAmountPerSecond; // 초당 자연 회복
+    private float armor; // 방어력 (데미지 감소율)
+    private float healingMultiplier; // 회복 배수
+
     //컴벳 시스템에 사용하는 내용
     [SerializeField] private Collider mainCollider;
     public Collider MainCollider => mainCollider;
     public GameObject GameObject => gameObject;
     private float currentHP;
     [SerializeField] private HPGaugeController hpGauge;
-   
+
     private bool bExternalInvincibility = false;
-    
+
     private void Awake()
     {
         PlaySystemRefStorage.playerStatManager = this;
@@ -58,7 +58,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         playerMover = GetComponent<PlayerMover>();
         visualCtrl = GetComponent<PlayerVisualController>();
-        
+
         if (isTestModel)
         {
             visualCtrl.test_InitModeling(equipPrefab, chaPrefab);
@@ -85,15 +85,15 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         auraController.gameObject.SetActive(false);
 
         PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(stopPlay);
-        
+
         //hpGauge?.SetGauge(1f);
 
         int selectedID = GameManager.Instance.SelectedUnimoID > 0
             ? GameManager.Instance.SelectedUnimoID
-            : unimoID;  
-        
+            : unimoID;
+
         InitCharacter(selectedID);
-        
+
         //최대 체력으로 hp 초기화
         currentHP = mStat.BaseStat.Health;
         hpGauge?.SetGauge(1f);
@@ -181,8 +181,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         Debug.Log("[PlayerStatManager] 스탯 갱신 완료");
     }
-    
-    
+
+
     void Update()
     {
         if (currentHP > 0f && currentHP < mStat.BaseStat.Health)
@@ -193,12 +193,12 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
             TakeHeal(healEvent);
         }
     }
-    
+
     public float GetCurrentHP()
     {
         return currentHP;
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<ItemController>(out var item))
@@ -235,7 +235,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         StartCoroutine(CoroutineExtensions.DelayedActionCall(() => { DeactivePlayer(); }, 4f));
     }
 
-    private IEnumerator StunCoroutine(float duration, Vector3 hitPos)
+    private IEnumerator StunCoroutine(float duration, Vector3 hitPos, float pushPower = 1f)
     {
         playerMover.IsStop = true;
         auraController.Shrink();
@@ -245,7 +245,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         yield return null;
 
-        playerMover.StunPush(duration, hitPos);
+        playerMover.StunPush(duration, hitPos, pushPower);
         visualCtrl.SetMovingAnim(false);
         visualCtrl.SetStunAnim(true);
 
@@ -258,18 +258,19 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         // 스턴 종료 직후 버프 발동 트리거
         TriggerEngineEffect_OnStunEnd();
-        
+
         yield return new WaitForSeconds(invincibleTime);
         isInvincible = false;
         yield break;
     }
-    
+
     private void TriggerEngineEffect_OnStunEnd()
     {
         var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
 
         Debug.Log($"[디버그] engineEffectController Null? : {PlaySystemRefStorage.engineEffectController == null}");
-        Debug.Log($"[디버그] engineData Null? : {engineData == null} (EngineID : {GameManager.Instance.SelectedEngineID})");
+        Debug.Log(
+            $"[디버그] engineData Null? : {engineData == null} (EngineID : {GameManager.Instance.SelectedEngineID})");
 
         if (engineData != null && PlaySystemRefStorage.engineEffectController != null)
         {
@@ -281,7 +282,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
             Debug.LogWarning("[PlayerStatManager] 엔진 스킬 발동 실패: 컨트롤러 또는 엔진 데이터가 null");
         }
     }
-    
+
     public void SetTemporaryInvincibility(bool isActive)
     {
         bExternalInvincibility = isActive;
@@ -291,18 +292,18 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     {
         return isInvincible || bExternalInvincibility;
     }
-    
+
     public AuraController GetAuraController()
     {
         return auraController;
     }
-    
+
     public void TakeDamage(CombatEvent combatEvent)
     {
         var stun = 0.8f;
         var hitPos = combatEvent.HitPosition;
-        
-        if (IsInvincible())   // 외부 무적 포함해서 처리
+
+        if (IsInvincible()) // 외부 무적 포함해서 처리
         {
             return;
         }
@@ -318,28 +319,45 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         {
             //  스턴 시간 감소 적용
             stun = Mathf.Max(stun * (1f - fStunReduceRate), 0.2f);
-        
+
             //스턴 처리 로직
             hitPos.y = 0;
-            stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
+            // stunCoroutine = combatEvent.IsStrongKnockback
+            //     ? StartCoroutine(StunCoroutine(stun, hitPos, 3))
+            //     : StartCoroutine(StunCoroutine(stun, hitPos));
+
+            if (combatEvent.IsStrongKnockback)
+            {
+                Debug.Log("강한 넉백!");
+                StartCoroutine(StunCoroutine(stun, hitPos, 3));
+            }
+            else
+            {
+                Debug.Log("일반 넉백");
+                StartCoroutine(StunCoroutine(stun, hitPos));
+            }
         }
-        
+
         //데미지 처리
         var reducedDamage = combatEvent.Damage * (1f - mStat.BaseStat.Armor);
         currentHP -= reducedDamage;
-        
+
         hpGauge?.SetGauge(currentHP / mStat.BaseStat.Health);
-        
+
         Debug.Log($"[Combat System] 피해량: {reducedDamage}");
         Debug.Log($"[Combat System] 현재 체력: {currentHP} / {mStat.BaseStat.Health}");
         Debug.Log($"[Combat System] 비율: {currentHP / mStat.BaseStat.Health}");
-        
+
         PlaySystemRefStorage.engineEffectTriggerManager.OnTakeDamage();
-        
+
         //사망 체크
         if (currentHP <= 0)
         {
-            if (PlaySystemRefStorage.stageManager.GetBonusStage()) { return; }
+            if (PlaySystemRefStorage.stageManager.GetBonusStage())
+            {
+                return;
+            }
+
             PlaySystemRefStorage.playProcessController.GameOver();
         }
     }
@@ -347,7 +365,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     public void TakeHeal(HealEvent healEvent)
     {
         currentHP = Mathf.Min(currentHP + healEvent.Heal, mStat.BaseStat.Health);
-        
+
         hpGauge?.SetGauge(currentHP / mStat.BaseStat.Health);
     }
 }

@@ -40,6 +40,7 @@ public class Boss1State_Pattern_3 : BossState_Pattern
         if (!hasDashed)
         {
             controller.enemyAnimator.SetBool(PATTERN3, true);
+            ((BossController)controller).isPattern3 = true;
             hasDashed = true; // µü ÇÑ ¹ø¸¸ ½ÇÇàµÊ
         }
 
@@ -101,6 +102,7 @@ public class Boss1State_Pattern_3 : BossState_Pattern
     {
         indicator.SetActive(false);
         controller.enemyAnimator.SetBool(PATTERN3, false);
+        ((BossController)controller).isPattern3 = false;
         yield return new WaitForSeconds(1f);
         controller.EnemyPreaction();
     }

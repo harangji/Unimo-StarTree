@@ -8,6 +8,7 @@ public class BossController : MonsterController
     [HideInInspector] public BossState_Pattern[] bossPatterns;
 
     public bool canAction = true;
+    public bool isPattern3 = false;
     
     public override void InitEnemy(Transform targetPlayer)
     {
@@ -52,9 +53,16 @@ public class BossController : MonsterController
                     Receiver = player,
                     Damage = (monster as Monster).defaultDamage,
                     HitPosition = hitPos,
-                    Collider = other
+                    Collider = other,
+                    IsStrongKnockback = false,
                 };
 
+                if (isPattern3)
+                {
+                    combatEvent.Damage = (int)(combatEvent.Damage * 1.5f);
+                    combatEvent.IsStrongKnockback = true;
+                }
+                
                 CombatSystem.Instance.AddInGameEvent(combatEvent);
 
                 // player.Hit(collideStunTime, hitPos, GetComponent<Monster>().GetDamage());

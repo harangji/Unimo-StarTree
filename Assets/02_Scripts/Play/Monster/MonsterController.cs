@@ -74,7 +74,8 @@ public class MonsterController : MonoBehaviour
                     Receiver = player,
                     Damage = (monster as Monster).defaultDamage,
                     HitPosition = hitPos,
-                    Collider = other
+                    Collider = other,
+                    IsStrongKnockback = false,
                 };
 
                 CombatSystem.Instance.AddInGameEvent(combatEvent);
