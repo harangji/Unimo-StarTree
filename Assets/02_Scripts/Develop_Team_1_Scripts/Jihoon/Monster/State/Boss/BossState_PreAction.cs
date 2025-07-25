@@ -43,6 +43,15 @@ public class BossState_PreAction : MonsterState_Preaction
     
     public override void UpdateAction()
     {
+        if (!((BossController)controller).canAction)
+        {
+            return;
+        }
+        else
+        {
+            Debug.Log("canAction is true");
+        }
+        
         RotateMonster();
         MoveMonster();
 

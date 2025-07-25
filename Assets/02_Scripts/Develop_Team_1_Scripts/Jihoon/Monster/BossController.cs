@@ -1,9 +1,13 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class BossController : MonsterController
 {
     [HideInInspector] public BossState_Pattern[] bossPatterns;
+
+    public bool canAction = true;
     
     public override void InitEnemy(Transform targetPlayer)
     {
@@ -28,5 +32,52 @@ public class BossController : MonsterController
     public void EnemyPattern(BossState_Pattern pattern)
     {
         machine.TransitState(pattern, this);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (other.TryGetComponent<PlayerStatManager>(out var player))
+            {
+                Vector3 hitPos = transform.position; //other.ClosestPoint(transform.position + new Vector3(0f, 1.5f, 0f))
+                hitPos.y = 0f;
+
+                //todo 이 부분에서 나중에 컴벳 시스템으로 바꿔야 함 -> 지금은 그냥 Hit 메서드를 변경함
+                var monster = GetComponent<IDamageAble>();
+
+                CombatEvent combatEvent = new CombatEvent
+                {
+                    Sender = monster,
+                    Receiver = player,
+                    Damage = (monster as Monster).defaultDamage,
+                    HitPosition = hitPos,
+                    Collider = other
+                };
+
+                CombatSystem.Instance.AddInGameEvent(combatEvent);
+
+                // player.Hit(collideStunTime, hitPos, GetComponent<Monster>().GetDamage());
+
+                Vector3 fxPos = (isExplodeFXAtPlayer)
+                    ? (hitPos + other.transform.position) / 2f + 1.5f * Vector3.up
+                    : hitPos + 1.5f * Vector3.up;
+                GameObject obj = Instantiate(explodeFX, fxPos, Quaternion.identity);
+
+                obj.GetComponent<AudioSource>().volume = Sound_Manager.instance._audioSources[1].volume;
+                obj.transform.localScale *= transform.localScale.x;
+            }
+
+            StartCoroutine(StartStun());
+        }
+    }
+
+    private IEnumerator StartStun()
+    {
+        canAction = false;
+        
+        yield return new WaitForSeconds(1f);
+        
+        canAction = true;
     }
 }

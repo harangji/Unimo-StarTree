@@ -20,10 +20,10 @@ public class MonsterController : MonoBehaviour
     public MonsterIndicatorCtrl indicatorCtrl { get; protected set; }
     public Collider enemyCollider { get; protected set; }
 
-    [SerializeField] private float collideStunTime = 0.8f;
-    [SerializeField] private bool isExplode = true;
-    [SerializeField] private GameObject explodeFX;
-    [SerializeField] private bool isExplodeFXAtPlayer = true;
+    public float collideStunTime = 0.8f;
+    public bool isExplode = true;
+    public GameObject explodeFX;
+    public bool isExplodeFXAtPlayer = true;
 
     protected MonsterMachine machine;
     protected MonsterState_Appear enemyAppear;
