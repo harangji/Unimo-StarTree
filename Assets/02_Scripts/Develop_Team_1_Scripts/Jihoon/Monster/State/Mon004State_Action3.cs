@@ -13,12 +13,11 @@ public class Mon004State_Action3 : MonsterState_Action
     private float maxRotation = Mathf.PI * 0.5f;
     private float moveSpeed = 6f;
     private float attRange = 2.7f;
-    private float attDamage = 2f;
     private Vector3 indicatorPos = Vector3.zero;
     private float lapseForIndicator = 0f;
 
-    [SerializeField]private GameObject summonMonsterPrefab;
-    
+    [SerializeField] private GameObject summonMonsterPrefab;
+
     public override void TransitionAction(MonsterController controller)
     {
         base.TransitionAction(controller);
@@ -38,15 +37,16 @@ public class Mon004State_Action3 : MonsterState_Action
     private IEnumerator jumpCoroutine()
     {
         yield return null;
-        
+
         Sound_Manager.instance.PlayClip(jumpSFX[remainJump - 1]);
-        
+
         seePlayer();
         checkJumpDuration();
-        
+
         controller.indicatorCtrl.ActivateIndicator();
-        controller.indicatorCtrl.GetIndicatorTransform().localScale = 2f * attRange / controller.transform.localScale.x * Vector3.one;
-        
+        controller.indicatorCtrl.GetIndicatorTransform().localScale =
+            2f * attRange / controller.transform.localScale.x * Vector3.one;
+
         while (remainJump > 0)
         {
             yield return new WaitForSeconds(jumpDuration);
@@ -62,7 +62,6 @@ public class Mon004State_Action3 : MonsterState_Action
 
     private void hitGround()
     {
-        --remainJump;
         Vector3 playerdiff = controller.transform.position - controller.playerTransform.position;
 
         if (playerdiff.magnitude < attRange)
@@ -76,7 +75,7 @@ public class Mon004State_Action3 : MonsterState_Action
                 {
                     Sender = monster,
                     Receiver = playerIDamageAble,
-                    Damage = (monster as Monster).skillDamage1,
+                    Damage = (monster as Monster).skillDamages[0],
                     HitPosition = controller.transform.position,
                     Collider = monster.MainCollider,
                 };
@@ -88,9 +87,6 @@ public class Mon004State_Action3 : MonsterState_Action
         slamVFX.transform.localScale = attRange / 1.8f * Vector3.one;
         slamVFX.SetActive(true);
 
-        attRange *= 0.8f;
-        attDamage *= 0.65f;
-        
         if (remainJump > 0)
         {
             Sound_Manager.instance.PlayClip(jumpSFX[remainJump - 1]);
@@ -101,6 +97,8 @@ public class Mon004State_Action3 : MonsterState_Action
             var mainptc = slamVFX.GetComponent<ParticleSystem>().main;
             mainptc.stopAction = ParticleSystemStopAction.Destroy;
         }
+
+        remainJump--;
     }
 
     private void seePlayer()
@@ -133,18 +131,19 @@ public class Mon004State_Action3 : MonsterState_Action
         controller.indicatorCtrl.GetIndicatorTransform().localScale =
             2f * attRange / controller.transform.localScale.x * Vector3.one;
     }
-    
+
     private void SpawnClone()
     {
         var generator = GameObject.Find("Mon004Gen").GetComponent<Mon004Generator_C>();
-        
+
         Vector3 pos = GetRandomCirclePosition(transform.position, 5f);
         Quaternion quat = SetGenRotation(pos);
 
-        MonsterController summonedMonsterController = Instantiate(summonMonsterPrefab, pos, quat).GetComponent<MonsterController>();
+        MonsterController summonedMonsterController =
+            Instantiate(summonMonsterPrefab, pos, quat).GetComponent<MonsterController>();
         summonedMonsterController.InitEnemy(controller.playerTransform);
     }
-    
+
     private Vector3 GetRandomCirclePosition(Vector3 center, float radius)
     {
         float angle = Random.Range(0f, 360f);
@@ -155,7 +154,7 @@ public class Mon004State_Action3 : MonsterState_Action
 
         return center + new Vector3(x, 0f, z);
     }
-    
+
     private Quaternion SetGenRotation(Vector3 genPos)
     {
         Quaternion quat = Quaternion.LookRotation(controller.playerTransform.position - genPos, Vector3.up);

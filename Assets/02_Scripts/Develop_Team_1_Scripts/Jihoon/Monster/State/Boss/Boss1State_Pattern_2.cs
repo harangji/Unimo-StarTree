@@ -69,7 +69,7 @@ public class Boss1State_Pattern_2 : BossState_Pattern
                 {
                     Sender = monster,
                     Receiver = playerIDamageAble,
-                    Damage = (monster as Monster).skillDamage1,
+                    Damage = (monster as Monster).skillDamages[1],
                     HitPosition = controller.transform.position,
                     Collider = monster.MainCollider,
                 };

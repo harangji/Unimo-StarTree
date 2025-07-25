@@ -72,7 +72,7 @@ public class MonsterController : MonoBehaviour
                 {
                     Sender = monster,
                     Receiver = player,
-                    Damage = (monster as Monster).defaultDamage,
+                    Damage = (monster as Monster).appliedDamage,
                     HitPosition = hitPos,
                     Collider = other,
                     IsStrongKnockback = false,

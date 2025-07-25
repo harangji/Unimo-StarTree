@@ -338,22 +338,13 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
             //스턴 처리 로직
             hitPos.y = 0;
-            // stunCoroutine = combatEvent.IsStrongKnockback
-            //     ? StartCoroutine(StunCoroutine(stun, hitPos, 3))
-            //     : StartCoroutine(StunCoroutine(stun, hitPos));
-
-            if (combatEvent.IsStrongKnockback)
-            {
-                Debug.Log("강한 넉백!");
-                StartCoroutine(StunCoroutine(stun, hitPos, 3));
-            }
-            else
-            {
-                Debug.Log("일반 넉백");
-                StartCoroutine(StunCoroutine(stun, hitPos));
-            }
+            stunCoroutine = combatEvent.IsStrongKnockback
+                ? StartCoroutine(StunCoroutine(stun, hitPos, 3))
+                : StartCoroutine(StunCoroutine(stun, hitPos));
         }
 
+        Debug.Log($"[보정 전 데미지]: {combatEvent.Damage}");
+        
         //데미지 처리
         var reducedDamage = combatEvent.Damage * (1f - mStat.BaseStat.Armor);
         currentHP -= reducedDamage;

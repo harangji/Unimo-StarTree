@@ -47,25 +47,9 @@ public class Mon005State_Preaction : MonsterState_Preaction
 
     private void setMoveDirVector()
     {
-        var stage = GetComponentInParent<Monster>().stage;
-        Vector3 moveDir = Vector3.zero;
-
-        if (stage == 1)
-        {
-            float angle = Random.Range(0f, 360f);
-            moveDir = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), 0f, Mathf.Sin(angle * Mathf.Deg2Rad));
-        }
-        else
-        {
-            moveDir = moveDir_0x1y2z switch
-            {
-                0 => Vector3.right,
-                1 => Vector3.up,
-                2 => Vector3.forward,
-                _ => Vector3.up
-            };
-        }
-
+        float angle = Random.Range(0f, 360f);
+        Vector3 moveDir = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), 0f, Mathf.Sin(angle * Mathf.Deg2Rad));
+        
         moveVec = moveFrontBack * moveDir;
     }
 

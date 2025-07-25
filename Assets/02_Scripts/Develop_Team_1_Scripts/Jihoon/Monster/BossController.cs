@@ -51,7 +51,7 @@ public class BossController : MonsterController
                 {
                     Sender = monster,
                     Receiver = player,
-                    Damage = (monster as Monster).defaultDamage,
+                    Damage = (monster as Monster).appliedDamage,
                     HitPosition = hitPos,
                     Collider = other,
                     IsStrongKnockback = false,
@@ -59,7 +59,7 @@ public class BossController : MonsterController
 
                 if (isPattern3)
                 {
-                    combatEvent.Damage = (int)(combatEvent.Damage * 1.5f);
+                    combatEvent.Damage = (monster as Monster).skillDamages[2];
                     combatEvent.IsStrongKnockback = true;
                 }
                 
