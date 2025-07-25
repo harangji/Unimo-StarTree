@@ -10,7 +10,6 @@ public class Mon007State_Preaction : MonsterState_Preaction
     public override void TransitionAction(MonsterController controller)
     {
         this.controller = controller;
-        Debug.Log("[자폭병] 프리액션 진입");
     }
     public override void UpdateAction()
     {
@@ -28,6 +27,7 @@ public class Mon007State_Preaction : MonsterState_Preaction
     private IEnumerator StartAnimation()
     {
         yield return new WaitForSeconds(0.5f);
+        Debug.Log(controller.enemyAnimator.GetInstanceID());
         controller.enemyAnimator.SetTrigger(BOMB);
     }
     
