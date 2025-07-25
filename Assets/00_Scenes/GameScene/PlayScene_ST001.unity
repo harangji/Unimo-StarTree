@@ -1063,6 +1063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectController: {fileID: 872065066}
+  shieldEffect: {fileID: 1198909784}
 --- !u!4 &113798971
 Transform:
   m_ObjectHideFlags: 0
@@ -6101,6 +6102,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beeTailEffect: {fileID: 1198909779}
   auraRangeEffect: {fileID: 1198909778}
+  criticalEffect: {fileID: 1198909785}
+  shieldEffect: {fileID: 1198909784}
+  timedInvincibleEffect: {fileID: 1198909783}
+  magicHatEffect: {fileID: 1198909782}
+  sandCastleEffect: {fileID: 1198909781}
 --- !u!4 &872065067
 Transform:
   m_ObjectHideFlags: 0
@@ -7631,6 +7637,11 @@ GameObject:
   - component: {fileID: 1198909780}
   - component: {fileID: 1198909779}
   - component: {fileID: 1198909778}
+  - component: {fileID: 1198909781}
+  - component: {fileID: 1198909785}
+  - component: {fileID: 1198909782}
+  - component: {fileID: 1198909784}
+  - component: {fileID: 1198909783}
   m_Layer: 0
   m_Name: activeName
   m_TagString: Untagged
@@ -7680,6 +7691,75 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1198909781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198909777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76980e30230614f4db7edf7c81d935d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeIncreasePercent: 0.5
+  duration: 20
+  maxIncreasePercent: 1
+--- !u!114 &1198909782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198909777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 028e984099191b84ba3ad25acc77c88a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffDuration: 7
+--- !u!114 &1198909783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198909777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8b60abe45b3cc847b252577e99cd6a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 30
+  invincibleDuration: 5
+  repeatCooldown: 30
+--- !u!114 &1198909784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198909777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dad70c76a94c7f84e97fbd22d1ec9596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldCooldown: 10
+--- !u!114 &1198909785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198909777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c2945b725253e4aa8a0d7e73195af6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 10
 --- !u!1 &1217114930
 GameObject:
   m_ObjectHideFlags: 0

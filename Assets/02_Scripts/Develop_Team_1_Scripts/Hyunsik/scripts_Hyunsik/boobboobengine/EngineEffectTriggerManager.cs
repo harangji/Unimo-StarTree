@@ -9,7 +9,9 @@ public class EngineEffectTriggerManager : MonoBehaviour
     private int yellowFlowerCount = 0;
     private float inactiveSkillTime = 0f;
     private bool bSkillInactiveTimer = false;
-
+    private float sandcastleTimer = 0f;
+    private const float sandcastleTriggerInterval = 5f; 
+    
     private void Awake()
     {
         PlaySystemRefStorage.engineEffectTriggerManager = this;
@@ -49,12 +51,26 @@ public class EngineEffectTriggerManager : MonoBehaviour
                 if (selectedSkillID == 317)
                 {
                     Debug.Log("[TriggerManager] TryActivateSkill 호출");
-                    TryActivateSkill();
+                    TryActivateSkill(PlaySystemRefStorage.playerStatManager);
                 }
 
                 bSkillInactiveTimer = false;
                 inactiveSkillTime = 0f;
             }
+            
+            if (selectedSkillID == 323)
+            {
+                sandcastleTimer += Time.deltaTime;
+                if (sandcastleTimer >= sandcastleTriggerInterval)
+                {
+                    var sandCastleEffect = PlaySystemRefStorage.playerStatManager.GetComponent<AuraRangeSandCastleEffect>();
+                    if (sandCastleEffect != null)
+                        sandCastleEffect.ExecuteEffect();
+
+                    sandcastleTimer = 0f;
+                }
+            }
+            
         }
     }
     
@@ -76,7 +92,7 @@ public class EngineEffectTriggerManager : MonoBehaviour
 
         if (selectedSkillID == 303 && orangeFlowerCount >= 5)
         {
-            TryActivateSkill();
+            TryActivateSkill(PlaySystemRefStorage.playerStatManager);
             orangeFlowerCount = 0;
         }
     }
@@ -89,7 +105,7 @@ public class EngineEffectTriggerManager : MonoBehaviour
 
         if (selectedSkillID == 304 && yellowFlowerCount >= 5)
         {
-            TryActivateSkill();
+            TryActivateSkill(PlaySystemRefStorage.playerStatManager);
             yellowFlowerCount = 0;
         }
     }
@@ -110,33 +126,51 @@ public class EngineEffectTriggerManager : MonoBehaviour
         // 예: 301 리비 엔진 (무적)만 피격으로 발동
         if (selectedSkillID == 301)
         {
-            TryActivateSkill();
+            TryActivateSkill(PlaySystemRefStorage.playerStatManager);
         }
+        
+        // 모래성(323) 엔진 버프 초기화
+        if (selectedSkillID == 323)
+        {
+            var sandCastleEffect = PlaySystemRefStorage.playerStatManager.GetComponent<AuraRangeSandCastleEffect>();
+            if (sandCastleEffect != null)
+                sandCastleEffect.ResetBuff();
+        }
+        
     }
 
+    // 플레이어 사망 시 TryReviveOnDeath로 위임 호출
+    public bool TryReviveOnDeath(PlayerStatManager player)
+    {
+        int skillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
+        if (skillID == 313 && player != null)
+        {
+            var reviveEffect = player.GetComponent<DogHouseReviveEffect>();
+            if (reviveEffect != null)
+                return reviveEffect.TryRevive(player); // << 여기!
+        }
+        return false;
+    }
+    
+    // 필요시 ExecuteEffect 리셋도 아래처럼!
+    public void ResetReviveEffect(PlayerStatManager player)
+    {
+        var reviveEffect = player.GetComponent<DogHouseReviveEffect>();
+        if (reviveEffect != null)
+            reviveEffect.ExecuteEffect();
+    }
+    
     /// <summary>
     /// 현재 선택된 엔진 스킬 발동
     /// </summary>
-    private void TryActivateSkill()
+    private void TryActivateSkill(PlayerStatManager target)
     {
         int selectedEngineID = GameManager.Instance.SelectedEngineID;
         var engineData = BoomBoomEngineDatabase.GetEngineData(selectedEngineID);
 
-        if (engineData != null)
+        if (engineData != null && effectController != null)
         {
-            if (effectController != null)
-            {
-                effectController.ActivateEffect(engineData.SkillID);
-                Debug.Log($"[EngineEffectTriggerManager] 발동됨 ▶ EngineID {selectedEngineID}, SkillID {engineData.SkillID}");
-            }
-            else
-            {
-                Debug.LogError("[EngineEffectTriggerManager] EffectController가 연결되지 않았습니다.");
-            }
-        }
-        else
-        {
-            Debug.LogWarning($"[EngineEffectTriggerManager] EngineID {selectedEngineID}에 대한 데이터가 없습니다.");
+            effectController.ActivateEffect(engineData.SkillID, target); //  정상
         }
     }
 }

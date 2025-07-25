@@ -33,6 +33,11 @@ public class UnimoRuntimeStat
         RecalculateFinalStat();
     }
 
+    public void SetFinalStat(SCharacterStat stat)
+    {
+        FinalStat = stat;
+    }
+    
     public void RemoveAuraRangeBonus(float bonusValue)
     {
         var bonus = BonusStat;

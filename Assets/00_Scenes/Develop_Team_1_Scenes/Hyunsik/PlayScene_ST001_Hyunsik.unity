@@ -6106,6 +6106,7 @@ MonoBehaviour:
   shieldEffect: {fileID: 1198909782}
   timedInvincibleEffect: {fileID: 1198909783}
   magicHatEffect: {fileID: 1198909784}
+  sandCastleEffect: {fileID: 1198909786}
 --- !u!4 &872065067
 Transform:
   m_ObjectHideFlags: 0
@@ -7640,6 +7641,7 @@ GameObject:
   - component: {fileID: 1198909782}
   - component: {fileID: 1198909783}
   - component: {fileID: 1198909784}
+  - component: {fileID: 1198909786}
   m_Layer: 0
   m_Name: activeName
   m_TagString: Untagged
@@ -7743,6 +7745,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buffDuration: 7
+--- !u!114 &1198909786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198909777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76980e30230614f4db7edf7c81d935d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeIncreasePercent: 0.5
+  growDuration: 20
+  maxIncreasePercent: 1
 --- !u!1 &1217114930
 GameObject:
   m_ObjectHideFlags: 0

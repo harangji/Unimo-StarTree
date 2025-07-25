@@ -9,7 +9,7 @@ public class BoomBoomEngineEffectController : MonoBehaviour
     [SerializeField] private ShieldEffect shieldEffect;
     [SerializeField] private TimedInvincibilityEffect timedInvincibleEffect;
     [SerializeField] private MagicHatEffect magicHatEffect;
-
+    [SerializeField] private AuraRangeSandCastleEffect sandCastleEffect;
     
     private void Awake()
     {
@@ -23,7 +23,7 @@ public class BoomBoomEngineEffectController : MonoBehaviour
     /// <summary>
     /// SkillID에 따라 대응하는 버프 실행
     /// </summary>
-    public void ActivateEffect(int skillID)
+    public void ActivateEffect(int skillID, PlayerStatManager target)
     {
         switch (skillID)
         {
@@ -84,6 +84,22 @@ public class BoomBoomEngineEffectController : MonoBehaviour
                 {
                     magicHatEffect.ExecuteEffect();
                     Debug.Log("[EffectController] 마술모자 버프 발동");
+                }
+                break;
+            
+            case 313: // 도베르만 엔진 (부활 리셋)
+                break;
+            
+            case 323: // 모래성 엔진 (Aura_Range 20초 누적 성장)
+                if (sandCastleEffect != null)
+                {
+                    Debug.Log($"[SandCastleEffect] ExecuteEffect 호출됨");
+                    sandCastleEffect.ExecuteEffect(); // **파라미터 없이!**
+                    Debug.Log("[EffectController] 모래성 엔진(323) 버프 발동");
+                }
+                else
+                {
+                    Debug.LogWarning("[EffectController] SandCastleEffect 연결 안됨");
                 }
                 break;
             
