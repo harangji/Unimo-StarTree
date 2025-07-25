@@ -16,6 +16,17 @@ public class PlaySceneController : MonoBehaviour
     public void ResetScene()
     {
         Sound_Manager.instance.Play(Sound.Effect, "Click_01");
+        
+        var stage = StageLoader.CurrentStageNumber;
+
+        // 별 3개 클리어한 보너스 스테이지라면 → 로비로
+        if (Base_Manager.Data.UserData.BonusStageStars.TryGetValue(stage, out var starFlag) && starFlag == 7)
+        {
+            Debug.Log($"[Stage {stage}] 이미 별 3개 클리어했습니다. 로비로 돌아갑니다.");
+            WholeSceneController.Instance.ReadyNextScene(0);
+            Time.timeScale = 1f;
+            return;
+        }
 
         PlayerPrefs.SetInt("GetRewardCount", PlayerPrefs.GetInt("GetRewardCount") - 1);
         if(PlayerPrefs.GetInt("GetRewardCount") <= 0)
@@ -34,8 +45,8 @@ public class PlaySceneController : MonoBehaviour
             WholeSceneController.Instance.ReadyNextScene(SceneManager.GetActiveScene().buildIndex - WholeSceneController.ActualSceneIdxOffset);
             Time.timeScale = 1f;
         }
-
     }
+    
     public void PauseGame()
     {
         Sound_Manager.instance.Play(Sound.Effect, "Click_01");

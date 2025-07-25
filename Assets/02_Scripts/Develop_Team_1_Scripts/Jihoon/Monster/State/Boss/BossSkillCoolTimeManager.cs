@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BossSkillCoolTimeManager : MonoBehaviour
 {
-    [SerializeField] private float[] skillCoolTime = new float[4];
-
     private MonsterController controller;
+
+    [SerializeField] private float[] skillCoolTime = new float[4];
 
     private float[] currentTime = new float[4];
 

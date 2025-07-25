@@ -12,7 +12,6 @@ public class Mon004State_Action : MonsterState_Action
     private float maxRotation = Mathf.PI * 7f / 18f;
     private float moveSpeed = 4f;
     private float attRange = 1.8f;
-    private float attDamage = 2f;
     private Vector3 indicatorPos = Vector3.zero;
     private float lapseForIndicator = 0f;
 
@@ -58,7 +57,6 @@ public class Mon004State_Action : MonsterState_Action
 
     private void hitGround()
     {
-        --remainJump;
         Vector3 playerdiff = controller.transform.position - controller.playerTransform.position;
 
         if (playerdiff.magnitude < attRange)
@@ -72,7 +70,7 @@ public class Mon004State_Action : MonsterState_Action
                 {
                     Sender = monster,
                     Receiver = playerIDamageAble,
-                    Damage = (monster as Monster).skillDamage1,
+                    Damage = (monster as Monster).skillDamages[3 - remainJump],
                     HitPosition = controller.transform.position,
                     Collider = monster.MainCollider,
                 };
@@ -85,7 +83,6 @@ public class Mon004State_Action : MonsterState_Action
         slamVFX.SetActive(true);
 
         attRange *= 0.8f;
-        attDamage *= 0.65f;
         
         if (remainJump > 0)
         {
@@ -97,6 +94,8 @@ public class Mon004State_Action : MonsterState_Action
             var mainptc = slamVFX.GetComponent<ParticleSystem>().main;
             mainptc.stopAction = ParticleSystemStopAction.Destroy;
         }
+        
+        remainJump--;
     }
 
     private void seePlayer()
