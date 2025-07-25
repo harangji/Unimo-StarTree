@@ -37,11 +37,12 @@ public class Gimmick_BlackHoleTween : Gimmick
     private void CreateGravitySequence()
     {
         gravitySequence = DOTween.Sequence().Pause().SetAutoKill(false);
-
+        gravitySequence.SetUpdate(UpdateType.Late); //LateUpdate에서 동작
+        
         // 블랙홀 지속 시간 동안 주기적으로 중력 효과 적용
-        gravitySequence.AppendInterval(0.05f); // 50ms 간격으로 체크 (FixedUpdate 대체)
+        // gravitySequence.AppendInterval(0.05f); // 50ms 간격으로 체크 (FixedUpdate 대체)
         gravitySequence.AppendCallback(ApplyGravity);
-        gravitySequence.SetLoops(Mathf.CeilToInt(bGimmickDuration / 0.05f), LoopType.Restart);
+        gravitySequence.SetLoops(-1, LoopType.Restart);
 
         // 끝나면 삭제
         gravitySequence.OnComplete(() =>
@@ -77,11 +78,13 @@ public class Gimmick_BlackHoleTween : Gimmick
 
     public override void ActivateGimmick()
     {
+        gameObject.SetActive(true);
         gravitySequence.Restart();
     }
 
     public override void DeactivateGimmick()
     {
         gravitySequence.Kill();
+        gameObject.SetActive(false);
     }
 }

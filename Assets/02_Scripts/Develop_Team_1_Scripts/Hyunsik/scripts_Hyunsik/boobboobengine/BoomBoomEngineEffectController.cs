@@ -5,8 +5,11 @@ public class BoomBoomEngineEffectController : MonoBehaviour
     [Header("붕붕엔진 버프 클래스 연결")]
     [SerializeField] private BeeTailInvincibilityEffect beeTailEffect;
     [SerializeField] private AuraRangeBoostEffect auraRangeEffect;
-    //[SerializeField] private CriticalChanceBoostEffect criticalEffect;
-    //[SerializeField] private ShieldEffect shieldEffect;
+    [SerializeField] private CriticalChanceBoostEffect criticalEffect;
+    [SerializeField] private ShieldEffect shieldEffect;
+    [SerializeField] private TimedInvincibilityEffect timedInvincibleEffect;
+    [SerializeField] private MagicHatEffect magicHatEffect;
+
     
     private void Awake()
     {
@@ -28,6 +31,7 @@ public class BoomBoomEngineEffectController : MonoBehaviour
                 if (beeTailEffect != null)
                 {
                     beeTailEffect.ExecuteEffect();
+                    Debug.Log("[EffectController] BeeTailEffect 버프 발동");
                 }
                 else
                 {
@@ -47,17 +51,42 @@ public class BoomBoomEngineEffectController : MonoBehaviour
                 }
                 break;
 
-            case 304:
-                Debug.Log("[EffectController] 크리티컬 버프 발동 (미구현)");
+            case 304: // 너구리 엔진 (크리티컬 확률 100%)
+                if (criticalEffect != null)
+                {
+                    criticalEffect.ExecuteEffect();
+                    Debug.Log("[EffectController] 크리티컬 버프 발동");
+                }
+                else
+                {
+                    Debug.LogWarning("[EffectController] CriticalEffect 연결 안됨");
+                }
                 break;
 
-            case 305:
-                Debug.Log("[EffectController] 방어막 생성 버프 발동 (미구현)");
+            case 305: // 실드 엔진
+                if (shieldEffect != null)
+                {
+                    shieldEffect.ExecuteEffect();
+                    Debug.Log("[EffectController] 실드 엔진 발동");
+                }
                 break;
-
-            default:
-                Debug.LogWarning($"[EffectController] 등록되지 않은 스킬ID: {skillID}");
+            
+            case 310:
+                if (timedInvincibleEffect != null)
+                {
+                    timedInvincibleEffect.ExecuteEffect();
+                    Debug.Log("[EffectController] 310 무적 스킬 발동");
+                }
                 break;
+         
+            case 317: // 마술 모자
+                if (magicHatEffect != null)
+                {
+                    magicHatEffect.ExecuteEffect();
+                    Debug.Log("[EffectController] 마술모자 버프 발동");
+                }
+                break;
+            
         }
     }
 }

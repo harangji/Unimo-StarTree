@@ -93,7 +93,7 @@ public class ScoreGaugeController : MonoBehaviour
                 break;
         }
         
-        Debug.Log($"현재 점수 : {mCurrentScore}, 타겟 점수  : {mTargetScore}");
+        //Debug.Log($"현재 점수 : {mCurrentScore}, 타겟 점수  : {mTargetScore}");
 
         // if (scoreText != null)
         // {

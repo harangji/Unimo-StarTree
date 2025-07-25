@@ -51,7 +51,7 @@ public class GimmickManager : MonoBehaviour
     private int currentCost;
     
     [LabelText("골라진 기믹들"), ShowInInspector, ReadOnly]
-    private List<Gimmick> readyGimmicks = new List<Gimmick>();
+    private Queue<Gimmick> readyGimmicks = new Queue<Gimmick>();
 
     private List<eGimmickGrade> canSelectAbleGrades = new List<eGimmickGrade>(); //등장 가능한 기믹 등급
     
@@ -78,9 +78,21 @@ public class GimmickManager : MonoBehaviour
 
     void Start()
     {
-        InitializeGimmickManager();
+        readyGimmicks.Clear();
+        
+        InitializeGimmickManager(); //기믹 뽑기
     }
 
+    public void ExcuteGimmick() //다른 곳에서 실행
+    {
+        if (bIsReadyGimmiks)
+        {
+            PlaySceneController.Instance.PauseGameSingleton();
+            //기믹 생성 연출 필요 ToDo:;
+            readyGimmicks.Dequeue().ActivateGimmick(); //기믹 활성화
+            PlaySceneController.Instance.ResumeGameSingleton();
+        }
+    }
     public void InitializeGimmickManager()
     {
         currentStage = Base_Manager.Data.UserData.BestStage + 100; //스테이지 int 캐싱 //최소 1 (테스트 100)
@@ -219,7 +231,7 @@ public class GimmickManager : MonoBehaviour
                 if (rand <= cumulative) //추첨
                 {
                     Gimmick readyGimmick = entry.GimmickInitializer.InitializeGimmick(entry.GimmickGrade); //껍데기를 통해 생성
-                    readyGimmicks.Add(readyGimmick); // 준비된 기믹에 추가
+                    readyGimmicks.Enqueue(readyGimmick); // 준비된 기믹에 추가
                     
                     cashGimmickTypes.Add(entry.GimmickInitializer.GimmickType); // 뽑은 타입을 추가, 중복방지
                     
