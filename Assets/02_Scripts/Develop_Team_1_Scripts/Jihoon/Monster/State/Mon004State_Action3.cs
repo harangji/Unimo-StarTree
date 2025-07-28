@@ -51,10 +51,10 @@ public class Mon004State_Action3 : MonsterState_Action
         {
             yield return new WaitForSeconds(jumpDuration);
             hitGround();
-            SpawnClone();
             seePlayer();
             yield return null;
             checkJumpDuration();
+            SpawnClone();
         }
 
         controller.EnemyExplode();
@@ -136,7 +136,8 @@ public class Mon004State_Action3 : MonsterState_Action
     {
         var generator = GameObject.Find("Mon004Gen").GetComponent<Mon004Generator_C>();
 
-        Vector3 pos = GetRandomCirclePosition(transform.position, 5f);
+        // Vector3 pos = GetRandomCirclePosition(transform.position, 5f);
+        Vector3 pos = transform.position;
         Quaternion quat = SetGenRotation(pos);
 
         MonsterController summonedMonsterController =

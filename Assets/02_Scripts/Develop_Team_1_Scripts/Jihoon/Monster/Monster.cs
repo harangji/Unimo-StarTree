@@ -22,11 +22,10 @@ public class Monster : MonoBehaviour, IDamageAble
         var isBoss = GetComponent<MonsterController>().isBoss;
         
         appliedDamage = isBoss ? CalculateFinalDamage(defaultDamage, 10, 0.1f) : CalculateFinalDamage(defaultDamage, 5, 0.05f);
-        Debug.Log($"Applied Damage: {appliedDamage}");
+
         for (int i = 0; i < skillDamages.Length; i++)
         {
             skillDamages[i] = isBoss ? CalculateFinalDamage(skillDamages[i], 10, 0.1f) : CalculateFinalDamage(skillDamages[i], 5, 0.05f);    
-            Debug.Log($"Skill{i} Damage: {skillDamages[i]}");
         }
     }
 

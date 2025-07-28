@@ -11,7 +11,7 @@ public class Mon004State_Action : MonsterState_Action
     private float jumpDuration = 10f;
     private float maxRotation = Mathf.PI * 7f / 18f;
     private float moveSpeed = 4f;
-    private float attRange = 1.8f;
+    [SerializeField] private float attRange = 1.8f;
     private Vector3 indicatorPos = Vector3.zero;
     private float lapseForIndicator = 0f;
 
