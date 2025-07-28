@@ -6,8 +6,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 {
     private static readonly float invincibleTime = 0.5f;
     
-    [SerializeField][Range(0.01f,1f)] private float revivePercent = 0.05f; // 30% (인스펙터에서 조절)
-    private bool bReviveUsed = false; // 1회 한정 부활이라면
+    //[SerializeField][Range(0.01f,1f)] private float revivePercent = 0.05f; // 30% (인스펙터에서 조절)
+    //private bool bReviveUsed = false; // 1회 한정 부활이라면
     
     // 스탯 추가. 정현식
     [Header("유닛 ID로 선택")] [SerializeField] private int unimoID = 10101;
@@ -43,13 +43,24 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     public GameObject GameObject => gameObject;
     private float currentHP;
     [SerializeField] private HPGaugeController hpGauge;
-   
+
     private bool bExternalInvincibility = false;
+    
     private ShieldEffect mShieldEffect;
+    private DogHouseReviveEffect mReviveEffect;
     
     private void Awake()
     {
         PlaySystemRefStorage.playerStatManager = this;
+        
+        mReviveEffect = GetComponent<DogHouseReviveEffect>();
+        if (mReviveEffect == null)
+        {
+            Debug.LogWarning("[PlayerStatManager] DogHouseReviveEffect가 플레이어에 없습니다. 자동 추가.");
+            mReviveEffect = gameObject.AddComponent<DogHouseReviveEffect>();
+        }
+        
+        
     }
 
     // Start is called before the first frame update
@@ -88,20 +99,37 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         auraController.gameObject.SetActive(false);
 
         PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(stopPlay);
-        
+
         //hpGauge?.SetGauge(1f);
 
         int selectedID = GameManager.Instance.SelectedUnimoID > 0
             ? GameManager.Instance.SelectedUnimoID
-            : unimoID;  
-        
+            : unimoID;
+
         InitCharacter(selectedID);
-        
+
         //최대 체력으로 hp 초기화
         currentHP = mStat.BaseStat.Health;
         hpGauge?.SetGauge(1f);
+        StartCoroutine(DelayedBuffStart());
     }
 
+    
+    private IEnumerator DelayedBuffStart()
+    {
+        yield return null; // 1프레임 딜레이 (모든 초기화 끝난 후)
+        var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
+        if (engineData != null && engineData.SkillID == 323)
+        {
+            var sandCastleEffect = GetComponent<AuraRangeSandCastleEffect>();
+            if (sandCastleEffect != null)
+            {
+                sandCastleEffect.ExecuteEffect();
+                Debug.Log("[PlayerStatManager] Start 이후 1프레임 → 모래성 AuraRange 누적 자동 시작!");
+            }
+        }
+    }
+    
     // 스탯 추가.정현식
     public void InitCharacter(int id)
     {
@@ -116,10 +144,9 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         //  기본 스탯 가져오기
         var baseStat = mUnimoData.Stat;
-
         //  붕붕엔진 스탯 적용
         var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
-
+        
         if (engineData != null)
         {
             var engineStat = engineData.StatBonus;
@@ -127,6 +154,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
             baseStat.MoveSpd += engineStat.MoveSpd;
             baseStat.Health += engineStat.Health;
             baseStat.Armor += engineStat.Armor;
+            baseStat.StunIgnoreChance += engineStat.StunIgnoreChance;
+            baseStat.StunResistanceRate += engineStat.StunResistanceRate;
             baseStat.AuraRange += engineStat.AuraRange;
             baseStat.AuraStr += engineStat.AuraStr;
             baseStat.CriticalChance += engineStat.CriticalChance;
@@ -141,6 +170,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
                       $"\n▶ 이동속도: +{engineStat.MoveSpd}" +
                       $"\n▶ 체력: +{engineStat.Health}" +
                       $"\n▶ 방어력: +{engineStat.Armor}" +
+                      $"\n▶ 스턴무시 확률: +{engineStat.StunIgnoreChance}" +
+                      $"\n▶ 스턴 저항: +{engineStat.StunResistanceRate}" +
                       $"\n▶ 오라 범위: +{engineStat.AuraRange}" +
                       $"\n▶ 오라 강도: +{engineStat.AuraStr}" +
                       $"\n▶ 크리티컬 확률: +{engineStat.CriticalChance}" +
@@ -166,6 +197,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         Debug.Log($"[PlayerStatManager] 회피확률: {bEvadeChance * 100}% / 스턴저항률: {fStunReduceRate * 100}%");
         Debug.Log($"[PlayerStatManager] 방어력: {armor}, 자연회복: {regenAmountPerSecond}, 회복배수: {healingMultiplier}");
+        
+        
     }
 
     public UnimoRuntimeStat GetStat()
@@ -186,8 +219,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         Debug.Log("[PlayerStatManager] 스탯 갱신 완료");
     }
-    
-    
+
+
     void Update()
     {
         if (currentHP > 0f && currentHP < mStat.BaseStat.Health)
@@ -197,13 +230,14 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
             TakeHeal(healEvent);
         }
+        
     }
-    
+
     public float GetCurrentHP()
     {
         return currentHP;
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<ItemController>(out var item))
@@ -245,7 +279,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         mShieldEffect = shield;
     }
     
-    private IEnumerator StunCoroutine(float duration, Vector3 hitPos)
+    private IEnumerator StunCoroutine(float duration, Vector3 hitPos, float pushPower = 1f)
     {
         playerMover.IsStop = true;
         auraController.Shrink();
@@ -255,7 +289,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         yield return null;
 
-        playerMover.StunPush(duration, hitPos);
+        playerMover.StunPush(duration, hitPos, pushPower);
         visualCtrl.SetMovingAnim(false);
         visualCtrl.SetStunAnim(true);
 
@@ -268,12 +302,12 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         // 스턴 종료 직후 버프 발동 트리거
         TriggerEngineEffect_OnStunEnd();
-        
+
         yield return new WaitForSeconds(invincibleTime);
         isInvincible = false;
         yield break;
     }
-    
+
     private void TriggerEngineEffect_OnStunEnd()
     {
         var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
@@ -283,7 +317,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         if (engineData != null && PlaySystemRefStorage.engineEffectController != null)
         {
-            PlaySystemRefStorage.engineEffectController.ActivateEffect(engineData.SkillID);
+            PlaySystemRefStorage.engineEffectController.ActivateEffect(engineData.SkillID, this);
             Debug.Log($"[PlayerStatManager] 스턴 해제 후 엔진 스킬 발동 ▶ SkillID : {engineData.SkillID}");
         }
         else
@@ -291,7 +325,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
             Debug.LogWarning("[PlayerStatManager] 엔진 스킬 발동 실패: 컨트롤러 또는 엔진 데이터가 null");
         }
     }
-    
+
     public void SetTemporaryInvincibility(bool isActive)
     {
         bExternalInvincibility = isActive;
@@ -301,12 +335,12 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     {
         return isInvincible || bExternalInvincibility;
     }
-    
+
     public AuraController GetAuraController()
     {
         return auraController;
     }
-    
+
     public void TakeDamage(CombatEvent combatEvent)
     {
         var stun = 0.8f;
@@ -316,7 +350,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         {
             return;
         }
-
+        
+        
         // 실드가 있다면 피해 무효화 + 리턴
         if (mShieldEffect != null && mShieldEffect.TryConsumeShield())
         {
@@ -331,40 +366,37 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
             return;
         }
 
-        //  스턴 시간 감소 적용
-        stun = Mathf.Max(stun * (1f - fStunReduceRate), 0.2f);
-        
-        //스턴 처리 로직
-        hitPos.y = 0;
-        stunCoroutine = StartCoroutine(StunCoroutine(stun, hitPos));
+        if (!combatEvent.CanBeStunned)
+        {
+            //  스턴 시간 감소 적용
+            stun = Mathf.Max(stun * (1f - fStunReduceRate), 0.2f);
+
+            //스턴 처리 로직
+            hitPos.y = 0;
+            stunCoroutine = combatEvent.IsStrongKnockback
+                ? StartCoroutine(StunCoroutine(stun, hitPos, 3))
+                : StartCoroutine(StunCoroutine(stun, hitPos));
+        }
+
+        Debug.Log($"[보정 전 데미지]: {combatEvent.Damage}");
         
         //데미지 처리
         var reducedDamage = combatEvent.Damage * (1f - mStat.BaseStat.Armor);
         currentHP -= reducedDamage;
-        
+
         hpGauge?.SetGauge(currentHP / mStat.BaseStat.Health);
-        
-        Debug.Log($"Combat System: 피해량: {reducedDamage}");
-        Debug.Log($"Combat System: 현재 체력: {currentHP} / {mStat.BaseStat.Health}");
-        Debug.Log($"Combat System: 비율: {currentHP / mStat.BaseStat.Health}");
-        
+
+        Debug.Log($"[Combat System] 피해량: {reducedDamage}");
+        Debug.Log($"[Combat System] 현재 체력: {currentHP} / {mStat.BaseStat.Health}");
+        Debug.Log($"[Combat System] 비율: {currentHP / mStat.BaseStat.Health}");
+
         PlaySystemRefStorage.engineEffectTriggerManager.OnTakeDamage();
-        
+
         //사망 체크
         if (currentHP <= 0)
         {
-            int skillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
-            if (skillID == 313 && !bReviveUsed)
-            {
-                float maxHp = mStat.BaseStat.Health;
-                float reviveHp = Mathf.Max(1f, maxHp * revivePercent);
-                currentHP = reviveHp;
-                hpGauge?.SetGauge(currentHP / maxHp);
-                bReviveUsed = true; // 1회 부활만 허용하려면
-                Debug.Log($"[도베르만 엔진] 부활! 체력 {currentHP}/{maxHp} ({revivePercent * 100}%)");
-                // 부활 이펙트/애니메이션/사운드 추가 가능
-                return; // 사망 처리 막음
-            }
+            if (PlaySystemRefStorage.engineEffectTriggerManager.TryReviveOnDeath(this))
+                return;
 
             // 일반 사망 처리
             if (PlaySystemRefStorage.stageManager.GetBonusStage()) { return; }
@@ -372,7 +404,19 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         }
         
     }
+    
+    public void SetAuraRange(float range)
+    {
+        var runtimeStat = mStat;
+        var final = runtimeStat.FinalStat;
+        final.AuraRange = range;
+        runtimeStat.SetFinalStat(final);
+        mStat = runtimeStat;
 
+        auraController.InitAura(range, mStat.FinalStat.AuraStr);
+        Debug.Log($"[PlayerStatManager] SetAuraRange 호출! 값: {range}");
+    }
+    
     // 강제 체력 회복용 메서드 추가
     public void ForceRevive(float reviveHp)
     {
@@ -384,7 +428,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     public void TakeHeal(HealEvent healEvent)
     {
         currentHP = Mathf.Min(currentHP + healEvent.Heal, mStat.BaseStat.Health);
-        
+
         hpGauge?.SetGauge(currentHP / mStat.BaseStat.Health);
     }
 }

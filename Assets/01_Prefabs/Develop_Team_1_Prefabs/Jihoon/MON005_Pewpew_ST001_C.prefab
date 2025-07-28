@@ -78,7 +78,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -102,6 +102,7 @@ MonoBehaviour:
     type: 3}
   isExplodeFXAtPlayer: 1
   pattern: 0
+  isBoss: 0
 --- !u!114 &1072457946450581001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,10 +127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2496f0de79cfafe4089067a76a05df68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: 1
-  defaultDamage: 20
-  skillDamage: 0
   mainCollider: {fileID: 1072457946450581015}
+  defaultDamage: 35
+  appliedDamage: 0
+  skillDamage1: 0
 --- !u!114 &-6918510194173504982
 MonoBehaviour:
   m_ObjectHideFlags: 0

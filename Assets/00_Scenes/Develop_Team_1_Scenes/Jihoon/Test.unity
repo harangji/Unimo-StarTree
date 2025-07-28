@@ -406,13 +406,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 615613598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4454a3fffa34ec340b901c081d0cafe5, type: 3}
+  m_Script: {fileID: 11500000, guid: d20dd0b9ef08ed54db77a67b8cc016ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  moveDuration: 1.5
-  moveDistance: 5
-  maxRotationAngle: 30
+  pattern1: {fileID: 1873183988358952980, guid: d334d5478fee1f64aaea37132e009cf5,
+    type: 3}
 --- !u!65 &615613600
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -625,7 +623,7 @@ GameObject:
   - component: {fileID: 2019084225}
   - component: {fileID: 2019084224}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

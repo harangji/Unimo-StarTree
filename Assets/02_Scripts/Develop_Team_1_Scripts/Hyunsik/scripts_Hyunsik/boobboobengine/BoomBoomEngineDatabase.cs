@@ -69,7 +69,7 @@ public static class BoomBoomEngineDatabase
         Rarity = "Normal",
         ModelID = "EQC002_HoneyJar",
         SkillID = 302,
-        StatBonus = new SCharacterStat { YFGainMult = 10f }
+        StatBonus = new SCharacterStat { YFGainMult = 1.0f }
     };
     
     private static BoomBoomEngineData CreateEngine_Toaster() => new BoomBoomEngineData
@@ -280,7 +280,7 @@ public static class BoomBoomEngineDatabase
         Rarity = "Unique",
         ModelID = "EQC010_Cloud",
         SkillID = 321,
-        StatBonus = new SCharacterStat { }
+        StatBonus = new SCharacterStat { StunIgnoreChance = 0.05f}
     };
 
     private static BoomBoomEngineData CreateEngine_Bathtub() => new BoomBoomEngineData
@@ -291,7 +291,7 @@ public static class BoomBoomEngineDatabase
         Rarity = "Legend",
         ModelID = "EQC007_Bathtub",
         SkillID = 322,
-        StatBonus = new SCharacterStat { CriticalMult = 10f }
+        StatBonus = new SCharacterStat { CriticalMult = 1.0f }
     };
 
     private static BoomBoomEngineData CreateEngine_SandCastle() => new BoomBoomEngineData

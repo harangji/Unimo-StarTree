@@ -5,12 +5,12 @@ public class BoomBoomEngineCallbackSystem : MonoBehaviour
 {
     public class EngineActiveCallback
     {
-        public event Action<int> OnEngineActivated;
+        public event Action<int, PlayerStatManager> OnEngineActivated;
 
-        public void ActivateEngine(int skillID)
+        public void ActivateEngine(int skillID, PlayerStatManager player)
         {
             Debug.Log($"ºØºØ¿£Áø ¾×Æ¼ºê ¹ßµ¿ (SkillID={skillID})");
-            OnEngineActivated?.Invoke(skillID);
+            OnEngineActivated?.Invoke(skillID, player);
         }
     }
 
@@ -23,8 +23,8 @@ public class BoomBoomEngineCallbackSystem : MonoBehaviour
         ActiveCallback.OnEngineActivated += HandleEngineActivated;
     }
 
-    private void HandleEngineActivated(int skillID)
+    private void HandleEngineActivated(int skillID, PlayerStatManager player)
     {
-        effectController.ActivateEffect(skillID);
+        effectController.ActivateEffect(skillID, player);
     }
 }
