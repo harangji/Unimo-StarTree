@@ -15,6 +15,9 @@ using Random = UnityEngine.Random;
 
 public class GimmickManager : MonoBehaviour
 {    
+    [field: SerializeField] public GameObject UnimoPrefab { get; set; }
+    [field: SerializeField] private GameDataSOHolder gameDataSoHolder;
+    
     //경고 연출s
     [LabelText("경고 팝업창"), SerializeField]
     private GameObject warningPopup;
@@ -43,26 +46,27 @@ public class GimmickManager : MonoBehaviour
     [LabelText("기믹 준비됨 bool"), ReadOnly]
     private bool bIsReadyGimmiks = false;
     
+    
     //ReadOnly
     [LabelText("현재 스테이지 캐싱"), ShowInInspector, ReadOnly]
-    private int currentStage;
+    private int mCurrentStage;
     
     [LabelText("복잡도 점수"), ShowInInspector, ReadOnly]
-    private int currentCost;
+    private int mCurrentCost;
     
     [LabelText("골라진 기믹들"), ShowInInspector, ReadOnly]
-    private Queue<Gimmick> readyGimmicks = new Queue<Gimmick>();
-
-    private List<eGimmickGrade> canSelectAbleGrades = new List<eGimmickGrade>(); //등장 가능한 기믹 등급
+    private Queue<Gimmick> mReadyGimmicks = new Queue<Gimmick>();
     
-    private Dictionary<eGimmickGrade, List<Gimmick>> canSelectedGimmicksDictionary = new Dictionary<eGimmickGrade, List<Gimmick>>(); //예비군
+    private List<eGimmickGrade> mCanSelectAbleGrades = new List<eGimmickGrade>(); //등장 가능한 기믹 등급
+    
+    private Dictionary<eGimmickGrade, List<Gimmick>> mCanSelectedGimmicksDictionary = new Dictionary<eGimmickGrade, List<Gimmick>>(); //예비군
+
     
     private int gimmickCount = 0;
-    
-    [field: SerializeField] public GameObject unimoPrefab { get; private set; }
-    
     public static GimmickManager Instance { get; private set; }
 
+    private Dictionary<string, GimmickInitializer> mGimmickInitializersMapper;
+    
     private void Awake()
     {
         if (Instance == null)
@@ -74,11 +78,16 @@ public class GimmickManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        mGimmickInitializersMapper = new Dictionary<string, GimmickInitializer>
+        {
+            { "G_TRP_002", gimmickInitializers[0] }, // 블랙홀
+            { "G_ENV_004", gimmickInitializers[1] } // 레드존
+        };
     }
 
     void Start()
     {
-        readyGimmicks.Clear();
+        mReadyGimmicks.Clear();
         
         InitializeGimmickManager(); //기믹 뽑기
     }
@@ -89,18 +98,26 @@ public class GimmickManager : MonoBehaviour
         {
             PlaySceneController.Instance.PauseGameSingleton();
             //기믹 생성 연출 필요 ToDo:;
-            readyGimmicks.Dequeue().ActivateGimmick(); //기믹 활성화
+            mReadyGimmicks.Dequeue().ActivateGimmick(); //기믹 활성화
             PlaySceneController.Instance.ResumeGameSingleton();
         }
     }
+    
     public void InitializeGimmickManager()
     {
-        currentStage = Base_Manager.Data.UserData.BestStage + 100; //스테이지 int 캐싱 //최소 1 (테스트 100)
+        mCurrentStage = Base_Manager.Data.UserData.BestStage + 100; //스테이지 int 캐싱 //최소 1 (테스트 100)
         
-        if (SetGimmicCountByStageNumber(currentStage)) //스테이지 수에 따른 설정들 - false일 경우 기믹 갯수가 0이므로 실행 안함
+        if (SetGimmicCountByStageNumber(mCurrentStage)) //스테이지 수에 따른 설정들 - false일 경우 기믹 갯수가 0이므로 실행 안함
         {
-            List<GimmickSample> canSelectAbleGimmickSamples = GetCanSelectAbleGimmickSamplesByGrade(canSelectAbleGrades); //기믹 껍데기 반환
+            List<GimmickSample> canSelectAbleGimmickSamples = GetCanSelectAbleGimmickSamplesByGrade(mCanSelectAbleGrades); //기믹 껍데기 반환
             PickGimmickSamples(canSelectAbleGimmickSamples, gimmickCount); //기믹 껍데기 기반으로 생성
+
+            ToTsvGimmickData[] toTsvGimmickDatas = gameDataSoHolder.GimmicParsingDataSo.GetDataAll();
+            for (int i = 0; i < toTsvGimmickDatas.Length; i++)
+            {
+                //key로 Initializer 매핑하여 초기화
+                mGimmickInitializersMapper[toTsvGimmickDatas[i].Key].GimmickInitializerSetting(toTsvGimmickDatas[i]);
+            }
             
             bIsReadyGimmiks = true;
         }
@@ -118,46 +135,46 @@ public class GimmickManager : MonoBehaviour
         switch (stageNumber)
         {
             case <= 10:
-                currentCost = 0; //복잡도 점수
+                mCurrentCost = 0; //복잡도 점수
                 return false;
             
             case <= 50:
-                currentCost = 10;
+                mCurrentCost = 10;
                 probabilities = new[] { 100, 0, 0, 0 }; //갯수 확률 설정
             
-                canSelectAbleGrades.Add(eGimmickGrade.Nomal); //고를 수 있는 기믹 등급 리스트 설정
+                mCanSelectAbleGrades.Add(eGimmickGrade.Nomal); //고를 수 있는 기믹 등급 리스트 설정
                 break;
             
             case <= 100:
-                currentCost = 25;
+                mCurrentCost = 25;
                 probabilities = new[] { 30, 70, 0, 0 };
             
-                canSelectAbleGrades.Add(eGimmickGrade.Nomal);
-                canSelectAbleGrades.Add(eGimmickGrade.Enhanced);
+                mCanSelectAbleGrades.Add(eGimmickGrade.Nomal);
+                mCanSelectAbleGrades.Add(eGimmickGrade.Enhanced);
                 break;
             
             case <= 300:
-                currentCost = 40;
+                mCurrentCost = 40;
                 probabilities = new[] { 0, 30, 70, 0 };
-                canSelectAbleGrades.Add(eGimmickGrade.Nomal);
-                canSelectAbleGrades.Add(eGimmickGrade.Enhanced);
-                canSelectAbleGrades.Add(eGimmickGrade.Elite);
+                mCanSelectAbleGrades.Add(eGimmickGrade.Nomal);
+                mCanSelectAbleGrades.Add(eGimmickGrade.Enhanced);
+                mCanSelectAbleGrades.Add(eGimmickGrade.Elite);
                 break;
             
             case <= 600:
-                currentCost = 55;
+                mCurrentCost = 55;
                 probabilities = new[] { 0, 20, 70, 10 };
             
-                canSelectAbleGrades.Add(eGimmickGrade.Enhanced);
-                canSelectAbleGrades.Add(eGimmickGrade.Elite);
+                mCanSelectAbleGrades.Add(eGimmickGrade.Enhanced);
+                mCanSelectAbleGrades.Add(eGimmickGrade.Elite);
                 break;
             
             case <= 1000:
-                currentCost = 70;
+                mCurrentCost = 70;
                 probabilities = new[] { 0, 0, 40, 60 };
             
-                canSelectAbleGrades.Add(eGimmickGrade.Elite);
-                canSelectAbleGrades.Add(eGimmickGrade.Legendary);
+                mCanSelectAbleGrades.Add(eGimmickGrade.Elite);
+                mCanSelectAbleGrades.Add(eGimmickGrade.Legendary);
                 break;
         }
         
@@ -186,7 +203,7 @@ public class GimmickManager : MonoBehaviour
             //하나의 Grade의 gimmickInitializers 모두 조회
             foreach (var gimmickInitializer in gimmickInitializers)
             {
-                if (gimmickInitializer.Costs[(int)grade] > currentCost) continue;
+                if (gimmickInitializer.Costs[(int)grade] > mCurrentCost) continue;
                 
                 GimmickSample gimmickSample = new GimmickSample()
                 {
@@ -231,7 +248,7 @@ public class GimmickManager : MonoBehaviour
                 if (rand <= cumulative) //추첨
                 {
                     Gimmick readyGimmick = entry.GimmickInitializer.InitializeGimmick(entry.GimmickGrade); //껍데기를 통해 생성
-                    readyGimmicks.Enqueue(readyGimmick); // 준비된 기믹에 추가
+                    mReadyGimmicks.Enqueue(readyGimmick); // 준비된 기믹에 추가
                     
                     cashGimmickTypes.Add(entry.GimmickInitializer.GimmickType); // 뽑은 타입을 추가, 중복방지
                     

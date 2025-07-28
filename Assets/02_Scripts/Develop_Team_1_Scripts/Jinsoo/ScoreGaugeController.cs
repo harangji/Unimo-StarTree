@@ -10,14 +10,14 @@ using UnityEngine.UI;
 /// </summary>
 public class ScoreGaugeController : MonoBehaviour
 {
-    [FormerlySerializedAs("fillImage")] [SerializeField] private Image mfillImage;   // 게이지 이미지 (Filled 방식)
+    [SerializeField] private Image mFillTopImage;   // 게이지 이미지 (Filled 방식)
+    [SerializeField] private Image mFillBottomImage;   // 게이지 이미지 (Filled 방식)
     // [SerializeField] private Text scoreText;    // 점수 표시 (선택사항)
     [SerializeField] private Image[] mStarImages;
     [SerializeField] [CanBeNull] private Image[] mGameClearStarImages;
     [SerializeField] private Image mEmptyStarImage;
     [SerializeField] private Image mFilledStarImage;
     
-    [CanBeNull] public TextMeshProUGUI mNewStarAddRedReward;
     [CanBeNull] public TextMeshProUGUI mNewStarAddBlueReward;
 
     private double mCurrentScore = 0;
@@ -72,23 +72,33 @@ public class ScoreGaugeController : MonoBehaviour
         float ratio = (float)(mCurrentScore / mTargetScore);
         ratio = Mathf.Clamp01(ratio);
 
-        mfillImage.fillAmount = ratio;
+        mFillTopImage.fillAmount = ratio;
+        mFillBottomImage.fillAmount = ratio;
         
         switch (ratio)
         {
             case >= 1.0f:
                 mStarImages[2].sprite = mFilledStarImage.sprite;
-                if (mGameClearStarImages != null) mGameClearStarImages[2].sprite = mFilledStarImage.sprite;
+                if (mGameClearStarImages != null)
+                {
+                    mGameClearStarImages[2].sprite = mFilledStarImage.sprite;
+                }
                 mStarImages[2].color = new Color(1f, 1f, 1f);
                 break;
             case >= 0.66f:
                 mStarImages[1].sprite = mFilledStarImage.sprite;
-                if (mGameClearStarImages != null) mGameClearStarImages[1].sprite = mFilledStarImage.sprite;
+                if (mGameClearStarImages != null)
+                {
+                    mGameClearStarImages[1].sprite = mFilledStarImage.sprite;
+                }
                 mStarImages[1].color = new Color(1f, 1f, 1f);
                 break;
             case >= 0.33f:
                 mStarImages[0].sprite = mFilledStarImage.sprite;
-                if (mGameClearStarImages != null) mGameClearStarImages[0].sprite = mFilledStarImage.sprite;
+                if (mGameClearStarImages != null)
+                {
+                    mGameClearStarImages[0].sprite = mFilledStarImage.sprite;
+                }
                 mStarImages[0].color = new Color(1f, 1f, 1f);
                 break;
         }

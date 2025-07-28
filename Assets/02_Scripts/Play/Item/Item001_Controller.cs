@@ -21,6 +21,8 @@ public class Item001_Controller : ItemController
             };
             
             CombatSystem.Instance.AddInGameEvent(healEvent);
+            
+            Base_Manager.Data.UserData.TimeItem++;
         }
     }
 }

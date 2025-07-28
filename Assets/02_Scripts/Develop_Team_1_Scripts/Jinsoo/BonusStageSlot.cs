@@ -33,15 +33,17 @@ public class BonusStageSlot : MonoBehaviour
 
             // 버튼 색상 변경 (회색 처리)
             var colors = playButton.colors;
-            colors.normalColor = new Color(0.6f, 0.6f, 0.6f); // 연한 회색
+            colors.normalColor = new Color(0.88f, 0.86f, 0.86f); // 회색
             playButton.colors = colors;
+
+            stageText.color = new Color(0.2f, 0.2f, 0.2f, 0.4f);
         }
         else
         {
             // 재도전 가능
             playButton.interactable = true;
             var colors = playButton.colors;
-            colors.normalColor = Color.white;
+            colors.normalColor = new Color(0.9f, 0.9f, 0.9f);
             playButton.colors = colors;
 
             playButton.onClick.AddListener(() =>

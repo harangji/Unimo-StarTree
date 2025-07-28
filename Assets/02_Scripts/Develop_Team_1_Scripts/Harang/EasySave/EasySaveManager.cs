@@ -44,6 +44,7 @@ public class EasySaveManager : MonoBehaviour
     // ES3File 버퍼에 지연 저장 - CommitBuffered() 시 한번에
     public void SaveBuffered<T>(string key, T value)
     {
+        if(!canSave) return;
         MyDebug.Log("저장 스택 쌓임");
         UserDataES3File.Save<T>(key, value);
     }
@@ -51,6 +52,7 @@ public class EasySaveManager : MonoBehaviour
     // ES3File 버퍼에 쌓인 value를 저장
     public void CommitBuffered()
     {
+        if(!canSave) return;
         MyDebug.Log("쌓인 스택 저장 완료");
         UserDataES3File.Sync();
     }
@@ -77,10 +79,13 @@ public class EasySaveManager : MonoBehaviour
             ES3.DeleteKey(key, UserDataSettings);
     }
 
+    private bool canSave = true;
+    
     // 전체 삭제
     public void DeleteAll()
     {
         ES3.DeleteFile(UserDataSettings.path);
+        canSave = false;
     }
     
 }
@@ -122,8 +127,8 @@ public class User_Data
     public int GamePlay;
     public int ADS;
     public int ADSNoneReset;
-    public int Touch;
-    public int TimeItem;
+    public int Touch; // 터치에서 유니모 강화하기로 변경했습니다. (변수명은 아직 바꾸지 않았습니다.)
+    public int TimeItem; // 시간 아이템이 아닌 회복 아이템으로 변경했습니다. (마찬가지로 변수명은 바꾸지 않았습니다.)
     public int RePlay;
 
     // 미션 완료 여부 (데일리)
@@ -131,7 +136,7 @@ public class User_Data
     public bool GetGamePlay; // 게임 플레이하기
     public bool GetADS; // 광고보기
     public bool GetTouch; // 유니모 터치하기
-    public bool GetTimeItem; //게 임 내에서 타이머 증가 아이템 먹기
+    public bool GetTimeItem; // 게임 내에서 타이머 증가 아이템 먹기
     public bool GetRePlay; // 두 배 보상
 
     //업적 완료 여부

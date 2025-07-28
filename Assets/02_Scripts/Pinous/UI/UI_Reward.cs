@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum RewardState
 {
@@ -12,7 +14,9 @@ public class UI_Reward : UI_Base
 {
     public GameObject OtherRewardPanel;
     public GameObject CharRewardPanel;
-    public TextMeshProUGUI GetRewardText; 
+    public TextMeshProUGUI GetRewardText;
+    
+    [SerializeField] [CanBeNull] private Image m_RewardImage;
 
     public override void Start()
     {
@@ -67,7 +71,14 @@ public class UI_Reward : UI_Base
             case RewardState.Other:
                 OtherRewardPanel.SetActive(true);
                 TextMeshProUGUI texts = OtherRewardPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-                Base_Manager.Data.UserData.Blue += cnt;
+                if (cnt >= 500)
+                {
+                    Base_Manager.Data.UserData.Red += cnt;
+                }
+                else
+                {
+                    Base_Manager.Data.UserData.Blue += cnt;
+                }
                 texts.text = "x" + cnt.ToString();
                 break;
             case RewardState.Character:

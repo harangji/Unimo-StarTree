@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 
 // 남은 플레이 시간 관리를 담당
@@ -16,8 +17,11 @@ public class PlayTimeManager : MonoBehaviour
     private bool isPaused = true;
     [CanBeNull] private ItemGenerator itemGenerator;
     [SerializeField] private TimeGaugeController timerGauge;
+    [SerializeField] [CanBeNull] private TextMeshProUGUI mTimerText;
     
     private bool mbTimerStopped = false;
+    
+    public float RemainingTime => remainTime;
     
     public float GetRemainTime() => remainTime;
     public bool GetTimerStopped() => mbTimerStopped;
@@ -88,6 +92,11 @@ public class PlayTimeManager : MonoBehaviour
             mbTimerStopped = true;
         }
         timerGauge.SetGauge(remainTime / maxTime);
+        if (mTimerText != null)
+        {
+            var floorTime = (int)remainTime;
+            mTimerText.text = floorTime.ToString();
+        }
     }
     private float calcReduceRate(float lapse)
     {

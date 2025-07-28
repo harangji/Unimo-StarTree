@@ -7849,7 +7849,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &505444016
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15858,9 +15858,9 @@ RectTransform:
   - {fileID: 1904120357}
   m_Father: {fileID: 1866218693}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1190, y: -200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -200}
   m_SizeDelta: {x: 150, y: -700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1828067244
@@ -17001,7 +17001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GetCompletedMission: 0
-  MissionMark: {fileID: 0}
+  MissionMark: {fileID: 505444015}
 --- !u!4 &1935465900
 Transform:
   m_ObjectHideFlags: 0
@@ -17055,8 +17055,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -219.99982}
-  m_SizeDelta: {x: 800, y: 200}
+  m_AnchoredPosition: {x: 25, y: -219.99982}
+  m_SizeDelta: {x: 850, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1941414572
 MonoBehaviour:
