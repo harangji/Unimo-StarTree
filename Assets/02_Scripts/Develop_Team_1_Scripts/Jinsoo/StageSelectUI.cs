@@ -3,7 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// 추후 추가할 UI 예시
+/// <summary>
+/// Lobby 씬의 스테이지 진입 버튼 Class
+/// </summary>
 public class StageSelectUI : MonoBehaviour
 {
     // 가운데에 적힐 Stage 번호 텍스트

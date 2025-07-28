@@ -41,6 +41,7 @@ public class MissionFinder : MonoBehaviour
                 if (GetCompletedMission == true) break;
             }
         }
+        
         MissionMark.SetActive(GetCompletedMission);
     }
     private bool GetCheckAchieve(int value)

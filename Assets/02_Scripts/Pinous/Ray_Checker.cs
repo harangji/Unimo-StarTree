@@ -76,7 +76,7 @@ public class Ray_Checker : MonoBehaviour
                     Canvas_Holder.instance.GetUI("##Unimo");
                     Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Unimo>().Key = hit.transform.gameObject.GetComponent<AI_Move>().Name;
 
-                    Base_Manager.Data.UserData.Touch++;
+                    // Base_Manager.Data.UserData.Touch++; // 유니모 터치 시 예전의 퀘스트 터치 증가 제거
                 }
             }
             obj = null;
