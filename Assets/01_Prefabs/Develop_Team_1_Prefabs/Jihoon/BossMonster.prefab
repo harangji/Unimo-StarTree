@@ -277,6 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pattern1: {fileID: 1873183988358952980, guid: d334d5478fee1f64aaea37132e009cf5,
     type: 3}
+  parents: {fileID: 5430360816383605108}
 --- !u!114 &1508913971679610982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1053,6 +1054,37 @@ Transform:
   - {fileID: 4742412287360167516}
   m_Father: {fileID: 6645618772173547176}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7006238839976332373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5430360816383605108}
+  m_Layer: 9
+  m_Name: SpawnedPattern
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5430360816383605108
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7006238839976332373}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 140373426390732208}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7171817942488705474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1193,7 +1225,7 @@ GameObject:
   - component: {fileID: 8894038903820872338}
   - component: {fileID: 3155139863087760817}
   - component: {fileID: 3473981320480033012}
-  - component: {fileID: 166928811168365032}
+  - component: {fileID: 2048600256913732848}
   - component: {fileID: 881998691838660088}
   m_Layer: 9
   m_Name: BossMonster
@@ -1216,6 +1248,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4711454949333909065}
+  - {fileID: 5430360816383605108}
   - {fileID: 4430879066749498101}
   - {fileID: 3630724171972459937}
   - {fileID: 1421651863677937815}
@@ -1302,7 +1335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09a18e802695a254f91c1990935fad8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &166928811168365032
+--- !u!114 &2048600256913732848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1311,16 +1344,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7924961332280952870}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92d7ae774ed294b43a6d7e95e6c654e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 2496f0de79cfafe4089067a76a05df68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mainCollider: {fileID: 8894038903820872338}
-  stage: 1
-  defaultDamage: 100
-  skillDamage1: 0
-  skillDamage2: 0
-  skillDamage3: 0
-  skillDamage4: 0
+  defaultDamage: 65
+  appliedDamage: 0
+  skillDamages: 16000000500000003e000000
 --- !u!114 &881998691838660088
 MonoBehaviour:
   m_ObjectHideFlags: 0
