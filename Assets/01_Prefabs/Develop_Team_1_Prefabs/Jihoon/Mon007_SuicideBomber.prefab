@@ -261,9 +261,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCollider: {fileID: 5987763322446070628}
-  stage: 1
-  defaultDamage: 1
-  skillDamage1: 0
+  defaultDamage: 35
+  appliedDamage: 0
+  skillDamages: 32000000
 --- !u!114 &7919001397906085611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,7 +293,7 @@ MonoBehaviour:
   explodeFX: {fileID: 5607654275264705885}
   isExplodeFXAtPlayer: 1
   pattern: 0
-  isBoss: 0
+  isBoss: 1
 --- !u!114 &1096242687382444329
 MonoBehaviour:
   m_ObjectHideFlags: 0

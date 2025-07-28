@@ -9,11 +9,11 @@ public class BossController : MonsterController
 
     public bool canAction = true;
     public bool isPattern3 = false;
-    
+
     public override void InitEnemy(Transform targetPlayer)
     {
         playerTransform = targetPlayer;
-        
+
         enemyAnimator = GetComponent<Animator>();
         machine = GetComponent<MonsterMachine>();
         enemyCollider = GetComponent<Collider>();
@@ -25,7 +25,7 @@ public class BossController : MonsterController
         enemyExplode = GetComponentInChildren<MonsterState_Explode>();
 
         bossPatterns = GetComponentsInChildren<BossState_Pattern>();
-        
+
         MonGeneratorManager.AllMonsterListSTATIC.Add(this);
         EnemyAppear();
     }
@@ -41,17 +41,16 @@ public class BossController : MonsterController
         {
             if (other.TryGetComponent<PlayerStatManager>(out var player))
             {
-                Vector3 hitPos = transform.position; //other.ClosestPoint(transform.position + new Vector3(0f, 1.5f, 0f))
+                Vector3 hitPos = transform.position; 
                 hitPos.y = 0f;
 
-                //todo 이 부분에서 나중에 컴벳 시스템으로 바꿔야 함 -> 지금은 그냥 Hit 메서드를 변경함
                 var monster = GetComponent<IDamageAble>();
 
                 CombatEvent combatEvent = new CombatEvent
                 {
                     Sender = monster,
                     Receiver = player,
-                    Damage = (monster as Monster).appliedDamage,
+                    Damage = ((Monster)monster).appliedDamage,
                     HitPosition = hitPos,
                     Collider = other,
                     IsStrongKnockback = false,
@@ -59,17 +58,13 @@ public class BossController : MonsterController
 
                 if (isPattern3)
                 {
-                    combatEvent.Damage = (monster as Monster).skillDamages[2];
+                    combatEvent.Damage = ((Monster)monster).skillDamages[2];
                     combatEvent.IsStrongKnockback = true;
                 }
-                
+
                 CombatSystem.Instance.AddInGameEvent(combatEvent);
 
-                // player.Hit(collideStunTime, hitPos, GetComponent<Monster>().GetDamage());
-
-                Vector3 fxPos = (isExplodeFXAtPlayer)
-                    ? (hitPos + other.transform.position) / 2f + 1.5f * Vector3.up
-                    : hitPos + 1.5f * Vector3.up;
+                Vector3 fxPos = (isExplodeFXAtPlayer) ? (hitPos + other.transform.position) / 2f + 1.5f * Vector3.up : hitPos + 1.5f * Vector3.up;
                 GameObject obj = Instantiate(explodeFX, fxPos, Quaternion.identity);
 
                 obj.GetComponent<AudioSource>().volume = Sound_Manager.instance._audioSources[1].volume;
@@ -83,9 +78,9 @@ public class BossController : MonsterController
     private IEnumerator StartStun()
     {
         canAction = false;
-        
+
         yield return new WaitForSeconds(1f);
-        
+
         canAction = true;
     }
 }

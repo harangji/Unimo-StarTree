@@ -1,11 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Boss1State_Pattern_1 : BossState_Pattern
 {
     private static readonly int PATTERN1 = Animator.StringToHash("Pattern1");
     
     [SerializeField] private GameObject pattern1;
+    [SerializeField] private Transform parents;
 
     public override void TransitionAction(MonsterController controller)
     {
@@ -26,7 +28,9 @@ public class Boss1State_Pattern_1 : BossState_Pattern
         
         for (int i = 0; i < 4; i++)
         {
-            Instantiate(pattern1, transform.position + transform.forward * 5f, Quaternion.identity);
+            var mon = Instantiate(pattern1, transform.position + transform.forward * 5f, Quaternion.identity);
+
+            mon.GetComponent<BossPattern1>().motherDamage = GetComponentInParent<Monster>().skillDamages[0];
 
             yield return new WaitForSeconds(0.5f);
         }

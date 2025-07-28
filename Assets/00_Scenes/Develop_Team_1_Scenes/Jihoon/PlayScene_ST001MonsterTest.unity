@@ -6153,7 +6153,6 @@ Transform:
   - {fileID: 524533855}
   - {fileID: 443619040}
   - {fileID: 1813277866}
-  - {fileID: 1078978237}
   - {fileID: 1971803515}
   - {fileID: 93051893}
   - {fileID: 1337893009}
@@ -6824,7 +6823,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1078978237
 Transform:
   m_ObjectHideFlags: 0
@@ -6838,7 +6837,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 877649383}
+  m_Father: {fileID: 1813277866}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1078978238
 MonoBehaviour:
@@ -10313,6 +10312,7 @@ Transform:
   - {fileID: 622374549}
   - {fileID: 326843634}
   - {fileID: 1398289741}
+  - {fileID: 1078978237}
   m_Father: {fileID: 877649383}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1813277867
@@ -10328,17 +10328,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   generators:
-  - {fileID: 622374550}
   - {fileID: 1398289742}
   - {fileID: 2044775334}
   - {fileID: 1803579855}
+  - {fileID: 622374550}
   - {fileID: 326843635}
   activateTime:
   - 5
-  - 1000000
-  - 1000000
-  - 1000000
-  - 1000000
+  - 10
+  - 15
+  - 20
+  - 25
   extreamTime: 1000000
   extreamCoolTime: 1000000
 --- !u!1 &1852270993
