@@ -89,6 +89,8 @@ public class UI_UpgradePopup : MonoBehaviour
         {
             Debug.Log($"[{currentUnitID}] {stat} {increaseAmount} 레벨 상승 완료!");
             UpdateAllLevelUI();
+            // 여기다가 강화 버튼 눌렀다는 데이터 추가하면 될 듯
+            Base_Manager.Data.UserData.Touch++;
         }
     }
 

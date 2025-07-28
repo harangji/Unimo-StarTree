@@ -67,7 +67,14 @@ public class UI_Reward : UI_Base
             case RewardState.Other:
                 OtherRewardPanel.SetActive(true);
                 TextMeshProUGUI texts = OtherRewardPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-                Base_Manager.Data.UserData.Blue += cnt;
+                if (cnt >= 500)
+                {
+                    Base_Manager.Data.UserData.Red += cnt;
+                }
+                else
+                {
+                    Base_Manager.Data.UserData.Blue += cnt;
+                }
                 texts.text = "x" + cnt.ToString();
                 break;
             case RewardState.Character:

@@ -181,27 +181,25 @@ public class StageManager : MonoBehaviour
                     switch (i)
                     {
                         case 1: 
-                            Base_Manager.Data.UserData.Red += 50;
-                            redReward += 50;
-                            Debug.Log("별 달성 추가 보상 지급 : 50 Red"); 
+                            Base_Manager.Data.UserData.Blue += 5;
+                            blueReward += 5;
+                            Debug.Log("별 달성 추가 보상 지급 : 5 Blue"); 
                             break;
                         case 2: 
-                            Base_Manager.Data.UserData.Red += 100; 
-                            redReward += 100;
-                            Debug.Log("별 달성 추가 보상 지급 : 100 Red"); 
+                            Base_Manager.Data.UserData.Blue += 5; 
+                            blueReward += 5;
+                            Debug.Log("별 달성 추가 보상 지급 : 5 Blue"); 
                             break;
                         case 3: 
-                            Base_Manager.Data.UserData.Blue += 50; 
-                            blueReward += 50;
-                            Debug.Log("별 달성 추가 보상 지급 : 50 Blue"); 
+                            Base_Manager.Data.UserData.Blue += 10; 
+                            blueReward += 10;
+                            Debug.Log("별 달성 추가 보상 지급 : 10 Blue"); 
                             break;
                     }
                     rewardFlags |= bit;
                 }
             }
 
-            if (mScoreGauge.mNewStarAddRedReward != null)
-                mScoreGauge.mNewStarAddRedReward.SetText(redReward.ToString());
             if (mScoreGauge.mNewStarAddBlueReward != null)
                 mScoreGauge.mNewStarAddBlueReward.SetText(blueReward.ToString());
 

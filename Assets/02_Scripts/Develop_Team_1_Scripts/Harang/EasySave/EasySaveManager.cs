@@ -122,8 +122,8 @@ public class User_Data
     public int GamePlay;
     public int ADS;
     public int ADSNoneReset;
-    public int Touch;
-    public int TimeItem;
+    public int Touch; // 터치에서 유니모 강화하기로 변경했습니다. (변수명은 아직 바꾸지 않았습니다.)
+    public int TimeItem; // 시간 아이템이 아닌 회복 아이템으로 변경했습니다. (마찬가지로 변수명은 바꾸지 않았습니다.)
     public int RePlay;
 
     // 미션 완료 여부 (데일리)
@@ -131,7 +131,7 @@ public class User_Data
     public bool GetGamePlay; // 게임 플레이하기
     public bool GetADS; // 광고보기
     public bool GetTouch; // 유니모 터치하기
-    public bool GetTimeItem; //게 임 내에서 타이머 증가 아이템 먹기
+    public bool GetTimeItem; // 게임 내에서 타이머 증가 아이템 먹기
     public bool GetRePlay; // 두 배 보상
 
     //업적 완료 여부

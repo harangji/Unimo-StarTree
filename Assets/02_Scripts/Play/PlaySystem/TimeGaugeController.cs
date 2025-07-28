@@ -50,7 +50,7 @@ public class TimeGaugeController : MonoBehaviour
             return;
         }
         bool isshaking = clockAnim.GetBool("isshake");
-        bool willshake = ratio <= exLowStandard;
+        bool willshake = PlaySystemRefStorage.playTimeManager.RemainingTime <= 10;
         if (isshaking != willshake) 
         { 
             clockAnim.SetBool("isshake", willshake);

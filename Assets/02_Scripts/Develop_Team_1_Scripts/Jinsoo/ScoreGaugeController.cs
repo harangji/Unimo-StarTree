@@ -10,14 +10,14 @@ using UnityEngine.UI;
 /// </summary>
 public class ScoreGaugeController : MonoBehaviour
 {
-    [FormerlySerializedAs("fillImage")] [SerializeField] private Image mfillImage;   // 게이지 이미지 (Filled 방식)
+    [SerializeField] private Image mFillTopImage;   // 게이지 이미지 (Filled 방식)
+    [SerializeField] private Image mFillBottomImage;   // 게이지 이미지 (Filled 방식)
     // [SerializeField] private Text scoreText;    // 점수 표시 (선택사항)
     [SerializeField] private Image[] mStarImages;
     [SerializeField] [CanBeNull] private Image[] mGameClearStarImages;
     [SerializeField] private Image mEmptyStarImage;
     [SerializeField] private Image mFilledStarImage;
     
-    [CanBeNull] public TextMeshProUGUI mNewStarAddRedReward;
     [CanBeNull] public TextMeshProUGUI mNewStarAddBlueReward;
 
     private double mCurrentScore = 0;
@@ -72,7 +72,8 @@ public class ScoreGaugeController : MonoBehaviour
         float ratio = (float)(mCurrentScore / mTargetScore);
         ratio = Mathf.Clamp01(ratio);
 
-        mfillImage.fillAmount = ratio;
+        mFillTopImage.fillAmount = ratio;
+        mFillBottomImage.fillAmount = ratio;
         
         switch (ratio)
         {

@@ -155,7 +155,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 16375
 --- !u!114 &613431164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,6 +333,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 613431166}
     m_Modifications:
+    - target: {fileID: 2225577827642358551, guid: b6b2aa04fd7b9a5429c95b5af40f5185,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 498
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225577827642358551, guid: b6b2aa04fd7b9a5429c95b5af40f5185,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230763317709083977, guid: b6b2aa04fd7b9a5429c95b5af40f5185,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2889835246140298447, guid: b6b2aa04fd7b9a5429c95b5af40f5185,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8d4cf66673dc2df42834c23f3bbe5add,
+        type: 3}
+    - target: {fileID: 6499094094623252162, guid: b6b2aa04fd7b9a5429c95b5af40f5185,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6616315882770423300, guid: b6b2aa04fd7b9a5429c95b5af40f5185,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8185247066102825692, guid: b6b2aa04fd7b9a5429c95b5af40f5185,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8409811821023838986, guid: b6b2aa04fd7b9a5429c95b5af40f5185,
         type: 3}
       propertyPath: m_Pivot.x
