@@ -44,6 +44,7 @@ public class EasySaveManager : MonoBehaviour
     // ES3File 버퍼에 지연 저장 - CommitBuffered() 시 한번에
     public void SaveBuffered<T>(string key, T value)
     {
+        if(!canSave) return;
         MyDebug.Log("저장 스택 쌓임");
         UserDataES3File.Save<T>(key, value);
     }
@@ -51,6 +52,7 @@ public class EasySaveManager : MonoBehaviour
     // ES3File 버퍼에 쌓인 value를 저장
     public void CommitBuffered()
     {
+        if(!canSave) return;
         MyDebug.Log("쌓인 스택 저장 완료");
         UserDataES3File.Sync();
     }
@@ -77,10 +79,13 @@ public class EasySaveManager : MonoBehaviour
             ES3.DeleteKey(key, UserDataSettings);
     }
 
+    private bool canSave = true;
+    
     // 전체 삭제
     public void DeleteAll()
     {
         ES3.DeleteFile(UserDataSettings.path);
+        canSave = false;
     }
     
 }
