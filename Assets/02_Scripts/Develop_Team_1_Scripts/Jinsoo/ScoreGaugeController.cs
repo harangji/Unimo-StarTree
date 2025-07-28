@@ -79,17 +79,26 @@ public class ScoreGaugeController : MonoBehaviour
         {
             case >= 1.0f:
                 mStarImages[2].sprite = mFilledStarImage.sprite;
-                if (mGameClearStarImages != null) mGameClearStarImages[2].sprite = mFilledStarImage.sprite;
+                if (mGameClearStarImages != null)
+                {
+                    mGameClearStarImages[2].sprite = mFilledStarImage.sprite;
+                }
                 mStarImages[2].color = new Color(1f, 1f, 1f);
                 break;
             case >= 0.66f:
                 mStarImages[1].sprite = mFilledStarImage.sprite;
-                if (mGameClearStarImages != null) mGameClearStarImages[1].sprite = mFilledStarImage.sprite;
+                if (mGameClearStarImages != null)
+                {
+                    mGameClearStarImages[1].sprite = mFilledStarImage.sprite;
+                }
                 mStarImages[1].color = new Color(1f, 1f, 1f);
                 break;
             case >= 0.33f:
                 mStarImages[0].sprite = mFilledStarImage.sprite;
-                if (mGameClearStarImages != null) mGameClearStarImages[0].sprite = mFilledStarImage.sprite;
+                if (mGameClearStarImages != null)
+                {
+                    mGameClearStarImages[0].sprite = mFilledStarImage.sprite;
+                }
                 mStarImages[0].color = new Color(1f, 1f, 1f);
                 break;
         }

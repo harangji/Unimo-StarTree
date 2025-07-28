@@ -87,10 +87,10 @@ public class StageManager : MonoBehaviour
         {
             mCurrentDifficulty -= cost;
             DeleteText();
-            Debug.Log($"[StageManager] 비용 사용 : {cost} → 현재 난이도 : {mCurrentDifficulty}");
+            // Debug.Log($"[StageManager] 비용 사용 : {cost} → 현재 난이도 : {mCurrentDifficulty}");
             return true;
         }
-        Debug.Log($"cost가 부족합니다. 현재 cost => {mCurrentDifficulty}, 사용됐어야 할 cost => {cost}");
+        // Debug.Log($"cost가 부족합니다. 현재 cost => {mCurrentDifficulty}, 사용됐어야 할 cost => {cost}");
         return false;
     }
 
@@ -99,7 +99,7 @@ public class StageManager : MonoBehaviour
     {
         mCurrentDifficulty = Mathf.Min(mCurrentDifficulty + cost, mMaxDifficulty);
         DeleteText();
-        Debug.Log($"[StageManager] 비용 복구 : {cost} → 현재 난이도 : {mCurrentDifficulty}");
+        // Debug.Log($"[StageManager] 비용 복구 : {cost} → 현재 난이도 : {mCurrentDifficulty}");
     }
     
     // 목표 점수 도달 시 바로 클리어 처리
@@ -201,7 +201,9 @@ public class StageManager : MonoBehaviour
             }
 
             if (mScoreGauge.mNewStarAddBlueReward != null)
+            {
                 mScoreGauge.mNewStarAddBlueReward.SetText(blueReward.ToString());
+            }
 
             // 새로운 별 획득이 있었을 경우만 저장
             if (rewardFlags != 0 || newStars > CountBits(oldFlags))

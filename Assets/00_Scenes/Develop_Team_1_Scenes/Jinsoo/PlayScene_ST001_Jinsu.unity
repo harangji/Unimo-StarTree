@@ -6006,7 +6006,10 @@ MonoBehaviour:
   - {fileID: 1192055157}
   - {fileID: 1724528394}
   - {fileID: 1564169560}
-  mGameClearStarImages: []
+  mGameClearStarImages:
+  - {fileID: 1192055157}
+  - {fileID: 1724528394}
+  - {fileID: 1564169560}
   mEmptyStarImage: {fileID: 1686138777}
   mFilledStarImage: {fileID: 503839792}
   mNewStarAddBlueReward: {fileID: 0}
@@ -6351,6 +6354,7 @@ MonoBehaviour:
   shieldEffect: {fileID: 0}
   timedInvincibleEffect: {fileID: 0}
   magicHatEffect: {fileID: 0}
+  sandCastleEffect: {fileID: 0}
 --- !u!4 &872065067
 Transform:
   m_ObjectHideFlags: 0

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum RewardState
 {
@@ -12,7 +14,9 @@ public class UI_Reward : UI_Base
 {
     public GameObject OtherRewardPanel;
     public GameObject CharRewardPanel;
-    public TextMeshProUGUI GetRewardText; 
+    public TextMeshProUGUI GetRewardText;
+    
+    [SerializeField] [CanBeNull] private Image m_RewardImage;
 
     public override void Start()
     {
