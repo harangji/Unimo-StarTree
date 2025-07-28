@@ -6,9 +6,6 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 {
     private static readonly float invincibleTime = 0.5f;
     
-    //[SerializeField][Range(0.01f,1f)] private float revivePercent = 0.05f; // 30% (인스펙터에서 조절)
-    //private bool bReviveUsed = false; // 1회 한정 부활이라면
-    
     // 스탯 추가. 정현식
     [Header("유닛 ID로 선택")] [SerializeField] private int unimoID = 10101;
     private UnimoData mUnimoData;
@@ -30,8 +27,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
     // 임시로 작성.정현식
     // 회피, 스턴 저항 (스탯 반영 예정)
-    [SerializeField] [Range(0f, 1f)] private float bEvadeChance = 0.5f;
-    [SerializeField] [Range(0f, 1f)] private float fStunReduceRate = 0.5f;
+    [SerializeField] [Range(0f, 1f)] private float bEvadeChance;
+    [SerializeField] [Range(0f, 1f)] private float fStunReduceRate;
 
     private float regenAmountPerSecond;  // 초당 자연 회복
     private float armor;                 // 방어력 (데미지 감소율)
@@ -111,23 +108,6 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         //최대 체력으로 hp 초기화
         currentHP = mStat.BaseStat.Health;
         hpGauge?.SetGauge(1f);
-        StartCoroutine(DelayedBuffStart());
-    }
-
-    
-    private IEnumerator DelayedBuffStart()
-    {
-        yield return null; // 1프레임 딜레이 (모든 초기화 끝난 후)
-        var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
-        if (engineData != null && engineData.SkillID == 323)
-        {
-            var sandCastleEffect = GetComponent<AuraRangeSandCastleEffect>();
-            if (sandCastleEffect != null)
-            {
-                sandCastleEffect.ExecuteEffect();
-                Debug.Log("[PlayerStatManager] Start 이후 1프레임 → 모래성 AuraRange 누적 자동 시작!");
-            }
-        }
     }
     
     // 스탯 추가.정현식
