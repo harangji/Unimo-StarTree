@@ -111,7 +111,8 @@ public class Mission_Base : MonoBehaviour
         Canvas_Holder.instance.NoneClose = true;
         Canvas_Holder.instance.GetUI("##Reward");
         Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
-        Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Reward>().GetRewardInit(RewardState.Other, CharCostumer.Charcater, reward);
+        Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Reward>().GetRewardInit(RewardState.Other, rewardType, reward);
+        // Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Reward>().GetRewardInit(RewardState.Other, CharCostumer.Charcater, reward);
 
         GetCheck(style);
 
