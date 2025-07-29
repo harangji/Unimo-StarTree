@@ -16,7 +16,9 @@ public class UI_Reward : UI_Base
     public GameObject CharRewardPanel;
     public TextMeshProUGUI GetRewardText;
     
-    [SerializeField] [CanBeNull] private Image m_RewardImage;
+    [SerializeField] private Image mRewardImage;
+    [SerializeField] private Image mBlueStarImage;
+    [SerializeField] private Image mOrangeStarImage;
 
     public override void Start()
     {
@@ -73,10 +75,12 @@ public class UI_Reward : UI_Base
                 TextMeshProUGUI texts = OtherRewardPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
                 if (cnt >= 500)
                 {
+                    mRewardImage.sprite = mOrangeStarImage.sprite;
                     Base_Manager.Data.UserData.Red += cnt;
                 }
                 else
                 {
+                    mRewardImage.sprite = mBlueStarImage.sprite;
                     Base_Manager.Data.UserData.Blue += cnt;
                 }
                 texts.text = "x" + cnt.ToString();
