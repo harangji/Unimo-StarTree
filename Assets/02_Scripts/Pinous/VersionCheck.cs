@@ -1,6 +1,4 @@
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
-using Application = UnityEngine.Application;
 
 public class VersionCheck : MonoBehaviour
 {
