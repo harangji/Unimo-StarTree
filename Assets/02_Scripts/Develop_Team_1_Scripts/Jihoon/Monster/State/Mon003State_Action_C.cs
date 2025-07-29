@@ -51,30 +51,34 @@ public class Mon003State_Action_C : MonsterState_Action
     {
         hasBomb = true;
         Instantiate(bombFX, transform.position + Vector3.up, Quaternion.identity);
+        
         for (int i = 0; i < projectiles.Count; i++)
         {
             projectiles[i].transform.SetParent(null, true);
             projectiles[i].ActivateMissle(controller.playerTransform, controller.transform.position);
         }
-
-        Vector3 playerdiff = controller.transform.position - controller.playerTransform.position;
-        if (playerdiff.magnitude < bombRadius)
+        
+        if(!EditorMode.Instance.isInvincible)
         {
-            if (controller.playerTransform.TryGetComponent<PlayerStatManager>(out var player))
+            Vector3 playerdiff = controller.transform.position - controller.playerTransform.position;
+            if (playerdiff.magnitude < bombRadius)
             {
-                var monster = GetComponentInParent<IDamageAble>();
-                var playerIDamageAble = GameObject.FindGameObjectWithTag("Player").GetComponent<IDamageAble>();
-
-                CombatEvent combatEvent = new CombatEvent
+                if (controller.playerTransform.TryGetComponent<PlayerStatManager>(out var player))
                 {
-                    Sender = monster,
-                    Receiver = playerIDamageAble,
-                    Damage = (monster as Monster).skillDamages[0],
-                    HitPosition = controller.transform.position,
-                    Collider = monster.MainCollider,
-                };
+                    var monster = GetComponentInParent<IDamageAble>();
+                    var playerIDamageAble = GameObject.FindGameObjectWithTag("Player").GetComponent<IDamageAble>();
 
-                CombatSystem.Instance.AddInGameEvent(combatEvent);
+                    CombatEvent combatEvent = new CombatEvent
+                    {
+                        Sender = monster,
+                        Receiver = playerIDamageAble,
+                        Damage = (monster as Monster).skillDamages[0],
+                        HitPosition = controller.transform.position,
+                        Collider = monster.MainCollider,
+                    };
+
+                    CombatSystem.Instance.AddInGameEvent(combatEvent);
+                }
             }
         }
 

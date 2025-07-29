@@ -62,25 +62,28 @@ public class Mon004State_Action3 : MonsterState_Action
 
     private void hitGround()
     {
-        Vector3 playerdiff = controller.transform.position - controller.playerTransform.position;
-
-        if (playerdiff.magnitude < attRange)
+        if(!EditorMode.Instance.isInvincible)
         {
-            if (controller.playerTransform.TryGetComponent<PlayerStatManager>(out var player))
+            Vector3 playerdiff = controller.transform.position - controller.playerTransform.position;
+
+            if (playerdiff.magnitude < attRange)
             {
-                var monster = GetComponentInParent<IDamageAble>();
-                var playerIDamageAble = GameObject.FindGameObjectWithTag("Player").GetComponent<IDamageAble>();
-
-                CombatEvent combatEvent = new CombatEvent
+                if (controller.playerTransform.TryGetComponent<PlayerStatManager>(out var player))
                 {
-                    Sender = monster,
-                    Receiver = playerIDamageAble,
-                    Damage = (monster as Monster).skillDamages[0],
-                    HitPosition = controller.transform.position,
-                    Collider = monster.MainCollider,
-                };
+                    var monster = GetComponentInParent<IDamageAble>();
+                    var playerIDamageAble = GameObject.FindGameObjectWithTag("Player").GetComponent<IDamageAble>();
 
-                CombatSystem.Instance.AddInGameEvent(combatEvent);
+                    CombatEvent combatEvent = new CombatEvent
+                    {
+                        Sender = monster,
+                        Receiver = playerIDamageAble,
+                        Damage = (monster as Monster).skillDamages[0],
+                        HitPosition = controller.transform.position,
+                        Collider = monster.MainCollider,
+                    };
+
+                    CombatSystem.Instance.AddInGameEvent(combatEvent);
+                }
             }
         }
 

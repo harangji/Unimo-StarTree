@@ -53,7 +53,7 @@ public class MonsterController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isExplode)
+        if (!isExplode || EditorMode.Instance.isInvincible)
         {
             return;
         }
