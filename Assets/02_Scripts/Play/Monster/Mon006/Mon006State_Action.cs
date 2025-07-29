@@ -46,7 +46,19 @@ public class Mon006State_Action : MonsterState_Action
         {
             if (controller.playerTransform.TryGetComponent<PlayerStatManager>(out var player))
             {
-                // player.Hit(Mathf.Max(remainDuration, 0.3f) + 0.5f, laserPivot.position + projectedVec);
+                var monster = GetComponentInParent<IDamageAble>();
+                var playerIDamageAble = GameObject.FindGameObjectWithTag("Player").GetComponent<IDamageAble>();
+
+                CombatEvent combatEvent = new CombatEvent
+                {
+                    Sender = monster,
+                    Receiver = playerIDamageAble,
+                    Damage = (monster as Monster).appliedDamage,
+                    HitPosition = controller.transform.position,
+                    Collider = monster.MainCollider,
+                };
+
+                CombatSystem.Instance.AddInGameEvent(combatEvent);
             }
         }
     }

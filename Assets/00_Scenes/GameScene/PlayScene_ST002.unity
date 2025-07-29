@@ -617,8 +617,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5030e6b005171e440a5ea4c37c2dca50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiplier: 7.5
-  areaMultiplier: 7.5
 --- !u!1 &79281781
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,7 +662,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: 3b4d65c9b8e5f4145a945b9768e70da5, type: 2}
-  monsterPattern1: {fileID: 0}
+  monsterPattern1: {fileID: 6964213239136335483, guid: c4d35c87bc3a9dc42bb316bd71affd26,
+    type: 3}
   monsterPattern2: {fileID: 0}
   monsterPattern3: {fileID: 0}
 --- !u!1 &106045910
@@ -853,6 +852,7 @@ Transform:
   - {fileID: 229194274}
   - {fileID: 78303978}
   - {fileID: 1802229742}
+  - {fileID: 1572692448}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &159835808
@@ -1105,7 +1105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: a41d453bb487d1343a561cbf7269b055, type: 2}
-  monsterPattern1: {fileID: 0}
+  monsterPattern1: {fileID: 2560127493471256366, guid: d676f08f8464aef41ae8c2123cb6cbd6,
+    type: 3}
   monsterPattern2: {fileID: 0}
   monsterPattern3: {fileID: 0}
 --- !u!1 &210031641
@@ -7818,6 +7819,50 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1572692446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1572692448}
+  - component: {fileID: 1572692447}
+  m_Layer: 0
+  m_Name: CombatSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1572692447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572692446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56da2358d3659fe449a840580614997f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1572692448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572692446}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 159835806}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1586520197
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9788,7 +9833,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1813277866
 Transform:
   m_ObjectHideFlags: 0
@@ -9825,8 +9870,8 @@ MonoBehaviour:
   - {fileID: 79281783}
   activateTime:
   - 2
-  - 25
-  - 75
+  - 5
+  - 10
   extreamTime: 93
   extreamCoolTime: 16.5
 --- !u!1 &1854572483
@@ -11507,7 +11552,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: df4fea242ac922f44b2565ca26ea9e89, type: 2}
-  monsterPattern1: {fileID: 0}
+  monsterPattern1: {fileID: 1072457946450581002, guid: ffe6322e61141d34bb0d8082e496440f,
+    type: 3}
   monsterPattern2: {fileID: 0}
   monsterPattern3: {fileID: 0}
 --- !u!1 &2060688664
@@ -11958,6 +12004,7 @@ MonoBehaviour:
   shieldEffect: {fileID: 0}
   timedInvincibleEffect: {fileID: 0}
   magicHatEffect: {fileID: 0}
+  sandCastleEffect: {fileID: 0}
 --- !u!4 &2100808603
 Transform:
   m_ObjectHideFlags: 0
@@ -12768,7 +12815,7 @@ PrefabInstance:
     - target: {fileID: 4876853301105598581, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4876853301105598584, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
