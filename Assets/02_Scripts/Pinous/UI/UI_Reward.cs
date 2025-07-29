@@ -43,24 +43,24 @@ public class UI_Reward : UI_Base
         {
             case "removeads": 
                 if(Base_Manager.Data.UserData.ADSBuy == false)
-                GetRewardInit(RewardState.Other, CharCostumer.Charcater, 50, 0, 0);
+                GetRewardInit(RewardState.Other, CharCostumer.Charcater, 150, 0, 0);
                 Base_Manager.Data.UserData.ADSBuy = true;
                 Base_Manager.ADS.BannerDestroy();
                 Main_UI.instance.RectADSCheck();
                 break;
             case "revemoads_all": 
                 if(Base_Manager.Data.UserData.ADSBuy == false)
-                GetRewardInit(RewardState.Other, CharCostumer.Charcater, 400, 0, 0);
+                GetRewardInit(RewardState.Other, CharCostumer.Charcater, 1200, 0, 0);
                 Base_Manager.Data.UserData.ADSBuy = true;
                 Base_Manager.ADS.BannerDestroy();
                 Main_UI.instance.RectADSCheck();
                 break;
-            case "bluehoney_1500": GetRewardInit(RewardState.Other, CharCostumer.Charcater, 40, 0, 0); break;
-            case "bluehoney_3300": GetRewardInit(RewardState.Other, CharCostumer.Charcater, 95, 0, 0); break;
-            case "bluehoney_6900": GetRewardInit(RewardState.Other, CharCostumer.Charcater, 200, 0, 0); break;
-            case "bluehoney_9900": GetRewardInit(RewardState.Other, CharCostumer.Charcater, 300, 0, 0); break;
-            case "bluehoney_29000": GetRewardInit(RewardState.Other, CharCostumer.Charcater, 900, 0, 0); break;
-            case "bluehoney_49000": GetRewardInit(RewardState.Other, CharCostumer.Charcater, 1500, 0, 0); break;
+            case "bluehoney_1500": GetRewardInit(RewardState.Other, CharCostumer.Charcater, 120, 0, 0); break;
+            case "bluehoney_3300": GetRewardInit(RewardState.Other, CharCostumer.Charcater, 285, 0, 0); break;
+            case "bluehoney_6900": GetRewardInit(RewardState.Other, CharCostumer.Charcater, 600, 0, 0); break;
+            case "bluehoney_9900": GetRewardInit(RewardState.Other, CharCostumer.Charcater, 900, 0, 0); break;
+            case "bluehoney_29000": GetRewardInit(RewardState.Other, CharCostumer.Charcater, 2700, 0, 0); break;
+            case "bluehoney_49000": GetRewardInit(RewardState.Other, CharCostumer.Charcater, 4500, 0, 0); break;
             case "character_cu": GetRewardInit(RewardState.Character, CharCostumer.Charcater, 0, 5, 1); break;
             case "character_primo": GetRewardInit(RewardState.Character, CharCostumer.Charcater, 0, 9, 1); break;
             case "eq_bath": GetRewardInit(RewardState.Character, CharCostumer.EQ, 0, 1, 19); break;
