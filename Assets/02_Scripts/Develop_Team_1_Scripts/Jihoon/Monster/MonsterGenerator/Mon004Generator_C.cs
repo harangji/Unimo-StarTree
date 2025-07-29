@@ -18,8 +18,8 @@ public class Mon004Generator_C : MonsterGenerator
     {
         int cost;
         // var rate = Random.Range(0, 100);
-        // var rate = Random.Range(0, 70);
-        var rate = Random.Range(90,100);
+        var rate = Random.Range(0, 70);
+        // var rate = Random.Range(90,100);
         if (rate < 70) {cost = 1;}
         else if (rate < 90) cost = 3;
         else cost = 5;

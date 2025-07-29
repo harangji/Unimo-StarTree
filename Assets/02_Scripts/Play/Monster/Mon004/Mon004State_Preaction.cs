@@ -10,12 +10,16 @@ public class Mon004State_Preaction : MonsterState_Preaction
         controller.indicatorCtrl.DeactivateIndicator();
         checkPreActAnimDuration();
     }
+
     public override void UpdateAction()
-    { }
+    {
+    }
+
     private void checkPreActAnimDuration()
     {
         StartCoroutine(CoroutineExtensions.DelayedActionCall(startJumping, 0.05f));
     }
+
     private void startJumping()
     {
         float animTime = controller.enemyAnimator.GetCurrentAnimatorStateInfo(0).length;
@@ -23,6 +27,7 @@ public class Mon004State_Preaction : MonsterState_Preaction
         StartCoroutine(CoroutineExtensions.DelayedActionCall(() =>
         {
             controller.enemyCollider.enabled = false;
-            controller.EnemyAction(); }, animTime));
+            controller.EnemyAction();
+        }, animTime));
     }
 }
