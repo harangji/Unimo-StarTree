@@ -5305,12 +5305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a788f285f2683334cb4cdf83ffa623e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  texts:
-  - {fileID: 1148019907}
-  - {fileID: 1148019908}
   YellowText: {fileID: 388438812}
   RedText: {fileID: 699031815}
-  ScoreText: {fileID: 0}
   ADSButton: {fileID: 504548385}
 --- !u!82 &749429217
 AudioSource:
@@ -5491,8 +5487,11 @@ MonoBehaviour:
   - {fileID: 1192055157}
   - {fileID: 1724528394}
   - {fileID: 1564169560}
+  mGameClearStarImages: []
   mEmptyStarImage: {fileID: 1686138777}
   mFilledStarImage: {fileID: 503839792}
+  mNewStarAddRedReward: {fileID: 0}
+  mNewStarAddBlueReward: {fileID: 0}
 --- !u!114 &788380614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9004,12 +9003,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a788f285f2683334cb4cdf83ffa623e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  texts:
-  - {fileID: 1148019907}
-  - {fileID: 1148019908}
   YellowText: {fileID: 1765974676}
   RedText: {fileID: 1349264280}
-  ScoreText: {fileID: 0}
   ADSButton: {fileID: 666768175}
 --- !u!82 &1628869255
 AudioSource:
@@ -9172,11 +9167,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1639946463}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c81715860a9283542b77bbb414b64885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <UnimoPrefab>k__BackingField: {fileID: 307905777}
+  gameDataSoHolder: {fileID: 64308020}
   warningPopup: {fileID: 0}
   modeText: []
   modeIcon: []
@@ -9187,7 +9184,6 @@ MonoBehaviour:
   gimmickInitializers:
   - {fileID: 332699472}
   - {fileID: 1936151400}
-  <unimoPrefab>k__BackingField: {fileID: 307905777}
 --- !u!1 &1686138775
 GameObject:
   m_ObjectHideFlags: 0

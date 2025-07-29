@@ -1,4 +1,5 @@
 using System;
+using Mono.Cecil.Cil;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,11 +18,14 @@ public class Monster : MonoBehaviour, IDamageAble
     private void Start()
     {
         CombatSystem.Instance.RegisterMonster(this);
-        appliedDamage = CalculateFinalDamage(defaultDamage);
+
+        var isBoss = GetComponent<MonsterController>().isBoss;
+        
+        appliedDamage = isBoss ? CalculateFinalDamage(defaultDamage, 10, 0.1f) : CalculateFinalDamage(defaultDamage, 5, 0.05f);
 
         for (int i = 0; i < skillDamages.Length; i++)
         {
-            skillDamages[i] = CalculateFinalDamage(skillDamages[i]);
+            skillDamages[i] = isBoss ? CalculateFinalDamage(skillDamages[i], 10, 0.1f) : CalculateFinalDamage(skillDamages[i], 5, 0.05f);    
         }
     }
 
@@ -29,11 +33,13 @@ public class Monster : MonoBehaviour, IDamageAble
     /// 스테이지에 따라 증가하는 보정값을 반영해 최종 데미지를 계산한다.
     /// </summary>
     /// <returns>보정이 적용된 최종 데미지 (정수)</returns>
-    public int CalculateFinalDamage(int baseDamage)
+    private int CalculateFinalDamage(int baseDamage, int boss, float growthRate)
     {
-        int stageTier = StageLoader.CurrentStageNumber / 5;
-        float multiplier = 1f + 0.05f * stageTier;
-        return Mathf.RoundToInt(baseDamage * multiplier);   
+        int stageTier = (StageLoader.CurrentStageNumber - 1) / boss;
+        
+        float multiplier = 1f + growthRate * stageTier;
+        
+        return (int)(baseDamage * multiplier + 0.5f);
     }
     
     public void TakeDamage(CombatEvent combatEvent)
