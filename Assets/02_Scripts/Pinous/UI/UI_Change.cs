@@ -51,17 +51,28 @@ public class UI_Change : UI_Base
     // Orange
     void ValueChangeSlider_Orange(float value)
     {
-        var index = YellowStarCount / Base_Manager.Data.UserData.Second_Base;
-        var DetectedYellow = Base_Manager.Data.UserData.Blue - index;
-        if (value >= DetectedYellow)
-        {
-            value = (float)DetectedYellow;
-            OrangeSlider.value = value;
-        }
+        // 슬라이더 값 = 사용하려는 Blue 수
+        BlueStarCount = Mathf.FloorToInt(value); // 정수 보장
 
-        OrangeStarCount = (int)(value * 500);
-        BlueCount();
+        // Orange = Blue × 150 (정해진 교환 비율)
+        OrangeStarCount = BlueStarCount * 150;
+
+        // YellowSlider.value = 0;
+        // YellowStarCount = 0;
+
         TextCheck();
+        
+        // var index = YellowStarCount / Base_Manager.Data.UserData.Second_Base;
+        // var DetectedYellow = Base_Manager.Data.UserData.Blue - index;
+        // if (value >= DetectedYellow)
+        // {
+        //     value = (float)DetectedYellow;
+        //     OrangeSlider.value = value;
+        // }
+        //
+        // OrangeStarCount = (int)(value * 500);
+        // BlueCount();
+        // TextCheck();
     }
 
     // Yellow
