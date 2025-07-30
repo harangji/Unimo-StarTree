@@ -14,5 +14,4 @@ public class EditorMode : SingletonBehaviour<EditorMode>
         string str = isEditor ? "활성화" : "비활성화";
         Debug.Log($"[개발자 모드] : 개발자 모드 {str}");
     }
-    
 }
