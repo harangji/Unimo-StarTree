@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EditorModeInGame : MonoBehaviour
 {
+    [SerializeField] private GameObject spawnerControllerPanel;
+    
     private void Start()
     {
         if (!EditorMode.Instance.isEditor)
@@ -31,5 +33,19 @@ public class EditorModeInGame : MonoBehaviour
         string status = editorMode.isShowDamage ? "활성화" : "비활성화";
 
         Debug.Log($"[개발자 모드] 데미지 표시 {status}");
+    }
+    
+    public void OnClickSpawnerController()
+    {
+        var editorMode = EditorMode.Instance;
+
+        editorMode.isShowSpawnerController = !editorMode.isShowSpawnerController;
+        
+        spawnerControllerPanel.GetComponent<SpawnerControllerUI>().Initialize();
+        spawnerControllerPanel.SetActive(editorMode.isShowSpawnerController);
+        
+        string status = editorMode.isShowSpawnerController ? "활성화" : "비활성화";
+
+        Debug.Log($"[개발자 모드] 스포너 컨트롤러 표시 {status}");
     }
 }
