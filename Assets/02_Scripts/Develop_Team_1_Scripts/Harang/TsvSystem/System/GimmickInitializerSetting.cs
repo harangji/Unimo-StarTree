@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class GimmickInitializerSetting : MonoBehaviour
 {
-    private static readonly Dictionary<string, eGimmickType> gimmickIdMap = new()
+    private static readonly Dictionary<string, eGimmicks> gimmickIdMap = new()
     {
-        { "G_TRP_002", eGimmickType.BlackHole },
-        { "G_INT_003", eGimmickType.RedZone },
+        { "G_TRP_002", eGimmicks.BlackHole },
+        { "G_INT_003", eGimmicks.RedZone },
         // { "G_ENV_004", eGimmickType.Environment },
         // { "G_PZL_005", eGimmickType.Puzzle },
         // { "G_TRG_006", eGimmickType.Trigger }
@@ -25,7 +25,7 @@ public class GimmickInitializerSetting : MonoBehaviour
                    switch (type)
                    {
                        // ºí·¢È¦
-                       case eGimmickType.BlackHole:
+                       case eGimmicks.BlackHole:
                            break;
                        // // Æ¯¼öÇÑ ²É
                        // case "G_INT_003":

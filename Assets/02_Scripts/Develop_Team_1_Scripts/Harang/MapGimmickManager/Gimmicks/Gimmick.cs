@@ -16,10 +16,16 @@ public enum eGimmickGrade
     Legendary,
 }
 
-public enum eGimmickType
+public enum eGimmicks
 {
     BlackHole,
     RedZone
+}
+
+public enum eGimmickType
+{
+    Dangerous,
+    Helpful
 }
 
 [Serializable]
@@ -50,7 +56,10 @@ public abstract class Gimmick : MonoBehaviour
     
     //ReadOnly
     [LabelText("기믹 등급"), Tooltip("기믹을 설정할 때 동적으로 할당되는 기믹의 등급"), ReadOnly]
-    protected eGimmickGrade ebGimmickGrade { get; set; } // 동적으로 설정할 기믹 등급
+    protected eGimmickGrade eGimmickGrade { get; set; } // 동적으로 설정할 기믹 등급
+
+    [LabelText("기믹 타입"), Tooltip("해로운 기믹, 이로운 기믹 설정"), ReadOnly]
+    public abstract eGimmickType eGimmickType { get;}
     
     [LabelText("기믹 지속 시간"), ReadOnly] 
     protected int bGimmickCost { get; set; }
@@ -64,20 +73,21 @@ public abstract class Gimmick : MonoBehaviour
     [LabelText("기믹 효과 수치 2"), ReadOnly]
     protected float bGimmickEffectValue2 { get; set; }
     
-    [LabelText("초기화 완료 여부"), ReadOnly] 
-    // protected bool mbGimmickInitialize { get; set; } = false; // 기믹 초기화 여부
-
     public abstract void ActivateGimmick(); //실행
     public abstract void DeactivateGimmick(); //정지
 
     //gimmickGrade로 자기 자신을 초기화 //기믹 생성, 준비 단계
     public void InitializeGimmick(GimmickInitializer gimmickInitializer, eGimmickGrade gimmickGrade)
     {
-        ebGimmickGrade = gimmickGrade;
+        eGimmickGrade = gimmickGrade;
         bGimmickCost = gimmickInitializer.Costs[(int)gimmickGrade];
         bGimmickDuration = gimmickInitializer.Durations_s[(int)gimmickGrade];
         bGimmickEffectValue1 = gimmickInitializer.EffectValue1[(int)gimmickGrade];
         bGimmickEffectValue2 = gimmickInitializer.EffectValue2[(int)gimmickGrade];
-        // mbGimmickInitialize = true;
+    }
+    
+    public void SetModeName(TextMeshProUGUI modeTxt)
+    {
+        modeTxt.text = gimmickName;
     }
 }

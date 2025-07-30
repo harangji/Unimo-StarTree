@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Gimmick_BlackHole : Gimmick
 {
-    [Header("블랙홀 설정")]
+    [Header("블랙홀 설정")] 
+    public override eGimmickType eGimmickType => eGimmickType.Dangerous;
     
     //SerializeField
     [field: SerializeField, LabelText("끌어당기는 힘"), Tooltip("블랙홀이 끌어당기는 정도"), Required, Space]
@@ -24,13 +25,25 @@ public class Gimmick_BlackHole : Gimmick
     private Rigidbody bPlayerRigidbody { get; set; }
     private float bTimeElapsed { get; set; } = 0f;
 
-    private void Start()
+    [SerializeField] private ParticleSystemRenderer[] particleSystemRenderers;
+
+    private void OnEnable()
     {
         if (GimmickManager.Instance != null)
         {
             if (GimmickManager.Instance.UnimoPrefab.TryGetComponent(out Collider coll))
             {
+                foreach (var psr in particleSystemRenderers)
+                {
+                    Material mat = psr.material;
+                    Color color = mat.color;
+                    color.a = 0f;
+                    mat.color = color;
+                }
+                FadeAll(true, 1f);
+                
                 bPlayerRigidbody = coll.attachedRigidbody;
+                bTimeElapsed = 0f; //블랙홀 시간 초기화
             }
             else
             {
@@ -39,13 +52,9 @@ public class Gimmick_BlackHole : Gimmick
         }
         else
         {
+            bPlayerRigidbody = null;
             gameObject.SetActive(false);
         }
-    }
-
-    private void OnEnable()
-    {
-        bTimeElapsed = 0f; //블랙홀 시간 초기화
     }
 
     private void Update()
@@ -71,13 +80,13 @@ public class Gimmick_BlackHole : Gimmick
         {
             MyDebug.Log("Player In InnerSuction");
             direction = (transform.position - bPlayerRigidbody.position).normalized;
-            bPlayerRigidbody.AddForce(direction * OuterSuctionGravityStrength[(int)ebGimmickGrade], ForceMode.Acceleration);
+            bPlayerRigidbody.AddForce(direction * OuterSuctionGravityStrength[(int)eGimmickGrade], ForceMode.Acceleration);
         }
         else if (distance <= EffectiveRange && distance > EffectiveCenterRange) // 블랙홀 내부 && 중심 구역보다는 바깥쪽에 위치
         {
             MyDebug.Log("Player In OuterSuction");
             direction = (transform.position - bPlayerRigidbody.position).normalized;
-            bPlayerRigidbody.AddForce(direction * OuterSuctionGravityStrength[(int)ebGimmickGrade], ForceMode.Acceleration);
+            bPlayerRigidbody.AddForce(direction * OuterSuctionGravityStrength[(int)eGimmickGrade], ForceMode.Acceleration);
         }
         else if (distance > EffectiveRange) //블랙홀 빠져나감
         {
@@ -91,34 +100,47 @@ public class Gimmick_BlackHole : Gimmick
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, EffectiveRange);
     }
+    
 
     public override void ActivateGimmick()
     {
+        MyDebug.Log("Activate Gimmick");
         gameObject.SetActive(true);
     }
 
     public override void DeactivateGimmick()
     {
-        FadeOutAll(1f);
+        MyDebug.Log("Deactivate Gimmick");
+        FadeAll(false);
         // gameObject.SetActive(false);
     }
-    
-    void FadeOutAll(float duration)
+
+    void FadeAll(bool fadeIn, float duration = 1f)
     {
-        Renderer[] renderers = gameObject.transform.GetComponentsInChildren<Renderer>();
+        float targetAlpha = fadeIn? 1f : 0f;
+        Sequence fadeSequence = DOTween.Sequence();
         
-        foreach (var rend in renderers)
+        foreach (ParticleSystemRenderer particleSystemRenderer in particleSystemRenderers)
         {
-            Material mat = rend.material;
+            Material mat = particleSystemRenderer.material;
             Color color = mat.color;
-            DOTween.To(() => color.a, x => {
+
+            float startAlpha = color.a;
+
+            Tween tween = DOTween.To(() => startAlpha, x =>
+            {
+                startAlpha = x;
                 color.a = x;
                 mat.color = color;
-            }, 0f, duration).OnComplete(() =>
-            {
-                MyDebug.Log("Fade Out Complete");
-                gameObject.SetActive(false);
-            });
+            }, targetAlpha, duration);
+            
+            fadeSequence.Join(tween); // 동시에 실행되도록 시퀀스에 추가
         }
+
+        fadeSequence.OnComplete(() =>
+        {
+            MyDebug.Log($"Fade to {targetAlpha} Complete");
+            gameObject.SetActive(fadeIn);
+        });
     }
 }
