@@ -207,7 +207,6 @@ public class Mon004State_Action : MonsterState_Action
     {
         yield return null;
 
-        Debug.Log($"[Mon004 Jump] 점프 시작, remainJump: {remainJump}");
         Sound_Manager.instance.PlayClip(jumpSFX[remainJump - 1]);
 
         RotateTowardPlayer();
@@ -218,20 +217,16 @@ public class Mon004State_Action : MonsterState_Action
 
         while (remainJump > 0)
         {
-            Debug.Log($"[Mon004 Jump] 점프 대기 시작, remainJump: {remainJump}, duration: {jumpDuration}");
             yield return new WaitForSeconds(jumpDuration);
 
-            Debug.Log($"[Mon004 Jump] 착지 처리 시작, remainJump: {remainJump}");
             ExecuteSlam();
 
             RotateTowardPlayer();
             yield return null;
 
             UpdateJumpDuration();
-            Debug.Log($"[Mon004 Jump] 다음 점프 준비, remainJump: {remainJump}, next duration: {jumpDuration}");
         }
 
-        Debug.Log("[Mon004 Jump] 모든 점프 종료, EnemyExplode 호출");
         controller.EnemyExplode();
     }
 
@@ -284,7 +279,6 @@ public class Mon004State_Action : MonsterState_Action
         }
 
         remainJump--;
-        Debug.Log($"[Mon004 Jump] remainJump 감소됨: {remainJump}");
     }
 
     /// <summary>
@@ -324,6 +318,5 @@ public class Mon004State_Action : MonsterState_Action
         controller.indicatorCtrl.GetIndicatorTransform().localScale =
             2f * attRange / controller.transform.localScale.x * Vector3.one;
 
-            Debug.Log($"[Mon004 Jump] jumpDuration: {jumpDuration}, indicatorPos: {indicatorPos}");
     }
 }

@@ -4,6 +4,7 @@ public class EditorMode : SingletonBehaviour<EditorMode>
 {
     public bool isEditor = false;
     public bool isInvincible = false;
+    public bool isShowDamage = false;
     
     public void OnClickEditorMode()
     {
