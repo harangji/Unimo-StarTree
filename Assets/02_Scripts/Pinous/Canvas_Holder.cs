@@ -105,6 +105,8 @@ public class Canvas_Holder : MonoBehaviour
                 bars[0].SetActive(true);
                 PeekCheck = false;
                 break;
+            
+            
             case "##Character":
                 if (bars[1].activeSelf)
                 {
@@ -144,17 +146,17 @@ public class Canvas_Holder : MonoBehaviour
                     bars[i].SetActive(false);
                 }
                 bars[4].SetActive(true);
-                PeekCheck = true;
+                PeekCheck = false;
 
                 break;
             
-            case "##BonusReward":
-                if (Base_Manager.Data.UserData.BonusRewardCount < 900.0f)
-                {
-                    return;
-                }
-                break;
-            case "##Setting":
+            //case "##BonusReward":
+            //    if (Base_Manager.Data.UserData.BonusRewardCount < 900.0f)
+            //    {
+            //        return;
+            //    }
+            //    break;
+            //case "##Setting":
                 
 #if UNITY_ANDROID
 #elif UNITY_IOS
