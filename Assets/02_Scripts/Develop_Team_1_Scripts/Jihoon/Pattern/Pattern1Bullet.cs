@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Pattern1Bullet : MonoBehaviour, IDamageAble
 {
-    [SerializeField] private int damage;
     [SerializeField] private Collider mainCollider;
 
     public Collider MainCollider => mainCollider;
@@ -18,7 +17,9 @@ public class Pattern1Bullet : MonoBehaviour, IDamageAble
                 Vector3
                     hitPos = transform.position; //other.ClosestPoint(transform.position + new Vector3(0f, 1.5f, 0f))
                 hitPos.y = 0f;
-    
+
+                var damage = GetComponentInParent<BossPattern1>().motherDamage;
+
                 CombatEvent combatEvent = new CombatEvent
                 {
                     Sender = this,
@@ -28,10 +29,10 @@ public class Pattern1Bullet : MonoBehaviour, IDamageAble
                     Collider = other,
                     CanBeStunned = true,
                 };
-    
+
                 CombatSystem.Instance.AddInGameEvent(combatEvent);
-            
-            Destroy(gameObject);
+
+                Destroy(gameObject);
             }
         }
     }

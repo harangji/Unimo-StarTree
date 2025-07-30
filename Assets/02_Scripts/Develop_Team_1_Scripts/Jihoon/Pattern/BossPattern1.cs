@@ -4,7 +4,8 @@ using UnityEngine;
 public class BossPattern1 : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 4.2f;
-
+    public int motherDamage;
+    
     private Vector3 moveDir;
 
     private void Start()

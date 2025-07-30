@@ -36,7 +36,7 @@ public class MonsterController : MonoBehaviour
 
     public Patterns pattern;
 
-    [SerializeField] private bool isBoss = false;
+    public bool isBoss = false;
     
     public event Action<MonsterController> OnDestroyed;
 

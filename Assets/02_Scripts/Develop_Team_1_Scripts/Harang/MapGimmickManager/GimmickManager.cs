@@ -54,18 +54,15 @@ public class GimmickManager : MonoBehaviour
     [LabelText("복잡도 점수"), ShowInInspector, ReadOnly]
     private int mCurrentCost;
     
-    [LabelText("골라진 기믹들"), ShowInInspector, ReadOnly]
-    private Queue<Gimmick> mReadyGimmicks = new Queue<Gimmick>();
+    private Queue<Gimmick> mReadyGimmickQueue = new Queue<Gimmick>();
     
     private List<eGimmickGrade> mCanSelectAbleGrades = new List<eGimmickGrade>(); //등장 가능한 기믹 등급
     
-    private Dictionary<eGimmickGrade, List<Gimmick>> mCanSelectedGimmicksDictionary = new Dictionary<eGimmickGrade, List<Gimmick>>(); //예비군
-
-    
     private int gimmickCount = 0;
-    public static GimmickManager Instance { get; private set; }
-
+    
     private Dictionary<string, GimmickInitializer> mGimmickInitializersMapper;
+    
+    public static GimmickManager Instance { get; private set; }
     
     private void Awake()
     {
@@ -87,38 +84,37 @@ public class GimmickManager : MonoBehaviour
 
     void Start()
     {
-        mReadyGimmicks.Clear();
+        mReadyGimmickQueue.Clear();
         
         InitializeGimmickManager(); //기믹 뽑기
     }
 
-    public void ExcuteGimmick() //다른 곳에서 실행
+    public void ExecuteGimmick() //다른 곳에서 실행
     {
-        if (bIsReadyGimmiks)
-        {
-            PlaySceneController.Instance.PauseGameSingleton();
-            //기믹 생성 연출 필요 ToDo:;
-            mReadyGimmicks.Dequeue().ActivateGimmick(); //기믹 활성화
-            PlaySceneController.Instance.ResumeGameSingleton();
-        }
+        bgmSource.clip = modeBGM;
+        StartCoroutine(TriggerGimmickCoroutine());
     }
     
+    //기믹 매니저 초기화
     public void InitializeGimmickManager()
     {
         mCurrentStage = Base_Manager.Data.UserData.BestStage + 100; //스테이지 int 캐싱 //최소 1 (테스트 100)
-        
-        if (SetGimmicCountByStageNumber(mCurrentStage)) //스테이지 수에 따른 설정들 - false일 경우 기믹 갯수가 0이므로 실행 안함
-        {
-            List<GimmickSample> canSelectAbleGimmickSamples = GetCanSelectAbleGimmickSamplesByGrade(mCanSelectAbleGrades); //기믹 껍데기 반환
-            PickGimmickSamples(canSelectAbleGimmickSamples, gimmickCount); //기믹 껍데기 기반으로 생성
 
+        if (SettingByStageNumber(mCurrentStage)) //스테이지 수에 따른 설정들 - false일 경우 기믹 갯수가 0이므로 실행 안함
+        {
             ToTsvGimmickData[] toTsvGimmickDatas = gameDataSoHolder.GimmicParsingDataSo.GetDataAll();
             for (int i = 0; i < toTsvGimmickDatas.Length; i++)
             {
                 //key로 Initializer 매핑하여 초기화
-                mGimmickInitializersMapper[toTsvGimmickDatas[i].Key].GimmickInitializerSetting(toTsvGimmickDatas[i]);
+                if (mGimmickInitializersMapper.TryGetValue(toTsvGimmickDatas[i].Key, out var gimmickInitializer))
+                {
+                    gimmickInitializer.GimmickInitializerSetting(toTsvGimmickDatas[i]);
+                }
             }
-            
+
+            List<GimmickSample> canSelectAbleGimmickSamples = GetCanSelectAbleGimmickSamplesByGrade(); //기믹 껍데기 반환
+            PickGimmickSamples(canSelectAbleGimmickSamples, gimmickCount); //기믹 껍데기 기반으로 생성
+
             bIsReadyGimmiks = true;
         }
         else
@@ -127,8 +123,8 @@ public class GimmickManager : MonoBehaviour
         }
     }
     
-    
-    private bool SetGimmicCountByStageNumber(int stageNumber) //currentStage를 통한 설정
+    //currentStage를 통한 설정
+    private bool SettingByStageNumber(int stageNumber)
     {
         int[] probabilities = new int[4]; // [0]=1개 확률, [1]=2개, [2]=3개, [3]=4개
         
@@ -194,11 +190,12 @@ public class GimmickManager : MonoBehaviour
         return false;
     }
     
-    private List<GimmickSample> GetCanSelectAbleGimmickSamplesByGrade(List<eGimmickGrade> canSelectGrades)
+    //기믹 껍데기 생성하기
+    private List<GimmickSample> GetCanSelectAbleGimmickSamplesByGrade()
     {
         List<GimmickSample> selectedGimmickSampless = new List<GimmickSample>();
         
-        foreach (var grade in canSelectGrades) //나올 수 있는 Grade를 전부 조회
+        foreach (var grade in mCanSelectAbleGrades) //나올 수 있는 Grade를 전부 조회
         {
             //하나의 Grade의 gimmickInitializers 모두 조회
             foreach (var gimmickInitializer in gimmickInitializers)
@@ -224,7 +221,7 @@ public class GimmickManager : MonoBehaviour
     //기믹 미리 준비하기
     public void PickGimmickSamples(List<GimmickSample> source, int count)
     {
-        List<eGimmickType> cashGimmickTypes = new List<eGimmickType>();  //중복방지
+        List<eGimmicks> cashGimmickTypes = new List<eGimmicks>();  //중복방지
         
         for (int i = 0; i < count; i++) //count 번 실행 // && pool.Count > 0
         {
@@ -248,7 +245,8 @@ public class GimmickManager : MonoBehaviour
                 if (rand <= cumulative) //추첨
                 {
                     Gimmick readyGimmick = entry.GimmickInitializer.InitializeGimmick(entry.GimmickGrade); //껍데기를 통해 생성
-                    mReadyGimmicks.Enqueue(readyGimmick); // 준비된 기믹에 추가
+                    mReadyGimmickQueue.Enqueue(readyGimmick); // 준비된 기믹에 추가
+                    MyDebug.Log($"{readyGimmick.gimmickName} is ready");
                     
                     cashGimmickTypes.Add(entry.GimmickInitializer.GimmickType); // 뽑은 타입을 추가, 중복방지
                     
@@ -260,6 +258,48 @@ public class GimmickManager : MonoBehaviour
                 }
             }
         }
+    }
+    
+    private IEnumerator TriggerGimmickCoroutine() //코루틴으로 모드 진행
+    {
+        yield return new WaitForSeconds(PlayProcessController.InitTimeSTATIC);
+        PlaySceneController.Instance.PauseGame();
+        
+        Gimmick gimmick = mReadyGimmickQueue.Dequeue();
+        gimmick.SetModeName(modeText[0]);
+        if (gimmick.eGimmickType == eGimmickType.Helpful)
+        {
+            modeText[0].color = goodModeTxtColor;
+            modeIcon[0].color = goodModeImgColor;
+        }
+        modeIcon[0].gameObject.SetActive(true);
+        
+        warningPopup.SetActive(true);
+        yield return new WaitForSecondsRealtime(2.5f);
+        warningPopup.SetActive(false);
+        
+        PlaySceneController.Instance.ResumeGame();
+        yield break;
+        
+        // //다수 동시
+        // for (int i = 0; i < modenum; i++)
+        // {
+        //     mReadyGimmickQueue.Dequeue().SetModeName(modeText[i]);
+        //     modeIcon[i].sprite = specialModes[idx].ModeIcon;
+        //     if (specialModes[idx].ModeCode.Equals("mode7") || specialModes[idx].ModeCode.Equals("mode8"))
+        //     {
+        //         modeText[i].color = goodModeTxtColor;
+        //         modeIcon[i].color = goodModeImgColor;
+        //     }
+        //     modeIcon[i].gameObject.SetActive(true);
+        //     specialModes[idx].TriggerMode(); 
+        //     // specialModes.RemoveAt(idx); //내보낸 모드 지우기
+        // }
+        // warningPopup.SetActive(true);
+        // yield return new WaitForSecondsRealtime(2.5f);
+        // warningPopup.SetActive(false);
+        // sceneCtrl.ResumeGame();
+        // yield break;
     }
 }
 

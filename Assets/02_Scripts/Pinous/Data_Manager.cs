@@ -217,11 +217,11 @@ public class Data_Manager
             UserData = NewData();
             Init();
             
-            EasySaveManager.Instance.SaveBuffered("User_Data", UserData);
-            EasySaveManager.Instance.CommitBuffered(); //버퍼에 쌓인 기록 저장
-            
             EasySaveManager.Instance.bSetEasySaveUser = true;
         }
+        
+        EasySaveManager.Instance.SaveBuffered("User_Data", UserData);
+        EasySaveManager.Instance.CommitBuffered(); //버퍼에 쌓인 기록 저장
     }
     
     User_Data NewData()
