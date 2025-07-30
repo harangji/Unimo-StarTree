@@ -1,5 +1,4 @@
-using System;
-using DG.Tweening;
+using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -16,25 +15,40 @@ public class Gimmick_RedZone : Gimmick
     
     public override eGimmickType eGimmickType => eGimmickType.Dangerous;
     
-    [field: SerializeField, LabelText("블랙홀 크기"), Tooltip("중력 영향을 받지 않는 폭풍의 눈 구역"), Required, Space]
-    private float EffectiveRange { get; set; } = 5.0f;
-
-    [field: SerializeField, LabelText("블랙홀 중심 안전 구역"), Tooltip("중력 영향을 받지 않는 폭풍의 눈 구역"), Required, Space]
-    private float EffectiveCenterRange { get; set; } = 0.2f;
+    [field: SerializeField, LabelText("레드존 크기"), Tooltip("레드존 피해 구역"), Required, Space]
+    private float EffectiveRange { get; set; } = 6.7f;
 
     //private
-    private Rigidbody bPlayerRigidbody { get; set; }
-    private float bTimeElapsed { get; set; } = 0f;
+    private IDamageAble mPlayerIDamageAble { get; set; }
+    private float mbTimeElapsed { get; set; } = 0f;
 
-
+    [SerializeField] private GameObject warningParticle;
+    [SerializeField] private GameObject fireParticle;
+    
+    private float mWaitWarningDuration = 5.0f;
+    
+    private float[] mWarningTimes = new float[]
+    {
+        5.0f,
+        4.0f,
+        4.0f,
+        3.0f,
+    };
+    
+    public void Awake()
+    {
+        base.Awake();
+        mWaitWarningDuration = mWarningTimes[(int)eGimmickType];
+    }
+    
     private void OnEnable()
     {
         if (GimmickManager.Instance != null)
         {
-            if (GimmickManager.Instance.UnimoPrefab.TryGetComponent(out Collider coll))
+            if (GimmickManager.Instance.UnimoPrefab.TryGetComponent(out IDamageAble iDamageAble))
             {
-                bPlayerRigidbody = coll.attachedRigidbody;
-                bTimeElapsed = 0f; //블랙홀 시간 초기화
+                mPlayerIDamageAble = iDamageAble;
+                mbTimeElapsed = 0f; //레드존 시간 초기화
             }
             else
             {
@@ -43,65 +57,91 @@ public class Gimmick_RedZone : Gimmick
         }
         else
         {
-            bPlayerRigidbody = null;
+            mPlayerIDamageAble = null;
             gameObject.SetActive(false);
         }
     }
 
+    //cash
+    private float mDistance;
+    private float mDamageTimeElapsed = 0f;
+    private float mDamageInterval = 1f; // 데미지 주기 (1초)
+
+
     private void Update()
     {
-        bTimeElapsed += Time.deltaTime;
-        if (bTimeElapsed >= bGimmickDuration) //지속 시간 경과 시 비활성
+        mbTimeElapsed += Time.deltaTime;
+        
+        if (mbTimeElapsed >= mGimmickDuration) //지속 시간 경과 시 비활성
         {
             DeactivateGimmick();
         }
+        
+        if (mPlayerIDamageAble == null && !mbReadyExecute) return;
+        
+        //거리 비교
+        mDistance = Vector3.Distance(transform.position, mPlayerIDamageAble.GameObject.transform.position);
+        
+        if(mDistance <= EffectiveRange) //레드존 내에 위치 
+        {
+            mDamageTimeElapsed += Time.deltaTime;
+            
+            if (mDamageTimeElapsed >= mDamageInterval) //1초마다
+            {
+                mDamageTimeElapsed = 0f;
+                
+                MyDebug.Log("Player In RedZone 1 Second");
+            
+                //데미지 발생시키기
+                CombatEvent combatEvent = new CombatEvent
+                {
+                    Receiver = mPlayerIDamageAble,
+                    Damage = (int)mGimmickEffectValue2,
+                    HitPosition = gameObject.transform.position,
+                };
+                
+                CombatSystem.Instance.AddInGameEvent(combatEvent);
+            }
+        }
     }
-
-    //cash
-    private float distance;
-    private Vector3 direction;
     
-    private void FixedUpdate()
-    {
-
-    }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, EffectiveRange);
     }
 
-    public override void ActivateGimmick()
+    public override async void ActivateGimmick()
     {
         MyDebug.Log("Activate Gimmick");
+        
+        Vector2 randomPos = Random.insideUnitCircle * ( PlaySystemRefStorage.mapSetter.MaxRange - 2 );
+        gameObject.transform.position = new Vector3(randomPos.x, 0, randomPos.y);
+        
         gameObject.SetActive(true);
+        await FadeAll(true);
+        StartCoroutine(FireParticleWaitCoroutine());
     }
 
-    public override void DeactivateGimmick()
+    public override async void DeactivateGimmick()
     {
         MyDebug.Log("Deactivate Gimmick");
-        FadeOutAll(1f);
-        // gameObject.SetActive(false);
-    }
-    
-    void FadeOutAll(float duration)
-    {
-        ParticleSystem[] renderers = gameObject.transform.GetComponentsInChildren<ParticleSystem>();
         
-        foreach (var rend in renderers)
-        {
-            Material mat = rend.GetComponent<ParticleSystemRenderer>().material;
-            Color color = mat.color;
-            DOTween.To(() => color.a, x => {
-                color.a = x;
-                mat.color = color;
-            }, 0f, duration).OnComplete(() =>
-            {
-                MyDebug.Log("Fade Out Complete");
-                bPlayerRigidbody = null;
-                gameObject.SetActive(false);
-            });
-        }
+        mbReadyExecute = false;
+        await FadeAll(false);
+        fireParticle.SetActive(false);
+        gameObject.SetActive(false);
+    }
+
+    public IEnumerator FireParticleWaitCoroutine()
+    {
+        warningParticle.SetActive(true);
+        
+        yield return new WaitForSeconds(mWaitWarningDuration); //경고 시간 동안 대기
+        
+        mbReadyExecute = true;
+        warningParticle.SetActive(false);
+        fireParticle.SetActive(true);
+        
     }
 }

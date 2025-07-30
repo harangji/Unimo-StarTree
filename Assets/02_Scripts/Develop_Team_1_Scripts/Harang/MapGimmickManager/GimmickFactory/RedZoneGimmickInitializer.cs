@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class RedZoneGimmickInitializer : GimmickInitializer
 {
-    [SerializeField] private Gimmick_BlackHole redZone;
+    [SerializeField] private Gimmick_RedZone redZone;
     
-    public override eGimmicks GimmickType => eGimmicks.RedZone;
+    public override eGimmicks eGimmick => eGimmicks.RedZone;
     
     public override Gimmick InitializeGimmick(eGimmickGrade gimmickGrade)
     {

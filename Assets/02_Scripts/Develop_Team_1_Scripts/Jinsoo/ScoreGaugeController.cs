@@ -67,11 +67,20 @@ public class ScoreGaugeController : MonoBehaviour
         UpdateUI();
     }
 
+    public class Event
+    {
+        public Action OnScoreChanged;
+    }
+    
+    public Event ScoreEvent = new Event();
+    
     private void UpdateUI()
     {
         float ratio = (float)(mCurrentScore / mTargetScore);
         ratio = Mathf.Clamp01(ratio);
 
+        ScoreEvent.OnScoreChanged?.Invoke();
+        
         mFillTopImage.fillAmount = ratio;
         mFillBottomImage.fillAmount = ratio;
         

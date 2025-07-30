@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class GimmickInitializer : MonoBehaviour
 {        
-    public abstract eGimmicks GimmickType { get; }
+    public abstract eGimmicks eGimmick { get; }
     public string GimmickID { get; set; }
     public string GimmickName { get; set; }
     public int[] Costs { get; set; }

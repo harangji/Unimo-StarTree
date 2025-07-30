@@ -5,7 +5,7 @@ public static class MyDebug
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
     public static void Log(object message)
     {
-        Debug.Log(message);
+        Debug.Log($"<color=red>{message}</color>");
     }
 
     public static void LogWarning(object message)
