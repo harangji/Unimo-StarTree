@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MonGeneratorManager : MonoBehaviour
 {
     public static List<MonsterController> AllMonsterListSTATIC;
 
+    [SerializeField] private TMP_Text[] buttonsText;
     [SerializeField] private List<MonsterGenerator> generators;
     [SerializeField] private List<float> activateTime;
     [SerializeField] private float extreamTime;
@@ -65,6 +67,7 @@ public class MonGeneratorManager : MonoBehaviour
         if (lapseTime > activateTime[newGenIdx])
         {
             generators[newGenIdx].gameObject.SetActive(true);
+            buttonsText[generators[newGenIdx].name[5] - '0' - 1].text = "V";
             ++newGenIdx;
         }
     }

@@ -339,11 +339,11 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
             return;
         }
         
-        
         // 실드가 있다면 피해 무효화 + 리턴
         if (mShieldEffect != null && mShieldEffect.TryConsumeShield())
         {
             Debug.Log("[PlayerStatManager] 실드로 인해 피해 무효화됨");
+            if(EditorMode.Instance.isShowDamage) DamageUIManager.instance.GetUI(0);
             return;
         }
         
@@ -351,6 +351,8 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         if (Random.value < bEvadeChance)
         {
             Debug.Log("피격 회피");
+            if(EditorMode.Instance.isShowDamage) DamageUIManager.instance.GetUI(0);
+
             return;
         }
 
@@ -372,6 +374,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         var reducedDamage = combatEvent.Damage * (1f - mStat.BaseStat.Armor);
         currentHP -= reducedDamage;
 
+        if(EditorMode.Instance.isShowDamage) DamageUIManager.instance.GetUI(reducedDamage);
         hpGauge?.SetGauge(currentHP / mStat.BaseStat.Health);
 
         Debug.Log($"[Combat System] 피해량: {reducedDamage}");
