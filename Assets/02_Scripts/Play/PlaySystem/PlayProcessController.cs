@@ -35,6 +35,7 @@ public class PlayProcessController : MonoBehaviour
 
     public void GameClear()
     {
+        
         Debug.Log("GameClear ::: gameoverAction 호출 전");
         if (gameoverAction != null) { gameoverAction.Invoke(); }
         Debug.Log("GameClear ::: gameoverAction 호출 후");

@@ -4,6 +4,7 @@ public class EngineEffectTriggerManager : MonoBehaviour
 {
     [SerializeField] private BoomBoomEngineEffectController effectController;
     [SerializeField] private ShieldEffect shieldEffect;
+    [SerializeField] private OrbitAuraController orbitAura;
     
     private int orangeFlowerCount = 0;
     private int yellowFlowerCount = 0;
@@ -34,6 +35,8 @@ public class EngineEffectTriggerManager : MonoBehaviour
             Debug.Log("[EngineTrigger] 317번(마술모자) 엔진 감지됨 → 비활성화 타이머 시작");
             StartSkillInactiveTimer();
         }
+        
+        UpdateOrbitAuraState();
     }
     
     void Update()
@@ -83,6 +86,24 @@ public class EngineEffectTriggerManager : MonoBehaviour
         }
     }
 
+    public void UpdateOrbitAuraState()
+    {
+        var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
+
+        if (orbitAura != null)
+        {
+            if (engineData != null && engineData.SkillID == 318)
+            {
+                orbitAura.gameObject.SetActive(true);
+                orbitAura.SetTarget(PlaySystemRefStorage.playerStatManager.transform, 4.0f, 0.0f);
+            }
+            else
+            {
+                orbitAura.gameObject.SetActive(false);
+            }
+        }
+    }
+    
     
     public void OnOrangeFlowerCollected()
     {

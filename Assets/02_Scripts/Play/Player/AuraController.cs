@@ -10,6 +10,8 @@ public class AuraController : MonoBehaviour
     private float originalGrowth = 12f;
     private Vector3 originalScale;
 
+    public static event System.Action OnAuraDisabled;
+    
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Flower"))
@@ -64,4 +66,10 @@ public class AuraController : MonoBehaviour
         StartCoroutine(CoroutineExtensions.ScaleInterpCoroutine(transform, originalScale, 0.07f));
         growthperSec = originalGrowth;
     }
+    
+    private void OnDisable()
+    {
+        OnAuraDisabled?.Invoke();
+    }
+    
 }

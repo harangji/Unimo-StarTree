@@ -10,6 +10,7 @@ public class BoomBoomEngineEffectController : MonoBehaviour
     [SerializeField] private TimedInvincibilityEffect timedInvincibleEffect;
     [SerializeField] private MagicHatEffect magicHatEffect;
     [SerializeField] private AuraRangeSandCastleEffect sandCastleEffect;
+    [SerializeField] private GameObject orbitAuraObject;
     
     private void Awake()
     {
@@ -102,7 +103,17 @@ public class BoomBoomEngineEffectController : MonoBehaviour
                     Debug.LogWarning("[EffectController] SandCastleEffect 연결 안됨");
                 }
                 break;
-            
+            case 318: // 개밥그릇 엔진 (OrbitAura ON)
+                if (orbitAuraObject != null)
+                {
+                    orbitAuraObject.SetActive(true); // 활성화
+                    Debug.Log("[EffectController] OrbitAura 활성화 (318 엔진)");
+                }
+                else
+                {
+                    Debug.LogWarning("[EffectController] OrbitAura 오브젝트 미연결");
+                }
+                break;
         }
     }
 }

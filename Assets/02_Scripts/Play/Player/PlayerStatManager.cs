@@ -11,7 +11,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     private UnimoData mUnimoData;
     private UnimoRuntimeStat mStat;
 
-    //private PlayerHPspriter HPspriter;
+    
     private PlayerMover playerMover;
     private AuraController auraController;
     private PlayerVisualController visualCtrl;
@@ -24,8 +24,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     [SerializeField] private bool isTestModel = false;
     [SerializeField] private GameObject equipPrefab;
     [SerializeField] private GameObject chaPrefab;
-
-    // 임시로 작성.정현식
+    
     // 회피, 스턴 저항 (스탯 반영 예정)
     [SerializeField] [Range(0f, 1f)] private float bEvadeChance;
     [SerializeField] [Range(0f, 1f)] private float fStunReduceRate;
@@ -45,6 +44,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     
     private ShieldEffect mShieldEffect;
     private DogHouseReviveEffect mReviveEffect;
+    public static event System.Action<bool> OnPlayerActiveChanged;
     
     private void Awake()
     {
@@ -95,6 +95,12 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         playerMover.FindAuraCtrl(auraController);
         auraController.gameObject.SetActive(false);
 
+        var orbitAura = FindObjectOfType<OrbitAuraController>();
+        if (orbitAura != null)
+        {
+            orbitAura.SetTarget(transform, 4.0f, 0.0f);
+        }
+        
         PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(stopPlay);
 
         //hpGauge?.SetGauge(1f);
@@ -231,11 +237,13 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         auraController.gameObject.SetActive(true);
         playerMover.IsStop = false;
         GetComponent<Collider>().enabled = true;
+        OnPlayerActiveChanged?.Invoke(true);
     }
 
     public void DeactivePlayer()
     {
-        auraController.gameObject.SetActive(false);
+        OnPlayerActiveChanged?.Invoke(false);
+        //auraController.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 
