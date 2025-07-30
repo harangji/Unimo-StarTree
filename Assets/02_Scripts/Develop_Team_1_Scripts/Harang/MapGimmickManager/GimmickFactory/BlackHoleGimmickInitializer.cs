@@ -4,7 +4,7 @@ public class BlackHoleGimmickInitializer : GimmickInitializer
 {
     [SerializeField] private Gimmick_BlackHole blackHole;
 
-    public override eGimmickType GimmickType => eGimmickType.BlackHole;
+    public override eGimmicks GimmickType => eGimmicks.BlackHole;
 
     public override Gimmick InitializeGimmick(eGimmickGrade gimmickGrade)
     {

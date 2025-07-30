@@ -142,6 +142,35 @@ public class Sound_Manager : MonoBehaviour
         return false;
     }
 
+    public bool Play(Sound type, AudioClip clip, float volume = 1.0f, float pitch = 1.0f)
+    {
+        if (clip == null)
+            return false;
+
+        AudioSource audioSource = _audioSources[(int)type];
+        
+        if (type == Sound.Bgm)
+        {
+            if (audioSource.isPlaying)
+                audioSource.Stop();
+
+            audioSource.clip = clip;
+            audioSource.pitch = pitch;
+            audioSource.Play();
+        }
+        else if (type == Sound.Effect)
+        {
+            if (clip == null)
+                return false;
+
+            audioSource.pitch = pitch;
+            audioSource.PlayOneShot(clip);
+            return true;
+        }
+
+        return false;
+    }
+    
     public void Stop(Sound type)
     {
         AudioSource audioSource = _audioSources[(int)type];
