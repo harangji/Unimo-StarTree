@@ -252,35 +252,35 @@ public static class BoomBoomEngineDatabase
 
     private static BoomBoomEngineData CreateEngine_ElfCup() => new BoomBoomEngineData
     {
-        // 랜덤으로 맵을 돌아다니는 구름 소환 (판정크기: n*n)
+        // 스테이지 클리어 게이지 1% 증가 (판정크기: n*n)
         EngineID = 21301,
         Name = "엘프컵",
         Rarity = "Unique",
         ModelID = "EQC008_ElfCup",
-        SkillID = 319,
+        SkillID = 320,
         StatBonus = new SCharacterStat { }
     };
 
     private static BoomBoomEngineData CreateEngine_TrashCan() => new BoomBoomEngineData
     {
-        // 스테이지 클리어 게이지 1% 증가 (판정크기: n*n)
+        // N%의 확률로 피격을 무시함
         EngineID = 21302,
         Name = "쓰레기통",
         Rarity = "Unique",
         ModelID = "EQC005_TrashCan",
-        SkillID = 320,
-        StatBonus = new SCharacterStat { }
+        SkillID = 321,
+        StatBonus = new SCharacterStat {StunIgnoreChance = 0.05f }
     };
 
     private static BoomBoomEngineData CreateEngine_Cloud() => new BoomBoomEngineData
     {
-        // N%의 확률로 피격을 무시함
+        // 랜덤으로 맵을 돌아다니는 구름 소환 (판정크기: n*n)
         EngineID = 20411,
         Name = "구름",
         Rarity = "Unique",
         ModelID = "EQC010_Cloud",
-        SkillID = 321,
-        StatBonus = new SCharacterStat { StunIgnoreChance = 0.05f}
+        SkillID = 319,
+        StatBonus = new SCharacterStat {}
     };
 
     private static BoomBoomEngineData CreateEngine_Bathtub() => new BoomBoomEngineData

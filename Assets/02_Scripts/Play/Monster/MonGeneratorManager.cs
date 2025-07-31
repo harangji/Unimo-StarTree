@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MonGeneratorManager : MonoBehaviour
 {
@@ -67,7 +69,16 @@ public class MonGeneratorManager : MonoBehaviour
         if (lapseTime > activateTime[newGenIdx])
         {
             generators[newGenIdx].gameObject.SetActive(true);
-            buttonsText[generators[newGenIdx].name[5] - '0' - 1].text = "V";
+
+            try
+            {
+                buttonsText[generators[newGenIdx].name[5] - '0' - 1].text = "V";
+            }
+            catch
+            {
+                // ignored
+            }
+
             ++newGenIdx;
         }
     }
