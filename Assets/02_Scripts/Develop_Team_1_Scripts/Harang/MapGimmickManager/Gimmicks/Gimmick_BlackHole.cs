@@ -33,6 +33,8 @@ public class Gimmick_BlackHole : Gimmick
     
     private void OnEnable()
     {
+        mbDeactivateStart = false;
+        
         if (GimmickManager.Instance != null)
         {
             if (GimmickManager.Instance.UnimoPrefab.TryGetComponent(out Collider coll))
@@ -68,7 +70,7 @@ public class Gimmick_BlackHole : Gimmick
     
     private void FixedUpdate()
     {
-        if (mPlayerRigidbody == null && !mbReadyExecute) return;
+        if (mPlayerRigidbody == null || !mbReadyExecute) return;
         
         //끌어당길 방향 설정 (플레이어가 블랙홀을 바라보는 방향) + 거리 재기
         mDistance = Vector3.Distance(transform.position, mPlayerRigidbody.position); 

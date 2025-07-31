@@ -14,6 +14,8 @@ public class Mon006State_Action : MonsterState_Action
     [SerializeField] private float laserWidth = 1.5f;
     private float remainDuration;
     private bool isFiring = false;
+    
+    private float mReducedTime = 1.5f;
     public override void TransitionAction(MonsterController controller)
     {
         base.TransitionAction(controller);
@@ -55,6 +57,8 @@ public class Mon006State_Action : MonsterState_Action
                     Receiver = playerIDamageAble,
                     Damage = (monster as Monster).appliedDamage,
                     HitPosition = controller.transform.position,
+                    IsTimeReduceMod = true,
+                    TimeReduceAmount = mReducedTime,
                     Collider = monster.MainCollider,
                 };
 

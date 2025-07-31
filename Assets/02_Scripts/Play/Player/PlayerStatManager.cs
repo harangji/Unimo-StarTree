@@ -371,6 +371,9 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         Debug.Log($"[보정 전 데미지]: {combatEvent.Damage}");
         
+        PlaySystemRefStorage.playTimeManager.ChangeTimer(-combatEvent.TimeReduceAmount);
+        Debug.Log($"{combatEvent.TimeReduceAmount}초 감소했습니다.");
+        
         //데미지 처리
         var reducedDamage = combatEvent.Damage * (1f - mStat.BaseStat.Armor);
         currentHP -= reducedDamage;
@@ -385,7 +388,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         PlaySystemRefStorage.engineEffectTriggerManager.OnTakeDamage();
 
         //사망 체크
-        if (currentHP <= 0)
+        if (currentHP <= 0 && !PlaySystemRefStorage.stageManager.GetBonusStage())
         {
             if (PlaySystemRefStorage.engineEffectTriggerManager.TryReviveOnDeath(this))
                 return;
