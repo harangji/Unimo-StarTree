@@ -119,6 +119,10 @@ public class User_Data
     public double BestScoreGameOne, BestScoreGameTwo;
 
     public int IAP = 0;
+    
+    // 업적 확인을 위한 int 변수들입니다.
+    public int ReinforceCountTotal; // 강화 횟수
+    public int FacilityLevelSum; // 시설 레벨
 
     //광고제거 상품 구매 여부
     public bool ADSBuy = false; 
@@ -140,7 +144,12 @@ public class User_Data
     public bool GetRePlay; // 두 배 보상
 
     //업적 완료 여부
-    public bool[] GetArchivements = { false, false, false, false, false, false, false, false, false };
+    public bool[] GetArchivements =
+    {
+        false, false, false, false, false, false, false, false, false,
+        false, false, false, false, false, false, false, false, false, false, false, false, false, false
+    };
+    // public bool[] GetArchivements = { false, false, false, false, false, false, false, false, false };
 
     public string S_DateTime, E_DateTime;
 

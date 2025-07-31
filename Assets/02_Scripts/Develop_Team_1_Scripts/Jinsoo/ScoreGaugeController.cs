@@ -19,6 +19,11 @@ public class ScoreGaugeController : MonoBehaviour
     [SerializeField] private Image mFilledStarImage;
     
     [CanBeNull] public TextMeshProUGUI mNewStarAddBlueReward;
+    
+    // 기믹 관련 이벤트
+    public event Action OnScoreThresholdReached;
+    // 각 비율마다 한 번만 호출되도록 막는 역할의 bool 값 .
+    private bool[] mThresholdPassed = new bool[3]; // 0%, 30%, 60% => 맵 기믹
 
     private double mCurrentScore = 0;
     private double mTargetScore;
@@ -41,7 +46,7 @@ public class ScoreGaugeController : MonoBehaviour
         }
         SetClearedStarCount(starCount);
 
-
+        UpdateUI();
 
         // for (int i = 0; i < mStarImages.Length; i++)
         // {
@@ -57,6 +62,8 @@ public class ScoreGaugeController : MonoBehaviour
 
     public void SetTargetScore(double target)
     {
+        // 게임 새로 시작할 때 배열 초기화.
+        Array.Clear(mThresholdPassed, 0, 3);
         mTargetScore = target;
         UpdateUI();
     }
@@ -66,23 +73,30 @@ public class ScoreGaugeController : MonoBehaviour
         mCurrentScore = score;
         UpdateUI();
     }
-
-    public class Event
-    {
-        public Action OnScoreChanged;
-    }
-    
-    public Event ScoreEvent = new Event();
     
     private void UpdateUI()
     {
         float ratio = (float)(mCurrentScore / mTargetScore);
         ratio = Mathf.Clamp01(ratio);
-
-        ScoreEvent.OnScoreChanged?.Invoke();
         
         mFillTopImage.fillAmount = ratio;
         mFillBottomImage.fillAmount = ratio;
+        
+        if (ratio >= 0.6f && !mThresholdPassed[2])
+        {
+            mThresholdPassed[2] = true;
+            OnScoreThresholdReached?.Invoke();
+        }
+        else if (ratio >= 0.3f && !mThresholdPassed[1])
+        {
+            mThresholdPassed[1] = true;
+            OnScoreThresholdReached?.Invoke();
+        }
+        else if (ratio >= 0 && !mThresholdPassed[0])
+        {
+            mThresholdPassed[0] = true;
+            OnScoreThresholdReached?.Invoke();
+        }
         
         switch (ratio)
         {

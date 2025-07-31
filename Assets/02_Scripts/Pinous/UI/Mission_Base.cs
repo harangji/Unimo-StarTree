@@ -16,7 +16,7 @@ public class Mission_Base : MonoBehaviour
     public CharCostumer m_CharCostumer;
     public int index;
 
-    public void Init(string style, int count, int reward, Asset_State rewardType)
+    public void Init(string style, int count, int reward, Asset_State rewardType, int rewardValue=0)
     {
         m_Slider.value = (float)valueCount(style) / (float)count;
         m_Count.text = valueCount(style).ToString() + "/" + count.ToString();
@@ -34,49 +34,44 @@ public class Mission_Base : MonoBehaviour
         }
         else
         {
-            button.onClick.AddListener(() => GetButtonTrophy(style, count, reward));
-            GetCheckAchieve(reward);
+            if (rewardType == Asset_State.Yellow || rewardType == Asset_State.Red || rewardType == Asset_State.Blue)
+            {
+                // 별꿀 보상 업적
+                m_RewardText.text = rewardValue.ToString();
+                // m_Reward.sprite = Data_Manager.atlas.GetSprite(rewardType.ToString());
+                button.onClick.AddListener(() => GetButtonRewardHoney(style, count, reward, rewardType, rewardValue));
+                GetCheckAchieve(reward);
+            }
+            else
+            {
+                // 기존 캐릭터/장비 보상 업적
+                button.onClick.AddListener(() => GetButtonTrophy(style, count, reward));
+                GetCheckAchieve(reward);
+            }
         }
     }
-
-    private void GetCheckAchieve(int value)
+    
+    private void GetButtonRewardHoney(string style, int count, int reward, Asset_State rewardType, int rewardValue)
     {
-        bool Base = Base_Manager.Data.UserData.GetArchivements[value];
-        button.gameObject.SetActive(Base ? false : true);
-        InProgress.SetActive(Base ? true : false);
-    }
+        if (valueCount(style) < count) return;
 
-    private void GetCheck(string style)
-    {
-        switch(style)
-        {
-            case "GamePlay": 
-                button.gameObject.SetActive(Base_Manager.Data.UserData.GetGamePlay ? false : true);
-                InProgress.SetActive(Base_Manager.Data.UserData.GetGamePlay ? true : false);
-                break;
-            case "ADS":
-                button.gameObject.SetActive(Base_Manager.Data.UserData.GetADS ? false : true);
-                InProgress.SetActive(Base_Manager.Data.UserData.GetADS ? true : false);
-                break;
-            case "Touch":
-                button.gameObject.SetActive(Base_Manager.Data.UserData.GetTouch ? false : true);
-                InProgress.SetActive(Base_Manager.Data.UserData.GetTouch ? true : false);
-                break;
-            case "DailyAccount":
-                button.gameObject.SetActive(Base_Manager.Data.UserData.GetDaily ? false : true);
-                InProgress.SetActive(Base_Manager.Data.UserData.GetDaily ? true : false);
-                break;
-            case "TimeItem":
-                button.gameObject.SetActive(Base_Manager.Data.UserData.GetTimeItem ? false : true);
-                InProgress.SetActive(Base_Manager.Data.UserData.GetTimeItem ? true : false);
-                break;
-            case "RePlay":
-                button.gameObject.SetActive(Base_Manager.Data.UserData.GetRePlay ? false : true);
-                InProgress.SetActive(Base_Manager.Data.UserData.GetRePlay ? true : false);
-                break;
-        }
-    }
+        Base_Manager.Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
 
+        Base_Manager.Data.UserData.GetArchivements[reward] = true;
+
+        Canvas_Holder.instance.NoneClose = true;
+        Canvas_Holder.instance.GetUI("##Reward");
+        Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
+
+        Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Reward>().GetRewardInit(
+            RewardState.Other,
+            rewardType,
+            rewardValue
+        );
+
+        GetCheckAchieve(reward);
+    }
+    
     private void GetButtonTrophy(string style, int count, int reward)
     {
         if (valueCount(style) < count) return;
@@ -118,6 +113,47 @@ public class Mission_Base : MonoBehaviour
 
     }
 
+    private void GetCheckAchieve(int value)
+    {
+        Debug.Log($"{value} ::: 몇 번째에서 끊기는거야 도대체 ?");
+        var Base = Base_Manager.Data.UserData.GetArchivements[value];
+        button.gameObject.SetActive(Base ? false : true);
+        InProgress.SetActive(Base ? true : false);
+    }
+
+    private void GetCheck(string style)
+    {
+        switch(style)
+        {
+            case "GamePlay": 
+                button.gameObject.SetActive(Base_Manager.Data.UserData.GetGamePlay ? false : true);
+                InProgress.SetActive(Base_Manager.Data.UserData.GetGamePlay ? true : false);
+                break;
+            case "ADS":
+                button.gameObject.SetActive(Base_Manager.Data.UserData.GetADS ? false : true);
+                InProgress.SetActive(Base_Manager.Data.UserData.GetADS ? true : false);
+                break;
+            case "Touch":
+                button.gameObject.SetActive(Base_Manager.Data.UserData.GetTouch ? false : true);
+                InProgress.SetActive(Base_Manager.Data.UserData.GetTouch ? true : false);
+                break;
+            case "DailyAccount":
+                button.gameObject.SetActive(Base_Manager.Data.UserData.GetDaily ? false : true);
+                InProgress.SetActive(Base_Manager.Data.UserData.GetDaily ? true : false);
+                break;
+            case "TimeItem":
+                button.gameObject.SetActive(Base_Manager.Data.UserData.GetTimeItem ? false : true);
+                InProgress.SetActive(Base_Manager.Data.UserData.GetTimeItem ? true : false);
+                break;
+            case "RePlay":
+                button.gameObject.SetActive(Base_Manager.Data.UserData.GetRePlay ? false : true);
+                InProgress.SetActive(Base_Manager.Data.UserData.GetRePlay ? true : false);
+                break;
+        }
+    }
+
+    
+
     public int valueCount(string style)
     {
         switch(style)
@@ -151,6 +187,9 @@ public class Mission_Base : MonoBehaviour
                     }
                 }
                 return b;
+            case "BestStage": return Base_Manager.Data.UserData.BestStage;
+            case "FacilityLevelSum": return Base_Manager.Data.UserData.FacilityLevelSum;
+            case "Reinforce": return Base_Manager.Data.UserData.ReinforceCountTotal;
         }
         return -1;
     }

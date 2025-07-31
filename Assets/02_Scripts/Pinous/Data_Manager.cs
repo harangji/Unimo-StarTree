@@ -267,7 +267,13 @@ public class Data_Manager
         data.TimeItem = 0;
         data.RePlay = 0;
 
-        bool[] archive = { false, false, false, false, false, false, false, false, false };
+        bool[] archive =
+        {
+            false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false
+        };
+        Debug.Log($"NewData :::: {archive.Length}");
+        // bool[] archive = { false, false, false, false, false, false, false, false, false };
         data.GetArchivements = archive;
 
         data.IAP = 0;
