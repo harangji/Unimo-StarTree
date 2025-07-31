@@ -70,12 +70,7 @@ public class Gimmick_RedZone : Gimmick
 
     private void Update()
     {
-        mbTimeElapsed += Time.deltaTime;
-        
-        if (mbTimeElapsed >= mGimmickDuration) //지속 시간 경과 시 비활성
-        {
-            DeactivateGimmick();
-        }
+        base.Update();
         
         if (mPlayerIDamageAble == null || !mbReadyExecute) return;
         

@@ -17727,6 +17727,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3250304557546419885}
     m_Modifications:
+    - target: {fileID: 4296241751882499354, guid: df495f308f0716c4cbff12b30ac995f7,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 40b09121a05752d42a4cd03ff85a2465, type: 2}
     - target: {fileID: 5291624535732533262, guid: df495f308f0716c4cbff12b30ac995f7,
         type: 3}
       propertyPath: m_Name
@@ -17782,7 +17787,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8965930889588795572, guid: df495f308f0716c4cbff12b30ac995f7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965930889588795575, guid: df495f308f0716c4cbff12b30ac995f7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8965930889588795572, guid: df495f308f0716c4cbff12b30ac995f7, type: 3}
+    - {fileID: 8965930889588795574, guid: df495f308f0716c4cbff12b30ac995f7, type: 3}
+    - {fileID: 8965930889588795575, guid: df495f308f0716c4cbff12b30ac995f7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -20858,6 +20876,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808547950}
   m_CullTransparentMesh: 1
+--- !u!1 &828134465
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 828134466}
+  - component: {fileID: 828134467}
+  m_Layer: 0
+  m_Name: AreaActivatorGimmickInitializer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &828134466
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828134465}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3250304557546419885}
+  m_Father: {fileID: 1642766944}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &828134467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828134465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e273adcaa075b94aa3273b4a2f709f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areaActivator: {fileID: 6976841541540005946}
 --- !u!1 &842163632
 GameObject:
   m_ObjectHideFlags: 0
@@ -24783,7 +24847,7 @@ Transform:
   m_Children:
   - {fileID: 1952237384}
   - {fileID: 512136990}
-  - {fileID: 3250304557546419885}
+  - {fileID: 828134466}
   m_Father: {fileID: 877649383}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1642766945
@@ -83461,7 +83525,7 @@ Transform:
   - {fileID: 6750580257912170075}
   - {fileID: 3456534084000508034}
   - {fileID: 470873193}
-  m_Father: {fileID: 1642766944}
+  m_Father: {fileID: 828134466}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!222 &3288087915494460480
 CanvasRenderer:
@@ -109162,8 +109226,9 @@ GameObject:
   - component: {fileID: 3250304557546419885}
   - component: {fileID: 3314637108261878290}
   - component: {fileID: 6976841541540005945}
+  - component: {fileID: 6976841541540005946}
   m_Layer: 0
-  m_Name: Orb
+  m_Name: AreaActivator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119735,6 +119800,23 @@ MonoBehaviour:
   ratio3D: 1
   minDist: 3
   maxDist: 20
+--- !u!114 &6976841541540005946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5354736466686861974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89246c29dea886a4784a3ddbf5524e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gimmickName: "\uC9C0\uC5ED \uD65C\uC131\uD654"
+  gimmickIcon: {fileID: 21300000, guid: 64eadafc842464bf3afbb248be166b72, type: 3}
+  mParticleSystems: []
+  <EffectiveRange>k__BackingField: 8.4
+  flowerGenerator: {fileID: 0}
 --- !u!222 &6982583867979355618
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -24,7 +24,8 @@ public enum eGimmickGrade
 public enum eGimmicks
 {
     BlackHole,
-    RedZone
+    RedZone,
+    AreaActivator,
 }
 
 public enum eGimmickType
@@ -84,6 +85,8 @@ public abstract class Gimmick : MonoBehaviour
     private ParticleSystemRenderer[] mParticleSystemRenderers { get; set; }
     
     protected bool mbReadyExecute = false;
+    protected bool mbDeactivateStart = false;
+    protected float mbTimeElapsed = 0f;
     
     public void Awake()
     {
@@ -104,7 +107,18 @@ public abstract class Gimmick : MonoBehaviour
             mat.color = color;
         }
     }
-    
+
+    protected void Update()
+    {
+        mbTimeElapsed += Time.deltaTime;
+
+        if (mbTimeElapsed >= mGimmickDuration && !mbDeactivateStart) //지속 시간 경과 시 비활성 && 조건 만족시 한 번만
+        {
+            mbDeactivateStart = true;
+            DeactivateGimmick();
+        }
+    }
+
     public abstract void ActivateGimmick(); //실행
     public abstract void DeactivateGimmick(); //정지
 

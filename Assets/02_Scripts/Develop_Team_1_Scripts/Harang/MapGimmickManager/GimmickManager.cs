@@ -79,7 +79,8 @@ public class GimmickManager : MonoBehaviour
         mGimmickInitializersMapper = new Dictionary<string, GimmickInitializer>
         {
             { "G_TRP_002", gimmickInitializers[0] }, // 블랙홀
-            { "G_ENV_004", gimmickInitializers[1] } // 레드존
+            { "G_ENV_004", gimmickInitializers[1] }, // 레드존
+            { "G_TRG_006", gimmickInitializers[2] }, // 지역 활성화
         };
         
         mReadyGimmickQueue.Clear();
