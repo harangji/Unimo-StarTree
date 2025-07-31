@@ -54322,6 +54322,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1813277866}
   - component: {fileID: 1813277867}
+  - component: {fileID: 1813277868}
   m_Layer: 0
   m_Name: MonsterGenerator
   m_TagString: Untagged
@@ -54357,7 +54358,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1813277865}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 334deac6809b7b84ab445bb25dcc37ce, type: 3}
   m_Name: 
@@ -54382,6 +54383,21 @@ MonoBehaviour:
   - 25
   extreamTime: 1000000
   extreamCoolTime: 1000000
+--- !u!114 &1813277868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813277865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb7ef6ba13e1a6d489db370363c05410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnData: {fileID: 11400000, guid: 9191764d2ba2174489597fdb67435be1, type: 2}
+  monsterFactories:
+  - {fileID: 2044775335}
 --- !u!1 &1815904165
 GameObject:
   m_ObjectHideFlags: 0
@@ -65579,6 +65595,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2044775333}
   - component: {fileID: 2044775334}
+  - component: {fileID: 2044775335}
   m_Layer: 0
   m_Name: Mon001Gen
   m_TagString: Untagged
@@ -65614,6 +65631,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monGenCalculator: {fileID: 11400000, guid: dcffbb70795227246bfd4ef98d31a243, type: 2}
+  monsterPattern1: {fileID: 8470377270446183419, guid: 448b05eca14b205479fa46300963edd4,
+    type: 3}
+  monsterPattern2: {fileID: 0}
+  monsterPattern3: {fileID: 8470377270446183419, guid: cda80853c6e79f8479fe4d246ae6ce53,
+    type: 3}
+--- !u!114 &2044775335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044775332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10708243e994e658c63a2929d1536cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   monsterPattern1: {fileID: 8470377270446183419, guid: 448b05eca14b205479fa46300963edd4,
     type: 3}
   monsterPattern2: {fileID: 0}
