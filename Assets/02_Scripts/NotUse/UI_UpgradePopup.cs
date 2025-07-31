@@ -81,7 +81,7 @@ public class UI_UpgradePopup : MonoBehaviour
 
     private void LevelUp(UnimoLevelSystem.StatType stat)
     {
-        int increaseAmount = 10;   // 한 번 클릭 시 10레벨씩 상승 (디버그용) 나중에 1로 수정
+        int increaseAmount = 1;   // 한 번 클릭 시 10레벨씩 상승 (디버그용) 나중에 1로 수정
 
         bool success = UnimoLevelSystem.LevelUp(currentUnitID, stat, increaseAmount);
 

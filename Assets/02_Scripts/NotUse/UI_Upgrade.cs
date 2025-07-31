@@ -11,7 +11,10 @@ public class UI_Upgrade : UI_Base
     
 
     [SerializeField] private GameObject upgradePopupPrefab;  // ÇÁ¸®ÆÕ ¿¡¼Â ¿¬°á
+    [SerializeField] private GameObject engineUpgradePopupPrefab;
+
     private UI_UpgradePopup upgradePopupInstance;
+    private UI_EngineUpgradePopup engineUpgradePopupInstance;
 
     public override void Start()
     {
@@ -39,11 +42,14 @@ public class UI_Upgrade : UI_Base
         upgradePopupInstance.OpenUpgradeUI(unitID);
     }
     
-
-    public override void DisableOBJ()
+    private void ShowEngineUpgradePopup(int engineID)
     {
-        Costume_Finder.instance.ReturnCamera();
-        base.DisableOBJ();
+        if (engineUpgradePopupInstance == null)
+        {
+            GameObject obj = Instantiate(engineUpgradePopupPrefab, transform.parent);
+            engineUpgradePopupInstance = obj.GetComponent<UI_EngineUpgradePopup>();
+        }
+        engineUpgradePopupInstance.OpenUpgradeUI(engineID);
     }
 
     public void CharacterChange(int value)
@@ -56,10 +62,10 @@ public class UI_Upgrade : UI_Base
 
     public void EQChange(int value)
     {
-        int equipIndex = value + 1;
-        Costumer.ChangeEquip(equipIndex, isPreviewOnly: true); // ÇÁ¸®ºä ¾È ¹Ù²ñ
-        int unitID = UnitIDMapping.GetUnitID(equipIndex);
-        ShowUpgradePopup(unitID);
+        int engineIndex = value + 1;
+        Costumer.ChangeEquip(engineIndex, isPreviewOnly: true); // ÇÁ¸®ºä ¾È ¹Ù²ñ
+        int engineID = EngineIDMapping.GetEngineID(engineIndex);
+        ShowEngineUpgradePopup(engineID);
     }
 
     public void GetUnimo()
@@ -77,4 +83,11 @@ public class UI_Upgrade : UI_Base
         Objs[0].SetActive(false);
         Objs[1].SetActive(true);
     }
+    
+    public override void DisableOBJ()
+    {
+        Costume_Finder.instance.ReturnCamera();
+        base.DisableOBJ();
+    }
+    
 }
