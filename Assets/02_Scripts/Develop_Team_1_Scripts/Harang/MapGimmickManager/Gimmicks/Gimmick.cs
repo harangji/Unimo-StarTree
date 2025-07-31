@@ -37,7 +37,7 @@ public enum eGimmickType
 public class ToTsvGimmickData : IKeyedData
 {
     //CsvHelper는 정적인 프로퍼티만 자동 매핑할 수 있다.
-    [field: SerializeField, ReadOnly] public string Key { get; set;}
+    [field: SerializeField, ReadOnly] public string Key { get; set; }
     [field: SerializeField, ReadOnly] public string GimmickName { get; set; }
     
     [field: SerializeField, TypeConverter(typeof(IntArrayConverter)), ReadOnly] public int[] Costs { get; set; }
