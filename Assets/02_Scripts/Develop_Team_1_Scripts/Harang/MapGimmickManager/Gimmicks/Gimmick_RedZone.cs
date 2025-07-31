@@ -77,7 +77,7 @@ public class Gimmick_RedZone : Gimmick
             DeactivateGimmick();
         }
         
-        if (mPlayerIDamageAble == null && !mbReadyExecute) return;
+        if (mPlayerIDamageAble == null || !mbReadyExecute) return;
         
         //거리 비교
         mDistance = Vector3.Distance(transform.position, mPlayerIDamageAble.GameObject.transform.position);

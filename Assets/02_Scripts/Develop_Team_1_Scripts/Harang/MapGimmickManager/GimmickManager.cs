@@ -17,6 +17,7 @@ public class GimmickManager : MonoBehaviour
 {    
     [field: SerializeField] public GameObject UnimoPrefab { get; set; }
     [field: SerializeField] private GameDataSOHolder gameDataSoHolder;
+    [SerializeField] private ScoreGaugeController scoreGaugeController; //실행순서 문제때문에 직접할당 //이거 맘에 안들면 브릿지 만듦
     
     //경고 연출s
     [LabelText("경고 팝업창"), SerializeField]
@@ -82,11 +83,18 @@ public class GimmickManager : MonoBehaviour
         };
         
         mReadyGimmickQueue.Clear();
+        
+        scoreGaugeController.OnScoreThresholdReached += ExecuteGimmick;
     }
 
-    void Start()
+    private void OnEnable()
     {
         InitializeGimmickManager(); //기믹 뽑기
+    }
+
+    private void OnDisable()
+    {
+        scoreGaugeController.OnScoreThresholdReached -= ExecuteGimmick;
     }
 
     //다른 곳에서 기믹 실행
@@ -110,7 +118,6 @@ public class GimmickManager : MonoBehaviour
         
         Gimmick gimmick = mReadyGimmickQueue.Dequeue();
         
-
         gimmick.SetGimmickTMP(modeText[0]);
         MyDebug.Log($"{modeText[0].text} is Dequeue");
         
@@ -289,7 +296,7 @@ public class GimmickManager : MonoBehaviour
             if (filteredPool.Count == 0)
                 break;
             
-            float totalWeight = source.Sum(e => e.GimmickWeight);
+            float totalWeight = filteredPool.Sum(e => e.GimmickWeight);
             int rand = (int)Random.Range(0, totalWeight);
 
             float cumulative = 0;
@@ -314,6 +321,5 @@ public class GimmickManager : MonoBehaviour
             }
         }
     }
-    
 }
 
