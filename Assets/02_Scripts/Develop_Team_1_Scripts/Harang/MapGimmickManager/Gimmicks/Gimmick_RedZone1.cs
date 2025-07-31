@@ -2,9 +2,9 @@ using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Gimmick_RedZone : Gimmick
+public class Gimmick_AreaActivator : Gimmick
 {
-    [Header("레드존 설정")]
+    [Header("지역 활성화 설정")]
     
     //SerializeField
     // [field: SerializeField, LabelText("끌어당기는 힘"), Tooltip("블랙홀이 끌어당기는 정도"), Required, Space]
@@ -15,7 +15,7 @@ public class Gimmick_RedZone : Gimmick
     
     public override eGimmickType eGimmickType => eGimmickType.Dangerous;
     
-    [field: SerializeField, LabelText("레드존 크기"), Tooltip("레드존 피해 구역"), Required, Space]
+    [field: SerializeField, LabelText("지역 활성화 크기"), Required, Space]
     private float EffectiveRange { get; set; } = 6.7f;
 
     //private
@@ -65,9 +65,8 @@ public class Gimmick_RedZone : Gimmick
     //cash
     private float mDistance;
     private float mDamageTimeElapsed = 0f;
-    private float mDamageInterval = 0.5f; // 데미지 주기 Time.deltaTime
-
-
+    private float mDamageInterval = 1f; // 데미지 주기 (1초)
+    
     private void Update()
     {
         mbTimeElapsed += Time.deltaTime;

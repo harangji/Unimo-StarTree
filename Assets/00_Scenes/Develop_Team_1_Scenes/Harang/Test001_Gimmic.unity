@@ -1065,6 +1065,8 @@ MonoBehaviour:
   effectController: {fileID: 872065066}
   shieldEffect: {fileID: 0}
   orbitAura: {fileID: 0}
+  cloudAura: {fileID: 0}
+  lightningAura: {fileID: 0}
 --- !u!4 &113798971
 Transform:
   m_ObjectHideFlags: 0
@@ -17717,6 +17719,80 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1001 &470873192
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3250304557546419885}
+    m_Modifications:
+    - target: {fileID: 5291624535732533262, guid: df495f308f0716c4cbff12b30ac995f7,
+        type: 3}
+      propertyPath: m_Name
+      value: Aura
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965930889588795529, guid: df495f308f0716c4cbff12b30ac995f7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965930889588795529, guid: df495f308f0716c4cbff12b30ac995f7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965930889588795529, guid: df495f308f0716c4cbff12b30ac995f7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965930889588795529, guid: df495f308f0716c4cbff12b30ac995f7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965930889588795529, guid: df495f308f0716c4cbff12b30ac995f7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965930889588795529, guid: df495f308f0716c4cbff12b30ac995f7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965930889588795529, guid: df495f308f0716c4cbff12b30ac995f7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965930889588795529, guid: df495f308f0716c4cbff12b30ac995f7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965930889588795529, guid: df495f308f0716c4cbff12b30ac995f7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965930889588795529, guid: df495f308f0716c4cbff12b30ac995f7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: df495f308f0716c4cbff12b30ac995f7, type: 3}
+--- !u!4 &470873193 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8965930889588795529, guid: df495f308f0716c4cbff12b30ac995f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 470873192}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &472919497
 GameObject:
   m_ObjectHideFlags: 0
@@ -21044,6 +21120,7 @@ MonoBehaviour:
   magicHatEffect: {fileID: 0}
   sandCastleEffect: {fileID: 0}
   orbitAuraObject: {fileID: 0}
+  cloudAuraObject: {fileID: 0}
 --- !u!4 &872065067
 Transform:
   m_ObjectHideFlags: 0
@@ -24723,6 +24800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <UnimoPrefab>k__BackingField: {fileID: 307905777}
   gameDataSoHolder: {fileID: 1749302432}
+  scoreGaugeController: {fileID: 0}
   warningPopup: {fileID: 8080612006517079116}
   modeText:
   - {fileID: 4558809849314686943}
@@ -26612,7 +26690,6 @@ MonoBehaviour:
   maxTime: 60
   reduceIncTime: 120
   timerGauge: {fileID: 4088}
-  mTimerText: {fileID: 573821743}
 --- !u!114 &1971803518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83383,6 +83460,7 @@ Transform:
   - {fileID: 443357401238676204}
   - {fileID: 6750580257912170075}
   - {fileID: 3456534084000508034}
+  - {fileID: 470873193}
   m_Father: {fileID: 1642766944}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!222 &3288087915494460480
@@ -83432,7 +83510,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5354736466686861974}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 2619689785442160053, guid: 0013e6a15c3541d4eac5b29f292ec32b,
     type: 2}
@@ -119649,7 +119727,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5354736466686861974}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 800c5b7cde5b14645aaaf9267f3b6806, type: 3}
   m_Name: 
