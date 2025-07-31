@@ -1064,6 +1064,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectController: {fileID: 872065066}
   shieldEffect: {fileID: 0}
+  orbitAura: {fileID: 0}
+  cloudAura: {fileID: 0}
+  lightningAura: {fileID: 0}
 --- !u!4 &113798971
 Transform:
   m_ObjectHideFlags: 0
@@ -2793,9 +2796,9 @@ RectTransform:
   - {fileID: 1083489134}
   m_Father: {fileID: 1059449178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -430.29996}
   m_SizeDelta: {x: 444.4445, y: 250.868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &392494909
@@ -4898,9 +4901,9 @@ RectTransform:
   - {fileID: 70759446}
   m_Father: {fileID: 1059449178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -717.1666}
   m_SizeDelta: {x: 444.4445, y: 250.868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &666768177
@@ -6356,6 +6359,8 @@ MonoBehaviour:
   timedInvincibleEffect: {fileID: 0}
   magicHatEffect: {fileID: 0}
   sandCastleEffect: {fileID: 0}
+  orbitAuraObject: {fileID: 0}
+  cloudAuraObject: {fileID: 0}
 --- !u!4 &872065067
 Transform:
   m_ObjectHideFlags: 0
@@ -9202,9 +9207,9 @@ RectTransform:
   - {fileID: 639960796}
   m_Father: {fileID: 1059449178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -143.43332}
   m_SizeDelta: {x: 444.4445, y: 250.868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1519353528
@@ -9676,7 +9681,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1628869253
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10529,6 +10534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334deac6809b7b84ab445bb25dcc37ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonsText: []
   generators:
   - {fileID: 622374550}
   - {fileID: 1398289742}

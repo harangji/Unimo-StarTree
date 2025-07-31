@@ -9683,6 +9683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334deac6809b7b84ab445bb25dcc37ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonsText: []
   generators:
   - {fileID: 2051661442}
   - {fileID: 207323012}
@@ -11696,6 +11697,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectController: {fileID: 2100808602}
   shieldEffect: {fileID: 0}
+  orbitAura: {fileID: 0}
+  cloudAura: {fileID: 0}
+  lightningAura: {fileID: 0}
 --- !u!4 &2083212281
 Transform:
   m_ObjectHideFlags: 0
@@ -11822,6 +11826,8 @@ MonoBehaviour:
   timedInvincibleEffect: {fileID: 0}
   magicHatEffect: {fileID: 0}
   sandCastleEffect: {fileID: 0}
+  orbitAuraObject: {fileID: 0}
+  cloudAuraObject: {fileID: 0}
 --- !u!4 &2100808603
 Transform:
   m_ObjectHideFlags: 0
