@@ -47,11 +47,41 @@ public class UI_Mission : UI_Base
                 if (state == Mission_State.Daily)
                 {
                     var reward = Data[i]["Reward"].ToString().Split("_");
-                    m_Mission[i].Init(Data[i]["Style"].ToString(), int.Parse(Data[i]["Count"].ToString()), int.Parse(reward[1]), stateCheck(reward[0]));
+                    m_Mission[i].Init(
+                        Data[i]["Style"].ToString(), 
+                        int.Parse(Data[i]["Count"].ToString()), 
+                        int.Parse(reward[1]), 
+                        stateCheck(reward[0]));
                 }
                 else if (state == Mission_State.Achievements)
                 {
-                    m_TrophyBase[a].Init(Data[i]["Style"].ToString(), int.Parse(Data[i]["Count"].ToString()), a, Asset_State.Blue);
+                    string rewardRaw = Data[i]["Reward"].ToString();
+                    var rewardSplit = rewardRaw.Split('_');
+
+                    if (rewardSplit.Length == 2)
+                    {
+                        // 별꿀 보상: B_50, O_500
+                        int rewardAmount = int.Parse(rewardSplit[1]);
+                        Asset_State rewardType = stateCheck(rewardSplit[0]);
+                        m_TrophyBase[a].Init(
+                            Data[i]["Style"].ToString(),
+                            int.Parse(Data[i]["Count"].ToString()),
+                            a,
+                            rewardType,
+                            rewardAmount
+                        );
+                    }
+                    else
+                    {
+                        // 캐릭터/장비 보상: DoomDoom, GomGom 등
+                        m_TrophyBase[a].Init(
+                            Data[i]["Style"].ToString(),
+                            int.Parse(Data[i]["Count"].ToString()),
+                            a,
+                            Asset_State.Blue // or 무시됨
+                        );
+                    }
+
                     a++;
                 }
             }

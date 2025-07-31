@@ -46,6 +46,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     private DogHouseReviveEffect mReviveEffect;
     public static event System.Action<bool> OnPlayerActiveChanged;
     
+    
     private void Awake()
     {
         PlaySystemRefStorage.playerStatManager = this;
@@ -243,7 +244,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     public void DeactivePlayer()
     {
         OnPlayerActiveChanged?.Invoke(false);
-        //auraController.gameObject.SetActive(false);
+        auraController.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 

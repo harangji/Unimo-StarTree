@@ -21,7 +21,7 @@ public class StageSelectUI : MonoBehaviour
         int lastCleared = StageLoader.GetLastClearedStage();
         mNextStage = lastCleared + 1;
         UpdateUI();
-        Debug.Log($"{Base_Manager.Data.UserData.BestStage} 입니다.");
+        // Debug.Log($"{Base_Manager.Data.UserData.BestStage} 입니다.");
     }
 
     public void StageUpgrade()

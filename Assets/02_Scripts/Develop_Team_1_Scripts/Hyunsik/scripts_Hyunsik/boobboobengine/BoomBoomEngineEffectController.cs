@@ -11,6 +11,7 @@ public class BoomBoomEngineEffectController : MonoBehaviour
     [SerializeField] private MagicHatEffect magicHatEffect;
     [SerializeField] private AuraRangeSandCastleEffect sandCastleEffect;
     [SerializeField] private GameObject orbitAuraObject;
+    [SerializeField] private GameObject cloudAuraObject;
     
     private void Awake()
     {
@@ -113,7 +114,21 @@ public class BoomBoomEngineEffectController : MonoBehaviour
                 {
                     Debug.LogWarning("[EffectController] OrbitAura 오브젝트 미연결");
                 }
+                
                 break;
+            case 319: // 구름 엔진 (CloudAura ON)
+                if (cloudAuraObject != null)
+                {
+                    cloudAuraObject.SetActive(true); // CloudAura 활성화
+                    Debug.Log("[EffectController] CloudAura 활성화 (319 엔진)");
+                }
+                else
+                {
+                    Debug.LogWarning("[EffectController] CloudAura 오브젝트 미연결");
+                }
+                break;
+            
+            
         }
     }
 }

@@ -5,6 +5,8 @@ public class EngineEffectTriggerManager : MonoBehaviour
     [SerializeField] private BoomBoomEngineEffectController effectController;
     [SerializeField] private ShieldEffect shieldEffect;
     [SerializeField] private OrbitAuraController orbitAura;
+    [SerializeField] private BoundaryChaser cloudAura;
+    [SerializeField] private BoundaryChaser lightningAura;
     
     private int orangeFlowerCount = 0;
     private int yellowFlowerCount = 0;
@@ -90,18 +92,22 @@ public class EngineEffectTriggerManager : MonoBehaviour
     {
         var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
 
+        // 318: OrbitAura (¿¹: °³¹ä±×¸©)
         if (orbitAura != null)
         {
-            if (engineData != null && engineData.SkillID == 318)
-            {
-                orbitAura.gameObject.SetActive(true);
+            bool isActive = engineData != null && engineData.SkillID == 318;
+            orbitAura.gameObject.SetActive(isActive);
+            if (isActive)
                 orbitAura.SetTarget(PlaySystemRefStorage.playerStatManager.transform, 4.0f, 0.0f);
-            }
-            else
-            {
-                orbitAura.gameObject.SetActive(false);
-            }
         }
+
+        // 319: CloudAura (BoundaryChaser)
+        if (cloudAura != null)
+        {
+            bool isActive = engineData != null && engineData.SkillID == 319;
+            cloudAura.gameObject.SetActive(isActive);
+        }
+        
     }
     
     

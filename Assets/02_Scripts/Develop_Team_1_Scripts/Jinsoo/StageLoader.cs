@@ -32,7 +32,7 @@ public static class StageLoader
     // EasySaveManager 기반 저장 함수
     public static void SaveClearedStage(int clearedStage)
     {
-        Debug.Log($"이전 최고 스테이지 : {Base_Manager.Data.UserData.BestStage}");
+        // Debug.Log($"이전 최고 스테이지 : {Base_Manager.Data.UserData.BestStage}");
         var userData = Base_Manager.Data.UserData;
         if (clearedStage > userData.BestStage && userData.BestStage < 1000)
         {
@@ -51,7 +51,7 @@ public static class StageLoader
     // 임시 Stage 낮추기 함수
     public static void StageDownSave()
     {
-        Debug.Log($"이전 최고 스테이지 : {Base_Manager.Data.UserData.BestStage}");
+        // Debug.Log($"이전 최고 스테이지 : {Base_Manager.Data.UserData.BestStage}");
         var userData = Base_Manager.Data.UserData;
         userData.BestStage--;
         Debug.Log($"바뀐 최고 스테이지 : {Base_Manager.Data.UserData.BestStage}");
