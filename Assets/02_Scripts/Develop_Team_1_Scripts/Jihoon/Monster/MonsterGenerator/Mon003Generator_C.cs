@@ -15,15 +15,9 @@ public class Mon003Generator_C : MonsterGenerator
 
     protected override MonsterController generateEnemy()
     {
-        // Vector3 pos = findGenPosition();
-        // Quaternion quat = setGenRotation(pos);
-        // MonsterController controller = Instantiate(monsterPattern1, pos, quat).GetComponent<MonsterController>();
-        // controller.InitEnemy(playerTransform);
-        //
-        // return controller;
-
         int cost;
-        var rate = Random.Range(0, 100);
+        // var rate = Random.Range(0, 100);
+        var rate = Random.Range(90, 100);
         if (rate < 70) cost = 2;
         else if (rate < 90) cost = 4;
         else cost = 7;
@@ -127,15 +121,15 @@ public class Mon003Generator_C : MonsterGenerator
         Vector3 center = playerTransform.position;
         Vector3[] spawnOffsets = new Vector3[]
         {
-            new Vector3(-2f, 0, 4f), // ¾Õ¿Þ
-            new Vector3(4f, 0, 2f), // ¿À¾Õ
-            new Vector3(2f, 0, -4f), // µÚ¿À
-            new Vector3(-4f, 0, -2f), // ¿ÞµÚ
+            new Vector3(-3f, 0, 6f), // ¾Õ¿Þ
+            new Vector3(6f, 0, 3f), // ¿À¾Õ
+            new Vector3(3f, 0, -6f), // µÚ¿À
+            new Vector3(-6f, 0, -3f), // ¿ÞµÚ
 
-            new Vector3(2f, 0, 4f), // ¾Õ¿À
-            new Vector3(4f, 0, -2f), // ¿ÀµÚ
-            new Vector3(-2f, 0, -4f), // µÚ¿Þ
-            new Vector3(-4f, 0, 2f) // ¿Þ¾Õ
+            new Vector3(3f, 0, 6f), // ¾Õ¿À
+            new Vector3(6f, 0, -3f), // ¿ÀµÚ
+            new Vector3(-3f, 0, -6f), // µÚ¿Þ
+            new Vector3(-6f, 0, 3f) // ¿Þ¾Õ
         };
         var actions = new List<Mon003State_Action_C>();
         
@@ -162,7 +156,7 @@ public class Mon003Generator_C : MonsterGenerator
 
     private IEnumerator DelayBomb(List<Mon003State_Action_C> actions)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2.75f);
 
         foreach (var action in actions)
         {
