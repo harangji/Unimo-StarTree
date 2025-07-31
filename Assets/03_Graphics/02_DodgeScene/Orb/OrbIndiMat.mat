@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7482729274356687460
+--- !u!114 &-9204455729233891591
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,15 +20,15 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FakeBloomMat
-  m_Shader: {fileID: -6465566751694194690, guid: 444ced7710436d44d8e77948f94a491f,
+  m_Name: OrbIndiMat
+  m_Shader: {fileID: -6465566751694194690, guid: 390695e4f9376d84cb558f6b29cee6f3,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -78,16 +78,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_592feb591c4b4b51aecba87cb07181e8_Texture_1:
-        m_Texture: {fileID: 2800000, guid: c3f8bbd6051391942b2b3aaa6bfb299a, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_592feb591c4b4b51aecba87cb07181e8_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: c3f8bbd6051391942b2b3aaa6bfb299a, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureIn:
+        m_Texture: {fileID: 2800000, guid: 47f01ae07aea7f847b10bca91fee97ff, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -120,10 +116,10 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
-    - _Opacity: 0.3
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Ratio: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -133,8 +129,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 0.9087162, b: 0.7122642, a: 1}
+    - _BaseColor: {r: 1, g: 0.7019608, b: 0.30980393, a: 0.7490196}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
