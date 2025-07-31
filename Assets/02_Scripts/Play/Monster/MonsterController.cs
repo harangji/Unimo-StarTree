@@ -25,6 +25,8 @@ public class MonsterController : MonoBehaviour
     public GameObject explodeFX;
     public bool isExplodeFXAtPlayer = true;
 
+    [SerializeField] private float mReducedTime = 0; // 몬스터마다 줄이는 시간
+
     protected MonsterMachine machine;
     protected MonsterState_Appear enemyAppear;
     protected MonsterState_Preaction enemyPreact;
@@ -67,16 +69,33 @@ public class MonsterController : MonoBehaviour
 
                 //todo 이 부분에서 나중에 컴벳 시스템으로 바꿔야 함 -> 지금은 그냥 Hit 메서드를 변경함
                 var monster = GetComponent<IDamageAble>();
+                CombatEvent combatEvent;
 
-                CombatEvent combatEvent = new CombatEvent
+                if (PlaySystemRefStorage.stageManager.GetBonusStage())
                 {
-                    Sender = monster,
-                    Receiver = player,
-                    Damage = (monster as Monster).appliedDamage,
-                    HitPosition = hitPos,
-                    Collider = other,
-                    IsStrongKnockback = false,
-                };
+                    combatEvent = new CombatEvent
+                    {
+                        Sender = monster,
+                        Receiver = player,
+                        HitPosition = hitPos,
+                        Collider = other,
+                        IsTimeReduceMod = true,
+                        TimeReduceAmount = mReducedTime,
+                        IsStrongKnockback = false,
+                    };
+                }
+                else
+                {
+                    combatEvent = new CombatEvent
+                    {
+                        Sender = monster,
+                        Receiver = player,
+                        Damage = (monster as Monster).appliedDamage,
+                        HitPosition = hitPos,
+                        Collider = other,
+                        IsStrongKnockback = false,
+                    };
+                }
 
                 CombatSystem.Instance.AddInGameEvent(combatEvent);
 
