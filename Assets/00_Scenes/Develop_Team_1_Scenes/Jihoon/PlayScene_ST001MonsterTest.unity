@@ -17445,7 +17445,7 @@ GameObject:
   - component: {fileID: 326843634}
   - component: {fileID: 326843635}
   m_Layer: 0
-  m_Name: Mon004Gen
+  m_Name: Mon004Factory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25019,7 +25019,7 @@ GameObject:
   - component: {fileID: 622374549}
   - component: {fileID: 622374550}
   m_Layer: 0
-  m_Name: Mon003Gen
+  m_Name: Mon003Factory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27460,6 +27460,7 @@ Transform:
   - {fileID: 524533855}
   - {fileID: 443619040}
   - {fileID: 1813277866}
+  - {fileID: 1932293081}
   - {fileID: 1971803515}
   - {fileID: 93051893}
   - {fileID: 1337893009}
@@ -41314,7 +41315,7 @@ GameObject:
   - component: {fileID: 1398289741}
   - component: {fileID: 1398289742}
   m_Layer: 0
-  m_Name: Mon005Gen
+  m_Name: Mon005Factory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53839,7 +53840,7 @@ GameObject:
   - component: {fileID: 1803579854}
   - component: {fileID: 1803579855}
   m_Layer: 0
-  m_Name: Mon002Gen
+  m_Name: Mon002Factory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53953,8 +53954,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1813277866}
   - component: {fileID: 1813277867}
+  - component: {fileID: 1813277868}
   m_Layer: 0
-  m_Name: MonsterGenerator
+  m_Name: MonsterSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53978,7 +53980,6 @@ Transform:
   - {fileID: 622374549}
   - {fileID: 326843634}
   - {fileID: 1398289741}
-  - {fileID: 1932293081}
   m_Father: {fileID: 877649383}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1813277867
@@ -54013,6 +54014,18 @@ MonoBehaviour:
   - 25
   extreamTime: 1000000
   extreamCoolTime: 1000000
+--- !u!114 &1813277868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813277865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb7ef6ba13e1a6d489db370363c05410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1815904165
 GameObject:
   m_ObjectHideFlags: 0
@@ -59649,7 +59662,7 @@ GameObject:
   - component: {fileID: 1932293081}
   - component: {fileID: 1932293082}
   m_Layer: 0
-  m_Name: BossGen
+  m_Name: BossSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59668,7 +59681,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1813277866}
+  m_Father: {fileID: 877649383}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1932293082
 MonoBehaviour:
@@ -65211,7 +65224,7 @@ GameObject:
   - component: {fileID: 2044775333}
   - component: {fileID: 2044775334}
   m_Layer: 0
-  m_Name: Mon001Gen
+  m_Name: Mon001Factory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
