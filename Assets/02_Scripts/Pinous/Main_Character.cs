@@ -6,7 +6,7 @@ public class Main_Character : MonoBehaviour
 {
     private void Start()
     {
-        StartCoroutine(Get_Yellow());
+        // StartCoroutine(Get_Yellow());     // 방치 재화 획득 임시로 막아놨습니다.
     }
 
     IEnumerator Get_Yellow()
