@@ -17,7 +17,7 @@ public class PlayTimeManager : MonoBehaviour
     private bool isPaused = true;
     [CanBeNull] private ItemGenerator itemGenerator;
     [SerializeField] private TimeGaugeController timerGauge;
-    [SerializeField] [CanBeNull] private TextMeshProUGUI mTimerText;
+    // [SerializeField] [CanBeNull] private TextMeshProUGUI mTimerText;
     
     private bool mbTimerStopped = false;
     
@@ -92,11 +92,11 @@ public class PlayTimeManager : MonoBehaviour
             mbTimerStopped = true;
         }
         timerGauge.SetGauge(remainTime / maxTime);
-        if (mTimerText != null)
-        {
-            var floorTime = (int)remainTime;
-            mTimerText.text = floorTime.ToString();
-        }
+        // if (mTimerText != null)
+        // {
+        //     var floorTime = (int)remainTime;
+        //     mTimerText.text = floorTime.ToString();
+        // }
     }
     private float calcReduceRate(float lapse)
     {

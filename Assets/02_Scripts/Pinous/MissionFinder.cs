@@ -109,6 +109,9 @@ public class MissionFinder : MonoBehaviour
                     }
                 }
                 return b;
+            case "BestStage": return Base_Manager.Data.UserData.BestStage;
+            case "FacilityLevelSum": return Base_Manager.Data.UserData.FacilityLevelSum;
+            case "Reinforce": return Base_Manager.Data.UserData.ReinforceCountTotal;
         }
         return -1;
     }
