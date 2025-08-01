@@ -76,10 +76,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: fcb0109e4ead7d8439ff2a312124de88, type: 3}
   - {fileID: 21300000, guid: c33de7b241863aa41b45721a9b8f7c4f, type: 3}
   - {fileID: 21300000, guid: 74c2c6da99363084697ccb0c65a7f51f, type: 3}
-  statLevelTexts:
-  - {fileID: 0}
-  upgradeButtons:
-  - {fileID: 7726533611727275527}
+  levelText: {fileID: 3094058287097824542}
+  descriptionText: {fileID: 4415780002677076224}
+  upgradeButton: {fileID: 7726533611727275527}
 --- !u!1 &2802019846257222176
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,15 +107,15 @@ RectTransform:
   m_GameObject: {fileID: 2802019846257222176}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.92, z: 1}
+  m_LocalScale: {x: 1.8, y: 1.6457778, z: 1.7888889}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7516338307898939777}
+  m_Father: {fileID: 3134950271005750552}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 465, y: -451.51013}
-  m_SizeDelta: {x: 356.08002, y: 115.6822}
+  m_AnchoredPosition: {x: 0, y: -1252.6499}
+  m_SizeDelta: {x: -932, y: 115.6822}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3183942836398048292
 CanvasRenderer:
@@ -146,7 +145,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uCCB4\uB825"
+  m_text: "\uCCB4\uB825 + 5%"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5e994e850b8324b18a58aa8c049a7865, type: 2}
   m_sharedMaterial: {fileID: -676856466882600281, guid: 5e994e850b8324b18a58aa8c049a7865,
@@ -174,12 +173,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 94.8
-  m_fontSizeBase: 94.8
+  m_fontSize: 79.85
+  m_fontSizeBase: 51
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 12
+  m_fontSizeMax: 80
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -339,15 +338,15 @@ RectTransform:
   m_GameObject: {fileID: 4419445626875460008}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.92, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7214697248215395221}
+  m_Father: {fileID: 3134950271005750552}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -287}
-  m_SizeDelta: {x: 0, y: 115.6822}
+  m_AnchoredPosition: {x: 0, y: -1042.286}
+  m_SizeDelta: {x: -982, y: 115.6822}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8490901988084257972
 CanvasRenderer:
@@ -1100,6 +1099,8 @@ RectTransform:
   m_Children:
   - {fileID: 5911263166484236436}
   - {fileID: 7828022627502914152}
+  - {fileID: 5530627910065198584}
+  - {fileID: 2414954812449151524}
   - {fileID: 7691929668716814411}
   - {fileID: 2723367795942266754}
   m_Father: {fileID: 3902296926365354139}
@@ -1335,7 +1336,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1285272767427530941}
-  - {fileID: 5530627910065198584}
   - {fileID: 7214697248215395221}
   m_Father: {fileID: 5911263166484236436}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1426,8 +1426,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_UpgradePopup, Assembly-CSharp
+      - m_Target: {fileID: -5562240479916194244}
+        m_TargetAssemblyTypeName: UI_EngineUpgradePopup, Assembly-CSharp
         m_MethodName: ResetAllStats
         m_Mode: 1
         m_Arguments:
@@ -1542,13 +1542,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3616880834862213963}
-  - {fileID: 2414954812449151524}
   m_Father: {fileID: 7516338307898939777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 465, y: -971.88}
-  m_SizeDelta: {x: 550, y: 200}
+  m_SizeDelta: {x: 550, y: 333.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &45909384713112887
 CanvasRenderer:
@@ -1628,14 +1627,14 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 949177116389532925}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: LobbySceneController, Assembly-CSharp
-        m_MethodName: LoadGame
-        m_Mode: 3
+      - m_Target: {fileID: -5562240479916194244}
+        m_TargetAssemblyTypeName: UI_EngineUpgradePopup, Assembly-CSharp
+        m_MethodName: OnUpgradeButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

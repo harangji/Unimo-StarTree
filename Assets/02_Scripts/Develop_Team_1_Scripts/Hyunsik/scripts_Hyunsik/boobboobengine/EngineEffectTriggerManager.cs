@@ -197,7 +197,17 @@ public class EngineEffectTriggerManager : MonoBehaviour
 
         if (engineData != null && effectController != null)
         {
-            effectController.ActivateEffect(engineData.SkillID, target); //  정상
+            var effect = target.GetComponent<IBoomBoomEngineEffect>();
+    
+            // BeeTail 무적 효과 초기화 (ID: 301번)
+            if (effect is BeeTailInvincibilityEffect beeTail)
+            {
+                int level = EngineLevelSystem.GetUniqueLevel(engineData.EngineID);
+                beeTail.Init(engineData.EngineID, level);
+            }
+
+            effectController.ActivateEffect(engineData.SkillID, target);
         }
+
     }
 }

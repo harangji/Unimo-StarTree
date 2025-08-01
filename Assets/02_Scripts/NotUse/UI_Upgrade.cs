@@ -49,7 +49,19 @@ public class UI_Upgrade : UI_Base
             GameObject obj = Instantiate(engineUpgradePopupPrefab, transform.parent);
             engineUpgradePopupInstance = obj.GetComponent<UI_EngineUpgradePopup>();
         }
-        engineUpgradePopupInstance.OpenUpgradeUI(engineID);
+
+        // 예시: 라비(고유효과 엔진)라면
+        if (engineID == 20101)
+        {
+            engineUpgradePopupInstance.OpenUpgradeUI(engineID, true);
+        }
+        // 일반 StatType 엔진
+        else
+        {
+            EngineLevelSystem.EEngineStatType statTypeToUpgrade = EngineLevelSystem.EEngineStatType.Health; // 예시, 필요에 따라 변경
+            if (engineID == 21103) statTypeToUpgrade = EngineLevelSystem.EEngineStatType.MoveSpd; // 등등
+            engineUpgradePopupInstance.OpenUpgradeUI(engineID, false, statTypeToUpgrade);
+        }
     }
 
     public void CharacterChange(int value)

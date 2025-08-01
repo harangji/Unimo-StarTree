@@ -32,6 +32,13 @@ public class BoomBoomEngineEffectController : MonoBehaviour
             case 301:  // 리비 엔진 (무적 버프)
                 if (beeTailEffect != null)
                 {
+                    int engineID = GameManager.Instance.SelectedEngineID;
+                    int level = EngineLevelSystem.GetUniqueLevel(engineID);
+
+                    //  Init 호출
+                    beeTailEffect.Init(engineID, level);
+
+                    //  ExecuteEffect 실행
                     beeTailEffect.ExecuteEffect();
                     Debug.Log("[EffectController] BeeTailEffect 버프 발동");
                 }

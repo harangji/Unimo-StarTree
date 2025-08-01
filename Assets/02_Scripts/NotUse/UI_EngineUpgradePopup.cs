@@ -2,39 +2,27 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class UI_EngineUpgradePopup : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI engineNameText;
     [SerializeField] private Image engineImage;
     [SerializeField] private GameObject panel;
     [SerializeField] private Sprite[] engineSprites;
-    
-    [Header("스탯 레벨 텍스트")]
-    [SerializeField] private TextMeshProUGUI[] statLevelTexts;
-    
-    [Header("업그레이드 버튼")]
-    [SerializeField] private Button[] upgradeButtons; 
-    
+    [SerializeField] private TextMeshProUGUI levelText;         // ex. "1 / 50"
+    [SerializeField] private TextMeshProUGUI descriptionText;  
+    [SerializeField] private Button upgradeButton;
+
     private int mEngineID;
+    private EngineLevelSystem.EEngineStatType mUpgradeStatType;
+    private bool bIsUniqueType;
+
     
-    private void Awake()
-    {
-        // 버튼 클릭시 레벨업 (클로저 방지)
-        for (int i = 0; i < upgradeButtons.Length; i++)
-        {
-            int statIndex = i;
-            upgradeButtons[i].onClick.AddListener
-                (() => LevelUp((EngineLevelSystem.EEngineStatType)statIndex));
-        }
-    }
-    
-    /// <summary>
-    /// 엔진 업그레이드 팝업 오픈
-    /// </summary>
-    public void OpenUpgradeUI(int engineID)
+    public void OpenUpgradeUI(int engineID, bool isUniqueType, EngineLevelSystem.EEngineStatType statType = EngineLevelSystem.EEngineStatType.Health)
     {
         mEngineID = engineID;
+        bIsUniqueType = isUniqueType;
+        mUpgradeStatType = statType;
+
         BoomBoomEngineData data = BoomBoomEngineDatabase.GetEngineData(engineID);
         panel.SetActive(true);
 
@@ -49,31 +37,56 @@ public class UI_EngineUpgradePopup : MonoBehaviour
             engineNameText.text = "???";
         }
     }
-    
-    /// <summary>
-    /// 엔진 스탯 모두 리셋
-    /// </summary>
-    public void ResetAllStats()
+
+    public void OnUpgradeButton()
     {
-        EngineLevelSystem.ResetEngineStats(mEngineID);
-        UpdateAllLevelUI();
-        Debug.Log($"[{mEngineID}] 엔진 스탯 전부 리셋됨");
+        bool success = bIsUniqueType
+            ? EngineLevelSystem.LevelUpUnique(mEngineID, 1)
+            : EngineLevelSystem.LevelUpStat(mEngineID, mUpgradeStatType, 1);
+
+        if (success)
+        {
+            Debug.Log($"[{mEngineID}] 레벨업 성공!");
+            UpdateAllLevelUI();
+        }
     }
 
-    /// <summary>
-    /// 엔진 스프라이트 세팅
-    /// </summary>
-    private void SetEngineSprite(int engineID)
+    private void UpdateAllLevelUI()
     {
-        int spriteIndex = GetSpriteIndexByEngineID(engineID);
-        engineImage.sprite = 
-            (spriteIndex >= 0 && spriteIndex < engineSprites.Length) ? engineSprites[spriteIndex] : null;
+        const int maxLevel = 50;
+        BoomBoomEngineData data = BoomBoomEngineDatabase.GetEngineData(mEngineID);
+
+        int curLevel = bIsUniqueType
+            ? EngineLevelSystem.GetUniqueLevel(mEngineID)
+            : EngineLevelSystem.GetStatLevel(mEngineID, mUpgradeStatType);
+
+        levelText.text = $"{curLevel} / {maxLevel}";
+
+        float growthValue = data.GrowthTable[Mathf.Clamp(curLevel - 1, 0, data.GrowthTable.Length - 1)];
+        descriptionText.text = string.Format(data.DescriptionFormat, growthValue);
+    }
+
+    public void ResetAllStats()
+    {
+        int engineID = GameManager.Instance.SelectedEngineID;
+        EngineLevelSystem.ResetEngine(engineID);  // 또는 StatSystem 등 정확한 static 클래스
+        Debug.Log($"[UI] {engineID} 엔진 스탯 초기화 완료");
+    
+        RefreshUI();  // 리셋 후 UI 갱신 함수 호출 필요
     }
     
     
-    /// <summary>
-    /// 엔진 ID로 스프라이트 인덱스 반환
-    /// </summary>
+    private void RefreshUI()
+    {
+        UpdateAllLevelUI(); // 레벨 텍스트 및 설명 다시 갱신
+    }
+    
+    private void SetEngineSprite(int engineID)
+    {
+        int index = GetSpriteIndexByEngineID(engineID);
+        engineImage.sprite = (index >= 0 && index < engineSprites.Length) ? engineSprites[index] : null;
+    }
+
     private int GetSpriteIndexByEngineID(int engineID)
     {
         switch (engineID)
@@ -101,38 +114,7 @@ public class UI_EngineUpgradePopup : MonoBehaviour
             case 21301: return 20;
             case 21201: return 21;
             case 20411: return 22;
-            
             default: return -1;
-        }
-    }
-
-    /// <summary>
-    /// 특정 스탯 레벨업
-    /// </summary>
-    private void LevelUp(EngineLevelSystem.EEngineStatType stat)
-    {
-        int increaseAmount = 10;   // 디버그용. 실제론 1로 바꿔 사용
-
-        bool success = EngineLevelSystem.LevelUp(mEngineID, stat, increaseAmount);
-
-        if (success)
-        {
-            Debug.Log($"[{mEngineID}] {stat} {increaseAmount} 레벨 상승 완료!");
-            UpdateAllLevelUI();
-            // Base_Manager.Data.UserData.EngineReinforceCountTotal++; // 업적 시스템 현재는 주석 처리
-        }
-    }
-
-    /// <summary>
-    /// 모든 스탯 UI 갱신
-    /// </summary>
-    private void UpdateAllLevelUI()
-    {
-        const int maxLevel = 50;
-        for (int i = 0; i < statLevelTexts.Length; i++)
-        {
-            int level = EngineLevelSystem.GetLevel(mEngineID, (EngineLevelSystem.EEngineStatType)i);
-            statLevelTexts[i].text = $"{level} / {maxLevel}";
         }
     }
 
@@ -141,4 +123,5 @@ public class UI_EngineUpgradePopup : MonoBehaviour
         Destroy(gameObject);
     }
 }
+
     
