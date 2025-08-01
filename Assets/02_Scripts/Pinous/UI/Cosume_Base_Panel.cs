@@ -26,8 +26,10 @@ public class Cosume_Base_Panel : MonoBehaviour
                 }
                 break;
             case CharCostumer.EQ:
+                Debug.Log($"{index} ::: {Base_Manager.Data.UserData.HasEnginData[index]}");
                 if (Base_Manager.Data.UserData.HasEnginData[index])
                 {
+                    Debug.Log($"{Base_Manager.Data.UserData.HasEnginData[index]} ::: 제대로 체크중인가요 ? {LockObj} ::: {LockObj.name}");
                     Destroy(LockObj);
                 }
                 else

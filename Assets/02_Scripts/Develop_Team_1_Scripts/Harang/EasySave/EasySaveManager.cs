@@ -114,7 +114,9 @@ public class User_Data
     public bool[] HasCharacterData = { true, false, false, false, false, false, false, false, false, false, false, false, false };
     
     //º¸À¯ÇÑ ºØºØ¿£Áø true, ¹Ìº¸À¯ false
-    public bool[] HasEnginData = { true, false, false, false, false, false, false, false, false, false, false, false, false , false, false , false, false, false, false , false, false, false, false};
+    public bool[] HasEnginData = { 
+        true, false, false, false, false, false, false, false, false, false, 
+        false, false, false, false, false, false, false, false, false, false, false, false, false};
 
     public double BestScoreGameOne, BestScoreGameTwo;
 
