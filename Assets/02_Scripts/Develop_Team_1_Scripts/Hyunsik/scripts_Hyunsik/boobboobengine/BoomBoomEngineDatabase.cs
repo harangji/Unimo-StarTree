@@ -8,11 +8,12 @@ public class BoomBoomEngineData
     public string Name;
     public string Rarity;
     public string ModelID;
-    public string DescriptionFormat; // "{0}초 동안 무적", "{0}% 체력 증가" 등
-    public float[] GrowthTable; // 레벨별 증가치(길이: 50)
-    public string ButtonText;   // "무적 강화", "체력 증가", ...
+    public string DescriptionFormat;
+    public float[] GrowthTable;
+    public string ButtonText;
     public int SkillID;
     public SCharacterStat StatBonus;
+    public System.Func<int, float[], SCharacterStat, SCharacterStat> GrowthStatCalculator; // 추가
 }
 
 public static class BoomBoomEngineDatabase
@@ -52,6 +53,38 @@ public static class BoomBoomEngineDatabase
         Debug.LogError($"붕붕엔진 ID {id} 데이터 없음");
         return null;
     }
+    
+    public static SCharacterStat GetBonusStatWithLevel(int engineID)
+    {
+        var data = GetEngineData(engineID);
+        var baseBonus = data.StatBonus;
+        var stat = new SCharacterStat
+        {
+            MoveSpd = baseBonus.MoveSpd,
+            Health = baseBonus.Health,
+            Armor = baseBonus.Armor,
+            StunIgnoreChance = baseBonus.StunIgnoreChance,
+            StunResistanceRate = baseBonus.StunResistanceRate,
+            AuraRange = baseBonus.AuraRange,
+            AuraStr = baseBonus.AuraStr,
+            CriticalChance = baseBonus.CriticalChance,
+            CriticalMult = baseBonus.CriticalMult,
+            HealingMult = baseBonus.HealingMult,
+            HealthRegen = baseBonus.HealthRegen,
+            YFGainMult = baseBonus.YFGainMult,
+            OFGainMult = baseBonus.OFGainMult,
+            CharSize = baseBonus.CharSize
+        };
+
+        if (data.GrowthTable != null && data.GrowthStatCalculator != null)
+        {
+            int level = EngineLevelSystem.GetUniqueLevel(engineID);
+            stat = data.GrowthStatCalculator(level, data.GrowthTable, stat);
+        }
+
+        return stat;
+    }
+    
 
     // 기존 메서드 생략 (301 ~ 313)
     private static BoomBoomEngineData CreateEngine_BeeTail() => new BoomBoomEngineData
@@ -74,14 +107,18 @@ public static class BoomBoomEngineDatabase
         Rarity = "Normal",
         ModelID = "EQC002_HoneyJar",
         SkillID = 302,
-        // n% 증가 → GrowthTable과 연동됨
         DescriptionFormat = "YF 획득량 {0}%",
-        GrowthTable = Enumerable.Range(0, 51)
-            .Select(i => 1.0f + i * 0.05f)
-            .ToArray(),
-
-        StatBonus = new SCharacterStat { YFGainMult = 1.0f } // 기본 보정치
+        GrowthTable = Enumerable.Range(0, 51).Select(i => 1.0f + i * 0.05f).ToArray(),
+        StatBonus = new SCharacterStat { },
+        GrowthStatCalculator = (level, table, stat) =>
+        {
+            float gainMult = table[Mathf.Clamp(level, 0, table.Length - 1)];
+            stat.YFGainMult = gainMult;
+            Debug.Log($"[곰곰엔진] YFGainMult 적용: {gainMult} (레벨 {level})");
+            return stat;
+        }
     };
+
     
     private static BoomBoomEngineData CreateEngine_Toaster() => new BoomBoomEngineData
     {
@@ -315,4 +352,7 @@ public static class BoomBoomEngineDatabase
         SkillID = 323,
         StatBonus = new SCharacterStat { }
     };
+    
+    
+    
 }

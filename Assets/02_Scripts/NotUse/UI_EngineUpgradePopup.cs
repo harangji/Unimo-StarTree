@@ -17,11 +17,27 @@ public class UI_EngineUpgradePopup : MonoBehaviour
     private bool bIsUniqueType;
 
     
-    public void OpenUpgradeUI(int engineID, bool isUniqueType, EngineLevelSystem.EEngineStatType statType = EngineLevelSystem.EEngineStatType.Health)
+    // 2. UI_EngineUpgradePopup.cs
+// °õ°õ¿£ÁøÀº YFGainMult °íÁ¤ Ã³¸®
+    private EngineLevelSystem.EEngineStatType GetDefaultStatTypeForEngine(int engineID)
+    {
+        return engineID switch
+        {
+            20102 => EngineLevelSystem.EEngineStatType.YFGainMult, // °õ°õ
+            21101 => EngineLevelSystem.EEngineStatType.Health, // ¿ÀÅ©Åë
+            21102 => EngineLevelSystem.EEngineStatType.AuraRange, // ¸¶³à¼Ü
+            21103 => EngineLevelSystem.EEngineStatType.MoveSpd, // ¾ÆÀÌ½ºÅ©¸²
+            _ => EngineLevelSystem.EEngineStatType.Health
+        };
+    }
+
+    public void OpenUpgradeUI(int engineID, bool isUniqueType, EngineLevelSystem.EEngineStatType statType = (EngineLevelSystem.EEngineStatType)(-1))
     {
         mEngineID = engineID;
         bIsUniqueType = isUniqueType;
-        mUpgradeStatType = statType;
+        mUpgradeStatType = statType == (EngineLevelSystem.EEngineStatType)(-1)
+            ? GetDefaultStatTypeForEngine(engineID)
+            : statType;
 
         BoomBoomEngineData data = BoomBoomEngineDatabase.GetEngineData(engineID);
         panel.SetActive(true);

@@ -13,7 +13,8 @@ public static class EngineLevelSystem
         Armor,
         AuraStr,
         AuraRange,
-        CriticalChance
+        CriticalChance,
+        YFGainMult
     }
     private static readonly int StatCount = System.Enum.GetNames(typeof(EEngineStatType)).Length;
     private static Dictionary<int, int[]> mEngineStatLevels = new Dictionary<int, int[]>();

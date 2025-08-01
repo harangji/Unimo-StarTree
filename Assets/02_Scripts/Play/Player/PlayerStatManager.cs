@@ -64,6 +64,9 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     // Start is called before the first frame update
     void Start()
     {
+        int level = PlayerPrefs.GetInt("Engine_20102_UniqueLevel", -1);
+        Debug.Log($"[DEBUG] 곰곰엔진 고유레벨: {level}");
+        
         transform.position = -1000f * Vector3.one;
         renderCam = GameObject.Find("RenderCam");
         renderCam.SetActive(false);
@@ -117,76 +120,62 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         hpGauge?.SetGauge(1f);
     }
     
-    // 스탯 추가.정현식
-    public void InitCharacter(int id)
+   public void InitCharacter(int id)
+{
+    Debug.Log($"[PlayerStatManager] InitCharacter 호출됨: ID = {id}");
+    mUnimoData = UnimoDatabase.GetUnimoData(id);
+
+    if (mUnimoData == null)
     {
-        Debug.Log($"[PlayerStatManager] InitCharacter 호출됨: ID = {id}");
-        mUnimoData = UnimoDatabase.GetUnimoData(id);
-
-        if (mUnimoData == null)
-        {
-            Debug.LogError($"[PlayerStatManager] 잘못된 Unimo ID: {id}");
-            return;
-        }
-
-        //  기본 스탯 가져오기
-        var baseStat = mUnimoData.Stat;
-        //  붕붕엔진 스탯 적용
-        var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
-        
-        if (engineData != null)
-        {
-            var engineStat = engineData.StatBonus;
-
-            baseStat.MoveSpd += engineStat.MoveSpd;
-            baseStat.Health += engineStat.Health;
-            baseStat.Armor += engineStat.Armor;
-            baseStat.StunIgnoreChance += engineStat.StunIgnoreChance;
-            baseStat.StunResistanceRate += engineStat.StunResistanceRate;
-            baseStat.AuraRange += engineStat.AuraRange;
-            baseStat.AuraStr += engineStat.AuraStr;
-            baseStat.CriticalChance += engineStat.CriticalChance;
-            baseStat.CriticalMult += engineStat.CriticalMult;
-            baseStat.HealingMult += engineStat.HealingMult;
-            baseStat.HealthRegen += engineStat.HealthRegen;
-            baseStat.YFGainMult += engineStat.YFGainMult;
-            baseStat.OFGainMult += engineStat.OFGainMult;
-
-            Debug.Log($"[PlayerStatManager] 붕붕엔진 스탯 적용됨: {engineData.Name}");
-            Debug.Log($"[붕붕엔진 스탯 증가]" +
-                      $"\n▶ 이동속도: +{engineStat.MoveSpd}" +
-                      $"\n▶ 체력: +{engineStat.Health}" +
-                      $"\n▶ 방어력: +{engineStat.Armor}" +
-                      $"\n▶ 스턴무시 확률: +{engineStat.StunIgnoreChance}" +
-                      $"\n▶ 스턴 저항: +{engineStat.StunResistanceRate}" +
-                      $"\n▶ 오라 범위: +{engineStat.AuraRange}" +
-                      $"\n▶ 오라 강도: +{engineStat.AuraStr}" +
-                      $"\n▶ 크리티컬 확률: +{engineStat.CriticalChance}" +
-                      $"\n▶ 크리티컬 배율: +{engineStat.CriticalMult}" +
-                      $"\n▶ 회복 배수: +{engineStat.HealingMult}" +
-                      $"\n▶ 자연 회복: +{engineStat.HealthRegen}" +
-                      $"\n▶ 노란별꽃 배수(YF): +{engineStat.YFGainMult}" +
-                      $"\n▶ 주황별꽃 배수(OF): +{engineStat.OFGainMult}");
-        }
-
-        //  최종 스탯으로 저장
-        mStat = new UnimoRuntimeStat(baseStat);
-
-        playerMover.SetCharacterStat(mStat);
-        auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
-        PlaySystemRefStorage.scoreManager.ApplyStatFromCharacter(mStat);
-
-        bEvadeChance = mStat.FinalStat.StunIgnoreChance;
-        fStunReduceRate = mStat.FinalStat.StunResistanceRate;
-        regenAmountPerSecond = mStat.FinalStat.HealthRegen;
-        armor = mStat.FinalStat.Armor;
-        healingMultiplier = mStat.FinalStat.HealingMult;
-
-        Debug.Log($"[PlayerStatManager] 회피확률: {bEvadeChance * 100}% / 스턴저항률: {fStunReduceRate * 100}%");
-        Debug.Log($"[PlayerStatManager] 방어력: {armor}, 자연회복: {regenAmountPerSecond}, 회복배수: {healingMultiplier}");
-        
-        
+        Debug.LogError($"[PlayerStatManager] 잘못된 Unimo ID: {id}");
+        return;
     }
+
+    int engineID = GameManager.Instance.SelectedEngineID;
+
+    // 기본 스탯 복사 및 유니모 성장 적용
+    var baseStat = UnimoLevelSystem.ApplyLevelBonus(mUnimoData.Stat, mUnimoData.UnimoID);
+
+    // 런타임 스탯 생성
+    mStat = new UnimoRuntimeStat(baseStat);
+    
+    // 엔진 보너스 적용
+    var engineBonus = BoomBoomEngineDatabase.GetBonusStatWithLevel(engineID);
+    mStat.AddBonus(engineBonus);
+
+    // 디버그 로그용 출력만 사용 (더 이상 baseStat 수정하지 마세요)
+    Debug.Log($"[곰곰엔진 적용] YFGainMult 최종 보정: {engineBonus.YFGainMult}");
+
+    Debug.Log($"[PlayerStatManager] 붕붕엔진 스탯 적용됨: {BoomBoomEngineDatabase.GetEngineData(engineID)?.Name}");
+    Debug.Log($"[붕붕엔진 스탯 증가]" +
+              $"\n▶ 이동속도: +{engineBonus.MoveSpd}" +
+              $"\n▶ 체력: +{engineBonus.Health}" +
+              $"\n▶ 방어력: +{engineBonus.Armor}" +
+              $"\n▶ 스턴무시 확률: +{engineBonus.StunIgnoreChance}" +
+              $"\n▶ 스턴 저항: +{engineBonus.StunResistanceRate}" +
+              $"\n▶ 오라 범위: +{engineBonus.AuraRange}" +
+              $"\n▶ 오라 강도: +{engineBonus.AuraStr}" +
+              $"\n▶ 크리티컬 확률: +{engineBonus.CriticalChance}" +
+              $"\n▶ 크리티컬 배율: +{engineBonus.CriticalMult}" +
+              $"\n▶ 회복 배수: +{engineBonus.HealingMult}" +
+              $"\n▶ 자연 회복: +{engineBonus.HealthRegen}" +
+              $"\n▶ 노란별꽃 배수(YF): +{engineBonus.YFGainMult}" +
+              $"\n▶ 주황별꽃 배수(OF): +{engineBonus.OFGainMult}");
+
+    // 최종 스탯을 기반으로 캐릭터 시스템에 반영
+    playerMover.SetCharacterStat(mStat);
+    auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
+    PlaySystemRefStorage.scoreManager.ApplyStatFromCharacter(mStat);
+
+    bEvadeChance = mStat.FinalStat.StunIgnoreChance;
+    fStunReduceRate = mStat.FinalStat.StunResistanceRate;
+    regenAmountPerSecond = mStat.FinalStat.HealthRegen;
+    armor = mStat.FinalStat.Armor;
+    healingMultiplier = mStat.FinalStat.HealingMult;
+
+    Debug.Log($"[PlayerStatManager] 회피확률: {bEvadeChance * 100}% / 스턴저항률: {fStunReduceRate * 100}%");
+    Debug.Log($"[PlayerStatManager] 방어력: {armor}, 자연회복: {regenAmountPerSecond}, 회복배수: {healingMultiplier}");
+}
 
     public UnimoRuntimeStat GetStat()
     {

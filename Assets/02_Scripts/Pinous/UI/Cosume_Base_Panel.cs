@@ -13,8 +13,12 @@ public class Cosume_Base_Panel : MonoBehaviour
         ButtonObj = GetComponent<Button>();
         LockObj = transform.GetChild(1).gameObject;
         LockObj.GetComponent<Button>().onClick.AddListener(() => GetLockDisable());
+        
+        CosumePanelManager.Instance?.Register(this); // <- 매니저에 등록
+        
         switch(costumer)
         {
+            
             case CharCostumer.Charcater:
                 if (Base_Manager.Data.UserData.HasCharacterData[index])
                 {
@@ -38,8 +42,20 @@ public class Cosume_Base_Panel : MonoBehaviour
                 }
                 break;
         }
+        Debug.Log($"[{name}] CosumePanelManager에 등록됨");
     }
 
+    public void ForceUnlock()
+    {
+        if (LockObj != null)
+        {
+            Debug.Log($"[{name}] LockObj 해제됨");
+            LockObj.SetActive(false);  // 눈에 보이는 즉시 해제
+            Destroy(LockObj);          // 필요 시 파괴
+            LockObj = null;
+        }
+    }
+    
     public void GetLockDisable()
     {
         if(costumer == CharCostumer.Charcater)
