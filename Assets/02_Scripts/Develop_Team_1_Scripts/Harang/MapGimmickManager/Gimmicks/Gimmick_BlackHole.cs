@@ -26,10 +26,6 @@ public class Gimmick_BlackHole : Gimmick
 
     //private
     private Rigidbody mPlayerRigidbody { get; set; }
-    private float bTimeElapsed { get; set; } = 0f;
-    
-
-    private bool mbDeactivateStart = false;
     
     private void OnEnable()
     {
@@ -40,7 +36,7 @@ public class Gimmick_BlackHole : Gimmick
             if (GimmickManager.Instance.UnimoPrefab.TryGetComponent(out Collider coll))
             {
                 mPlayerRigidbody = coll.attachedRigidbody;
-                bTimeElapsed = 0f; //블랙홀 시간 초기화
+                mbTimeElapsed = 0f; //블랙홀 시간 초기화
             }
             else
             {
@@ -56,12 +52,7 @@ public class Gimmick_BlackHole : Gimmick
 
     private void Update()
     {
-        bTimeElapsed += Time.deltaTime;
-        if (bTimeElapsed >= mGimmickDuration && !mbDeactivateStart) //지속 시간 경과 시 비활성
-        {
-            mbDeactivateStart = true;
-            DeactivateGimmick();
-        }
+        base.Update();
     }
 
     //cash

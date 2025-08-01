@@ -255,7 +255,8 @@ public class Data_Manager
         data.BestScoreGameTwo = 0;
 
         bool[] charDatas = { true, false, false, false, false, false, false, false, false, false, false, false, false };
-        bool[] EqDatas = { true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
+        bool[] EqDatas = { true, false, false, false, false, false, false, false, false, false, 
+            false, false, false, false, false, false, false, false, false, false, false, false, false };
 
         data.HasCharacterData = charDatas;
         data.HasEnginData = EqDatas;

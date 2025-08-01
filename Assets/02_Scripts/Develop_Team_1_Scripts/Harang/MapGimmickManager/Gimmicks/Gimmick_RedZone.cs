@@ -65,17 +65,12 @@ public class Gimmick_RedZone : Gimmick
     //cash
     private float mDistance;
     private float mDamageTimeElapsed = 0f;
-    private float mDamageInterval = 1f; // 데미지 주기 (1초)
+    private float mDamageInterval = 0.5f; // 데미지 주기 Time.deltaTime
 
 
     private void Update()
     {
-        mbTimeElapsed += Time.deltaTime;
-        
-        if (mbTimeElapsed >= mGimmickDuration) //지속 시간 경과 시 비활성
-        {
-            DeactivateGimmick();
-        }
+        base.Update();
         
         if (mPlayerIDamageAble == null || !mbReadyExecute) return;
         
