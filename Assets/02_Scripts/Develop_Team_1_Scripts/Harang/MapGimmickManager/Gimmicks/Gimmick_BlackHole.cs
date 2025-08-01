@@ -58,6 +58,7 @@ public class Gimmick_BlackHole : Gimmick
     //cash
     private float mDistance;
     private Vector3 mDirection;
+    private bool mbFirstInnerSuction = false;
     
     private void FixedUpdate()
     {
@@ -69,18 +70,30 @@ public class Gimmick_BlackHole : Gimmick
         if(mDistance <= EffectiveCenterRange) //블랙홀 중심 구역에 위치 
         {
             MyDebug.Log("Player In InnerSuction");
+            
+            //로프 현상 방지 //중앙에 들어온 첫 프레임에 받는 힘 초기화
+            if (!mbFirstInnerSuction) //이전 프레임에서 들어온 적 없음
+            {
+                mPlayerRigidbody.linearVelocity = Vector3.zero;
+                mbFirstInnerSuction = true;
+            }
+            
             mDirection = (transform.position - mPlayerRigidbody.position).normalized;
-            mPlayerRigidbody.AddForce(mDirection * OuterSuctionGravityStrength[(int)emGimmickGrade], ForceMode.Acceleration);
+            mPlayerRigidbody.AddForce(mDirection * InnerSuctionGravityStrength[(int)emGimmickGrade], ForceMode.Acceleration);
         }
         else if (mDistance <= EffectiveRange && mDistance > EffectiveCenterRange) // 블랙홀 내부 && 중심 구역보다는 살짝 바깥쪽에 위치
         {
             MyDebug.Log("Player In OuterSuction");
+            
+            mbFirstInnerSuction = false;
             mDirection = (transform.position - mPlayerRigidbody.position).normalized;
             mPlayerRigidbody.AddForce(mDirection * OuterSuctionGravityStrength[(int)emGimmickGrade], ForceMode.Acceleration);
         }
         else if (mDistance > EffectiveRange) //블랙홀 빠져나감
         {
             MyDebug.Log("Player Out");
+            
+            mbFirstInnerSuction = false;
             mPlayerRigidbody.linearVelocity = Vector3.zero;
         }
     }
