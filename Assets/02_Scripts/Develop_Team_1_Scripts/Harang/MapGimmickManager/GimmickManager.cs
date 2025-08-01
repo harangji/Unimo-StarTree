@@ -121,7 +121,7 @@ public class GimmickManager : MonoBehaviour
         
         gimmick.SetGimmickTMP(modeText[0]);
         MyDebug.Log($"{modeText[0].text} is Dequeue");
-        
+
         if (gimmick.eGimmickType == eGimmickType.Helpful)
         {
             modeText[0].color = goodModeTxtColor;
@@ -130,7 +130,7 @@ public class GimmickManager : MonoBehaviour
         modeIcon[0].gameObject.SetActive(true);
         
         warningPopup.SetActive(true);
-        yield return new WaitForSecondsRealtime(2.5f);
+        yield return new WaitForSecondsRealtime(1.5f);
         warningPopup.SetActive(false);
         
         PlaySceneController.Instance.ResumeGame();
@@ -161,7 +161,7 @@ public class GimmickManager : MonoBehaviour
     //기믹 매니저 초기화
     private void InitializeGimmickManager()
     {
-        mCurrentStage = StageLoader.CurrentStageNumber + 100; //스테이지 int 캐싱 //최소 1 (테스트 100)
+        mCurrentStage = StageLoader.CurrentStageNumber; //스테이지 int 캐싱 //최소 1 (테스트 100)
 
         if (SettingByStageNumber(mCurrentStage)) //스테이지 수에 따른 설정들 - false일 경우 기믹 갯수가 0이므로 실행 안함
         {
