@@ -176,7 +176,7 @@ public abstract class Gimmick : MonoBehaviour
     protected Task FadeAll(bool fadeIn, float duration = 1f)
     {
         fadeSequence = DOTween.Sequence();
-        float targetAlpha = fadeIn? 1f : 0f;
+        float targetAlpha = fadeIn? 0.7f : 0f;
         
         TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 

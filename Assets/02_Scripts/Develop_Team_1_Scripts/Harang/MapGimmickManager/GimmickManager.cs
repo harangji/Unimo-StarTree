@@ -122,11 +122,14 @@ public class GimmickManager : MonoBehaviour
         gimmick.SetGimmickTMP(modeText[0]);
         MyDebug.Log($"{modeText[0].text} is Dequeue");
 
+        modeIcon[0].sprite = gimmick.gimmickIcon;
+        
         if (gimmick.eGimmickType == eGimmickType.Helpful)
         {
             modeText[0].color = goodModeTxtColor;
             modeIcon[0].color = goodModeImgColor;
         }
+        
         modeIcon[0].gameObject.SetActive(true);
         
         warningPopup.SetActive(true);

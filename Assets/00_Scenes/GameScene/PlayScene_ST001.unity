@@ -11854,7 +11854,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.08, y: 4.08, z: 4.08}
+  m_LocalScale: {x: 3.17, y: 3.17, z: 3.17}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 76257608}
@@ -16767,7 +16767,7 @@ MonoBehaviour:
   - 20
   - 25
   - 30
-  <EffectiveRange>k__BackingField: 9
+  <EffectiveRange>k__BackingField: 7
   <EffectiveCenterRange>k__BackingField: 0.2
 --- !u!1 &190140233
 GameObject:
@@ -18580,9 +18580,9 @@ RectTransform:
   - {fileID: 1136129608}
   m_Father: {fileID: 627190551}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 975, y: -216}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 330, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &437598763
@@ -18995,9 +18995,9 @@ RectTransform:
   - {fileID: 681324329}
   m_Father: {fileID: 627190551}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 195, y: -216}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 330, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &468425826
@@ -43920,7 +43920,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 2.938736e-39, y: 3.306078e-39, z: 3.67342e-39, w: 4.132597e-39}
+  m_BoundingSphereOverride: {x: 2.297e-42, y: 2.524355e-29, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -50946,7 +50946,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea3f40d5689efa74aa228daf29f636a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 5
 --- !u!4 &1198909780
 Transform:
   m_ObjectHideFlags: 0
@@ -57538,9 +57537,9 @@ RectTransform:
   - {fileID: 157154355}
   m_Father: {fileID: 627190551}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 585, y: -216}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 330, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1424354879
@@ -68390,7 +68389,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1665733232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68461,7 +68460,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -74812,8 +74811,8 @@ MonoBehaviour:
   - {fileID: 286070950}
   bgmSource: {fileID: 756565030}
   modeBGM: {fileID: 8300000, guid: 377f937d7749e544cb60bcee5be2feec, type: 3}
-  goodModeTxtColor: {r: 0.4392157, g: 1, b: 0.32156864, a: 0}
-  goodModeImgColor: {r: 0.14901961, g: 0.85882354, b: 0.34117648, a: 0}
+  goodModeTxtColor: {r: 0.4392157, g: 1, b: 0.32156864, a: 1}
+  goodModeImgColor: {r: 0.14901961, g: 0.85882354, b: 0.34117648, a: 1}
   gimmickInitializers:
   - {fileID: 1101405922}
   - {fileID: 609605849}
@@ -84795,7 +84794,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.9, y: 1.9, z: 1.9}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1652707992}
@@ -84829,7 +84828,7 @@ MonoBehaviour:
   - {fileID: 379775503}
   - {fileID: 490969576}
   - {fileID: 1514470829}
-  <EffectiveRange>k__BackingField: 8.4
+  <EffectiveRange>k__BackingField: 8
   flowerGenerator: {fileID: 443619041}
 --- !u!114 &1840164436
 MonoBehaviour:
