@@ -49,13 +49,15 @@ public class Gimmick_AreaActivator : Gimmick
     {
         if (!mbReadyExecute) return;
 
-        mFlowerControllers = flowerGenerator.AllFlowers; //비교 도중 List변경을 막기 위해 복사
+        mFlowerControllers = new List<FlowerController>(flowerGenerator.AllFlowers); //비교 도중 List변경을 막기 위해 복사
         
         //거리 비교
         foreach (FlowerController flower in mFlowerControllers)
         {
+            if(!flower) continue; //복사된 리스트에 실제로 플라워가 없을 수 있으니 검사
+            
             mFlowerDistance = Vector3.Distance(transform.position, flower.transform.position);
-            if (mFlowerDistance <= EffectiveRange)
+            if (mFlowerDistance <= EffectiveRange && flower)
             {
                 flower.AuraAffectFlower(mGrowthperSec * Time.fixedDeltaTime);
             }
