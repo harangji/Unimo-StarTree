@@ -118,7 +118,7 @@ public abstract class Gimmick : MonoBehaviour
                 Material mat = mObjectRenderers[i].material;
 
                 if (!mat.HasProperty(COLOR)) continue;
-
+                
                 Color color = mat.color;
                 color.a = 0f;
                 mat.color = color;
@@ -173,13 +173,14 @@ public abstract class Gimmick : MonoBehaviour
     private Sequence fadeSequence;
     
     //서서히 나타나기
-    protected Task FadeAll(bool fadeIn, float duration = 1f)
+    protected Task FadeAll(bool fadeIn, float duration = 1.5f)
     {
         fadeSequence = DOTween.Sequence();
-        float targetAlpha = fadeIn? 0.7f : 0f;
+        fadeSequence.Pause();
+        
+        float targetAlpha = fadeIn? 0.4f : 0f;
         
         TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
-
         
         foreach (ParticleSystemRenderer particleSystemRenderer in mParticleSystemRenderers)
         {
@@ -192,32 +193,32 @@ public abstract class Gimmick : MonoBehaviour
             Material mat = objectRenderer.material;
             RenderFloatChanger(mat, targetAlpha, duration);
         }
-
+        
         fadeSequence.OnComplete(() =>
         {
             MyDebug.Log($"Fade to {targetAlpha} Complete");
             tcs.SetResult(true);
         });
-
+        
+        fadeSequence.Play();
+        
         return tcs.Task;
     }
 
-    private Color mCashColor;
-    private float mCashStartAlpha;
-    
-    private void RenderFloatChanger(Material mat, float targetAlpha = 1f, float duration = 1f)
+    private void RenderFloatChanger(Material mat, float targetAlpha, float duration)
     {
         if (!mat.HasProperty(COLOR)) return;
-            
-        mCashColor = mat.color;
-
-        mCashStartAlpha = mCashColor.a;
         
-        Tween tween = DOTween.To(() => mCashStartAlpha, x =>
+        Color mColor = mat.color;
+
+        float mStartAlpha = mColor.a;
+        
+        Tween tween = DOTween.To(() => mStartAlpha, x =>
         {
-            mCashStartAlpha = x;
-            mCashColor.a = x;
-            mat.color = mCashColor;
+            mStartAlpha = x;
+            mColor.a = x;
+            mat.color = mColor;
+            MyDebug.Log($"a is {mat.color.a}");
         }, targetAlpha, duration);
             
         fadeSequence.Join(tween); // 동시에 실행되도록 시퀀스에 추가
