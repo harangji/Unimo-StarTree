@@ -82,7 +82,9 @@ public abstract class Gimmick : MonoBehaviour
     protected float mGimmickEffectValue2 { get; set; }
     
     [SerializeField] private ParticleSystem[] mParticleSystems;
-    private ParticleSystemRenderer[] mParticleSystemRenderers { get; set; }
+    [SerializeField] private Renderer[] mObjectRenderers;
+
+    private ParticleSystemRenderer[] mParticleSystemRenderers;
     
     protected bool mbReadyExecute = false;
     protected bool mbDeactivateStart = false;
@@ -90,21 +92,37 @@ public abstract class Gimmick : MonoBehaviour
     
     public void Awake()
     {
-        // if(mParticleSystems == null || mParticleSystems.Length > 0) return;
-        
-        mParticleSystemRenderers = new ParticleSystemRenderer[mParticleSystems.Length];
-
-        for (int i = 0; i < mParticleSystems.Length; i++)
+        if (mParticleSystems != null && mParticleSystems.Length > 0)
         {
-            mParticleSystemRenderers[i] = mParticleSystems[i].GetComponent<ParticleSystemRenderer>();
-            
-            Material mat = mParticleSystemRenderers[i].material;
+            mParticleSystemRenderers = new ParticleSystemRenderer[mParticleSystems.Length];
 
-            if (!mat.HasProperty(COLOR)) continue;
+            for (int i = 0; i < mParticleSystems.Length; i++)
+            {
+                mParticleSystemRenderers[i] = mParticleSystems[i].GetComponent<ParticleSystemRenderer>();
             
-            Color color = mat.color;
-            color.a = 0f;
-            mat.color = color;
+                Material mat = mParticleSystemRenderers[i].material;
+
+                if (!mat.HasProperty(COLOR)) continue;
+            
+                Color color = mat.color;
+                color.a = 0f;
+                mat.color = color;
+            }
+        }
+
+
+        if (mObjectRenderers != null && mObjectRenderers.Length > 0)
+        {
+            for (int i = 0; i < mObjectRenderers.Length; i++)
+            {
+                Material mat = mObjectRenderers[i].material;
+
+                if (!mat.HasProperty(COLOR)) continue;
+                
+                Color color = mat.color;
+                color.a = 0f;
+                mat.color = color;
+            }
         }
     }
 
@@ -151,40 +169,58 @@ public abstract class Gimmick : MonoBehaviour
             modeTxt.text = gimmickName;
         }
     }
+
+    private Sequence fadeSequence;
     
     //서서히 나타나기
-    protected Task FadeAll(bool fadeIn, float duration = 1f)
+    protected Task FadeAll(bool fadeIn, float duration = 1.5f)
     {
-        float targetAlpha = fadeIn? 1f : 0f;
+        fadeSequence = DOTween.Sequence();
+        fadeSequence.Pause();
+        
+        float targetAlpha = fadeIn? 0.4f : 0f;
         
         TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
-        Sequence fadeSequence = DOTween.Sequence();
         
         foreach (ParticleSystemRenderer particleSystemRenderer in mParticleSystemRenderers)
         {
             Material mat = particleSystemRenderer.material;
-            
-            if (!mat.HasProperty(COLOR)) continue;
-            
-            Color color = mat.color;
-
-            float startAlpha = color.a;
-
-            Tween tween = DOTween.To(() => startAlpha, x =>
-            {
-                startAlpha = x;
-                color.a = x;
-                mat.color = color;
-            }, targetAlpha, duration);
-            
-            fadeSequence.Join(tween); // 동시에 실행되도록 시퀀스에 추가
+            RenderFloatChanger(mat, targetAlpha, duration);
         }
+
+        foreach (Renderer objectRenderer in mObjectRenderers)
+        {
+            Material mat = objectRenderer.material;
+            RenderFloatChanger(mat, targetAlpha, duration);
+        }
+        
         fadeSequence.OnComplete(() =>
         {
             MyDebug.Log($"Fade to {targetAlpha} Complete");
             tcs.SetResult(true);
         });
-
+        
+        fadeSequence.Play();
+        
         return tcs.Task;
+    }
+
+    private void RenderFloatChanger(Material mat, float targetAlpha, float duration)
+    {
+        if (!mat.HasProperty(COLOR)) return;
+        
+        Color mColor = mat.color;
+
+        float mStartAlpha = mColor.a;
+        
+        Tween tween = DOTween.To(() => mStartAlpha, x =>
+        {
+            mStartAlpha = x;
+            mColor.a = x;
+            mat.color = mColor;
+            MyDebug.Log($"a is {mat.color.a}");
+        }, targetAlpha, duration);
+            
+        fadeSequence.Join(tween); // 동시에 실행되도록 시퀀스에 추가
     }
 }
