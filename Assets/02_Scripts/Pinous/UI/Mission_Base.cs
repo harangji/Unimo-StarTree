@@ -55,7 +55,7 @@ public class Mission_Base : MonoBehaviour
     {
         if (valueCount(style) < count) return;
 
-        Base_Manager.Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
+        // Base_Manager.Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
 
         Base_Manager.Data.UserData.GetArchivements[reward] = true;
 
@@ -76,7 +76,7 @@ public class Mission_Base : MonoBehaviour
     {
         if (valueCount(style) < count) return;
 
-        Base_Manager.Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
+        // Base_Manager.Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
 
         Base_Manager.Data.UserData.GetArchivements[reward] = true;
         Canvas_Holder.instance.NoneClose = true;
@@ -91,7 +91,7 @@ public class Mission_Base : MonoBehaviour
     private void GetButtonCheck(string style, int count, int reward, Asset_State rewardType)
     {
         if (valueCount(style) < count) return;
-        Base_Manager.Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
+        // Base_Manager.Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
 
         switch (style)
         {

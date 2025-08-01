@@ -115,13 +115,13 @@ public class UI_Shop : UI_Base
     }
     public void GetProduct(string name)
     {
-        Base_Manager.Analytics.RecordCustomEventWithParameters(name, 1);
-        Base_Manager.IAP.Purchase(name);
+        // Base_Manager.Analytics.RecordCustomEventWithParameters(name, 1);
+        // Base_Manager.IAP.Purchase(name);
     }
 
     public void GetBuyAsset(int value)
     {
-        Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
+        // Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
         // 해당 캐릭터 데이터를 이미 보유하고 있다면 되돌아가는 return 문으로 추정.
         if (Base_Manager.Data.UserData.HasCharacterData[value]) return;
@@ -160,7 +160,7 @@ public class UI_Shop : UI_Base
     }
     public void GetBuyAsset02(int value)
     {
-        Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
+        // Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
         if (Base_Manager.Data.UserData.HasCharacterData[value]) return;
         if (Base_Manager.Data.UserData.Blue < 150)
@@ -196,7 +196,7 @@ public class UI_Shop : UI_Base
     }
     public void GetBuyAsset03(int value)
     {
-        Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
+        // Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
         if (Base_Manager.Data.UserData.HasCharacterData[value]) return;
         if (Base_Manager.Data.UserData.Red < 150000)
@@ -218,7 +218,7 @@ public class UI_Shop : UI_Base
 
     public void GetBuyAssetDown(int value)
     {
-        Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
+        // Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
         if (Base_Manager.Data.UserData.HasCharacterData[value]) return;
 
@@ -240,7 +240,7 @@ public class UI_Shop : UI_Base
     }
     public void GetBuyAssetEQ(int value)
     {
-        Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
+        // Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
         if (Base_Manager.Data.UserData.HasEnginData[value]) return;
 
@@ -278,7 +278,7 @@ public class UI_Shop : UI_Base
     }
     public void GetBuyAssetEQ02(int value)
     {
-        Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
+        // Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
         if (Base_Manager.Data.UserData.HasEnginData[value]) return;
 

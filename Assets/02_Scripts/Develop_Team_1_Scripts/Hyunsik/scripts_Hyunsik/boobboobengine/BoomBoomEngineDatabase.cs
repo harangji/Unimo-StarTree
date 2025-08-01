@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class BoomBoomEngineData
 {
@@ -7,6 +8,9 @@ public class BoomBoomEngineData
     public string Name;
     public string Rarity;
     public string ModelID;
+    public string DescriptionFormat; // "{0}초 동안 무적", "{0}% 체력 증가" 등
+    public float[] GrowthTable; // 레벨별 증가치(길이: 50)
+    public string ButtonText;   // "무적 강화", "체력 증가", ...
     public int SkillID;
     public SCharacterStat StatBonus;
 }
@@ -52,24 +56,31 @@ public static class BoomBoomEngineDatabase
     // 기존 메서드 생략 (301 ~ 313)
     private static BoomBoomEngineData CreateEngine_BeeTail() => new BoomBoomEngineData
     {
-        // 몬스터한테 타격 받은 이후 3초 동안 몬스터로 부터 피격을 받지 않음
+        // 몬스터한테 타격 받은 이후 n초 동안 몬스터로 부터 피격을 받지 않음
         EngineID = 20101,
         Name = "리비",
         Rarity = "Normal",
         ModelID = "EQC001_BeeTail",
         SkillID = 301,
+        DescriptionFormat = "{0}초 동안 몬스터로부터 피격을 받지 않음",
+        GrowthTable = Enumerable.Range(0, 51).Select(i => 1.0f + i * 0.1f).ToArray(),  // 0~50
         StatBonus = new SCharacterStat {  }
     };
     
     private static BoomBoomEngineData CreateEngine_HoneyJar() => new BoomBoomEngineData
     {
-        // YF_Gainmult n% 증가
         EngineID = 20102,
         Name = "곰곰",
         Rarity = "Normal",
         ModelID = "EQC002_HoneyJar",
         SkillID = 302,
-        StatBonus = new SCharacterStat { YFGainMult = 1.0f }
+        // n% 증가 → GrowthTable과 연동됨
+        DescriptionFormat = "YF 획득량 {0}%",
+        GrowthTable = Enumerable.Range(0, 51)
+            .Select(i => 1.0f + i * 0.05f)
+            .ToArray(),
+
+        StatBonus = new SCharacterStat { YFGainMult = 1.0f } // 기본 보정치
     };
     
     private static BoomBoomEngineData CreateEngine_Toaster() => new BoomBoomEngineData
