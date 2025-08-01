@@ -29,15 +29,15 @@ public class UI_Reward : UI_Base
 
     public void GetIAPReward(string name)
     {
-        if(Base_Manager.Data.UserData.IAP == 0)
-        {
-            Base_Manager.Analytics.RecordCustomEventWithParameters("First Buy", (Base_Manager.Data.UserData.Level + 1));
-        }
-        else
-        {
-            Base_Manager.Analytics.RecordCustomEventWithParameters("Duplicate Buy", 1);
-        }
-        Base_Manager.Analytics.RecordSaleItemForPurchase(name);
+        // if(Base_Manager.Data.UserData.IAP == 0)
+        // {
+        //     Base_Manager.Analytics.RecordCustomEventWithParameters("First Buy", (Base_Manager.Data.UserData.Level + 1));
+        // }
+        // else
+        // {
+        //     Base_Manager.Analytics.RecordCustomEventWithParameters("Duplicate Buy", 1);
+        // }
+        // Base_Manager.Analytics.RecordSaleItemForPurchase(name);
 
         switch (name)
         {
@@ -149,8 +149,8 @@ public class UI_Reward : UI_Base
         {
             if (Base_Manager.Data.UserData.HasEnginData[i] == true) eq++;
         }
-        Base_Manager.Analytics.RecordCustomEventWithParameters("Character", character);
-        Base_Manager.Analytics.RecordCustomEventWithParameters("EQ", eq);
+        // Base_Manager.Analytics.RecordCustomEventWithParameters("Character", character);
+        // Base_Manager.Analytics.RecordCustomEventWithParameters("EQ", eq);
     }
 
     public override void DisableOBJ()

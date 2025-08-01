@@ -12,6 +12,9 @@ public class UI_UpgradePopup : MonoBehaviour
     
     [Header("스탯 레벨 텍스트")]
     [SerializeField] private TextMeshProUGUI[] statLevelTexts;  // 인덱스: 스탯 순서 동일하게 연결
+    
+    [Header("강화 요구 재화 텍스트")]
+    [SerializeField] private TextMeshProUGUI[] statCostTexts;
 
     [Header("업그레이드 버튼")]
     [SerializeField] private Button[] upgradeButtons;  // 인덱스: 스탯 순서 동일하게 연결
@@ -102,6 +105,26 @@ public class UI_UpgradePopup : MonoBehaviour
             int level = UnimoLevelSystem.GetLevel(currentUnitID, (UnimoLevelSystem.StatType)i);
             int maxLevel = (i == (int)UnimoLevelSystem.StatType.CriticalChance) ? 100 : 250;
             statLevelTexts[i].text = $"{level} / {maxLevel}";
+        }
+        
+        UpdateAllCostUI();
+    }
+    
+    private void UpdateAllCostUI()
+    {
+        for (int i = 0; i < statCostTexts.Length; i++)
+        {
+            int currentLevel = UnimoLevelSystem.GetLevel(currentUnitID, (UnimoLevelSystem.StatType)i);
+            int nextLevel = currentLevel + 1;
+
+            if (UnimoLevelSystem.TryGetCost((UnimoLevelSystem.StatType)i, nextLevel, out var cost))
+            {
+                statCostTexts[i].text = $"YF: {cost.RequireYF}\nOF: {cost.RequireOF}";
+            }
+            else
+            {
+                statCostTexts[i].text = "MAX";
+            }
         }
     }
 

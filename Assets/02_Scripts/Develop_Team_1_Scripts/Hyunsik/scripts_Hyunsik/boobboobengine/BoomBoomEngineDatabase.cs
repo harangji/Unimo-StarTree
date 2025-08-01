@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class BoomBoomEngineData
 {
@@ -7,8 +8,12 @@ public class BoomBoomEngineData
     public string Name;
     public string Rarity;
     public string ModelID;
+    public string DescriptionFormat;
+    public float[] GrowthTable;
+    public string ButtonText;
     public int SkillID;
     public SCharacterStat StatBonus;
+    public System.Func<int, float[], SCharacterStat, SCharacterStat> GrowthStatCalculator; // 추가
 }
 
 public static class BoomBoomEngineDatabase
@@ -48,29 +53,72 @@ public static class BoomBoomEngineDatabase
         Debug.LogError($"붕붕엔진 ID {id} 데이터 없음");
         return null;
     }
+    
+    public static SCharacterStat GetBonusStatWithLevel(int engineID)
+    {
+        var data = GetEngineData(engineID);
+        var baseBonus = data.StatBonus;
+        var stat = new SCharacterStat
+        {
+            MoveSpd = baseBonus.MoveSpd,
+            Health = baseBonus.Health,
+            Armor = baseBonus.Armor,
+            StunIgnoreChance = baseBonus.StunIgnoreChance,
+            StunResistanceRate = baseBonus.StunResistanceRate,
+            AuraRange = baseBonus.AuraRange,
+            AuraStr = baseBonus.AuraStr,
+            CriticalChance = baseBonus.CriticalChance,
+            CriticalMult = baseBonus.CriticalMult,
+            HealingMult = baseBonus.HealingMult,
+            HealthRegen = baseBonus.HealthRegen,
+            YFGainMult = baseBonus.YFGainMult,
+            OFGainMult = baseBonus.OFGainMult,
+            CharSize = baseBonus.CharSize
+        };
+
+        if (data.GrowthTable != null && data.GrowthStatCalculator != null)
+        {
+            int level = EngineLevelSystem.GetUniqueLevel(engineID);
+            stat = data.GrowthStatCalculator(level, data.GrowthTable, stat);
+        }
+
+        return stat;
+    }
+    
 
     // 기존 메서드 생략 (301 ~ 313)
     private static BoomBoomEngineData CreateEngine_BeeTail() => new BoomBoomEngineData
     {
-        // 몬스터한테 타격 받은 이후 3초 동안 몬스터로 부터 피격을 받지 않음
+        // 몬스터한테 타격 받은 이후 n초 동안 몬스터로 부터 피격을 받지 않음
         EngineID = 20101,
         Name = "리비",
         Rarity = "Normal",
         ModelID = "EQC001_BeeTail",
         SkillID = 301,
+        DescriptionFormat = "{0}초 동안 몬스터로부터 피격을 받지 않음",
+        GrowthTable = Enumerable.Range(0, 51).Select(i => 1.0f + i * 0.1f).ToArray(),  // 0~50
         StatBonus = new SCharacterStat {  }
     };
     
     private static BoomBoomEngineData CreateEngine_HoneyJar() => new BoomBoomEngineData
     {
-        // YF_Gainmult n% 증가
         EngineID = 20102,
         Name = "곰곰",
         Rarity = "Normal",
         ModelID = "EQC002_HoneyJar",
         SkillID = 302,
-        StatBonus = new SCharacterStat { YFGainMult = 1.0f }
+        DescriptionFormat = "YF 획득량 {0}%",
+        GrowthTable = Enumerable.Range(0, 51).Select(i => 1.0f + i * 0.05f).ToArray(),
+        StatBonus = new SCharacterStat { },
+        GrowthStatCalculator = (level, table, stat) =>
+        {
+            float gainMult = table[Mathf.Clamp(level, 0, table.Length - 1)];
+            stat.YFGainMult = gainMult;
+            Debug.Log($"[곰곰엔진] YFGainMult 적용: {gainMult} (레벨 {level})");
+            return stat;
+        }
     };
+
     
     private static BoomBoomEngineData CreateEngine_Toaster() => new BoomBoomEngineData
     {
@@ -304,4 +352,7 @@ public static class BoomBoomEngineDatabase
         SkillID = 323,
         StatBonus = new SCharacterStat { }
     };
+    
+    
+    
 }

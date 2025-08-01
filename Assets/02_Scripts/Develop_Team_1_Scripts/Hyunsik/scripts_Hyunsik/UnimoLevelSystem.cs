@@ -4,6 +4,9 @@ using UnityEngine;
 public static class UnimoLevelSystem
 {
     private static Dictionary<int, int[]> unitStatLevels = new();
+    
+    private static Dictionary<int, SStatCost> mNormalStatCostTable = new();
+    private static Dictionary<int, SStatCost> mCriticalStatCostTable = new();
 
     private const int MaxLevel_NormalStat = 250;
     private const int MaxLevel_CritChance = 100;
@@ -22,6 +25,26 @@ public static class UnimoLevelSystem
     static UnimoLevelSystem()
     {
         LoadAllData(); // 게임 시작 시 자동 로드
+        LoadStatCostTables(); 
+    }
+    
+    private static void LoadStatCostTables()
+    {
+        var normalCsv = Resources.Load<TextAsset>("Datas/StatCost/StatCost_Normal");
+        var critCsv = Resources.Load<TextAsset>("Datas/StatCost/StatCost_Critical");
+
+        mNormalStatCostTable = StatCostDataLoader.LoadCostTable(normalCsv);
+        mCriticalStatCostTable = StatCostDataLoader.LoadCostTable(critCsv);
+
+        Debug.Log($"[StatCost] 일반 스탯 {mNormalStatCostTable.Count}개, 크리티컬 스탯 {mCriticalStatCostTable.Count}개 로드됨");
+    }
+    
+    private static bool TryGetStatCost(StatType stat, int nextLevel, out SStatCost cost)
+    {
+        if (stat == StatType.CriticalChance)
+            return mCriticalStatCostTable.TryGetValue(nextLevel, out cost);
+        else
+            return mNormalStatCostTable.TryGetValue(nextLevel, out cost);
     }
 
     public static int GetLevel(int unitID, StatType stat)
@@ -33,18 +56,54 @@ public static class UnimoLevelSystem
     public static bool LevelUp(int unitID, StatType stat, int amount = 1) // ← 추가
     {
         int[] levels = GetOrCreateLevelArray(unitID);
-
         int currentLevel = levels[(int)stat];
         int maxLevel = (stat == StatType.CriticalChance) ? MaxLevel_CritChance : MaxLevel_NormalStat;
 
         if (currentLevel >= maxLevel)
             return false;
+        
+        int nextLevel = currentLevel + 1;
+
+        if (!TryGetStatCost(stat, nextLevel, out SStatCost cost))
+        {
+            Debug.LogWarning($"[StatCost] 요구량 정보 없음 - {stat} {nextLevel}레벨");
+            return false;
+        }
+
+        if (!UserHasEnoughCurrency(cost.RequireYF, cost.RequireOF))
+        {
+            Debug.Log($"[강화 실패] 재화 부족 - YF:{cost.RequireYF}, OF:{cost.RequireOF}");
+            return false;
+        }
+
+        DeductCurrency(cost.RequireYF, cost.RequireOF);
 
         // 한번에 amount 만큼 상승
         levels[(int)stat] = Mathf.Min(currentLevel + amount, maxLevel);
 
         SaveUnitData(unitID, levels);
         return true;
+    }
+    
+    private static bool UserHasEnoughCurrency(int requireYF, int requireOF)
+    {
+        var user = Base_Manager.Data.UserData;
+        return user.Yellow >= requireYF && user.Red >= requireOF;
+    }
+
+    private static void DeductCurrency(int requireYF, int requireOF)
+    {
+        var user = Base_Manager.Data.UserData;
+        user.Yellow -= requireYF;
+        user.Red -= requireOF;
+    }
+    
+    public static bool TryGetCost(StatType stat, int level, out SStatCost cost)
+    {
+        if (stat == StatType.CriticalChance)
+            return mCriticalStatCostTable.TryGetValue(level, out cost);
+        else
+            return mNormalStatCostTable.TryGetValue(level, out cost);
     }
 
     public static void ResetUnitStats(int unitID)

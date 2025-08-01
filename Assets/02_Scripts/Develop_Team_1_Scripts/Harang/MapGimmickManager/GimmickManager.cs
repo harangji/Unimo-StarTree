@@ -63,6 +63,8 @@ public class GimmickManager : MonoBehaviour
     
     private Dictionary<string, GimmickInitializer> mGimmickInitializersMapper;
     
+    private Color originalTextColor;
+    private Color originalImageColor;
     public static GimmickManager Instance { get; private set; }
     
     private void Awake()
@@ -79,8 +81,12 @@ public class GimmickManager : MonoBehaviour
         mGimmickInitializersMapper = new Dictionary<string, GimmickInitializer>
         {
             { "G_TRP_002", gimmickInitializers[0] }, // 블랙홀
-            { "G_ENV_004", gimmickInitializers[1] } // 레드존
+            { "G_ENV_004", gimmickInitializers[1] }, // 레드존
+            { "G_TRG_006", gimmickInitializers[2] }, // 지역 활성화
         };
+        
+        originalTextColor = modeText[0].color;
+        originalImageColor = modeIcon[0].color;
         
         mReadyGimmickQueue.Clear();
         
@@ -97,6 +103,20 @@ public class GimmickManager : MonoBehaviour
         scoreGaugeController.OnScoreThresholdReached -= ExecuteGimmick;
     }
 
+    public void ExecuteGimmickTestButton()
+    {
+        InitializeGimmickManager();
+        
+        if (mReadyGimmickQueue.Count == 0)
+        {
+            Debug.Log("큐에 담긴 기믹이 없습니다.");
+            return;
+        }
+
+        bgmSource.clip = modeBGM;
+        StartCoroutine(TriggerGimmickCoroutine());
+    }
+    
     //다른 곳에서 기믹 실행
     public void ExecuteGimmick()
     {
@@ -120,16 +140,24 @@ public class GimmickManager : MonoBehaviour
         
         gimmick.SetGimmickTMP(modeText[0]);
         MyDebug.Log($"{modeText[0].text} is Dequeue");
+
+        modeIcon[0].sprite = gimmick.gimmickIcon;
         
         if (gimmick.eGimmickType == eGimmickType.Helpful)
         {
             modeText[0].color = goodModeTxtColor;
             modeIcon[0].color = goodModeImgColor;
         }
+        else
+        {
+            modeText[0].color = originalTextColor;
+            modeIcon[0].color = originalImageColor;
+        }
+        
         modeIcon[0].gameObject.SetActive(true);
         
         warningPopup.SetActive(true);
-        yield return new WaitForSecondsRealtime(2.5f);
+        yield return new WaitForSecondsRealtime(1.5f);
         warningPopup.SetActive(false);
         
         PlaySceneController.Instance.ResumeGame();
@@ -160,7 +188,7 @@ public class GimmickManager : MonoBehaviour
     //기믹 매니저 초기화
     private void InitializeGimmickManager()
     {
-        mCurrentStage = StageLoader.CurrentStageNumber + 100; //스테이지 int 캐싱 //최소 1 (테스트 100)
+        mCurrentStage = StageLoader.CurrentStageNumber + 500; //스테이지 int 캐싱 //최소 1 (이미 되어있음) (테스트 100)
 
         if (SettingByStageNumber(mCurrentStage)) //스테이지 수에 따른 설정들 - false일 경우 기믹 갯수가 0이므로 실행 안함
         {
