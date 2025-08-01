@@ -137,26 +137,12 @@ public class Mon004State_Action3 : MonsterState_Action
 
     private void SpawnClone()
     {
-        var generator = GameObject.Find("Mon004Gen").GetComponent<Mon004Generator_C>();
-
-        // Vector3 pos = GetRandomCirclePosition(transform.position, 5f);
         Vector3 pos = transform.position;
         Quaternion quat = SetGenRotation(pos);
 
-        MonsterController summonedMonsterController =
+        MonsterController summonedMonsterController = 
             Instantiate(summonMonsterPrefab, pos, quat).GetComponent<MonsterController>();
         summonedMonsterController.InitEnemy(controller.playerTransform);
-    }
-
-    private Vector3 GetRandomCirclePosition(Vector3 center, float radius)
-    {
-        float angle = Random.Range(0f, 360f);
-        float radian = angle * Mathf.Deg2Rad;
-
-        float x = Mathf.Cos(radian) * radius;
-        float z = Mathf.Sin(radian) * radius;
-
-        return center + new Vector3(x, 0f, z);
     }
 
     private Quaternion SetGenRotation(Vector3 genPos)

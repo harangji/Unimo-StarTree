@@ -26,7 +26,7 @@ public class BossController : MonsterController
 
         bossPatterns = GetComponentsInChildren<BossState_Pattern>();
 
-        MonGeneratorManager.AllMonsterListSTATIC.Add(this);
+        // MonGeneratorManager.AllMonsterListSTATIC.Add(this);
         EnemyAppear();
     }
 

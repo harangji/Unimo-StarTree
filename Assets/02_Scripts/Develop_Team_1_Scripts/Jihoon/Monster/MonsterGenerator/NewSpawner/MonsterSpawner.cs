@@ -8,14 +8,24 @@ public class MonsterSpawner : MonoBehaviour
 {
     [SerializeField] private SpawnSO spawnData;
 
-    [SerializeField] private MonsterFactory[]  monsterFactories; 
-    
+    [SerializeField] private MonsterFactory[] monsterFactories;
+
     private SpawnData currentSpawnData;
-    
+    private WaitForSeconds spawnDelay = new WaitForSeconds(1f);
+
     private void Awake()
     {
         FindSpawnData();
-        
+
+        string str = "";
+
+        foreach (var monsterSpawnRate in currentSpawnData.MonsterSpawnRates)
+        {
+            str += $"{monsterSpawnRate}, ";
+        }
+
+        Debug.Log($"[확률]: {str}");
+
         StartCoroutine(StartSpawner());
     }
 
@@ -40,42 +50,44 @@ public class MonsterSpawner : MonoBehaviour
 
     private IEnumerator StartSpawner()
     {
-        // var rate = Random.Range(0, 100);
-        var rate = 0;
-
+        yield return new WaitForSeconds(3f);
         
-        if (rate < currentSpawnData.MonsterSpawnRates[0])
+        while (true)
         {
-            monsterFactories[0].SpawnMonster(3);
-            // monsterFactories[0].SpawnMonster(currentSpawnData.Pattern);
-        }
-        else if (rate < currentSpawnData.MonsterSpawnRates[1])
-        {
-            monsterFactories[1].SpawnMonster(currentSpawnData.Pattern);
-        }
-        else if (rate < currentSpawnData.MonsterSpawnRates[2])
-        {
-            monsterFactories[2].SpawnMonster(currentSpawnData.Pattern);
-        }
-        else if (rate < currentSpawnData.MonsterSpawnRates[3])
-        {
-            monsterFactories[3].SpawnMonster(currentSpawnData.Pattern);
-        }
-        else if (rate < currentSpawnData.MonsterSpawnRates[4])
-        {
-            monsterFactories[4].SpawnMonster(currentSpawnData.Pattern);
-        }
-        else if (rate < currentSpawnData.MonsterSpawnRates[5])
-        {
-            Debug.Log($"[Spawner] 레이저 소환");
-            // monsterFactories[5].SpawnMonster(currentSpawnData.Pattern);
-        }
-        else
-        {
-            Debug.Log($"[Spawner] 추격 소환");
-            // monsterFactories[6].SpawnMonster(currentSpawnData.Pattern);
-        }
+            var rate = Random.Range(0, 100);
 
-        yield return new WaitForSeconds(1f);
+            if (rate < currentSpawnData.MonsterSpawnRates[0])
+            {
+                monsterFactories[0].SpawnMonster(currentSpawnData.Pattern);
+            }
+            else if (rate < currentSpawnData.MonsterSpawnRates[1])
+            {
+                monsterFactories[1].SpawnMonster(currentSpawnData.Pattern);
+            }
+            else if (rate < currentSpawnData.MonsterSpawnRates[2])
+            {
+                monsterFactories[2].SpawnMonster(currentSpawnData.Pattern);
+            }
+            else if (rate < currentSpawnData.MonsterSpawnRates[3])
+            {
+                monsterFactories[3].SpawnMonster(currentSpawnData.Pattern);
+            }
+            else if (rate < currentSpawnData.MonsterSpawnRates[4])
+            {
+                monsterFactories[4].SpawnMonster(currentSpawnData.Pattern);
+            }
+            else if (rate < currentSpawnData.MonsterSpawnRates[5])
+            {
+                Debug.Log($"[Spawner] 레이저 소환");
+                // monsterFactories[5].SpawnMonster(currentSpawnData.Pattern);
+            }
+            else
+            {
+                Debug.Log($"[Spawner] 추격 소환");
+                // monsterFactories[6].SpawnMonster(currentSpawnData.Pattern);
+            }
+
+            yield return spawnDelay;
+        }
     }
 }
