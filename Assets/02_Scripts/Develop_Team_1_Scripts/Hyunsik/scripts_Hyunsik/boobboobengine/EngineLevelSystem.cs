@@ -108,11 +108,10 @@ public static class EngineLevelSystem
 
     public static void ResetEngine(int engineID)
     {
-        // 고유 레벨 초기화
-        mEngineUniqueLevels[engineID] = 1;
-        PlayerPrefs.SetInt($"Engine_{engineID}_UniqueLevel", 1);
+        mEngineUniqueLevels[engineID] = 0;
+        PlayerPrefs.SetInt($"Engine_{engineID}_UniqueLevel", 0); 
 
-        // 일반 스탯 초기화
+        // 일반 스탯 초기화는 그대로 유지
         mEngineStatLevels[engineID] = new int[StatCount];
         for (int i = 0; i < StatCount; i++)
             PlayerPrefs.DeleteKey($"Engine_{engineID}_Stat_{i}");

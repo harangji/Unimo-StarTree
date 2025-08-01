@@ -62,17 +62,45 @@ public class UI_EngineUpgradePopup : MonoBehaviour
 
         levelText.text = $"{curLevel} / {maxLevel}";
 
-        float growthValue = data.GrowthTable[Mathf.Clamp(curLevel - 1, 0, data.GrowthTable.Length - 1)];
+        float growthValue = data.GrowthTable[Mathf.Clamp(curLevel, 0, data.GrowthTable.Length - 1)];
         descriptionText.text = string.Format(data.DescriptionFormat, growthValue);
     }
 
     public void ResetAllStats()
     {
         int engineID = GameManager.Instance.SelectedEngineID;
-        EngineLevelSystem.ResetEngine(engineID);  // 또는 StatSystem 등 정확한 static 클래스
+
+        // 레벨 초기화
+        EngineLevelSystem.ResetEngine(engineID);  
         Debug.Log($"[UI] {engineID} 엔진 스탯 초기화 완료");
-    
-        RefreshUI();  // 리셋 후 UI 갱신 함수 호출 필요
+
+        // 해당 엔진 고유 효과 초기화 로직 호출
+        var player = PlaySystemRefStorage.playerStatManager;
+
+        if (player != null)
+        {
+            var effectScripts = player.GetComponents<MonoBehaviour>();
+
+            foreach (var script in effectScripts)
+            {
+                if (script is IBoomBoomEngineEffect)
+                {
+                    var initMethod = script.GetType().GetMethod("Init");
+                    if (initMethod != null)
+                    {
+                        int level = EngineLevelSystem.GetUniqueLevel(engineID);
+                        initMethod.Invoke(script, new object[] { engineID, level });
+                        Debug.Log($"[ResetAllStats] Init 호출됨: {script.GetType().Name}");
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[ResetAllStats] playerStatManager가 null입니다. 인게임에서만 호출 가능.");
+        }
+
+        RefreshUI();
     }
     
     

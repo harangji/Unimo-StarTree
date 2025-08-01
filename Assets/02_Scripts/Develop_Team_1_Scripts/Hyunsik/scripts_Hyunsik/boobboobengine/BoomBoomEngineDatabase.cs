@@ -63,7 +63,7 @@ public static class BoomBoomEngineDatabase
         ModelID = "EQC001_BeeTail",
         SkillID = 301,
         DescriptionFormat = "{0}초 동안 몬스터로부터 피격을 받지 않음",
-        GrowthTable = Enumerable.Range(1, 50).Select(i => 1.0f + i * 0.1f).ToArray(),
+        GrowthTable = Enumerable.Range(0, 51).Select(i => 1.0f + i * 0.1f).ToArray(),  // 0~50
         StatBonus = new SCharacterStat {  }
     };
     

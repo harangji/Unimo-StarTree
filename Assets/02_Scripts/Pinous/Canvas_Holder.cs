@@ -121,7 +121,7 @@ public class Canvas_Holder : MonoBehaviour
                 PeekCheck = false;
 
                 break;
-            case "##Upgrade_Hyunsik":
+            case "##Upgrade":
                 if (bars[3].activeSelf)
                 {
                     CloseAllPopupUI();
