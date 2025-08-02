@@ -107,7 +107,7 @@ public class GimmickManager : MonoBehaviour
     {
         InitializeGimmickManager();
         
-        if (mReadyGimmickQueue.Count == 0)
+        if (mReadyGimmickQueue.Count <= 0)
         {
             Debug.Log("큐에 담긴 기믹이 없습니다.");
             return;
@@ -120,7 +120,7 @@ public class GimmickManager : MonoBehaviour
     //다른 곳에서 기믹 실행
     public void ExecuteGimmick()
     {
-        if (mReadyGimmickQueue.Count == 0)
+        if (mReadyGimmickQueue.Count <= 0)
         {
             Debug.Log("큐에 담긴 기믹이 없습니다.");
             return;

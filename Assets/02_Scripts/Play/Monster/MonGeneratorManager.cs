@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class MonGeneratorManager : MonoBehaviour
 {
-    public static List<MonsterController> AllMonsterListSTATIC;
+    // public static List<MonsterController> AllMonsterListSTATIC;
 
     [SerializeField] private TMP_Text[] buttonsText;
     [SerializeField] private List<MonsterGenerator> generators;
@@ -19,7 +19,7 @@ public class MonGeneratorManager : MonoBehaviour
     private int newGenIdx = 0;
     private void Awake()
     {
-        AllMonsterListSTATIC = new List<MonsterController>();
+        // AllMonsterListSTATIC = new List<MonsterController>();
         foreach(var gen in generators) { gen.gameObject.SetActive(false); }
         currentExCoolTime = 0f;
     }

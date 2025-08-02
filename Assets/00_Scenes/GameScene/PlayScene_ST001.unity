@@ -17550,6 +17550,86 @@ MonoBehaviour:
   monsterPattern2: {fileID: 0}
   monsterPattern3: {fileID: 1313915641652497427, guid: e8410453af08a234d889e0bd14a44b14,
     type: 3}
+--- !u!1001 &342595798
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2128166652}
+    m_Modifications:
+    - target: {fileID: 4640236555979499196, guid: 313edbeaf5d71bd4588aeac72ee90219,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640236555979499196, guid: 313edbeaf5d71bd4588aeac72ee90219,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640236555979499196, guid: 313edbeaf5d71bd4588aeac72ee90219,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640236555979499196, guid: 313edbeaf5d71bd4588aeac72ee90219,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640236555979499196, guid: 313edbeaf5d71bd4588aeac72ee90219,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640236555979499196, guid: 313edbeaf5d71bd4588aeac72ee90219,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640236555979499196, guid: 313edbeaf5d71bd4588aeac72ee90219,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640236555979499196, guid: 313edbeaf5d71bd4588aeac72ee90219,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640236555979499196, guid: 313edbeaf5d71bd4588aeac72ee90219,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640236555979499196, guid: 313edbeaf5d71bd4588aeac72ee90219,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501496307030212588, guid: 313edbeaf5d71bd4588aeac72ee90219,
+        type: 3}
+      propertyPath: m_Name
+      value: MON002_ExIndicator
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 313edbeaf5d71bd4588aeac72ee90219, type: 3}
+--- !u!4 &342595799 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4640236555979499196, guid: 313edbeaf5d71bd4588aeac72ee90219,
+    type: 3}
+  m_PrefabInstance: {fileID: 342595798}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &342595800 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8501496307030212588, guid: 313edbeaf5d71bd4588aeac72ee90219,
+    type: 3}
+  m_PrefabInstance: {fileID: 342595798}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &358636101
 GameObject:
   m_ObjectHideFlags: 0
@@ -19709,6 +19789,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   areaActivator: {fileID: 1840164435}
+--- !u!1 &513950973
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 513950974}
+  - component: {fileID: 513950975}
+  m_Layer: 0
+  m_Name: Mon5Factory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &513950974
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513950973}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1361393794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &513950975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513950973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde0042401068c2449479345e33d03d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterPattern1: {fileID: 1072457946450581002, guid: c02c1f7cc92d0d246a08e5d9c106b44b,
+    type: 3}
+  monsterPattern2: {fileID: 6673824433684689492, guid: 86ca129ac9fcfb14a968da8d64a5cf74,
+    type: 3}
+  monsterPattern3: {fileID: 6673824433684689492, guid: 86ca129ac9fcfb14a968da8d64a5cf74,
+    type: 3}
 --- !u!1 &514003174
 GameObject:
   m_ObjectHideFlags: 0
@@ -20131,6 +20261,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &546339010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 546339011}
+  - component: {fileID: 546339012}
+  m_Layer: 0
+  m_Name: Mon4Factory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &546339011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546339010}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1361393794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &546339012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546339010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18aaad08ad579ea4b9253032581bda88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterPattern1: {fileID: 1313915641652497427, guid: 9856596b3536ec541b4301941f5516d0,
+    type: 3}
+  monsterPattern2: {fileID: 0}
+  monsterPattern3: {fileID: 1313915641652497427, guid: e8410453af08a234d889e0bd14a44b14,
+    type: 3}
 --- !u!1 &546730706
 GameObject:
   m_ObjectHideFlags: 0
@@ -38093,6 +38272,8 @@ Transform:
   - {fileID: 524533855}
   - {fileID: 443619040}
   - {fileID: 1813277866}
+  - {fileID: 1361393794}
+  - {fileID: 1932293081}
   - {fileID: 1971803515}
   - {fileID: 93051893}
   - {fileID: 1337893009}
@@ -38312,6 +38493,54 @@ Transform:
   m_Children: []
   m_Father: {fileID: 886842675}
   m_LocalEulerAnglesHint: {x: -32.629337, y: -0.0000009128286, z: -0.0000042958973}
+--- !u!1 &909950402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 909950403}
+  - component: {fileID: 909950404}
+  m_Layer: 0
+  m_Name: Mon3Factory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &909950403
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 909950402}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1361393794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &909950404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 909950402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8006a86424d9a0149afd9866f0251eef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterPattern1: {fileID: 2682052996701666488, guid: b3bb4774883e28c44a4f21eecaa08034,
+    type: 3}
+  monsterPattern2: {fileID: 0}
+  monsterPattern3: {fileID: 0}
 --- !u!1 &919046459
 GameObject:
   m_ObjectHideFlags: 0
@@ -57033,6 +57262,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1353411018}
   m_CullTransparentMesh: 1
+--- !u!1 &1361393793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1361393794}
+  - component: {fileID: 1361393795}
+  m_Layer: 0
+  m_Name: MonsterFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1361393794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361393793}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1926240370}
+  - {fileID: 2128166652}
+  - {fileID: 909950403}
+  - {fileID: 546339011}
+  - {fileID: 513950974}
+  m_Father: {fileID: 877649383}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1361393795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361393793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb7ef6ba13e1a6d489db370363c05410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnData: {fileID: 11400000, guid: 9191764d2ba2174489597fdb67435be1, type: 2}
+  monsterFactories:
+  - {fileID: 513950975}
+  - {fileID: 909950404}
+  - {fileID: 2128166653}
+  - {fileID: 1926240371}
+  - {fileID: 546339012}
 --- !u!1 &1364882250
 GameObject:
   m_ObjectHideFlags: 0
@@ -74741,7 +75026,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1813277866
 Transform:
   m_ObjectHideFlags: 0
@@ -74760,7 +75045,6 @@ Transform:
   - {fileID: 622374549}
   - {fileID: 326843634}
   - {fileID: 1398289741}
-  - {fileID: 1932293081}
   m_Father: {fileID: 877649383}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1813277867
@@ -90256,6 +90540,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1913795383}
   m_CullTransparentMesh: 1
+--- !u!1 &1926240369
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1926240370}
+  - component: {fileID: 1926240371}
+  m_Layer: 0
+  m_Name: Mon1Factory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1926240370
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926240369}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1361393794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1926240371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926240369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10708243e994e658c63a2929d1536cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterPattern1: {fileID: 8470377270446183419, guid: 448b05eca14b205479fa46300963edd4,
+    type: 3}
+  monsterPattern2: {fileID: 0}
+  monsterPattern3: {fileID: 8470377270446183419, guid: cda80853c6e79f8479fe4d246ae6ce53,
+    type: 3}
 --- !u!1 &1928446051
 GameObject:
   m_ObjectHideFlags: 0
@@ -90455,7 +90788,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1813277866}
+  m_Father: {fileID: 877649383}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1932293082
 MonoBehaviour:
@@ -106182,6 +106515,56 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2128166651
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2128166652}
+  - component: {fileID: 2128166653}
+  m_Layer: 0
+  m_Name: Mon2Factory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2128166652
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2128166651}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 342595799}
+  m_Father: {fileID: 1361393794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2128166653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2128166651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38420765302f7164997269405df76561, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterPattern1: {fileID: 2560127493471256366, guid: 6ebf42e53bff66c4ebe51e09fc50b8d2,
+    type: 3}
+  monsterPattern2: {fileID: 0}
+  monsterPattern3: {fileID: 0}
+  focusingObj: {fileID: 342595800}
 --- !u!222 &33501478476362097
 CanvasRenderer:
   m_ObjectHideFlags: 0
