@@ -26,6 +26,7 @@ public enum eGimmicks
     BlackHole,
     RedZone,
     AreaActivator,
+    UniqueFlower,
 }
 
 public enum eGimmickType
@@ -196,7 +197,6 @@ public abstract class Gimmick : MonoBehaviour
         
         fadeSequence.OnComplete(() =>
         {
-            MyDebug.Log($"Fade to {targetAlpha} Complete");
             tcs.SetResult(true);
         });
         
@@ -218,7 +218,6 @@ public abstract class Gimmick : MonoBehaviour
             mStartAlpha = x;
             mColor.a = x;
             mat.color = mColor;
-            MyDebug.Log($"a is {mat.color.a}");
         }, targetAlpha, duration);
             
         fadeSequence.Join(tween); // 동시에 실행되도록 시퀀스에 추가
