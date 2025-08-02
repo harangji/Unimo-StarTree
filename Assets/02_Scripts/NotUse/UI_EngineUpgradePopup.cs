@@ -31,15 +31,22 @@ public class UI_EngineUpgradePopup : MonoBehaviour
         };
     }
 
-    public void OpenUpgradeUI(int engineID, bool isUniqueType, EngineLevelSystem.EEngineStatType statType = (EngineLevelSystem.EEngineStatType)(-1))
+    public void OpenUpgradeUI
+        (int engineID, EngineLevelSystem.EEngineStatType statType = 
+            (EngineLevelSystem.EEngineStatType)(-1))
     {
         mEngineID = engineID;
-        bIsUniqueType = isUniqueType;
+        var data = BoomBoomEngineDatabase.GetEngineData(engineID);
+        
+        bIsUniqueType = data.IsUniqueType;
         mUpgradeStatType = statType == (EngineLevelSystem.EEngineStatType)(-1)
             ? GetDefaultStatTypeForEngine(engineID)
             : statType;
 
-        BoomBoomEngineData data = BoomBoomEngineDatabase.GetEngineData(engineID);
+        //  고유 엔진일 경우 강제 캐시 리셋
+        if (bIsUniqueType)
+            EngineLevelSystem.ForceReloadUniqueLevel(engineID);
+
         panel.SetActive(true);
 
         if (data != null)
@@ -56,8 +63,11 @@ public class UI_EngineUpgradePopup : MonoBehaviour
 
     public void OnUpgradeButton()
     {
-        bool success = bIsUniqueType
-            ? EngineLevelSystem.LevelUpUnique(mEngineID, 1)
+        var engineData = BoomBoomEngineDatabase.GetEngineData(mEngineID);
+        bool isUnique = engineData != null && engineData.IsUniqueType;
+
+        bool success = isUnique
+            ? EngineLevelSystem.LevelUpUnique(mEngineID)
             : EngineLevelSystem.LevelUpStat(mEngineID, mUpgradeStatType, 1);
 
         if (success)
@@ -76,49 +86,52 @@ public class UI_EngineUpgradePopup : MonoBehaviour
             ? EngineLevelSystem.GetUniqueLevel(mEngineID)
             : EngineLevelSystem.GetStatLevel(mEngineID, mUpgradeStatType);
 
-        levelText.text = $"{curLevel} / {maxLevel}";
+        Debug.Log($"[UI] UpdateAllLevelUI 호출됨 ▶ CurLevel: {curLevel}");
 
+        levelText.text = $"{curLevel} / {maxLevel}";
         float growthValue = data.GrowthTable[Mathf.Clamp(curLevel, 0, data.GrowthTable.Length - 1)];
         descriptionText.text = string.Format(data.DescriptionFormat, growthValue);
     }
 
     public void ResetAllStats()
     {
-        int engineID = GameManager.Instance.SelectedEngineID;
-
-        // 레벨 초기화
-        EngineLevelSystem.ResetEngine(engineID);  
-        Debug.Log($"[UI] {engineID} 엔진 스탯 초기화 완료");
-
-        // 해당 엔진 고유 효과 초기화 로직 호출
-        var player = PlaySystemRefStorage.playerStatManager;
-
-        if (player != null)
+        var allEngines = BoomBoomEngineDatabase.GetAllEngines(); // 전체 등록된 엔진 목록
+        foreach (var engine in allEngines)
         {
-            var effectScripts = player.GetComponents<MonoBehaviour>();
+            int engineID = engine.EngineID;
 
-            foreach (var script in effectScripts)
+            // 1. 초기화
+            EngineLevelSystem.ResetEngine(engineID);  
+
+            // 2. 캐시 강제 갱신
+            EngineLevelSystem.ForceReloadUniqueLevel(engineID);
+
+            // 3. 고유 효과 스크립트 Init 재호출 (현재 장착된 엔진만 적용됨)
+            var player = PlaySystemRefStorage.playerStatManager;
+            if (player != null)
             {
-                if (script is IBoomBoomEngineEffect)
+                var effectScripts = player.GetComponents<MonoBehaviour>();
+                foreach (var script in effectScripts)
                 {
-                    var initMethod = script.GetType().GetMethod("Init");
-                    if (initMethod != null)
+                    if (script is IBoomBoomEngineEffect)
                     {
-                        int level = EngineLevelSystem.GetUniqueLevel(engineID);
-                        initMethod.Invoke(script, new object[] { engineID, level });
-                        Debug.Log($"[ResetAllStats] Init 호출됨: {script.GetType().Name}");
+                        var initMethod = script.GetType().GetMethod("Init");
+                        if (initMethod != null)
+                        {
+                            int level = EngineLevelSystem.GetUniqueLevel(engineID);
+                            initMethod.Invoke(script, new object[] { engineID, level });
+                            Debug.Log($"[ResetAllStats] Init 호출됨: {script.GetType().Name} (EngineID={engineID})");
+                        }
                     }
                 }
             }
         }
-        else
-        {
-            Debug.LogWarning("[ResetAllStats] playerStatManager가 null입니다. 인게임에서만 호출 가능.");
-        }
 
+        Debug.Log("[ResetAllStats] 전체 엔진 초기화 완료");
+
+        // 4. UI 갱신은 현재 선택된 엔진만
         RefreshUI();
     }
-    
     
     private void RefreshUI()
     {

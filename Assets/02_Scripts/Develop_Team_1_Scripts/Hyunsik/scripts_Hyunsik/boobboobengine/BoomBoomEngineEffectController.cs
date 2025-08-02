@@ -27,6 +27,8 @@ public class BoomBoomEngineEffectController : MonoBehaviour
     /// </summary>
     public void ActivateEffect(int skillID, PlayerStatManager target)
     {
+        var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
+        
         switch (skillID)
         {
             case 301:  // 리비 엔진 (무적 버프)
@@ -47,10 +49,13 @@ public class BoomBoomEngineEffectController : MonoBehaviour
                     Debug.LogWarning("[EffectController] BeeTailEffect 연결 안됨");
                 }
                 break;
-
             case 303:  // 5초 Aura_Range 증가
                 if (auraRangeEffect != null)
                 {
+                    int engineID = GameManager.Instance.SelectedEngineID;
+                    int level = EngineLevelSystem.GetUniqueLevel(engineID); // 고유 레벨 기반
+
+                    auraRangeEffect.Init(engineID, level);
                     auraRangeEffect.ExecuteEffect();
                     Debug.Log("[EffectController] Aura Range 버프 발동");
                 }
@@ -59,7 +64,7 @@ public class BoomBoomEngineEffectController : MonoBehaviour
                     Debug.LogWarning("[EffectController] AuraRangeEffect 연결 안됨");
                 }
                 break;
-
+            
             case 304: // 너구리 엔진 (크리티컬 확률 100%)
                 if (criticalEffect != null)
                 {
@@ -75,16 +80,28 @@ public class BoomBoomEngineEffectController : MonoBehaviour
             case 305: // 실드 엔진
                 if (shieldEffect != null)
                 {
+                    int level = EngineLevelSystem.GetUniqueLevel(GameManager.Instance.SelectedEngineID);
+                    shieldEffect.Init(GameManager.Instance.SelectedEngineID, level); //  추가
                     shieldEffect.ExecuteEffect();
-                    Debug.Log("[EffectController] 실드 엔진 발동");
+                    Debug.Log("[EffectController] 실드 생성 시도됨 (레벨 기반 쿨다운 적용)");
+                }
+                else
+                {
+                    Debug.LogWarning("[EffectController] shieldEffect 연결되지 않음");
                 }
                 break;
             
             case 310:
                 if (timedInvincibleEffect != null)
                 {
+                    int level = EngineLevelSystem.GetUniqueLevel(GameManager.Instance.SelectedEngineID);
+                    timedInvincibleEffect.Init(GameManager.Instance.SelectedEngineID, level); //  추가
                     timedInvincibleEffect.ExecuteEffect();
-                    Debug.Log("[EffectController] 310 무적 스킬 발동");
+                    Debug.Log("[EffectController] 310 무적 스킬 발동 (레벨 기반 적용)");
+                }
+                else
+                {
+                    Debug.LogWarning("[EffectController] timedInvincibleEffect 연결되지 않음");
                 }
                 break;
          
