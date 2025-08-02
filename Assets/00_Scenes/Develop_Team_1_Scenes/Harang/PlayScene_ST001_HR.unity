@@ -19427,6 +19427,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 498004083}
+  - component: {fileID: 498004084}
   m_Layer: 0
   m_Name: UniqueFlowerGimmickInitializer
   m_TagString: Untagged
@@ -19446,9 +19447,23 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1178451803}
   m_Father: {fileID: 1809248999}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &498004084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498004082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b72b942e57d91044b9d1beb031da0a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueFlower: {fileID: 1178451805}
 --- !u!1 &503839790
 GameObject:
   m_ObjectHideFlags: 0
@@ -50497,17 +50512,22 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 498004083}
     m_Modifications:
-    - target: {fileID: 2041511086051162884, guid: f1b4291b4257cea4d9b053b69e9dd7f6,
+    - target: {fileID: 2310265215322405914, guid: f1b4291b4257cea4d9b053b69e9dd7f6,
         type: 3}
-      propertyPath: scoreGain
-      value: 50
+      propertyPath: maxGrowth
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4507383953486226555, guid: f1b4291b4257cea4d9b053b69e9dd7f6,
         type: 3}
       propertyPath: m_Name
-      value: FLO001_Blue_ST001
+      value: UniqueFlower
+      objectReference: {fileID: 0}
+    - target: {fileID: 4507383953486226555, guid: f1b4291b4257cea4d9b053b69e9dd7f6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4507383953486226556, guid: f1b4291b4257cea4d9b053b69e9dd7f6,
         type: 3}
@@ -50532,17 +50552,17 @@ PrefabInstance:
     - target: {fileID: 4507383953486226556, guid: f1b4291b4257cea4d9b053b69e9dd7f6,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4507383953486226556, guid: f1b4291b4257cea4d9b053b69e9dd7f6,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4507383953486226556, guid: f1b4291b4257cea4d9b053b69e9dd7f6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4507383953486226556, guid: f1b4291b4257cea4d9b053b69e9dd7f6,
         type: 3}
@@ -50559,11 +50579,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6750460272663271539, guid: f1b4291b4257cea4d9b053b69e9dd7f6,
+        type: 3}
+      propertyPath: mFlowerGenerator
+      value: 
+      objectReference: {fileID: 443619041}
+    - target: {fileID: 6750460272663271539, guid: f1b4291b4257cea4d9b053b69e9dd7f6,
+        type: 3}
+      propertyPath: mUniqueController
+      value: 
+      objectReference: {fileID: 1178451804}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1b4291b4257cea4d9b053b69e9dd7f6, type: 3}
+--- !u!4 &1178451803 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4507383953486226556, guid: f1b4291b4257cea4d9b053b69e9dd7f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1178451802}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1178451804 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2310265215322405914, guid: f1b4291b4257cea4d9b053b69e9dd7f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1178451802}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6519df573d3d7554a8cb7c72a7ca4f2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1178451805 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6750460272663271539, guid: f1b4291b4257cea4d9b053b69e9dd7f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1178451802}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c27db5d821d774987fdec711b035e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1188259538
 GameObject:
   m_ObjectHideFlags: 0
@@ -74828,6 +74888,7 @@ MonoBehaviour:
   goodModeImgColor: {r: 0.14901961, g: 0.85882354, b: 0.34117648, a: 1}
   gimmickInitializers:
   - {fileID: 1101405922}
+  - {fileID: 498004084}
   - {fileID: 609605849}
   - {fileID: 513377648}
 --- !u!1 &1813277865
@@ -84829,7 +84890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gimmickName: "\uC9C0\uC5ED \uD65C\uC131\uD654"
-  gimmickIcon: {fileID: 21300000, guid: 64eadafc842464bf3afbb248be166b72, type: 3}
+  gimmickIcon: {fileID: 21300000, guid: 984ab8fbfc7e7402fafc1d7e91fd85fe, type: 3}
   mParticleSystems:
   - {fileID: 1901163327}
   - {fileID: 1949615324}
@@ -109215,4 +109276,3 @@ SceneRoots:
   - {fileID: 861254156}
   - {fileID: 1665733236}
   - {fileID: 190140238}
-  - {fileID: 1178451802}

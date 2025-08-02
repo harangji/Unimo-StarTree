@@ -6,8 +6,13 @@ using UnityEngine;
 /// </summary>
 public class AuraRangeBoostEffect : MonoBehaviour, IBoomBoomEngineEffect
 {
-    [SerializeField] private float bonusPercent = 50f;
+    public int EngineID { get; set; }
+    public int EngineLevel { get; set; }
+
     [SerializeField] private float duration = 5f;
+    private float bonusPercent = 0f;         // 퍼센트 (예: 20.3)
+    private float cachedBonusRatio = 0f;     // 0.203 형태
+    private float cachedBonusValue = 0f;     // 예: 6.92 * 0.203 = 1.40
 
     private PlayerStatManager mStatManager;
     private bool bBuffActive = false;
@@ -17,19 +22,37 @@ public class AuraRangeBoostEffect : MonoBehaviour, IBoomBoomEngineEffect
         TryFindPlayerStatManager();
     }
 
-    private void TryFindPlayerStatManager()
+    public void Init(int engineID, int level)
     {
-        if (PlaySystemRefStorage.playerStatManager != null)
+        EngineID = engineID;
+        EngineLevel = level;
+
+        var data = BoomBoomEngineDatabase.GetEngineData(engineID);
+        if (data != null && data.GrowthTable != null)
         {
-            mStatManager = PlaySystemRefStorage.playerStatManager;
-            Debug.Log("[AuraRangeBoostEffect] PlayerStatManager 연결 완료.");
+            bonusPercent = data.GrowthTable[Mathf.Clamp(level, 0, data.GrowthTable.Length - 1)] * 100f;
+            cachedBonusRatio = bonusPercent / 100f;
+
+            Debug.Log($"[AuraRangeBoostEffect] Init 완료: {bonusPercent}% (레벨 {level})");
         }
         else
         {
-            Debug.LogWarning("[AuraRangeBoostEffect] PlayerStatManager가 아직 초기화되지 않음. 다음 호출에서 재시도 예정.");
+            bonusPercent = 0f;
+            cachedBonusRatio = 0f;
+            Debug.LogWarning($"[AuraRangeBoostEffect] GrowthTable 없음: EngineID={engineID}");
         }
     }
-    
+
+    private void TryFindPlayerStatManager()
+    {
+        mStatManager = PlaySystemRefStorage.playerStatManager;
+
+        if (mStatManager != null)
+            Debug.Log("[AuraRangeBoostEffect] PlayerStatManager 연결 완료.");
+        else
+            Debug.LogWarning("[AuraRangeBoostEffect] PlayerStatManager가 아직 초기화되지 않음.");
+    }
+
     public void ExecuteEffect()
     {
         if (mStatManager == null)
@@ -45,40 +68,38 @@ public class AuraRangeBoostEffect : MonoBehaviour, IBoomBoomEngineEffect
         if (!bBuffActive)
             StartCoroutine(ApplyAuraRangeBuff());
     }
-    
+
     private IEnumerator ApplyAuraRangeBuff()
     {
         bBuffActive = true;
 
         var stat = mStatManager.GetStat();
-        float bonusValue = stat.BaseStat.AuraRange * (bonusPercent / 100f);
+        float baseRange = stat.BaseStat.AuraRange;
+        cachedBonusValue = baseRange * cachedBonusRatio;
 
-        // ① BonusStat 임시 변수로 가져와 수정 후 다시 대입
+        // 버프 적용: BonusStat에 비율 적용
         var bonusStat = stat.BonusStat;
-        bonusStat.AuraRange += bonusValue;
+        bonusStat.AuraRange += cachedBonusRatio;
         stat.BonusStat = bonusStat;
 
-        // ② 최종 스탯 재계산 및 적용
         stat.RecalculateFinalStat();
         mStatManager.SetStat(stat);
 
-        // ③ 아우라 반영 (필요시)
         mStatManager.GetAuraController().SetAuraRange(stat.FinalStat.AuraRange);
 
-        Debug.Log($"[붕붕엔진] AuraRange +{bonusValue} 적용됨 ({bonusPercent}%)");
+        Debug.Log($"[붕붕엔진] AuraRange +{cachedBonusValue:F2} 적용됨 (기준: {baseRange}, 증가율: {bonusPercent}%)");
 
         yield return new WaitForSeconds(duration);
 
-        // ④ 버프 해제 시
+        // 버프 해제
         bonusStat = stat.BonusStat;
-        bonusStat.AuraRange -= bonusValue;
+        bonusStat.AuraRange -= cachedBonusRatio;
         stat.BonusStat = bonusStat;
 
         stat.RecalculateFinalStat();
         mStatManager.SetStat(stat);
 
         mStatManager.GetAuraController().SetAuraRange(stat.FinalStat.AuraRange);
-
         Debug.Log("[붕붕엔진] AuraRange 버프 종료");
 
         bBuffActive = false;

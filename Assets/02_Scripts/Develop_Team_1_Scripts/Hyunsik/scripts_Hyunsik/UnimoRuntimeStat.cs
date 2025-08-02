@@ -49,7 +49,23 @@ public class UnimoRuntimeStat
     
     public void RecalculateFinalStat()
     {
-        FinalStat = AddStat(BaseStat, BonusStat);
+        FinalStat = new SCharacterStat
+        {
+            MoveSpd = BaseStat.MoveSpd * (1 + BonusStat.MoveSpd),
+            CharSize = BaseStat.CharSize,
+            Health = BaseStat.Health * (1 + BonusStat.Health),
+            HealthRegen = BaseStat.HealthRegen + BonusStat.HealthRegen,
+            HealingMult = BaseStat.HealingMult * (1 + BonusStat.HealingMult),
+            Armor = BaseStat.Armor * (1 + BonusStat.Armor),
+            StunIgnoreChance = BaseStat.StunIgnoreChance + BonusStat.StunIgnoreChance,
+            StunResistanceRate = BaseStat.StunResistanceRate + BonusStat.StunResistanceRate,
+            CriticalChance = BaseStat.CriticalChance + BonusStat.CriticalChance,
+            CriticalMult = BaseStat.CriticalMult * (1 + BonusStat.CriticalMult),
+            YFGainMult = BaseStat.YFGainMult * (1 + BonusStat.YFGainMult),
+            OFGainMult = BaseStat.OFGainMult * (1 + BonusStat.OFGainMult),
+            AuraRange = BaseStat.AuraRange * (1 + BonusStat.AuraRange),
+            AuraStr = BaseStat.AuraStr * (1 + BonusStat.AuraStr)
+        };
     }
     
     private SCharacterStat AddStat(SCharacterStat a, SCharacterStat b)
@@ -94,5 +110,28 @@ public class UnimoRuntimeStat
         };
     }
 
-    
+    public string ToDebugString(string type = "Final")
+    {
+        SCharacterStat stat = type switch
+        {
+            "Base" => BaseStat,
+            "Bonus" => BonusStat,
+            _ => FinalStat
+        };
+
+        return $"[UnimoStat: {type}]" +
+               $"\n▶ 이동속도: {stat.MoveSpd}" +
+               $"\n▶ 체력: {stat.Health}" +
+               $"\n▶ 방어력: {stat.Armor}" +
+               $"\n▶ 스턴무시 확률: {stat.StunIgnoreChance}" +
+               $"\n▶ 스턴 저항: {stat.StunResistanceRate}" +
+               $"\n▶ 오라 범위: {stat.AuraRange}" +
+               $"\n▶ 오라 강도: {stat.AuraStr}" +
+               $"\n▶ 크리티컬 확률: {stat.CriticalChance}" +
+               $"\n▶ 크리티컬 배율: {stat.CriticalMult}" +
+               $"\n▶ 회복 배수: {stat.HealingMult}" +
+               $"\n▶ 자연 회복: {stat.HealthRegen}" +
+               $"\n▶ 노란별꽃 배수(YF): {stat.YFGainMult}" +
+               $"\n▶ 주황별꽃 배수(OF): {stat.OFGainMult}";
+    }
 }

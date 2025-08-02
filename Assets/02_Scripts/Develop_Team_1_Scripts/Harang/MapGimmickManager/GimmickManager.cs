@@ -81,8 +81,9 @@ public class GimmickManager : MonoBehaviour
         mGimmickInitializersMapper = new Dictionary<string, GimmickInitializer>
         {
             { "G_TRP_002", gimmickInitializers[0] }, // 블랙홀
-            { "G_ENV_004", gimmickInitializers[1] }, // 레드존
-            { "G_TRG_006", gimmickInitializers[2] }, // 지역 활성화
+            { "G_INT_003", gimmickInitializers[1] }, // 특수한 꽃
+            { "G_ENV_004", gimmickInitializers[2] }, // 레드존
+            { "G_TRG_006", gimmickInitializers[3] }, // 지역 활성화
         };
         
         originalTextColor = modeText[0].color;

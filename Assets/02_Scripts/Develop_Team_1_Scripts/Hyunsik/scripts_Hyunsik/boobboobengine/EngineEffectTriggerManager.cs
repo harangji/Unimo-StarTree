@@ -27,18 +27,26 @@ public class EngineEffectTriggerManager : MonoBehaviour
 
         if (skillID == 305 && shieldEffect != null)
         {
-            Debug.Log("[EngineTrigger] 305번 엔진 감지됨 → 실드 생성 타이머 시작");
+            int level = EngineLevelSystem.GetUniqueLevel(GameManager.Instance.SelectedEngineID);
+            shieldEffect.Init(GameManager.Instance.SelectedEngineID, level);
             shieldEffect.ExecuteEffect();
-            
+            Debug.Log("[EngineTrigger] 305번 엔진 감지됨 → 실드 생성 타이머 시작");
         }
-        // 마술모자(317) 엔진이면 반드시 타이머 시작
+
         if (skillID == 317)
         {
             Debug.Log("[EngineTrigger] 317번(마술모자) 엔진 감지됨 → 비활성화 타이머 시작");
             StartSkillInactiveTimer();
         }
-        
+
         UpdateOrbitAuraState();
+        
+        var data = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
+        if (data?.TriggerCondition == ETriggerCondition.OnStart)
+        {
+            Debug.Log("[EngineTrigger] TriggerCondition == OnStart 감지됨 → TryActivateSkill 호출");
+            TryActivateSkill(PlaySystemRefStorage.playerStatManager);
+        }
     }
     
     void Update()
@@ -114,10 +122,10 @@ public class EngineEffectTriggerManager : MonoBehaviour
     public void OnOrangeFlowerCollected()
     {
         orangeFlowerCount++;
+        var data = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
 
-        int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
-
-        if (selectedSkillID == 303 && orangeFlowerCount >= 5)
+        if (data?.TriggerCondition == ETriggerCondition.OnOrangeFlowerCollected &&
+            orangeFlowerCount >= 10)
         {
             TryActivateSkill(PlaySystemRefStorage.playerStatManager);
             orangeFlowerCount = 0;
@@ -127,13 +135,18 @@ public class EngineEffectTriggerManager : MonoBehaviour
     public void OnYellowFlowerCollected()
     {
         yellowFlowerCount++;
+        var data = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
 
-        int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
-
-        if (selectedSkillID == 304 && yellowFlowerCount >= 5)
+        if (data?.TriggerCondition == ETriggerCondition.OnYellowFlowerCollected)
         {
-            TryActivateSkill(PlaySystemRefStorage.playerStatManager);
-            yellowFlowerCount = 0;
+            int level = EngineLevelSystem.GetUniqueLevel(data.EngineID);
+            int requiredCount = Mathf.RoundToInt(70f - 50f * (data.GrowthTable[level])); // 0레벨: 70, 50레벨: 1
+
+            if (yellowFlowerCount >= requiredCount)
+            {
+                TryActivateSkill(PlaySystemRefStorage.playerStatManager);
+                yellowFlowerCount = 0;
+            }
         }
     }
 
@@ -148,22 +161,17 @@ public class EngineEffectTriggerManager : MonoBehaviour
 
     public void OnTakeDamage()
     {
-        int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
-
-        // 예: 301 리비 엔진 (무적)만 피격으로 발동
-        if (selectedSkillID == 301)
+        var data = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
+        if (data?.TriggerCondition == ETriggerCondition.OnTakeDamage)
         {
             TryActivateSkill(PlaySystemRefStorage.playerStatManager);
         }
-        
-        // 모래성(323) 엔진 버프 초기화
-        if (selectedSkillID == 323)
+
+        if (data?.SkillID == 323) // 모래성 특수 처리
         {
-            var sandCastleEffect = PlaySystemRefStorage.playerStatManager.GetComponent<AuraRangeSandCastleEffect>();
-            if (sandCastleEffect != null)
-                sandCastleEffect.ResetBuff();
+            var sandCastle = PlaySystemRefStorage.playerStatManager.GetComponent<AuraRangeSandCastleEffect>();
+            sandCastle?.ResetBuff();
         }
-        
     }
 
     // 플레이어 사망 시 TryReviveOnDeath로 위임 호출
@@ -198,16 +206,34 @@ public class EngineEffectTriggerManager : MonoBehaviour
         if (engineData != null && effectController != null)
         {
             var effect = target.GetComponent<IBoomBoomEngineEffect>();
-    
-            // BeeTail 무적 효과 초기화 (ID: 301번)
-            if (effect is BeeTailInvincibilityEffect beeTail)
+            int level = EngineLevelSystem.GetUniqueLevel(engineData.EngineID);
+
+            //  AuraRangeBoostEffect는 Init → ExecuteEffect 순서로만 처리
+            if (effect is AuraRangeBoostEffect auraBoost)
             {
-                int level = EngineLevelSystem.GetUniqueLevel(engineData.EngineID);
-                beeTail.Init(engineData.EngineID, level);
+                auraBoost.Init(engineData.EngineID, level);  // Init 먼저
+                auraBoost.ExecuteEffect();                   // 즉시 효과 적용 (SetStat 포함)
+                return; // 중복 호출 방지
             }
 
+            //  다른 Effect는 기존처럼 처리
+            if (effect is BeeTailInvincibilityEffect beeTail)
+            {
+                beeTail.Init(engineData.EngineID, level);
+            }
+            else if (effect is ShieldEffect shield)
+            {
+                shield.Init(engineData.EngineID, level); // 쿨다운 초기화
+            }
+            
+            if (effect is TimedInvincibilityEffect timedInvincibility)
+            {
+                timedInvincibility.Init(engineData.EngineID, level); //
+                timedInvincibility.ExecuteEffect();
+                return;
+            }
+            
             effectController.ActivateEffect(engineData.SkillID, target);
         }
-
     }
 }

@@ -64,9 +64,6 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     // Start is called before the first frame update
     void Start()
     {
-        int level = PlayerPrefs.GetInt("Engine_20102_UniqueLevel", -1);
-        Debug.Log($"[DEBUG] 곰곰엔진 고유레벨: {level}");
-        
         transform.position = -1000f * Vector3.one;
         renderCam = GameObject.Find("RenderCam");
         renderCam.SetActive(false);
@@ -116,67 +113,66 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         InitCharacter(selectedID);
 
         //최대 체력으로 hp 초기화
-        currentHP = mStat.BaseStat.Health;
+        currentHP = mStat.FinalStat.Health;
         hpGauge?.SetGauge(1f);
     }
     
-   public void InitCharacter(int id)
-{
-    Debug.Log($"[PlayerStatManager] InitCharacter 호출됨: ID = {id}");
-    mUnimoData = UnimoDatabase.GetUnimoData(id);
-
-    if (mUnimoData == null)
+    public void InitCharacter(int id)
     {
-        Debug.LogError($"[PlayerStatManager] 잘못된 Unimo ID: {id}");
-        return;
+        Debug.Log($"[PlayerStatManager] InitCharacter 호출됨: ID = {id}");
+        mUnimoData = UnimoDatabase.GetUnimoData(id);
+
+        if (mUnimoData == null)
+        {
+            Debug.LogError($"[PlayerStatManager] 잘못된 Unimo ID: {id}");
+            return;
+        }
+
+        int engineID = GameManager.Instance.SelectedEngineID;
+
+        //  기본 스탯 계산
+        var baseStat = UnimoLevelSystem.ApplyLevelBonus(mUnimoData.Stat, mUnimoData.UnimoID);
+
+        //  최종 스탯 생성 (기본)
+        mStat = new UnimoRuntimeStat(baseStat);
+
+        //  붕붕엔진 레벨 보정 추가
+        var engineBonus = BoomBoomEngineDatabase.GetBonusStatWithLevel(engineID);
+        mStat.AddBonus(engineBonus);
+
+        //  디버그 출력
+        Debug.Log($"[엔진 적용 디버그] 엔진 ID: {engineID}");
+        Debug.Log($"[엔진 적용 디버그] YFGainMult: {engineBonus.YFGainMult}");
+
+        //  최종 세팅
+        playerMover.SetCharacterStat(mStat);
+        auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
+        PlaySystemRefStorage.scoreManager.ApplyStatFromCharacter(mStat);
+
+        playerMover.SetCharacterStat(mStat);
+        auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
+        PlaySystemRefStorage.scoreManager.ApplyStatFromCharacter(mStat);
+
+// 디버그 출력
+        Debug.Log("========== [UnimoStat 디버그 출력] ==========");
+        Debug.Log(mStat.ToDebugString("Base"));
+        Debug.Log(mStat.ToDebugString("Bonus"));
+        Debug.Log(mStat.ToDebugString("Final"));
+        Debug.Log("===========================================");
+        
+        // 기타 값 세팅
+        bEvadeChance = mStat.FinalStat.StunIgnoreChance;
+        fStunReduceRate = mStat.FinalStat.StunResistanceRate;
+        regenAmountPerSecond = mStat.FinalStat.HealthRegen;
+        armor = mStat.FinalStat.Armor;
+        healingMultiplier = mStat.FinalStat.HealingMult;
+
+        Debug.Log($"[PlayerStatManager] 회피확률: {bEvadeChance * 100}% / 스턴저항률: {fStunReduceRate * 100}%");
+        Debug.Log($"[PlayerStatManager] 방어력: {armor}, 자연회복: {regenAmountPerSecond}, 회복배수: {healingMultiplier}");
     }
-
-    int engineID = GameManager.Instance.SelectedEngineID;
-
-    // 기본 스탯 복사 및 유니모 성장 적용
-    var baseStat = UnimoLevelSystem.ApplyLevelBonus(mUnimoData.Stat, mUnimoData.UnimoID);
-
-    // 런타임 스탯 생성
-    mStat = new UnimoRuntimeStat(baseStat);
     
-    // 엔진 보너스 적용
-    var engineBonus = BoomBoomEngineDatabase.GetBonusStatWithLevel(engineID);
-    mStat.AddBonus(engineBonus);
-
-    // 디버그 로그용 출력만 사용 (더 이상 baseStat 수정하지 마세요)
-    Debug.Log($"[곰곰엔진 적용] YFGainMult 최종 보정: {engineBonus.YFGainMult}");
-
-    Debug.Log($"[PlayerStatManager] 붕붕엔진 스탯 적용됨: {BoomBoomEngineDatabase.GetEngineData(engineID)?.Name}");
-    Debug.Log($"[붕붕엔진 스탯 증가]" +
-              $"\n▶ 이동속도: +{engineBonus.MoveSpd}" +
-              $"\n▶ 체력: +{engineBonus.Health}" +
-              $"\n▶ 방어력: +{engineBonus.Armor}" +
-              $"\n▶ 스턴무시 확률: +{engineBonus.StunIgnoreChance}" +
-              $"\n▶ 스턴 저항: +{engineBonus.StunResistanceRate}" +
-              $"\n▶ 오라 범위: +{engineBonus.AuraRange}" +
-              $"\n▶ 오라 강도: +{engineBonus.AuraStr}" +
-              $"\n▶ 크리티컬 확률: +{engineBonus.CriticalChance}" +
-              $"\n▶ 크리티컬 배율: +{engineBonus.CriticalMult}" +
-              $"\n▶ 회복 배수: +{engineBonus.HealingMult}" +
-              $"\n▶ 자연 회복: +{engineBonus.HealthRegen}" +
-              $"\n▶ 노란별꽃 배수(YF): +{engineBonus.YFGainMult}" +
-              $"\n▶ 주황별꽃 배수(OF): +{engineBonus.OFGainMult}");
-
-    // 최종 스탯을 기반으로 캐릭터 시스템에 반영
-    playerMover.SetCharacterStat(mStat);
-    auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
-    PlaySystemRefStorage.scoreManager.ApplyStatFromCharacter(mStat);
-
-    bEvadeChance = mStat.FinalStat.StunIgnoreChance;
-    fStunReduceRate = mStat.FinalStat.StunResistanceRate;
-    regenAmountPerSecond = mStat.FinalStat.HealthRegen;
-    armor = mStat.FinalStat.Armor;
-    healingMultiplier = mStat.FinalStat.HealingMult;
-
-    Debug.Log($"[PlayerStatManager] 회피확률: {bEvadeChance * 100}% / 스턴저항률: {fStunReduceRate * 100}%");
-    Debug.Log($"[PlayerStatManager] 방어력: {armor}, 자연회복: {regenAmountPerSecond}, 회복배수: {healingMultiplier}");
-}
-
+    
+    
     public UnimoRuntimeStat GetStat()
     {
         return mStat;
@@ -199,7 +195,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
     void Update()
     {
-        if (currentHP > 0f && currentHP < mStat.BaseStat.Health)
+        if (currentHP > 0f && currentHP < mStat.FinalStat.Health)
         {
             var regenHeal = regenAmountPerSecond * Time.deltaTime * healingMultiplier;
             var healEvent = new HealEvent { Heal = regenHeal };
@@ -295,15 +291,22 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         if (engineData != null && PlaySystemRefStorage.engineEffectController != null)
         {
-            PlaySystemRefStorage.engineEffectController.ActivateEffect(engineData.SkillID, this);
-            Debug.Log($"[PlayerStatManager] 스턴 해제 후 엔진 스킬 발동 ▶ SkillID : {engineData.SkillID}");
+            // ✅ 조건 확인 후 실행
+            if (engineData.TriggerCondition == ETriggerCondition.OnStunEnd)
+            {
+                PlaySystemRefStorage.engineEffectController.ActivateEffect(engineData.SkillID, this);
+                Debug.Log($"[PlayerStatManager] 스턴 해제 후 엔진 스킬 발동 ▶ SkillID : {engineData.SkillID}");
+            }
+            else
+            {
+                Debug.Log($"[PlayerStatManager] 스턴 해제 ▶ 발동 조건 불일치로 무시됨 (TriggerCondition: {engineData.TriggerCondition})");
+            }
         }
         else
         {
             Debug.LogWarning("[PlayerStatManager] 엔진 스킬 발동 실패: 컨트롤러 또는 엔진 데이터가 null");
         }
     }
-
     public void SetTemporaryInvincibility(bool isActive)
     {
         bExternalInvincibility = isActive;
@@ -364,11 +367,11 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         Debug.Log($"{combatEvent.TimeReduceAmount}초 감소했습니다.");
         
         //데미지 처리
-        var reducedDamage = combatEvent.Damage * (1f - mStat.BaseStat.Armor);
+        var reducedDamage = combatEvent.Damage * (1f - mStat.FinalStat.Armor); 
         currentHP -= reducedDamage;
 
         if(EditorMode.Instance.isShowDamage) DamageUIManager.instance.GetUI(reducedDamage);
-        hpGauge?.SetGauge(currentHP / mStat.BaseStat.Health);
+        hpGauge?.SetGauge(currentHP / mStat.FinalStat.Health); // 보정된 최대 체력 사용
 
         Debug.Log($"[Combat System] 피해량: {reducedDamage}");
         Debug.Log($"[Combat System] 현재 체력: {currentHP} / {mStat.BaseStat.Health}");
@@ -405,14 +408,13 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
     public void ForceRevive(float reviveHp)
     {
         currentHP = reviveHp;
-        hpGauge?.SetGauge(currentHP / mStat.BaseStat.Health);
+        hpGauge?.SetGauge(currentHP / mStat.FinalStat.Health);
         // 추가 이펙트, 무적 등 연출
     }
     
     public void TakeHeal(HealEvent healEvent)
     {
-        currentHP = Mathf.Min(currentHP + healEvent.Heal, mStat.BaseStat.Health);
-
-        hpGauge?.SetGauge(currentHP / mStat.BaseStat.Health);
+        currentHP = Mathf.Min(currentHP + healEvent.Heal, mStat.FinalStat.Health);
+        hpGauge?.SetGauge(currentHP / mStat.FinalStat.Health);
     }
 }
