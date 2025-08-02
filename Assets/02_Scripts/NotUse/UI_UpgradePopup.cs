@@ -108,6 +108,7 @@ public class UI_UpgradePopup : MonoBehaviour
         }
         
         UpdateAllCostUI();
+        Main_UI.instance.Text_Check();
     }
     
     private void UpdateAllCostUI()
