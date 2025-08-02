@@ -103,6 +103,7 @@ public class User_Data
     
     // 스테이지 관련 (담당 : 김진수)
     public int BestStage = 0; //최고 클리어 스테이지
+    public int GamePlaySum = 0; // 플레이어 스테이지 진행 횟수
     public Dictionary<int, int> BonusStageStars = new Dictionary<int, int>();
     // 전체 스테이지 보상 획득 여부 저장
     public HashSet<int> RewardedStages = new HashSet<int>();

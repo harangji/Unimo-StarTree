@@ -191,6 +191,7 @@ public class Mission_Base : MonoBehaviour
             case "BestStage": return Base_Manager.Data.UserData.BestStage;
             case "StarSum": return Base_Manager.Data.UserData.StarSum;
             case "Reinforce": return Base_Manager.Data.UserData.ReinforceCountTotal;
+            case "GamePlaySum" : return Base_Manager.Data.UserData.GamePlaySum;
         }
         return -1;
     }

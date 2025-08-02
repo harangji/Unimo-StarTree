@@ -21,6 +21,7 @@ public class UI_Game : UI_Base
     {
         WholeSceneController.Instance.ReadyNextScene(value);
         Base_Manager.Data.UserData.GamePlay++;
+        Base_Manager.Data.UserData.GamePlaySum++;
         Pinous_Flower_Holder.FlowerHolder.Clear();
         //Base_Mng.ADS._interstitialCallback = () =>
         //{

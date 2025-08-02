@@ -240,6 +240,7 @@ public class Data_Manager
         data.Red = 0;
         data.Blue = 0;
         data.BestStage = 0;
+        data.GamePlaySum = 0;
         data.NextLevel_Base = 10;
         data.GetReview = false;
         data.GetOarkTong = false;
