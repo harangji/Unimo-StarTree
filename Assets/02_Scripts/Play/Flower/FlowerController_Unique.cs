@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FlowerController_Unique : FlowerController
@@ -24,15 +22,25 @@ public class FlowerController_Unique : FlowerController
             if (timeAfterActive <= 0f) { isGrowing = false; visual.SetFlowerActivate(isGrowing); }
         }
     }
-    override public void AuraAffectFlower(float affection)
+    
+    public override void AuraAffectFlower(float affection)
     {
+        MyDebug.Log("FlowerController_Unique.AuraAffectFlower");
         if (!isGrowing) { isGrowing = true; visual.SetFlowerActivate(isGrowing); }
         timeAfterActive = 0.15f;
         currentGrowth += affection;
         (visual as FlowerFXController_ST001).AffectFlowerFX(currentGrowth / maxGrowth);
         if (currentGrowth >= maxGrowth) 
         { 
+            MyDebug.Log("FlowerController_Unique.completeBloom");
+
             completeBloom();
         }
+    }
+    
+    protected virtual void DeactivateFlower()
+    {
+        GetComponent<Collider>().enabled = false;
+        gameObject.SetActive(false);
     }
 }
