@@ -271,7 +271,8 @@ public class Data_Manager
         bool[] archive =
         {
             false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false
         };
         Debug.Log($"NewData :::: {archive.Length}");
         // bool[] archive = { false, false, false, false, false, false, false, false, false };

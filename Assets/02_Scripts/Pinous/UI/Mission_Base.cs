@@ -189,7 +189,7 @@ public class Mission_Base : MonoBehaviour
                 }
                 return b;
             case "BestStage": return Base_Manager.Data.UserData.BestStage;
-            case "FacilityLevelSum": return Base_Manager.Data.UserData.FacilityLevelSum;
+            case "StarSum": return Base_Manager.Data.UserData.StarSum;
             case "Reinforce": return Base_Manager.Data.UserData.ReinforceCountTotal;
         }
         return -1;
