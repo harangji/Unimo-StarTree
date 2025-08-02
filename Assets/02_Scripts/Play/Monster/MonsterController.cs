@@ -129,7 +129,7 @@ public class MonsterController : MonoBehaviour
         enemyDiappear = GetComponentInChildren<MonsterState_Disappear>();
         enemyExplode = GetComponentInChildren<MonsterState_Explode>();
 
-        MonGeneratorManager.AllMonsterListSTATIC.Add(this);
+        // MonGeneratorManager.AllMonsterListSTATIC.Add(this);
         EnemyAppear();
     }
 
@@ -155,7 +155,7 @@ public class MonsterController : MonoBehaviour
 
     public void DestroyEnemy()
     {
-        MonGeneratorManager.AllMonsterListSTATIC.Remove(this);
+        // MonGeneratorManager.AllMonsterListSTATIC.Remove(this);
         OnDestroyed?.Invoke(this);
         Destroy(gameObject);
     }

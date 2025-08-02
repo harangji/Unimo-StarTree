@@ -120,8 +120,10 @@ public class Main_UI : MonoBehaviour
         LevelText.text = "LV." + (Base_Manager.Data.UserData.Level + 1).ToString();
 
         Assets_Text[0].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Yellow);
-        Assets_Text[1].text = string.Format("{0:#,###}", Base_Manager.Data.UserData.Red);
-        Assets_Text[2].text = Base_Manager.Data.UserData.Blue.ToString();
+        Assets_Text[1].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Red);
+        Assets_Text[2].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Blue);
+        // Assets_Text[1].text = string.Format("{0:#,###}", Base_Manager.Data.UserData.Red);
+        // Assets_Text[2].text = Base_Manager.Data.UserData.Blue.ToString();
         
         GetSecondText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Second_Base) + "/Sec";
         NextLevelText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.NextLevel_Base);

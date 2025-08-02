@@ -49,6 +49,7 @@ public class Mission_Base : MonoBehaviour
                 GetCheckAchieve(reward);
             }
         }
+        Main_UI.instance.Text_Check();
     }
     
     private void GetButtonRewardHoney(string style, int count, int reward, Asset_State rewardType, int rewardValue)
@@ -90,11 +91,9 @@ public class Mission_Base : MonoBehaviour
     }
     private void GetButtonCheck(string style, int count, int reward, Asset_State rewardType)
     {
-        Debug.Log("들어옴 ?");
         if (valueCount(style) < count) return;
         // Base_Manager.Analytics.RecordCustomEventWithParameters("Trophy Mission Completed", reward);
         
-        Debug.Log("들어왔음 ?");
         switch (style)
         {
             case "GamePlay": Base_Manager.Data.UserData.GetGamePlay = true; break;
