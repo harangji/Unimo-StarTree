@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlowerController_ST001 : FlowerController
+public class FlowerController_Unique : FlowerController
 {
     [SerializeField] private float maxGrowth = 20f;
     private float currentGrowth;
