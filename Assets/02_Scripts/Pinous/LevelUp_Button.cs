@@ -76,13 +76,46 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     private void InitLevelUpBUtton()
     {
-        if (Base_Manager.Data.UserData.Yellow < Base_Manager.Data.UserData.NextLevel_Base)
+        int nextLevel = Base_Manager.Data.UserData.Level + 2;
+        
+        double expNow = Base_Manager.Data.UserData.EXP;
+        double expAdd = Base_Manager.Data.EXP_GET;
+        double expMax = Base_Manager.Data.EXP_SET;
+
+        bool isLevelUp = (expNow + expAdd >= expMax);
+        bool isGradeUp = (nextLevel == 100 || nextLevel == 300 || nextLevel == 700 || nextLevel == 1000);
+
+        double requiredCost = 0;
+        
+        // 레벨업 + 진화 조건일 경우
+        if (isLevelUp && isGradeUp)
         {
-            Canvas_Holder.instance.Get_Toast("NM");
-            return;
+            requiredCost = RewardCalculator.GetGradeUpCost();
+            if (Base_Manager.Data.UserData.Yellow < requiredCost && Base_Manager.Data.UserData.Red < requiredCost)
+            {
+                Canvas_Holder.instance.Get_Toast("NM");
+                return;
+            }
+            
+            Base_Manager.Data.UserData.Yellow -= requiredCost;
+            Base_Manager.Data.UserData.Red -= requiredCost;
+            Base_Manager.Data.LevelUP();
+            Sound_Manager.instance.Play(Sound.Effect, "effect_00");
         }
-        Base_Manager.Data.UserData.Yellow -= Base_Manager.Data.UserData.NextLevel_Base;
-        Base_Manager.Data.LevelUP();
-        Sound_Manager.instance.Play(Sound.Effect, "effect_00");
+        else
+        {
+            requiredCost = RewardCalculator.GetLevelUpCost();
+            if (Base_Manager.Data.UserData.Yellow < requiredCost)
+            {
+                Canvas_Holder.instance.Get_Toast("NM");
+                return;
+            }
+            
+            Base_Manager.Data.UserData.Yellow -= requiredCost;
+            Base_Manager.Data.LevelUP();
+            Sound_Manager.instance.Play(Sound.Effect, "effect_00");
+        }
+        
+        Debug.Log($"재화 소모 비용 ::: {requiredCost}, 다음 레벨 ::: {nextLevel}");
     }
 }

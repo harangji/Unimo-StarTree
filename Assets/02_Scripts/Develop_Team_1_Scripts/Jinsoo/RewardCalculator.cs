@@ -102,5 +102,40 @@ public static class RewardCalculator
 
         return ofValue;
     }
+    
+    /// <summary>
+    /// Alta 강화 시 소모될 재화 계산
+    /// </summary>
+    /// <returns></returns>
+    public static double GetLevelUpCost()
+    {
+        var level = Base_Manager.Data.UserData.Level + 1;
+        
+        const int baseCost = 250000;
+        const int delta = 25;
+        const int commonDiff = 50;
+        
+        int result = baseCost + delta * (level - 1) + (commonDiff * (level - 1) * (level - 2)) / 2;
 
+        return result;
+    }
+
+    /// <summary>
+    /// Alta 진화 시 소모될 재화 계산
+    /// </summary>
+    /// <returns></returns>
+    public static double GetGradeUpCost()
+    {
+        var level = Base_Manager.Data.UserData.Level + 2;
+        int result = 0;
+
+        switch (level)
+        {
+            case 100 : result = 500000; break;
+            case 300 : result = 1500000; break;
+            case 700 : result = 3500000; break;
+            case 1000 : result = 5000000; break;
+        }
+        return result;
+    }
 }
