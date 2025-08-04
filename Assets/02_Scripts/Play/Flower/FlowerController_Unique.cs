@@ -2,11 +2,29 @@ using UnityEngine;
 
 public class FlowerController_Unique : FlowerController
 {
-    [SerializeField] private float maxGrowth = 20f;
+    private float[] maxGrowths =
+    {
+        18.0f,
+        24.0f,
+        30.0f,
+        36.0f
+    };
+    private float maxGrowth = 18.0f;
     private float currentGrowth;
     private bool isGrowing;
     private float timeAfterActive = 0.08f;
+    private int emGimmickGrade;
 
+    // private readonly IBlessingEffect[] mBlessings = new IBlessingEffect[]
+    // {
+    //     new Blessing_MoveSpeed(),
+    //     new Blessing_Armor(),
+    //     new Blessing_ResourceGain(),
+    //     new Blessing_AuraBoost(),
+    // };
+    
+    private PlayerStatManager mUnimoData;
+    
     // Start is called before the first frame update
     new void Start()
     {
@@ -22,6 +40,18 @@ public class FlowerController_Unique : FlowerController
             if (timeAfterActive <= 0f) { isGrowing = false; visual.SetFlowerActivate(isGrowing); }
         }
     }
+
+    public void InitFlower(FlowerGenerator generator, eGimmickGrade grade)
+    {
+        flowerGenerator = generator;
+        if (flowerGenerator != null) { flowerGenerator.AllFlowers.Add(this);
+            PlaySystemRefStorage.stageManager.DeleteText();
+        }
+        emGimmickGrade = (int)grade;
+        maxGrowth = maxGrowths[(int)emGimmickGrade];
+        
+        StartCoroutine(CoroutineExtensions.DelayedActionCall(ActivateFlower, 0.5f));
+    }
     
     public override void AuraAffectFlower(float affection)
     {
@@ -32,12 +62,12 @@ public class FlowerController_Unique : FlowerController
         (visual as FlowerFXController_ST001).AffectFlowerFX(currentGrowth / maxGrowth);
         if (currentGrowth >= maxGrowth) 
         { 
-            MyDebug.Log("FlowerController_Unique.completeBloom");
-
+            // mBlessings[Random.Range(0, mBlessings.Length)].Apply(mUnimoData, emGimmickGrade);
             completeBloom();
         }
     }
     
+
     protected virtual void DeactivateFlower()
     {
         GetComponent<Collider>().enabled = false;
