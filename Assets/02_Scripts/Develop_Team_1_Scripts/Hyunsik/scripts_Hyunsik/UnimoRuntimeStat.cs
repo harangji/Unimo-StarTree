@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 public class UnimoRuntimeStat
 {
@@ -10,6 +11,7 @@ public class UnimoRuntimeStat
     {
         BaseStat = baseStat;
         BonusStat = new SCharacterStat();
+        
         RecalculateFinalStat();
     }
 

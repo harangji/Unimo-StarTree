@@ -11,6 +11,9 @@ public class UI_EngineUpgradePopup : MonoBehaviour
     [SerializeField] private TextMeshProUGUI levelText;         // ex. "1 / 50"
     [SerializeField] private TextMeshProUGUI descriptionText;  
     [SerializeField] private Button upgradeButton;
+    
+    [SerializeField] private TextMeshProUGUI mYellowCostText;
+    [SerializeField] private TextMeshProUGUI mOrangeCostText;
 
     private int mEngineID;
     private EngineLevelSystem.EEngineStatType mUpgradeStatType;
@@ -66,7 +69,7 @@ public class UI_EngineUpgradePopup : MonoBehaviour
         var engineData = BoomBoomEngineDatabase.GetEngineData(mEngineID);
         bool isUnique = engineData != null && engineData.IsUniqueType;
 
-        bool success = isUnique
+        bool success = isUnique 
             ? EngineLevelSystem.LevelUpUnique(mEngineID)
             : EngineLevelSystem.LevelUpStat(mEngineID, mUpgradeStatType, 1);
 
@@ -87,8 +90,11 @@ public class UI_EngineUpgradePopup : MonoBehaviour
             : EngineLevelSystem.GetStatLevel(mEngineID, mUpgradeStatType);
 
         Debug.Log($"[UI] UpdateAllLevelUI »£√‚µ  ¢∫ CurLevel: {curLevel}");
+        
+        mYellowCostText.text = StringMethod.ToCurrencyString(RewardCalculator.EngineYellowCost(curLevel));
+        mOrangeCostText.text = StringMethod.ToCurrencyString(RewardCalculator.EngineOrangeCost(curLevel));
 
-        levelText.text = $"{curLevel} / {maxLevel}";
+        levelText.text = $"Lv. {curLevel} / {maxLevel}";
         float growthValue = data.GrowthTable[Mathf.Clamp(curLevel, 0, data.GrowthTable.Length - 1)];
         descriptionText.text = string.Format(data.DescriptionFormat, growthValue);
     }

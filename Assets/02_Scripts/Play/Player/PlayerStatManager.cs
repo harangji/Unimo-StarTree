@@ -139,12 +139,10 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         }
 
         int engineID = GameManager.Instance.SelectedEngineID;
-
-        //  기본 스탯 계산
-        var baseStat = UnimoLevelSystem.ApplyLevelBonus(mUnimoData.Stat, mUnimoData.UnimoID);
-
-        //  최종 스탯 생성 (기본)
-        mStat = new UnimoRuntimeStat(baseStat);
+        
+        // 기본 스탯 생상
+        mStat = new UnimoRuntimeStat(mUnimoData.Stat);
+        mStat.RecalculateFinalStat();
 
         //  붕붕엔진 레벨 보정 추가
         var engineBonus = BoomBoomEngineDatabase.GetBonusStatWithLevel(engineID);
@@ -158,10 +156,9 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         playerMover.SetCharacterStat(mStat);
         auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
         PlaySystemRefStorage.scoreManager.ApplyStatFromCharacter(mStat);
+        
+        Debug.Log($"mStat3 ::: {mStat.FinalStat.Health}");
 
-        playerMover.SetCharacterStat(mStat);
-        auraController.InitAura(mStat.FinalStat.AuraRange, mStat.FinalStat.AuraStr);
-        PlaySystemRefStorage.scoreManager.ApplyStatFromCharacter(mStat);
 
 // 디버그 출력
         Debug.Log("========== [UnimoStat 디버그 출력] ==========");
