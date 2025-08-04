@@ -236,7 +236,7 @@ public class EngineEffectTriggerManager : MonoBehaviour
             }
             else if (effect is MagicHatEffect magicHat)
             {
-                magicHat.Init(engineData.EngineID, level);
+                //magicHat.Init(engineData.EngineID, level);
                 magicHat.ExecuteEffect();
                 return;
             }

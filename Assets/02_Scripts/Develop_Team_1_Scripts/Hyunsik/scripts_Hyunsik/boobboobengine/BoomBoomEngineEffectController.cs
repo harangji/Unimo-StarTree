@@ -109,7 +109,7 @@ public class BoomBoomEngineEffectController : MonoBehaviour
                 if (magicHatEffect != null)
                 {
                     int level = EngineLevelSystem.GetUniqueLevel(GameManager.Instance.SelectedEngineID);
-                    magicHatEffect.Init(GameManager.Instance.SelectedEngineID, level); 
+                    //magicHatEffect.Init(GameManager.Instance.SelectedEngineID, level); 
                     magicHatEffect.ExecuteEffect();
                     Debug.Log("[EffectController] 마술모자 버프 발동 (레벨 기반)");
                 }
