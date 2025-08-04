@@ -7,7 +7,7 @@ public class BoundaryChaser : MonoBehaviour
     private MapRSetter_Circular mapRangeSetter;
     private Vector3 moveDir;
 
-    private float growthperSec = 12f;
+    private float growthperSec = 30f;
     private float originalGrowth = 12f;
     private Vector3 originalScale;
 
