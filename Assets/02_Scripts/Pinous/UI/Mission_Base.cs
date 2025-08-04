@@ -34,7 +34,7 @@ public class Mission_Base : MonoBehaviour
         }
         else
         {
-            if (rewardType == Asset_State.Yellow || rewardType == Asset_State.Red || rewardType == Asset_State.Blue)
+            if ((rewardType == Asset_State.Yellow || rewardType == Asset_State.Red || rewardType == Asset_State.Blue) && rewardValue != 0)
             {
                 // 별꿀 보상 업적
                 m_RewardText.text = rewardValue.ToString();

@@ -49,20 +49,29 @@ public class UnimoRuntimeStat
     
     public void RecalculateFinalStat()
     {
+        float Armor = 1f, Health = 1f, YfGain = 1f, OfGain = 1f, Critical = 1f;
+        int level = Base_Manager.Data.UserData.Level + 1;
+
+        if (level >= 0) Armor = 1.05f;
+        if (level >= 100) Health = 1.05f;
+        if (level >= 300) YfGain = 1.05f;
+        if (level >= 700) OfGain = 1.05f;
+        if (level >= 1000) Critical = 1.05f;
+        
         FinalStat = new SCharacterStat
         {
             MoveSpd = BaseStat.MoveSpd * (1 + BonusStat.MoveSpd),
             CharSize = BaseStat.CharSize,
-            Health = BaseStat.Health * (1 + BonusStat.Health),
+            Health = BaseStat.Health * (1 + BonusStat.Health) * Health,
             HealthRegen = BaseStat.HealthRegen + BonusStat.HealthRegen,
             HealingMult = BaseStat.HealingMult * (1 + BonusStat.HealingMult),
-            Armor = BaseStat.Armor * (1 + BonusStat.Armor),
+            Armor = BaseStat.Armor * (1 + BonusStat.Armor) * Armor,
             StunIgnoreChance = BaseStat.StunIgnoreChance + BonusStat.StunIgnoreChance,
             StunResistanceRate = BaseStat.StunResistanceRate + BonusStat.StunResistanceRate,
-            CriticalChance = BaseStat.CriticalChance + BonusStat.CriticalChance,
+            CriticalChance = BaseStat.CriticalChance + BonusStat.CriticalChance * Critical,
             CriticalMult = BaseStat.CriticalMult * (1 + BonusStat.CriticalMult),
-            YFGainMult = BaseStat.YFGainMult * (1 + BonusStat.YFGainMult),
-            OFGainMult = BaseStat.OFGainMult * (1 + BonusStat.OFGainMult),
+            YFGainMult = BaseStat.YFGainMult * (1 + BonusStat.YFGainMult) * YfGain,
+            OFGainMult = BaseStat.OFGainMult * (1 + BonusStat.OFGainMult) * OfGain,
             AuraRange = BaseStat.AuraRange * (1 + BonusStat.AuraRange),
             AuraStr = BaseStat.AuraStr * (1 + BonusStat.AuraStr)
         };
