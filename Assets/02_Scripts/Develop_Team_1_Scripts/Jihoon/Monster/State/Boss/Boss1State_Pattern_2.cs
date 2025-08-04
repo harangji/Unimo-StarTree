@@ -63,18 +63,21 @@ public class Boss1State_Pattern_2 : BossState_Pattern
             if (controller.playerTransform.TryGetComponent<PlayerStatManager>(out var player))
             {
                 var monster = GetComponentInParent<IDamageAble>();
-                var playerIDamageAble = GameObject.FindGameObjectWithTag("Player").GetComponent<IDamageAble>();
-
-                CombatEvent combatEvent = new CombatEvent
+                var playerGo = GameObject.FindGameObjectWithTag("Player");
+                    
+                if (playerGo != null && playerGo.TryGetComponent<IDamageAble>(out var receiver))
                 {
-                    Sender = monster,
-                    Receiver = playerIDamageAble,
-                    Damage = (monster as Monster).skillDamages[1],
-                    HitPosition = controller.transform.position,
-                    Collider = monster.MainCollider,
-                };
+                    CombatEvent combatEvent = new CombatEvent
+                    {
+                        Sender = monster,
+                        Receiver = receiver,
+                        Damage = (monster as Monster).skillDamages[1],
+                        HitPosition = controller.transform.position,
+                        Collider = monster.MainCollider,
+                    };
 
-                CombatSystem.Instance.AddInGameEvent(combatEvent);
+                    CombatSystem.Instance.AddInGameEvent(combatEvent);
+                }
             }
         }
 
