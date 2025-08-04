@@ -99,10 +99,12 @@ public static class BoomBoomEngineDatabase
             return data.GrowthStatCalculator != null
                 ? data.GrowthStatCalculator(level, data.GrowthTable, data.StatBonus)
                 : data.StatBonus;
+            
         }
 
         return data.StatBonus;
     }
+    
 
     // 기존 메서드 생략 (301 ~ 313)
     private static BoomBoomEngineData CreateEngine_BeeTail()
@@ -640,8 +642,13 @@ public static class BoomBoomEngineDatabase
             Rarity = "Legend",
             ModelID = "EQC006_SandCastle",
             SkillID = 323,
+            IsUniqueType = true,
             DescriptionFormat = "20초에 걸쳐서 아우라 크기 {0:P0} 까지 증가, 피격 시 초기화",
-            StatBonus = new SCharacterStat { }
+            StatBonus = new SCharacterStat { },
+            GrowthTable = Enumerable.Range(0, 51)
+                .Select(i => 0.10f + i * ((1.70f - 0.10f) / 50f)) // 10% ~ 170%
+                .ToArray(),
+            TriggerCondition = ETriggerCondition.OnStart,
         };
 
         engineDataList.Add(data); 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class EngineEffectTriggerManager : MonoBehaviour
 {
@@ -7,14 +8,14 @@ public class EngineEffectTriggerManager : MonoBehaviour
     [SerializeField] private OrbitAuraController orbitAura;
     [SerializeField] private BoundaryChaser cloudAura;
     [SerializeField] private BoundaryChaser lightningAura;
-    
+
     private int orangeFlowerCount = 0;
     private int yellowFlowerCount = 0;
     private float inactiveSkillTime = 0f;
     private bool bSkillInactiveTimer = false;
     private float sandcastleTimer = 0f;
-    private const float sandcastleTriggerInterval = 5f; 
-    
+    private const float sandcastleTriggerInterval = 5f;
+
     private void Awake()
     {
         PlaySystemRefStorage.engineEffectTriggerManager = this;
@@ -22,8 +23,7 @@ public class EngineEffectTriggerManager : MonoBehaviour
 
     private void Start()
     {
-        var skillID = BoomBoomEngineDatabase.GetEngineData
-            (GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
+        var skillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
 
         if (skillID == 305 && shieldEffect != null)
         {
@@ -38,6 +38,12 @@ public class EngineEffectTriggerManager : MonoBehaviour
             Debug.Log("[EngineTrigger] 317번(마술모자) 엔진 감지됨 → 비활성화 타이머 시작");
             StartSkillInactiveTimer();
         }
+
+        //if (skillID == 323)
+        //{
+        //    Debug.Log("[EngineTrigger] 323번(모래성) 엔진 감지됨 → 비활성화 타이머 시작");
+        //    StartSkillInactiveTimer();
+        //}
 
         UpdateOrbitAuraState();
         
@@ -57,7 +63,6 @@ public class EngineEffectTriggerManager : MonoBehaviour
         // int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
         if (bSkillInactiveTimer)
         {
-            
             inactiveSkillTime += Time.deltaTime;
 
             if (inactiveSkillTime >= 7f)
@@ -72,24 +77,25 @@ public class EngineEffectTriggerManager : MonoBehaviour
                 bSkillInactiveTimer = false;
                 inactiveSkillTime = 0f;
             }
-            
+
             if (selectedSkillID == 323)
             {
                 sandcastleTimer += Time.deltaTime;
                 if (sandcastleTimer >= sandcastleTriggerInterval)
                 {
                     var sandCastleEffect = PlaySystemRefStorage.playerStatManager.GetComponent<AuraRangeSandCastleEffect>();
-                    if (sandCastleEffect != null)
-                        sandCastleEffect.ExecuteEffect();
+                    //if (sandCastleEffect != null && !sandCastleEffect.IsActive())
+                    //{
+                    //    int level = EngineLevelSystem.GetUniqueLevel(GameManager.Instance.SelectedEngineID);
+                    //    StartCoroutine(WaitForStatThenActivate(PlaySystemRefStorage.playerStatManager, sandCastleEffect, GameManager.Instance.SelectedEngineID, level));
+                    //}
 
                     sandcastleTimer = 0f;
                 }
             }
-            
         }
     }
-    
-    // 추가로, 향후 피격 외 조건에 따라 실드 재생성 트리거 가능
+
     public void TryForceShield()
     {
         if (shieldEffect != null)
@@ -102,7 +108,6 @@ public class EngineEffectTriggerManager : MonoBehaviour
     {
         var engineData = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
 
-        // 318: OrbitAura (예: 개밥그릇)
         if (orbitAura != null)
         {
             bool isActive = engineData != null && engineData.SkillID == 318;
@@ -111,16 +116,13 @@ public class EngineEffectTriggerManager : MonoBehaviour
                 orbitAura.SetTarget(PlaySystemRefStorage.playerStatManager.transform, 4.0f, 0.0f);
         }
 
-        // 319: CloudAura (BoundaryChaser)
         if (cloudAura != null)
         {
             bool isActive = engineData != null && engineData.SkillID == 319;
             cloudAura.gameObject.SetActive(isActive);
         }
-        
     }
-    
-    
+
     public void OnOrangeFlowerCollected()
     {
         orangeFlowerCount++;
@@ -142,7 +144,7 @@ public class EngineEffectTriggerManager : MonoBehaviour
         if (data?.TriggerCondition == ETriggerCondition.OnYellowFlowerCollected)
         {
             int level = EngineLevelSystem.GetUniqueLevel(data.EngineID);
-            int requiredCount = Mathf.RoundToInt(70f - 50f * (data.GrowthTable[level])); // 0레벨: 70, 50레벨: 1
+            int requiredCount = Mathf.RoundToInt(70f - 50f * (data.GrowthTable[level]));
 
             if (yellowFlowerCount >= requiredCount)
             {
@@ -169,38 +171,33 @@ public class EngineEffectTriggerManager : MonoBehaviour
             TryActivateSkill(PlaySystemRefStorage.playerStatManager);
         }
 
-        if (data?.SkillID == 323) // 모래성 특수 처리
+        if (data?.SkillID == 323)
         {
             var sandCastle = PlaySystemRefStorage.playerStatManager.GetComponent<AuraRangeSandCastleEffect>();
             sandCastle?.ResetBuff();
         }
     }
 
-    // 플레이어 사망 시 TryReviveOnDeath로 위임 호출
     public bool TryReviveOnDeath(PlayerStatManager player)
     {
         int skillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
-    
+
         if (skillID == 313 && player != null)
         {
             var reviveEffect = player.GetComponent<DogHouseReviveEffect>();
             if (reviveEffect != null && !reviveEffect.IsReviveUsed)
-                return reviveEffect.TryRevive(player); 
+                return reviveEffect.TryRevive(player);
         }
         return false;
     }
-    
-    // 필요시 ExecuteEffect 리셋도 아래처럼!
+
     public void ResetReviveEffect(PlayerStatManager player)
     {
         var reviveEffect = player.GetComponent<DogHouseReviveEffect>();
         if (reviveEffect != null)
             reviveEffect.ExecuteEffect();
     }
-    
-    /// <summary>
-    /// 현재 선택된 엔진 스킬 발동
-    /// </summary>
+
     private void TryActivateSkill(PlayerStatManager target)
     {
         int selectedEngineID = GameManager.Instance.SelectedEngineID;
@@ -211,8 +208,12 @@ public class EngineEffectTriggerManager : MonoBehaviour
             var effect = target.GetComponent<IBoomBoomEngineEffect>();
             int level = EngineLevelSystem.GetUniqueLevel(engineData.EngineID);
 
-            // 모든 Effect에 Init → ExecuteEffect → return 구조 통일
-            if (effect is AuraRangeBoostEffect auraBoost)
+            if (effect is AuraRangeSandCastleEffect sandCastle)
+            {
+                StartCoroutine(WaitForStatThenActivate(target, sandCastle, engineData.EngineID, level));
+                return;
+            }
+            else if (effect is AuraRangeBoostEffect auraBoost)
             {
                 auraBoost.Init(engineData.EngineID, level);
                 auraBoost.ExecuteEffect();
@@ -238,12 +239,20 @@ public class EngineEffectTriggerManager : MonoBehaviour
             }
             else if (effect is MagicHatEffect magicHat)
             {
-                //magicHat.Init(engineData.EngineID, level);
+                magicHat.Init(engineData.EngineID, level);
                 magicHat.ExecuteEffect();
                 return;
             }
-            
+
             effectController.ActivateEffect(engineData.SkillID, target);
         }
+    }
+
+    private IEnumerator WaitForStatThenActivate(PlayerStatManager target, AuraRangeSandCastleEffect sandCastle, int engineID, int level)
+    {
+        yield return new WaitUntil(() => target != null && target.GetStat() != null);
+
+        //sandCastle.Init(engineID, level);
+        sandCastle.ExecuteEffect();
     }
 }
