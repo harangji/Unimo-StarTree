@@ -178,11 +178,12 @@ public class EngineEffectTriggerManager : MonoBehaviour
     public bool TryReviveOnDeath(PlayerStatManager player)
     {
         int skillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
+    
         if (skillID == 313 && player != null)
         {
             var reviveEffect = player.GetComponent<DogHouseReviveEffect>();
             if (reviveEffect != null && !reviveEffect.IsReviveUsed)
-                return reviveEffect.TryRevive(player);
+                return reviveEffect.TryRevive(player); 
         }
         return false;
     }
@@ -208,28 +209,35 @@ public class EngineEffectTriggerManager : MonoBehaviour
             var effect = target.GetComponent<IBoomBoomEngineEffect>();
             int level = EngineLevelSystem.GetUniqueLevel(engineData.EngineID);
 
-            //  AuraRangeBoostEffect는 Init → ExecuteEffect 순서로만 처리
+            // 모든 Effect에 Init → ExecuteEffect → return 구조 통일
             if (effect is AuraRangeBoostEffect auraBoost)
             {
-                auraBoost.Init(engineData.EngineID, level);  // Init 먼저
-                auraBoost.ExecuteEffect();                   // 즉시 효과 적용 (SetStat 포함)
-                return; // 중복 호출 방지
+                auraBoost.Init(engineData.EngineID, level);
+                auraBoost.ExecuteEffect();
+                return;
             }
-
-            //  다른 Effect는 기존처럼 처리
-            if (effect is BeeTailInvincibilityEffect beeTail)
+            else if (effect is BeeTailInvincibilityEffect beeTail)
             {
                 beeTail.Init(engineData.EngineID, level);
+                beeTail.ExecuteEffect();
+                return;
             }
             else if (effect is ShieldEffect shield)
             {
-                shield.Init(engineData.EngineID, level); // 쿨다운 초기화
+                shield.Init(engineData.EngineID, level);
+                shield.ExecuteEffect();
+                return;
             }
-            
-            if (effect is TimedInvincibilityEffect timedInvincibility)
+            else if (effect is TimedInvincibilityEffect timedInvincibility)
             {
-                timedInvincibility.Init(engineData.EngineID, level); //
+                timedInvincibility.Init(engineData.EngineID, level);
                 timedInvincibility.ExecuteEffect();
+                return;
+            }
+            else if (effect is MagicHatEffect magicHat)
+            {
+                //magicHat.Init(engineData.EngineID, level);
+                magicHat.ExecuteEffect();
                 return;
             }
             

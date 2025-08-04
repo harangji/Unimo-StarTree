@@ -274,6 +274,7 @@ public static class BoomBoomEngineDatabase
             Rarity = "Unique",
             ModelID = "EQC005_CleanBucket",
             SkillID = 308,
+            DescriptionFormat = "제작 못함",
             StatBonus = new SCharacterStat { }
         };
 
@@ -292,6 +293,7 @@ public static class BoomBoomEngineDatabase
             Rarity = "Unique",
             ModelID = "EQC005_Scootus",
             SkillID = 309,
+            DescriptionFormat = "제작 못함",
             StatBonus = new SCharacterStat { }
         };
 
@@ -335,6 +337,7 @@ public static class BoomBoomEngineDatabase
             Rarity = "Legend",
             ModelID = "EQC005_MonoPlane",
             SkillID = 311,
+            DescriptionFormat = "제작 못함",
             StatBonus = new SCharacterStat { }
         };
 
@@ -353,6 +356,7 @@ public static class BoomBoomEngineDatabase
             Rarity = "Legend",
             ModelID = "EQC005_EmperorPenguin",
             SkillID = 312,
+            DescriptionFormat = "제작 못함",
             StatBonus = new SCharacterStat { }
         };
 
@@ -372,7 +376,13 @@ public static class BoomBoomEngineDatabase
             ModelID = "EQC005_DogHouse",
             SkillID = 313,
             DescriptionFormat = "체력이 전부 소모됐을 경우, 최대체력 {0:P0}가지고 부활",
-            StatBonus = new SCharacterStat { }
+            StatBonus = new SCharacterStat { },
+            IsUniqueType = true,
+            GrowthTable = Enumerable.Range(0, 51)
+                .Select(i => 0.05f + i * ((0.45f - 0.05f) / 50f))
+                .ToArray(),
+            GrowthStatCalculator = (level, table, stat) => stat,
+            TriggerCondition = ETriggerCondition.OnDeath,
         };
 
         engineDataList.Add(data); 
@@ -482,8 +492,13 @@ public static class BoomBoomEngineDatabase
             ModelID = "EQC009_MagicHat",
             SkillID = 317,
             DescriptionFormat = "다음 중 하나의 효과를 7초마다 얻음." +
-                                "이동속도 {0:P0} 증가 , 아우라 크기 {1:P0} 증가, 체력 재생 {0:P0} 증가",
-            StatBonus = new SCharacterStat { }
+                                "이동속도, 아우라 크기, 체력 재생 중 하나 {0:P0} 상승",
+            IsUniqueType = true, // 고유 효과로 취급 시 필요
+            GrowthTable = Enumerable.Range(0, 51)
+                .Select(i => 0.10f + i * ((0.30f - 0.10f) / 50f)) // 0레벨 10% → 50레벨 30%
+                .ToArray(),
+            StatBonus = new SCharacterStat { },
+            TriggerCondition = ETriggerCondition.OnStart //  추가: 시작 시 발동 조건
         };
 
         engineDataList.Add(data); 
@@ -519,6 +534,7 @@ public static class BoomBoomEngineDatabase
             Rarity = "Unique",
             ModelID = "EQC008_ElfCup",
             SkillID = 320,
+            DescriptionFormat = "제작 못함",
             StatBonus = new SCharacterStat { }
         };
         //제작 못함

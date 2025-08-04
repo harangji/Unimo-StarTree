@@ -7,7 +7,7 @@ public class DogHouseReviveEffect : MonoBehaviour, IBoomBoomEngineEffect
     private bool bReviveUsed = false;
     public bool IsReviveUsed => bReviveUsed; // 읽기전용
     private PlayerStatManager mStatManager;
-
+    
     void Start() {
         var arr = GetComponents<DogHouseReviveEffect>();
         Debug.Log($"[DogHouseReviveEffect] Player에 붙은 개수: {arr.Length}");
@@ -23,6 +23,23 @@ public class DogHouseReviveEffect : MonoBehaviour, IBoomBoomEngineEffect
         }
     }
 
+    public void Init(int engineID, int level)
+    {
+        var data = BoomBoomEngineDatabase.GetEngineData(engineID);
+        if (data?.GrowthTable != null && data.GrowthTable.Length > level)
+        {
+            revivePercent = data.GrowthTable[level];
+            Debug.Log($"[도베르만] Init 완료 ▶ RevivePercent = {revivePercent:P} (레벨 {level})");
+        }
+        else
+        {
+            revivePercent = 0.05f;
+            Debug.LogWarning("[도베르만] GrowthTable 정보 없음 ▶ 기본값 5% 사용");
+        }
+
+        bReviveUsed = false; // 초기화 시 항상 리셋
+    }
+    
     public void ExecuteEffect()
     {
         // 스테이지 시작 등에서 호출해 리셋
