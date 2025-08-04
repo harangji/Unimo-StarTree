@@ -46,8 +46,10 @@ public class EngineEffectTriggerManager : MonoBehaviour
         //}
 
         UpdateOrbitAuraState();
-
-        var data = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
+        
+        BoomBoomEngineData data = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
+        selectedSkillID = (data != null) ? data.SkillID : -1;
+        
         if (data?.TriggerCondition == ETriggerCondition.OnStart)
         {
             Debug.Log("[EngineTrigger] TriggerCondition == OnStart °¨ÁöµÊ ¡æ TryActivateSkill È£Ãâ");
@@ -55,9 +57,10 @@ public class EngineEffectTriggerManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    private int selectedSkillID;
+    void Update()
     {
-        int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
+        // int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
         if (bSkillInactiveTimer)
         {
             inactiveSkillTime += Time.deltaTime;

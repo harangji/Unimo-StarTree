@@ -72,6 +72,15 @@ public static class EngineLevelSystem
     {
         int cur = GetUniqueLevel(engineID);
         if (cur >= MaxLevel) return false;
+        
+        var yellowCost = RewardCalculator.EngineYellowCost(cur);
+        var redCost = RewardCalculator.EngineOrangeCost(cur);
+
+        if (Base_Manager.Data.UserData.Yellow < yellowCost || Base_Manager.Data.UserData.Red < redCost) 
+            return false;
+
+        Base_Manager.Data.UserData.Yellow -= yellowCost;
+        Base_Manager.Data.UserData.Red -= redCost;
 
         int newLevel = Mathf.Min(cur + amount, MaxLevel);
         SetUniqueLevel(engineID, newLevel);

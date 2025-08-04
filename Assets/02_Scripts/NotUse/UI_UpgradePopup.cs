@@ -24,6 +24,10 @@ public class UI_UpgradePopup : MonoBehaviour
     [Header("업그레이드 버튼")]
     [SerializeField] private Button[] upgradeButtons;  // 인덱스: 스탯 순서 동일하게 연결
 
+    [Header("상세 스탯")] 
+    [SerializeField] private GameObject statDetailPanel;
+    [SerializeField] private TextMeshProUGUI[] statDetailText;
+
     private int currentUnitID;
 
     private void Awake()
@@ -46,6 +50,7 @@ public class UI_UpgradePopup : MonoBehaviour
             unitNameText.text = data.Name;
             SetUnitSprite(unitID);
             UpdateAllLevelUI();
+            UpdateStatDetailUI();
         }
         else
         {
@@ -58,6 +63,44 @@ public class UI_UpgradePopup : MonoBehaviour
         UnimoLevelSystem.ResetUnitStats(currentUnitID);  // UnimoLevelSystem에 정의됨
         UpdateAllLevelUI();
         Debug.Log($"[{currentUnitID}] 스탯 전부 리셋됨");
+    }
+    
+    private void UpdateStatDetailUI()
+    {
+        UnimoData data = UnimoDatabase.GetUnimoData(currentUnitID);
+        if (data == null)
+            return;
+
+        var unimoStat = new UnimoRuntimeStat(data.Stat);
+        unimoStat.RecalculateFinalStat();
+
+        var stat = unimoStat.FinalStat;
+        
+        statDetailText[0].text  = $"{stat.Health:N0}";
+        statDetailText[1].text  = $"+{stat.Armor:F2}";
+        statDetailText[2].text  = $"{stat.MoveSpd:F2}";
+        statDetailText[3].text = $"{stat.AuraRange:F2}m";
+        statDetailText[4].text = $"{stat.AuraStr:F2}";
+        statDetailText[5].text  = $"{stat.CriticalChance * 100f:F0}%";
+        statDetailText[6].text  = $"x{stat.CriticalMult:F2}";
+        statDetailText[7].text  = $"x{stat.YFGainMult:F2}";
+        statDetailText[8].text = $"x{stat.OFGainMult:F2}";
+        statDetailText[9].text  = $"+{stat.HealthRegen:F1}";
+        statDetailText[10].text  = $"x{stat.HealingMult:F2}";
+        statDetailText[11].text  = $"{stat.StunIgnoreChance * 100f:F0}%";
+        statDetailText[12].text  = $"{stat.StunResistanceRate * 100f:F0}%";
+    }
+
+    public void DetailStat()
+    {
+        if (statDetailPanel.activeSelf)
+        {
+            statDetailPanel.SetActive(false);
+        }
+        else
+        {
+            statDetailPanel.SetActive(true);
+        }
     }
     
     private void SetUnitSprite(int unitID)
@@ -97,6 +140,7 @@ public class UI_UpgradePopup : MonoBehaviour
         {
             Debug.Log($"[{currentUnitID}] {stat} {increaseAmount} 레벨 상승 완료!");
             UpdateAllLevelUI();
+            UpdateStatDetailUI();
             // 여기다가 강화 버튼 눌렀다는 데이터 추가하면 될 듯
             Base_Manager.Data.UserData.Touch++;
             Base_Manager.Data.UserData.ReinforceCountTotal++;

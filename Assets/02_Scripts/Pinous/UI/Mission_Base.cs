@@ -34,7 +34,7 @@ public class Mission_Base : MonoBehaviour
         }
         else
         {
-            if (rewardType == Asset_State.Yellow || rewardType == Asset_State.Red || rewardType == Asset_State.Blue)
+            if ((rewardType == Asset_State.Yellow || rewardType == Asset_State.Red || rewardType == Asset_State.Blue) && rewardValue != 0)
             {
                 // 별꿀 보상 업적
                 m_RewardText.text = rewardValue.ToString();
@@ -116,7 +116,7 @@ public class Mission_Base : MonoBehaviour
 
     private void GetCheckAchieve(int value)
     {
-        Debug.Log($"{value} ::: 몇 번째에서 끊기는거야 도대체 ?");
+        // Debug.Log($"{value} ::: 몇 번째에서 끊기는거야 도대체 ?");
         var Base = Base_Manager.Data.UserData.GetArchivements[value];
         button.gameObject.SetActive(Base ? false : true);
         InProgress.SetActive(Base ? true : false);

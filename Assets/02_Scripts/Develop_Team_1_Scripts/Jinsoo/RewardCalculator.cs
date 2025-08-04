@@ -138,4 +138,22 @@ public static class RewardCalculator
         }
         return result;
     }
+
+    public static double EngineYellowCost(int level)
+    {
+        int result = 0;
+        
+        result = 90000 + (230000 * level);
+        
+        return result;
+    }
+
+    public static double EngineOrangeCost(int level)
+    {
+        int result = 0;
+
+        result = 1500 + (1530 * level);
+        
+        return result;
+    }
 }
