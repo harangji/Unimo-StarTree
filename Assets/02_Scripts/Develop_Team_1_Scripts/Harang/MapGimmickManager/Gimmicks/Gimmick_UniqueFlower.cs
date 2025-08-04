@@ -17,7 +17,7 @@ public class Gimmick_UniqueFlower : Gimmick
     
     private void Start()
     {
-        mUniqueController.InitFlower(mFlowerGenerator);
+        mUniqueController.InitFlower(mFlowerGenerator, emGimmickGrade);
     }
 
     private void Update()
