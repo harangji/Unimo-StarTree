@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class UI_UpgradePopup : MonoBehaviour
@@ -13,8 +14,12 @@ public class UI_UpgradePopup : MonoBehaviour
     [Header("스탯 레벨 텍스트")]
     [SerializeField] private TextMeshProUGUI[] statLevelTexts;  // 인덱스: 스탯 순서 동일하게 연결
     
+    
     [Header("강화 요구 재화 텍스트")]
-    [SerializeField] private TextMeshProUGUI[] statCostTexts;
+    [SerializeField] private TextMeshProUGUI[] statYellowCostTexts;
+    [SerializeField] private TextMeshProUGUI[] statOrangeCostTexts;
+    [SerializeField] private GameObject[] maxLevelTexts;
+    [SerializeField] private GameObject[] maxLevelRemoves;
 
     [Header("업그레이드 버튼")]
     [SerializeField] private Button[] upgradeButtons;  // 인덱스: 스탯 순서 동일하게 연결
@@ -113,18 +118,22 @@ public class UI_UpgradePopup : MonoBehaviour
     
     private void UpdateAllCostUI()
     {
-        for (int i = 0; i < statCostTexts.Length; i++)
+        for (int i = 0; i < statYellowCostTexts.Length; i++)
         {
             int currentLevel = UnimoLevelSystem.GetLevel(currentUnitID, (UnimoLevelSystem.StatType)i);
             int nextLevel = currentLevel + 1;
 
             if (UnimoLevelSystem.TryGetCost((UnimoLevelSystem.StatType)i, nextLevel, out var cost))
             {
-                statCostTexts[i].text = $"YF: {cost.RequireYF}\nOF: {cost.RequireOF}";
+                maxLevelRemoves[i].SetActive(true);
+                maxLevelTexts[i].SetActive(false);
+                statYellowCostTexts[i].text = StringMethod.ToCurrencyString(cost.RequireYF);
+                statOrangeCostTexts[i].text = StringMethod.ToCurrencyString(cost.RequireOF);
             }
             else
             {
-                statCostTexts[i].text = "MAX";
+                maxLevelRemoves[i].SetActive(false);
+                maxLevelTexts[i].SetActive(true);
             }
         }
     }

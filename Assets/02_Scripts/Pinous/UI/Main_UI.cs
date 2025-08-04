@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -89,13 +90,48 @@ public class Main_UI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_Slider_Text;
     [SerializeField] private TextMeshProUGUI LevelText;
     [SerializeField] private TextMeshProUGUI[] Assets_Text;
-    [SerializeField] private TextMeshProUGUI GetSecondText; //다음 레벨까지 요구 EXP 텍스트
+    [SerializeField] private TextMeshProUGUI GetSecondText;
     [SerializeField] private TextMeshProUGUI NextLevelText;
     [SerializeField] private TextMeshProUGUI NameText;
     [SerializeField] private GameObject[] objs;
     int value;
+    
+    [SerializeField] private GameObject levelUpCostGroup;  
+    [SerializeField] private GameObject gradeUpCostGroup;
+    [SerializeField] private TextMeshProUGUI gradeUpYfCostText;
+    [SerializeField] private TextMeshProUGUI gradeUpOfCostText;
+    [SerializeField] private Image gradeUpOfCostImg;
+    
     public void Text_Check()
     {
+        double expNow = Base_Manager.Data.UserData.EXP;
+        double expAdd = Base_Manager.Data.EXP_GET;
+        double expMax = Base_Manager.Data.EXP_SET;
+        int nextLevel = Base_Manager.Data.UserData.Level + 2;
+
+        bool isLevelUp = (expNow + expAdd >= expMax);
+        bool isGradeUp = (nextLevel == 100 || nextLevel == 300 || nextLevel == 700 || nextLevel == 1000);
+
+        if (isLevelUp && isGradeUp)
+        {
+            double gradeCost = RewardCalculator.GetGradeUpCost();
+
+            levelUpCostGroup.SetActive(false);
+            gradeUpCostGroup.SetActive(true);
+
+            gradeUpYfCostText.text = StringMethod.ToCurrencyString(gradeCost);
+            gradeUpOfCostText.text = StringMethod.ToCurrencyString(gradeCost);
+        }
+        else
+        {
+            double yellowCost = RewardCalculator.GetLevelUpCost();
+
+            levelUpCostGroup.SetActive(true);
+            gradeUpCostGroup.SetActive(false);
+
+            NextLevelText.text = StringMethod.ToCurrencyString(yellowCost);
+        }
+        
         bool NoneDefault = false;
         for (int i = 0; i < 5; i++) objs[i].SetActive(false);
 
@@ -125,8 +161,10 @@ public class Main_UI : MonoBehaviour
         // Assets_Text[1].text = string.Format("{0:#,###}", Base_Manager.Data.UserData.Red);
         // Assets_Text[2].text = Base_Manager.Data.UserData.Blue.ToString();
         
-        GetSecondText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Second_Base) + "/Sec";
-        NextLevelText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.NextLevel_Base);
+        GetSecondText.text = StringMethod.ToCurrencyString(RewardCalculator.GetYfByAltaLevel()) + "/Sec"
+            +"\n" + StringMethod.ToCurrencyString(RewardCalculator.GetOfByAltaLevel()) + "/Sec";
+        // GetSecondText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Second_Base) + "/Sec";
+        // NextLevelText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.NextLevel_Base);
 
         NameText.text = Base_Manager.Data.UserData.UserName;
         OnActionEvent?.Invoke();
@@ -140,5 +178,15 @@ public class Main_UI : MonoBehaviour
         NextLevelText.color = Base_Manager.Data.UserData.Yellow >= Base_Manager.Data.UserData.NextLevel_Base ? colors[0] : colors[1];
         NextLevelImage.color = Base_Manager.Data.UserData.Yellow >= Base_Manager.Data.UserData.NextLevel_Base ?
             new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.5f);
+        
+        if (Base_Manager.Data.UserData.Yellow < RewardCalculator.GetGradeUpCost() ||
+            Base_Manager.Data.UserData.Red < RewardCalculator.GetGradeUpCost())
+        {
+            gradeUpOfCostImg.color = new Color(0.6f, 0.6f, 0.6f, 0);
+        }
+        else
+        {
+            gradeUpOfCostImg.color = new Color(0.6f, 1, 0.3f, 0.8f);
+        }
     }
 }

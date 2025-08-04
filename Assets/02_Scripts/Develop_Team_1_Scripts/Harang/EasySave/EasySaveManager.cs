@@ -103,6 +103,7 @@ public class User_Data
     
     // 스테이지 관련 (담당 : 김진수)
     public int BestStage = 0; //최고 클리어 스테이지
+    public int GamePlaySum = 0; // 플레이어 스테이지 진행 횟수
     public Dictionary<int, int> BonusStageStars = new Dictionary<int, int>();
     // 전체 스테이지 보상 획득 여부 저장
     public HashSet<int> RewardedStages = new HashSet<int>();
@@ -124,7 +125,9 @@ public class User_Data
     
     // 업적 확인을 위한 int 변수들입니다.
     public int ReinforceCountTotal; // 강화 횟수
-    public int FacilityLevelSum; // 시설 레벨
+    public int StarSum; // 별 합 갯수
+    // 시설 레벨 (사용하지 않아 주석 처리)
+    // public int FacilityLevelSum;
 
     //광고제거 상품 구매 여부
     public bool ADSBuy = false; 
@@ -149,7 +152,8 @@ public class User_Data
     public bool[] GetArchivements =
     {
         false, false, false, false, false, false, false, false, false,
-        false, false, false, false, false, false, false, false, false, false, false, false, false, false
+        false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+        false, false, false, false, false, false, false
     };
     // public bool[] GetArchivements = { false, false, false, false, false, false, false, false, false };
 

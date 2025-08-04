@@ -26,6 +26,7 @@ public static class StageLoader
         }
         
         Base_Manager.Data.UserData.GamePlay++;
+        Base_Manager.Data.UserData.GamePlaySum++;
         Pinous_Flower_Holder.FlowerHolder.Clear();
     }
     

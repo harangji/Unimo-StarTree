@@ -108,8 +108,6 @@ public class Gimmick_RedZone : Gimmick
 
     public override async void ActivateGimmick()
     {
-        MyDebug.Log("Activate Gimmick");
-        
         Vector2 randomPos = Random.insideUnitCircle * ( PlaySystemRefStorage.mapSetter.MaxRange - 2 );
         gameObject.transform.position = new Vector3(randomPos.x, 0, randomPos.y);
         
@@ -120,8 +118,6 @@ public class Gimmick_RedZone : Gimmick
 
     public override async void DeactivateGimmick()
     {
-        MyDebug.Log("Deactivate Gimmick");
-        
         mbReadyExecute = false;
         await FadeAll(false);
         fireParticle.SetActive(false);

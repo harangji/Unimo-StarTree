@@ -84,17 +84,17 @@ public class FlowerFXController_Lobby : MonoBehaviour
         harvestVFX.GetComponent<FlowerHarvestFX_Lobby>().SetUnimoTransform(unimoPos);
 
         // ·Îºñ¿¡¼­ ²ÉÀ» ÄºÀ» ? È¹µæÇÏ´Â ÀçÈ­µµ ¸·¾Æ³ù½À´Ï´Ù.
-        // double reward = Base_Manager.Data.UserData.Second_Base;
-        // if (Base_Manager.Data.UserData.BuffFloating[0] > 0.0f)
-        // {
-        //     reward *= 1.3f;
-        // }
-        // Base_Manager.Data.AssetPlus(Asset_State.Yellow, reward);
-        // Land.instance.FlowerValue--;
-        //
-        // var go = Instantiate(Resources.Load<Get_TEXT>("TextMESH"));
-        // go.gameObject.SetActive(false); //±ôºýÀÌ´Â Çö»ó ¼öÁ¤
-        // go.Init(transform.position + new Vector3(0, 3.0f, 0), reward);
+         double reward = Base_Manager.Data.UserData.Second_Base;
+         if (Base_Manager.Data.UserData.BuffFloating[0] > 0.0f)
+         {
+             reward *= 1.3f;
+         }
+         Base_Manager.Data.AssetPlus(Asset_State.Yellow, reward);
+         Land.instance.FlowerValue--;
+        
+         var go = Instantiate(Resources.Load<Get_TEXT>("TextMESH"));
+         go.gameObject.SetActive(false); //±ôºýÀÌ´Â Çö»ó ¼öÁ¤
+         go.Init(transform.position + new Vector3(0, 3.0f, 0), reward);
 
         yield break;
     }

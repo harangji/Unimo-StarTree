@@ -6,6 +6,15 @@ using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 public class UI_Alta : UI_Base
 {
+    private static readonly string[] sBuffTexts = new string[]
+    {
+        "방어력\n+ 5%",
+        "체력\n+ 5%",
+        "노랑 별꿀\n획득량 증가\n+ 5%",
+        "주황 별꿀\n획득량 증가\n+ 5%",
+        "크리티컬 확률\n+ 5%"
+    };
+    
     [SerializeField] private Slider m_Slider;
     [SerializeField] private TextMeshProUGUI m_Slider_Text;
     [SerializeField] private TextMeshProUGUI LevelText;
@@ -13,6 +22,16 @@ public class UI_Alta : UI_Base
     [SerializeField] private TextMeshProUGUI NextLevelText;
     [SerializeField] private GameObject[] objs;
     [SerializeField] private TextMeshProUGUI SecText;
+    
+    [SerializeField] private GameObject levelGroup;
+    [SerializeField] private GameObject gradeGroup;
+    [SerializeField] private Image gradeImg;
+    [SerializeField] private TextMeshProUGUI gradeYfText;
+    [SerializeField] private TextMeshProUGUI gradeOfText;
+
+    [SerializeField] private Image[] levelBuffImgs;
+    [SerializeField] private TextMeshProUGUI[] levelBuffTexts;
+    
     public Color[] colors;
     int value;
     public GameObject InformationPanel;
@@ -44,20 +63,93 @@ public class UI_Alta : UI_Base
     }
     public void Text_Check()
     {
+        double expNow = Base_Manager.Data.UserData.EXP;
+        double expAdd = Base_Manager.Data.EXP_GET;
+        double expMax = Base_Manager.Data.EXP_SET;
+        int nextLevel = Base_Manager.Data.UserData.Level + 2;
+
+        bool isLevelUp = (expNow + expAdd >= expMax);
+        bool isGradeUp = (nextLevel == 100 || nextLevel == 300 || nextLevel == 700 || nextLevel == 1000);
+
+        if (isLevelUp && isGradeUp)
+        {
+            double gradeCost = RewardCalculator.GetGradeUpCost();
+
+            levelGroup.SetActive(false);
+            gradeGroup.SetActive(true);
+
+            gradeYfText.text = StringMethod.ToCurrencyString(gradeCost);
+            gradeOfText.text = StringMethod.ToCurrencyString(gradeCost);
+        }
+        else
+        {
+            double yellowCost = RewardCalculator.GetLevelUpCost();
+
+            levelGroup.SetActive(true);
+            gradeGroup.SetActive(false);
+
+            NextLevelText.text = StringMethod.ToCurrencyString(yellowCost);
+        }
+        
         m_Slider.value = Base_Manager.Data.EXP_Percentage();
         m_Slider_Text.text = string.Format("{0:0.00}", Base_Manager.Data.EXP_Percentage() * 100.0f) + "%";
         LevelText.text = "LV." + (Base_Manager.Data.UserData.Level + 1).ToString();
-        NextLevelText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.NextLevel_Base);
-        SecText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Second_Base) + "/Sec";
+        NextLevelText.text = StringMethod.ToCurrencyString(RewardCalculator.GetLevelUpCost());
+        // NextLevelText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.NextLevel_Base);
+        SecText.text = StringMethod.ToCurrencyString(RewardCalculator.GetYfByAltaLevel()) + "/Sec"
+            +"\n" + StringMethod.ToCurrencyString(RewardCalculator.GetOfByAltaLevel()) + "/Sec";
+        
+        
+        LevelBuffColorCheck();
+        
         TextColorCheck();
+    }
+
+    /// <summary>
+    /// TODO:: 우선적으로 만든 함수인데 이렇게 계속 호출하는 방식보단 레벨 변화가 감지될 때에만 한 번 실행하는게 좋아보이기는 함...
+    /// </summary>
+    private void LevelBuffColorCheck()
+    {
+        var level = Base_Manager.Data.UserData.Level + 1;
+        int activeCount = 0;
+
+        if (level < 100) activeCount = 1;
+        else if (level < 300) activeCount = 2;
+        else if (level < 700) activeCount = 3;
+        else if (level < 1000) activeCount = 4;
+        else activeCount = 5;
+
+        for (int i = 0; i < levelBuffImgs.Length; i++)
+        {
+            levelBuffImgs[i].color = (i < activeCount) ? new Color(1, 1, 1, 1) : new Color(0, 0, 0, 1);
+        }
+
+        for (int i = 0; i < levelBuffTexts.Length; i++)
+        {
+            if (i < activeCount)
+                levelBuffTexts[i].text = sBuffTexts[i];
+            else
+                levelBuffTexts[i].text = "???";
+        }
     }
 
     [SerializeField] private Image LevelAssetImage;
     public void TextColorCheck()
     {
-        NextLevelText.color = Base_Manager.Data.UserData.Yellow >= Base_Manager.Data.UserData.NextLevel_Base ? colors[0] : colors[1];
-        LevelAssetImage.color = Base_Manager.Data.UserData.Yellow >= Base_Manager.Data.UserData.NextLevel_Base ?
+        // NextLevelText.color = Base_Manager.Data.UserData.Yellow >= Base_Manager.Data.UserData.NextLevel_Base ? colors[0] : colors[1];
+        NextLevelText.color = Base_Manager.Data.UserData.Yellow >= RewardCalculator.GetLevelUpCost() ? colors[0] : colors[1];
+        LevelAssetImage.color = Base_Manager.Data.UserData.Yellow >= RewardCalculator.GetLevelUpCost() ?
             new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.5f);
+        
+        if (Base_Manager.Data.UserData.Yellow < RewardCalculator.GetGradeUpCost() ||
+            Base_Manager.Data.UserData.Red < RewardCalculator.GetGradeUpCost())
+        {
+            gradeImg.color = new Color(0.6f, 0.6f, 0.6f, 0);
+        }
+        else
+        {
+            gradeImg.color = new Color(0.6f, 1, 0.3f, 0.8f);
+        }
     }
     public override void DisableOBJ()
     {

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.UI;
@@ -27,16 +28,20 @@ public class UI_Shop : UI_Base
     {
         CheckShop();
         texts[0].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Yellow);
-        texts[1].text = string.Format("{0:#,###}", Base_Manager.Data.UserData.Red);
-        texts[2].text = Base_Manager.Data.UserData.Blue.ToString();
+        texts[1].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Red);
+            // string.Format("{0:#,###}", Base_Manager.Data.UserData.Red);
+        texts[2].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Blue);
+            // Base_Manager.Data.UserData.Blue.ToString();
         return base.Init();
     }
 
     public override void Update()
     {
         texts[0].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Yellow);
-        texts[1].text = string.Format("{0:#,###}", Base_Manager.Data.UserData.Red);
-        texts[2].text = Base_Manager.Data.UserData.Blue.ToString();
+        texts[1].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Red);
+        // string.Format("{0:#,###}", Base_Manager.Data.UserData.Red);
+        texts[2].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Blue);
+        // Base_Manager.Data.UserData.Blue.ToString();
         return;
         base.Update();
     }
@@ -125,53 +130,60 @@ public class UI_Shop : UI_Base
 
         // 해당 캐릭터 데이터를 이미 보유하고 있다면 되돌아가는 return 문으로 추정.
         if (Base_Manager.Data.UserData.HasCharacterData[value]) return;
-        // 가지고 있는 파랑재화가 300보다 낮으면
-        if (Base_Manager.Data.UserData.Blue < 300)
+        switch (value)
         {
-            // 재화 부족 문구 뜨면서 되돌아가기.
-            Canvas_Holder.instance.Get_Toast("NM");
+            case 1 :
+                // 가지고 있는 파랑재화가 1500보다 낮으면
+                if (Base_Manager.Data.UserData.Blue < 1500)
+                {
+                    // 재화 부족 문구 뜨면서 되돌아가기.
+                    Canvas_Holder.instance.Get_Toast("NM");
 
-            return;
+                    return;
+                }
+                GetPurchase(true, Asset_State.Blue, 1500, () =>
+                {
+                    Base_Manager.Data.UserData.Blue -= 1500;
+                    Canvas_Holder.instance.NoneClose = true;
+                    Canvas_Holder.instance.GetUI("##Reward");
+                    Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
+                    Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Reward>().GetRewardInit(RewardState.Character, CharCostumer.Charcater, 0, value, 1);
+                    CheckShop();
+                });
+                break;
+            case 4 :
+                if (Base_Manager.Data.UserData.Red < 5000000)
+                {
+                    Canvas_Holder.instance.Get_Toast("NM");
+
+                    return;
+                }
+                GetPurchase(true, Asset_State.Red, 5000000, () =>
+                {
+                    Base_Manager.Data.UserData.Red -= 5000000;
+                    Canvas_Holder.instance.NoneClose = true;
+                    Canvas_Holder.instance.GetUI("##Reward");
+                    Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
+                    Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Reward>().GetRewardInit(RewardState.Character, CharCostumer.Charcater, 0, value, 1);
+                    CheckShop();
+                });
+                break;
         }
-        GetPurchase(true, Asset_State.Blue, 300, () =>
-        {
-            Base_Manager.Data.UserData.Blue -= 300;
-            Canvas_Holder.instance.NoneClose = true;
-            Canvas_Holder.instance.GetUI("##Reward");
-            Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
-            Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Reward>().GetRewardInit(RewardState.Character, CharCostumer.Charcater, 0, value, 1);
-            CheckShop();
-        });
-        // if (Base_Manager.Data.UserData.Red < 100000)
-        // {
-        //     Canvas_Holder.instance.Get_Toast("NM");
-        //
-        //     return;
-        // }
-        // GetPurchase(true, Asset_State.Red, 100000, () =>
-        // {
-        //     Base_Manager.Data.UserData.Red -= 100000;
-        //     Canvas_Holder.instance.NoneClose = true;
-        //     Canvas_Holder.instance.GetUI("##Reward");
-        //     Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
-        //     Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Reward>().GetRewardInit(RewardState.Character, CharCostumer.Charcater, 0, value, 1);
-        //     CheckShop();
-        // });
     }
     public void GetBuyAsset02(int value)
     {
         // Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
         if (Base_Manager.Data.UserData.HasCharacterData[value]) return;
-        if (Base_Manager.Data.UserData.Blue < 150)
+        if (Base_Manager.Data.UserData.Blue < 600)
         {
             Canvas_Holder.instance.Get_Toast("NM");
 
             return;
         }
-        GetPurchase(true, Asset_State.Blue, 150, () =>
+        GetPurchase(true, Asset_State.Blue, 600, () =>
         {
-            Base_Manager.Data.UserData.Blue -= 150;
+            Base_Manager.Data.UserData.Blue -= 600;
             Canvas_Holder.instance.NoneClose = true;
             Canvas_Holder.instance.GetUI("##Reward");
             Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
@@ -199,15 +211,15 @@ public class UI_Shop : UI_Base
         // Base_Manager.Analytics.RecordSaleItemForInGame("InGame");
 
         if (Base_Manager.Data.UserData.HasCharacterData[value]) return;
-        if (Base_Manager.Data.UserData.Red < 150000)
+        if (Base_Manager.Data.UserData.Red < 7500000)
         {
             Canvas_Holder.instance.Get_Toast("NM");
 
             return;
         }
-        GetPurchase(true, Asset_State.Red, 150000, () =>
+        GetPurchase(true, Asset_State.Red, 7500000, () =>
         {
-            Base_Manager.Data.UserData.Red -= 150000;
+            Base_Manager.Data.UserData.Red -= 7500000;
             Canvas_Holder.instance.NoneClose = true;
             Canvas_Holder.instance.GetUI("##Reward");
             Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
@@ -244,37 +256,43 @@ public class UI_Shop : UI_Base
 
         if (Base_Manager.Data.UserData.HasEnginData[value]) return;
 
-        if (Base_Manager.Data.UserData.Blue < 150)
+        switch (value)
         {
-            Canvas_Holder.instance.Get_Toast("NM");
+            case 17:
+                if (Base_Manager.Data.UserData.Red < 2500000)
+                {
+                    Canvas_Holder.instance.Get_Toast("NM");
 
-            return;
+                    return;
+                }
+                GetPurchase(true, Asset_State.Red, 2500000, () =>
+                {
+                    Base_Manager.Data.UserData.Red -= 2500000;
+                    Canvas_Holder.instance.NoneClose = true;
+                    Canvas_Holder.instance.GetUI("##Reward");
+                    Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
+                    Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Reward>().GetRewardInit(RewardState.Character, CharCostumer.Charcater, 0, value, 1);
+                    CheckShop();
+                });
+                break;
+            case 20:
+                if (Base_Manager.Data.UserData.Blue < 600)
+                {
+                    Canvas_Holder.instance.Get_Toast("NM");
+
+                    return;
+                }
+                GetPurchase(true, Asset_State.Blue, 600, () =>
+                {
+                    Base_Manager.Data.UserData.Blue -= 600;
+                    Canvas_Holder.instance.NoneClose = true;
+                    Canvas_Holder.instance.GetUI("##Reward");
+                    Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
+                    Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Reward>().GetRewardInit(RewardState.Character, CharCostumer.EQ, 0, 1, value);
+                    CheckShop();
+                });
+                break;
         }
-        GetPurchase(true, Asset_State.Blue, 150, () =>
-        {
-            Base_Manager.Data.UserData.Blue -= 150;
-            Canvas_Holder.instance.NoneClose = true;
-            Canvas_Holder.instance.GetUI("##Reward");
-            Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
-            Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Reward>().GetRewardInit(RewardState.Character, CharCostumer.EQ, 0, 1, value);
-            CheckShop();
-        });
-        
-        // if (Base_Manager.Data.UserData.Red < 50000)
-        // {
-        //     Canvas_Holder.instance.Get_Toast("NM");
-        //
-        //     return;
-        // }
-        // GetPurchase(true, Asset_State.Red, 50000, () =>
-        // {
-        //     Base_Manager.Data.UserData.Red -= 50000;
-        //     Canvas_Holder.instance.NoneClose = true;
-        //     Canvas_Holder.instance.GetUI("##Reward");
-        //     Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
-        //     Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Reward>().GetRewardInit(RewardState.Character, CharCostumer.EQ, 0, 1, value);
-        //     CheckShop();
-        // });
     }
     public void GetBuyAssetEQ02(int value)
     {
@@ -282,15 +300,15 @@ public class UI_Shop : UI_Base
 
         if (Base_Manager.Data.UserData.HasEnginData[value]) return;
 
-        if (Base_Manager.Data.UserData.Red < 25000)
+        if (Base_Manager.Data.UserData.Red < 1000000)
         {
             Canvas_Holder.instance.Get_Toast("NM");
 
             return;
         }
-        GetPurchase(true, Asset_State.Red, 25000, () =>
+        GetPurchase(true, Asset_State.Red, 1000000, () =>
         {
-            Base_Manager.Data.UserData.Red -= 25000;
+            Base_Manager.Data.UserData.Red -= 1000000;
             Canvas_Holder.instance.NoneClose = true;
             Canvas_Holder.instance.GetUI("##Reward");
             Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
