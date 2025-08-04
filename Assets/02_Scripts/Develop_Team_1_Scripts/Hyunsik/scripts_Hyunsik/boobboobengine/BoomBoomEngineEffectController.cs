@@ -109,7 +109,7 @@ public class BoomBoomEngineEffectController : MonoBehaviour
                 if (magicHatEffect != null)
                 {
                     int level = EngineLevelSystem.GetUniqueLevel(GameManager.Instance.SelectedEngineID);
-                    //magicHatEffect.Init(GameManager.Instance.SelectedEngineID, level); 
+                    magicHatEffect.Init(GameManager.Instance.SelectedEngineID, level); 
                     magicHatEffect.ExecuteEffect();
                     Debug.Log("[EffectController] 마술모자 버프 발동 (레벨 기반)");
                 }
@@ -127,8 +127,9 @@ public class BoomBoomEngineEffectController : MonoBehaviour
             case 323: // 모래성 엔진 (Aura_Range 20초 누적 성장)
                 if (sandCastleEffect != null)
                 {
-                    Debug.Log($"[SandCastleEffect] ExecuteEffect 호출됨");
-                    sandCastleEffect.ExecuteEffect(); // **파라미터 없이!**
+                    int level = EngineLevelSystem.GetUniqueLevel(GameManager.Instance.SelectedEngineID);
+                    //sandCastleEffect.Init(GameManager.Instance.SelectedEngineID, level); // 레벨 기반 성장률 적용
+                    sandCastleEffect.ExecuteEffect(); //  실제 버프 실행
                     Debug.Log("[EffectController] 모래성 엔진(323) 버프 발동");
                 }
                 else
