@@ -2,10 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class MonsterSpawner : MonoBehaviour
 {
+    public bool[] isStop = { false, false, false, false, false };
+    public bool isAllStop;
+    
     [SerializeField] private SpawnSO spawnData;
 
     [SerializeField] private MonsterFactory[] monsterFactories;
@@ -51,7 +55,7 @@ public class MonsterSpawner : MonoBehaviour
     private IEnumerator StartSpawner()
     {
         yield return new WaitForSeconds(3f);
-        
+
         while (true)
         {
             var rate = Random.Range(0, 100);
