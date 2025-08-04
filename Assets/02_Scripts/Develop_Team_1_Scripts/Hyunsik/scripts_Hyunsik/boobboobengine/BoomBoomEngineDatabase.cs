@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -67,7 +68,16 @@ public static class BoomBoomEngineDatabase
     public static BoomBoomEngineData GetEngineData(int id)
     {
         if (mEngineTable.TryGetValue(id, out var data))
+        {
             return data;
+        }
+        else
+        {
+            if(mEngineTable.TryGetValue(21101, out var data1))
+            {
+                return data1;
+            }
+        }
 
         Debug.LogError($"ºØºØ¿£Áø ID {id} µ¥ÀÌÅÍ ¾øÀ½");
         return null;
