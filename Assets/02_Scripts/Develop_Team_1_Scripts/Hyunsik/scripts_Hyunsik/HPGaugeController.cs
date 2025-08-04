@@ -47,6 +47,8 @@ public class HPGaugeController : MonoBehaviour
         if (playerStatManager != null)
         {
             float currentHP = playerStatManager.GetCurrentHP();
+            currentHP = Mathf.Max(0, currentHP);
+            
             hpText.text = Mathf.CeilToInt(currentHP).ToString();
         }
     }
