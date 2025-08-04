@@ -52,10 +52,13 @@ public class FlowerController_Unique : FlowerController
         
         StartCoroutine(CoroutineExtensions.DelayedActionCall(ActivateFlower, 0.5f));
     }
+
+    public bool bCanGlow { get; set; } = true;
     
     public override void AuraAffectFlower(float affection)
     {
-        MyDebug.Log("FlowerController_Unique.AuraAffectFlower");
+        if(!bCanGlow) { return; }
+        
         if (!isGrowing) { isGrowing = true; visual.SetFlowerActivate(isGrowing); }
         timeAfterActive = 0.15f;
         currentGrowth += affection;

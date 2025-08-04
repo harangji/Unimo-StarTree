@@ -90,6 +90,9 @@ public abstract class Gimmick : MonoBehaviour
     protected bool mbReadyExecute = false;
     protected bool mbDeactivateStart = false;
     protected float mbTimeElapsed = 0f;
+
+    public bool BReadyExecute => mbReadyExecute;
+    public bool BDeactivateStart => mbDeactivateStart;
     
     public void Awake()
     {

@@ -72,7 +72,7 @@ public class Gimmick_RedZone : Gimmick
     {
         base.Update();
         
-        if (mPlayerIDamageAble == null || !mbReadyExecute) return;
+        if (mPlayerIDamageAble == null || !mbFireParticleStart) return;
         
         //거리 비교
         mDistance = Vector3.Distance(transform.position, mPlayerIDamageAble.GameObject.transform.position);
@@ -108,6 +108,7 @@ public class Gimmick_RedZone : Gimmick
 
     public override async void ActivateGimmick()
     {
+        mbReadyExecute = true;
         Vector2 randomPos = Random.insideUnitCircle * ( PlaySystemRefStorage.mapSetter.MaxRange - 2 );
         gameObject.transform.position = new Vector3(randomPos.x, 0, randomPos.y);
         
@@ -118,21 +119,25 @@ public class Gimmick_RedZone : Gimmick
 
     public override async void DeactivateGimmick()
     {
+        StopCoroutine(FireParticleWaitCoroutine());
+        mbDeactivateStart = true;
         mbReadyExecute = false;
+        mbFireParticleStart = false;
         await FadeAll(false);
         fireParticle.SetActive(false);
         gameObject.SetActive(false);
     }
-
+    
+    private bool mbFireParticleStart = false;
+    
     public IEnumerator FireParticleWaitCoroutine()
     {
         warningParticle.SetActive(true);
+        mbFireParticleStart = true;
         
         yield return new WaitForSeconds(mWaitWarningDuration); //경고 시간 동안 대기
         
-        mbReadyExecute = true;
         warningParticle.SetActive(false);
         fireParticle.SetActive(true);
-        
     }
 }
