@@ -115,6 +115,16 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         //최대 체력으로 hp 초기화
         currentHP = mStat.FinalStat.Health;
         hpGauge?.SetGauge(1f);
+        
+        int engineID = GameManager.Instance.SelectedEngineID;
+        var engineData = BoomBoomEngineDatabase.GetEngineData(engineID);
+        if (engineData?.SkillID == 313 && mReviveEffect != null)
+        {
+            int level = EngineLevelSystem.GetUniqueLevel(engineID);
+            mReviveEffect.Init(engineID, level); // ✅ 레벨 기반 부활 비율 적용
+            Debug.Log("[PlayerStatManager] 도베르만 Init 호출됨");
+        }
+        
     }
     
     public void InitCharacter(int id)
@@ -291,7 +301,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
 
         if (engineData != null && PlaySystemRefStorage.engineEffectController != null)
         {
-            // ✅ 조건 확인 후 실행
+            //  조건 확인 후 실행
             if (engineData.TriggerCondition == ETriggerCondition.OnStunEnd)
             {
                 PlaySystemRefStorage.engineEffectController.ActivateEffect(engineData.SkillID, this);

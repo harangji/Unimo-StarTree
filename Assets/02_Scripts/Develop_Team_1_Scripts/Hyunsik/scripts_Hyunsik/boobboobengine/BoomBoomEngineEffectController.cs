@@ -108,12 +108,20 @@ public class BoomBoomEngineEffectController : MonoBehaviour
             case 317: // 마술 모자
                 if (magicHatEffect != null)
                 {
+                    int level = EngineLevelSystem.GetUniqueLevel(GameManager.Instance.SelectedEngineID);
+                    magicHatEffect.Init(GameManager.Instance.SelectedEngineID, level); 
                     magicHatEffect.ExecuteEffect();
-                    Debug.Log("[EffectController] 마술모자 버프 발동");
+                    Debug.Log("[EffectController] 마술모자 버프 발동 (레벨 기반)");
+                }
+                else
+                {
+                    Debug.LogWarning("[EffectController] magicHatEffect 연결되지 않음");
                 }
                 break;
             
-            case 313: // 도베르만 엔진 (부활 리셋)
+            case 313:
+                // 도베르만은 ExecuteEffect로 bReviveUsed = false 초기화만 필요
+                Debug.Log("[EffectController] 도베르만 Init은 TriggerManager에서 처리, ExecuteEffect는 리셋용");
                 break;
             
             case 323: // 모래성 엔진 (Aura_Range 20초 누적 성장)
