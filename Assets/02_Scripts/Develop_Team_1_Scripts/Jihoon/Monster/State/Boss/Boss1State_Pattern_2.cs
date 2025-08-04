@@ -58,25 +58,28 @@ public class Boss1State_Pattern_2 : BossState_Pattern
         
         yield return new WaitForSeconds(0.2f);
 
-        if (safeZone < playerDist.magnitude && playerDist.magnitude < radius)
+        if (!EditorMode.Instance.isInvincible)
         {
-            if (controller.playerTransform.TryGetComponent<PlayerStatManager>(out var player))
+            if (safeZone < playerDist.magnitude && playerDist.magnitude < radius)
             {
-                var monster = GetComponentInParent<IDamageAble>();
-                var playerGo = GameObject.FindGameObjectWithTag("Player");
-                    
-                if (playerGo != null && playerGo.TryGetComponent<IDamageAble>(out var receiver))
+                if (controller.playerTransform.TryGetComponent<PlayerStatManager>(out var player))
                 {
-                    CombatEvent combatEvent = new CombatEvent
+                    var monster = GetComponentInParent<IDamageAble>();
+                    var playerGo = GameObject.FindGameObjectWithTag("Player");
+                    
+                    if (playerGo != null && playerGo.TryGetComponent<IDamageAble>(out var receiver))
                     {
-                        Sender = monster,
-                        Receiver = receiver,
-                        Damage = (monster as Monster).skillDamages[1],
-                        HitPosition = controller.transform.position,
-                        Collider = monster.MainCollider,
-                    };
+                        CombatEvent combatEvent = new CombatEvent
+                        {
+                            Sender = monster,
+                            Receiver = receiver,
+                            Damage = (monster as Monster).skillDamages[1],
+                            HitPosition = controller.transform.position,
+                            Collider = monster.MainCollider,
+                        };
 
-                    CombatSystem.Instance.AddInGameEvent(combatEvent);
+                        CombatSystem.Instance.AddInGameEvent(combatEvent);
+                    }
                 }
             }
         }

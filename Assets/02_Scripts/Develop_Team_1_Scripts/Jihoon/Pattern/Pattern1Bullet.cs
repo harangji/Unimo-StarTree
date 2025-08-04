@@ -10,6 +10,11 @@ public class Pattern1Bullet : MonoBehaviour, IDamageAble
 
     private void OnTriggerEnter(Collider other)
     {
+        if (EditorMode.Instance.isInvincible)
+        {
+            return;
+        }
+        
         if (other.CompareTag("Player"))
         {
             if (other.TryGetComponent<PlayerStatManager>(out var player))

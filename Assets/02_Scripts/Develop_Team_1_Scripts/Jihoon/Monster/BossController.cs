@@ -37,6 +37,11 @@ public class BossController : MonsterController
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!isExplode || EditorMode.Instance.isInvincible)
+        {
+            return;
+        }
+
         if (other.CompareTag("Player"))
         {
             if (other.TryGetComponent<PlayerStatManager>(out var player))
