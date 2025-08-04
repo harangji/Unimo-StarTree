@@ -47,10 +47,10 @@ public class BossState_PreAction : MonsterState_Preaction
         {
             return;
         }
-        else
-        {
-            Debug.Log("canAction is true");
-        }
+        // else
+        // {
+        //     Debug.Log("canAction is true");
+        // }
         
         RotateMonster();
         MoveMonster();

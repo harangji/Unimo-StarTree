@@ -25,7 +25,7 @@ public class BossGenerator : MonsterGenerator
         }
         else
         {
-            Debug.Log($"Stage number: {StageLoader.CurrentStageNumber}");
+            // Debug.Log($"Stage number: {StageLoader.CurrentStageNumber}");
         }
     }
     

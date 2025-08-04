@@ -34,13 +34,15 @@ public class Gimmick_UniqueFlower : Gimmick
         await FadeAll(true);
 
         mUniqueController.InitFlower(mFlowerGenerator); //²É »ý¼º
-        
+        mUniqueController.bCanGlow = true;
         mbReadyExecute = true;
     }
 
     public override async void DeactivateGimmick()
     {
         mbReadyExecute = false;
+        mbDeactivateStart = true;
+        mUniqueController.bCanGlow = false;
         
         await FadeAll(false);
 

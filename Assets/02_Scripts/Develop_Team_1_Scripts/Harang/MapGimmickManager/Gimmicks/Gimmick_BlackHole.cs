@@ -113,6 +113,7 @@ public class Gimmick_BlackHole : Gimmick
         mPlayerRigidbody.linearVelocity = Vector3.zero;
         mPlayerRigidbody = null;
         mbReadyExecute = false;
+        mbDeactivateStart = true;
         
         await FadeAll(false);
         gameObject.SetActive(false);

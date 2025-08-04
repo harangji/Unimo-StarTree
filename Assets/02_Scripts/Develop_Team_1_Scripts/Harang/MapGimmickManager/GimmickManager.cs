@@ -24,7 +24,7 @@ public class GimmickManager : MonoBehaviour
     private GameObject warningPopup;
     
     [LabelText("기믹 텍스트들"), SerializeField]
-    private List<TextMeshProUGUI> modeText;
+    private List<TextMeshProUGUI> modeText; //0 메인, 1 서브
     
     [LabelText("기믹 아이콘들"), SerializeField]
     private List<Image> modeIcon;
@@ -56,6 +56,7 @@ public class GimmickManager : MonoBehaviour
     private int mCurrentCost;
     
     private Queue<Gimmick> mReadyGimmickQueue = new Queue<Gimmick>();
+    private Gimmick currentGimmick;
     
     private List<eGimmickGrade> mCanSelectAbleGrades = new List<eGimmickGrade>(); //등장 가능한 기믹 등급
     
@@ -65,6 +66,8 @@ public class GimmickManager : MonoBehaviour
     
     private Color originalTextColor;
     private Color originalImageColor;
+    private Color originalHeaderTextColor;
+    
     public static GimmickManager Instance { get; private set; }
     
     private void Awake()
@@ -81,13 +84,14 @@ public class GimmickManager : MonoBehaviour
         mGimmickInitializersMapper = new Dictionary<string, GimmickInitializer>
         {
             { "G_TRP_002", gimmickInitializers[0] }, // 블랙홀
-            { "G_INT_003", gimmickInitializers[1] }, // 특수한 꽃
-            { "G_ENV_004", gimmickInitializers[2] }, // 레드존
-            { "G_TRG_006", gimmickInitializers[3] }, // 지역 활성화
+            // { "G_INT_003", gimmickInitializers[1] }, // 특수한 꽃
+            { "G_ENV_004", gimmickInitializers[1] }, // 레드존
+            { "G_TRG_006", gimmickInitializers[2] }, // 지역 활성화
         };
         
         originalTextColor = modeText[0].color;
         originalImageColor = modeIcon[0].color;
+        originalHeaderTextColor = modeText[1].color;
         
         mReadyGimmickQueue.Clear();
         
@@ -106,6 +110,8 @@ public class GimmickManager : MonoBehaviour
 
     public void ExecuteGimmickTestButton()
     {
+        mReadyGimmickQueue.Clear();
+        
         InitializeGimmickManager();
         
         if (mReadyGimmickQueue.Count <= 0)
@@ -137,22 +143,29 @@ public class GimmickManager : MonoBehaviour
         yield return new WaitForSeconds(PlayProcessController.InitTimeSTATIC);
         PlaySceneController.Instance.PauseGame();
         
-        Gimmick gimmick = mReadyGimmickQueue.Dequeue();
+        if (currentGimmick && currentGimmick.BReadyExecute && !currentGimmick.BDeactivateStart) //나갈 준비 다됨 && 사라지기 시작 하지 않음
+        {
+            currentGimmick.DeactivateGimmick();
+        }
         
-        gimmick.SetGimmickTMP(modeText[0]);
+        currentGimmick = mReadyGimmickQueue.Dequeue();
+        
+        currentGimmick.SetGimmickTMP(modeText[0]);
         MyDebug.Log($"{modeText[0].text} is Dequeue");
 
-        modeIcon[0].sprite = gimmick.gimmickIcon;
+        modeIcon[0].sprite = currentGimmick.gimmickIcon;
         
-        if (gimmick.eGimmickType == eGimmickType.Helpful)
+        if (currentGimmick.eGimmickType == eGimmickType.Helpful)
         {
             modeText[0].color = goodModeTxtColor;
             modeIcon[0].color = goodModeImgColor;
+            modeText[1].color = goodModeTxtColor;
         }
         else
         {
             modeText[0].color = originalTextColor;
             modeIcon[0].color = originalImageColor;
+            modeText[1].color = originalHeaderTextColor;
         }
         
         modeIcon[0].gameObject.SetActive(true);
@@ -162,34 +175,14 @@ public class GimmickManager : MonoBehaviour
         warningPopup.SetActive(false);
         
         PlaySceneController.Instance.ResumeGame();
-        gimmick.ActivateGimmick();
+        currentGimmick.ActivateGimmick();
         yield break;
-        
-        // //다수 동시
-        // for (int i = 0; i < modenum; i++)
-        // {
-        //     mReadyGimmickQueue.Dequeue().SetModeName(modeText[i]);
-        //     modeIcon[i].sprite = specialModes[idx].ModeIcon;
-        //     if (specialModes[idx].ModeCode.Equals("mode7") || specialModes[idx].ModeCode.Equals("mode8"))
-        //     {
-        //         modeText[i].color = goodModeTxtColor;
-        //         modeIcon[i].color = goodModeImgColor;
-        //     }
-        //     modeIcon[i].gameObject.SetActive(true);
-        //     specialModes[idx].TriggerMode(); 
-        //     // specialModes.RemoveAt(idx); //내보낸 모드 지우기
-        // }
-        // warningPopup.SetActive(true);
-        // yield return new WaitForSecondsRealtime(2.5f);
-        // warningPopup.SetActive(false);
-        // sceneCtrl.ResumeGame();
-        // yield break;
     }
     
     //기믹 매니저 초기화
     private void InitializeGimmickManager()
     {
-        mCurrentStage = StageLoader.CurrentStageNumber + 500; //스테이지 int 캐싱 //최소 1 (이미 되어있음) (테스트 100)
+        mCurrentStage = StageLoader.CurrentStageNumber; //스테이지 int 캐싱 //최소 1 (이미 되어있음) (테스트 100)
 
         if (SettingByStageNumber(mCurrentStage)) //스테이지 수에 따른 설정들 - false일 경우 기믹 갯수가 0이므로 실행 안함
         {
@@ -286,12 +279,16 @@ public class GimmickManager : MonoBehaviour
     {
         List<GimmickSample> selectedGimmickSamples = new List<GimmickSample>();
         
+        if(mCurrentCost <= 0) return selectedGimmickSamples;
+        
         foreach (var grade in mCanSelectAbleGrades) //나올 수 있는 Grade를 전부 조회
         {
             //하나의 Grade의 gimmickInitializers 모두 조회
             foreach (var gimmickInitializer in gimmickInitializers)
             {
                 if (gimmickInitializer.Costs[(int)grade] > mCurrentCost) continue;
+
+                mCurrentCost -= gimmickInitializer.Costs[(int)grade];
                 
                 GimmickSample gimmickSample = new GimmickSample()
                 {
@@ -310,8 +307,10 @@ public class GimmickManager : MonoBehaviour
     } 
     
     //기믹 미리 준비하기
-    public void PickGimmickSamples(List<GimmickSample> source, int count)
+    private void PickGimmickSamples(List<GimmickSample> source, int count)
     {
+        if(source.Count == 0) return;
+        
         List<eGimmicks> cashGimmickTypes = new List<eGimmicks>();  //중복방지
         
         for (int i = 0; i < count; i++) //count 번 실행 // && pool.Count > 0
