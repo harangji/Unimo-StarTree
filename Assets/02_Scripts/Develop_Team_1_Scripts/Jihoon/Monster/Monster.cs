@@ -1,4 +1,5 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,7 +10,7 @@ public class Monster : MonoBehaviour, IDamageAble
     public GameObject GameObject => gameObject;
     
     [SerializeField] private int defaultDamage;
-    [HideInInspector] public int appliedDamage;
+    [ReadOnly] public int appliedDamage;
     
     public int[] skillDamages;
     
