@@ -74,6 +74,8 @@ public static class RewardCalculator
             yfValue = 6160000 + 8800 * (level - 700);
         else if (level == 1000)
             yfValue = 17600000;
+
+        yfValue /= 3600;
         
         return yfValue;
     }
@@ -99,6 +101,8 @@ public static class RewardCalculator
             ofValue = 75600 + 108 * (level - 700);
         else if (level == 1000)
             ofValue = 216000;
+        
+        ofValue /= 3600;
 
         return ofValue;
     }
@@ -138,7 +142,12 @@ public static class RewardCalculator
         }
         return result;
     }
-
+    
+    /// <summary>
+    /// ºØºØ¿£Áø °­È­ ³ë¶û¹ú²Ü ¼Ò¸ð·®
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
     public static double EngineYellowCost(int level)
     {
         int result = 0;
@@ -147,7 +156,12 @@ public static class RewardCalculator
         
         return result;
     }
-
+    
+    /// <summary>
+    /// ºØºØ¿£Áø °­È­ ÁÖÈ²º°²Ü ¼Ò¸ð·®
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
     public static double EngineOrangeCost(int level)
     {
         int result = 0;
