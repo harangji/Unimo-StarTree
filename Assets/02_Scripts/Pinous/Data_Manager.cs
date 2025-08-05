@@ -29,6 +29,8 @@ public class Data_Manager
 
     public float EXP_SET = 0;
     public float EXP_GET = 0;
+    public bool PendingGradeUp = false; // 진화 대기 상태 추가
+    
     public static bool SetPlayScene = false;
     public static int QualityLevel;
     
@@ -80,6 +82,12 @@ public class Data_Manager
     
     public void LevelUP()
     {
+        if (PendingGradeUp)
+        {
+            Debug.Log("[Alta] 진화 대기 상태 - 진화 버튼 클릭 시에만 레벨업 가능");
+            return;
+        }
+        
         UserData.EXP += EXP_GET;
         UserData.Second_Base = CalculateExperienceForLevel(5, UserData.Level + 1, exp_data.L_GOLD_GET);
         UserData.NextLevel_Base = CalculateExperienceForLevel(10,UserData.Level + 1, exp_data.L_GOLD);
@@ -88,6 +96,15 @@ public class Data_Manager
 
         if (UserData.EXP >= EXP_SET)
         {
+            // 현재 레벨이 AltaCount에 해당하면 진화 대기 상태로 전환
+            if (IsAltaGradeLevel(UserData.Level+1))
+            {
+                PendingGradeUp = true;    // 진화 대기 상태 활성화
+                UserData.EXP = EXP_SET;   // EXP를 100%로 고정
+                Main_UI.instance.Text_Check(); // UI 갱신
+                return; // 레벨업은 하지 않음
+            }
+            
             UserData.EXP = 0;
             UserData.Level++;
             if (UserData.Level >= 99)
@@ -105,6 +122,31 @@ public class Data_Manager
             // EXP_GET = CalculateExperienceForLevel(5, UserData.Level + 1, exp_data.GET_EXP);
         }
         Main_UI.instance.Text_Check();
+    }
+    
+    public void GradeUp()
+    {
+        if (!PendingGradeUp) return; // 대기 상태가 아니면 무시
+
+        UserData.EXP = 0;
+        UserData.Level++;
+        PendingGradeUp = false;
+
+        LevelCheck();
+        Canvas_Holder.instance.GetLevelCheck();
+
+        Debug.Log($"[Alta] 진화 완료 → 현재 레벨: {UserData.Level}");
+        Main_UI.instance.Text_Check();
+    }
+    
+    // AltaCount 배열에 현재 레벨이 포함되어 있는지 체크
+    private bool IsAltaGradeLevel(int level)
+    {
+        for (int i = 0; i < AltaCount.Length; i++)
+        {
+            if (AltaCount[i] == level) return true;
+        }
+        return false;
     }
 
     public float EXP_Percentage()
