@@ -62,8 +62,11 @@ public class Data_Manager
         exp_data.L_GOLD_GET = 1.2f;
 
         atlas = Resources.Load<SpriteAtlas>("Atlas");
-        EXP_SET = CalculateExperienceForLevel(15, UserData.Level + 1, exp_data.EXP);
-        EXP_GET = CalculateExperienceForLevel(5,  UserData.Level + 1, exp_data.GET_EXP);
+        // EXP_SET = CalculateExperienceForLevel(15, UserData.Level + 1, exp_data.EXP);
+        // EXP_GET = CalculateExperienceForLevel(5,  UserData.Level + 1, exp_data.GET_EXP);
+        
+        EXP_SET = 5f;
+        EXP_GET = 1f; 
 
         float timer = (float)Base_Manager.instance.TimerCheck();
         for(int i = 0; i < UserData.BuffFloating.Length; i++)
@@ -98,8 +101,8 @@ public class Data_Manager
             }
             LevelCheck();
             Canvas_Holder.instance.GetLevelCheck();
-            EXP_SET = CalculateExperienceForLevel(15, UserData.Level + 1, exp_data.EXP);
-            EXP_GET = CalculateExperienceForLevel(5, UserData.Level + 1, exp_data.GET_EXP);
+            // EXP_SET = CalculateExperienceForLevel(15, UserData.Level + 1, exp_data.EXP);
+            // EXP_GET = CalculateExperienceForLevel(5, UserData.Level + 1, exp_data.GET_EXP);
         }
         Main_UI.instance.Text_Check();
     }

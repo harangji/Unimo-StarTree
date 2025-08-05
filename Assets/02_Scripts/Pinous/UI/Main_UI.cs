@@ -125,6 +125,7 @@ public class Main_UI : MonoBehaviour
         else
         {
             double yellowCost = RewardCalculator.GetLevelUpCost();
+            yellowCost /= 5;
 
             levelUpCostGroup.SetActive(true);
             gradeUpCostGroup.SetActive(false);

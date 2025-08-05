@@ -85,37 +85,39 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         bool isLevelUp = (expNow + expAdd >= expMax);
         bool isGradeUp = (nextLevel == 100 || nextLevel == 300 || nextLevel == 700 || nextLevel == 1000);
 
-        double requiredCost = 0;
-        
-        // 레벨업 + 진화 조건일 경우
+        double totalCost;
+        double costPerClick;
+
         if (isLevelUp && isGradeUp)
         {
-            requiredCost = RewardCalculator.GetGradeUpCost();
-            if (Base_Manager.Data.UserData.Yellow < requiredCost && Base_Manager.Data.UserData.Red < requiredCost)
+            totalCost = RewardCalculator.GetGradeUpCost();
+            costPerClick = totalCost / 5.0; // 5회 클릭당 1레벨업
+            if (Base_Manager.Data.UserData.Yellow < costPerClick && Base_Manager.Data.UserData.Red < costPerClick)
             {
                 Canvas_Holder.instance.Get_Toast("NM");
                 return;
             }
-            
-            Base_Manager.Data.UserData.Yellow -= requiredCost;
-            Base_Manager.Data.UserData.Red -= requiredCost;
+
+            Base_Manager.Data.UserData.Yellow -= costPerClick;
+            Base_Manager.Data.UserData.Red -= costPerClick;
             Base_Manager.Data.LevelUP();
             Sound_Manager.instance.Play(Sound.Effect, "effect_00");
         }
         else
         {
-            requiredCost = RewardCalculator.GetLevelUpCost();
-            if (Base_Manager.Data.UserData.Yellow < requiredCost)
+            totalCost = RewardCalculator.GetLevelUpCost();
+            costPerClick = totalCost / 5.0;
+            if (Base_Manager.Data.UserData.Yellow < costPerClick)
             {
                 Canvas_Holder.instance.Get_Toast("NM");
                 return;
             }
-            
-            Base_Manager.Data.UserData.Yellow -= requiredCost;
+
+            Base_Manager.Data.UserData.Yellow -= costPerClick;
             Base_Manager.Data.LevelUP();
             Sound_Manager.instance.Play(Sound.Effect, "effect_00");
         }
-        
-        Debug.Log($"재화 소모 비용 ::: {requiredCost}, 다음 레벨 ::: {nextLevel}");
+
+        Debug.Log($"재화 소모 비용 ::: {costPerClick}, 총비용 ::: {totalCost}, 다음 레벨 ::: {nextLevel}");
     }
 }
