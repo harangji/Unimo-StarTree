@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UI_EngineUpgradePopup : MonoBehaviour
@@ -14,10 +15,20 @@ public class UI_EngineUpgradePopup : MonoBehaviour
     
     [SerializeField] private TextMeshProUGUI mYellowCostText;
     [SerializeField] private TextMeshProUGUI mOrangeCostText;
+    
+    [Header("UI 관련")]
+    [SerializeField] private RectTransform mBgRectTransform;
 
     private int mEngineID;
     private EngineLevelSystem.EEngineStatType mUpgradeStatType;
     private bool bIsUniqueType;
+    
+    private UI_Upgrade mUpgradeUI; // 첫 번째 팝업 참조
+
+    public void Init(UI_Upgrade upgradeUI)
+    {
+        mUpgradeUI = upgradeUI;
+    }
 
     
     // 2. UI_EngineUpgradePopup.cs
@@ -32,6 +43,20 @@ public class UI_EngineUpgradePopup : MonoBehaviour
             21103 => EngineLevelSystem.EEngineStatType.MoveSpd, // 아이스크림
             _ => EngineLevelSystem.EEngineStatType.Health
         };
+    }
+    
+    void Update()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            if (!RectTransformUtility.RectangleContainsScreenPoint(
+                    mBgRectTransform, 
+                    Input.mousePosition, 
+                    null))
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
     public void OpenUpgradeUI
@@ -178,6 +203,16 @@ public class UI_EngineUpgradePopup : MonoBehaviour
             case 21201: return 21;
             case 20411: return 22;
             default: return -1;
+        }
+    }
+    
+    public void OnClickUnimoTab()
+    {
+        CloseUI(); 
+
+        if (mUpgradeUI != null)
+        {
+            mUpgradeUI.GetUnimo();
         }
     }
 

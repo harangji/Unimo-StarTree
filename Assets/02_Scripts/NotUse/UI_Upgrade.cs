@@ -37,6 +37,8 @@ public class UI_Upgrade : UI_Base
             // 동적으로 인스턴스화
             GameObject obj = Instantiate(upgradePopupPrefab, transform.parent);  // Canvas 하위에 생성
             upgradePopupInstance = obj.GetComponent<UI_UpgradePopup>();
+            
+            upgradePopupInstance.Init(this);
         }
 
         upgradePopupInstance.OpenUpgradeUI(unitID);
@@ -48,6 +50,8 @@ public class UI_Upgrade : UI_Base
         {
             GameObject obj = Instantiate(engineUpgradePopupPrefab, transform.parent);
             engineUpgradePopupInstance = obj.GetComponent<UI_EngineUpgradePopup>();
+            
+            engineUpgradePopupInstance.Init(this);
         }
 
         var engineData = BoomBoomEngineDatabase.GetEngineData(engineID);

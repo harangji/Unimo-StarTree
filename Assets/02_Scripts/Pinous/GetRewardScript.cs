@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// °ÔÀÓ Á¾·á ÈÄ °ÔÀÓ Å¬¸®¾î UI°¡ ³ªÅ¸³µÀ» ¶§ ½ÇÇàµÇ´Â Class (GameOver ½Ã¿¡´Â ½ÇÇàµÇÁö ¾ÊÀ½)
+/// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ UIï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ Class (GameOver ï¿½Ã¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 /// </summary>
 public class GetRewardScript : MonoBehaviour
 {
@@ -24,7 +24,7 @@ public class GetRewardScript : MonoBehaviour
         
         if (Base_Manager.Data.UserData.RewardedStages.Contains(stage))
         {
-            Debug.Log($"[Stage {stage}] º¸»óÀº ÀÌ¹Ì Áö±ÞµÇ¾ú½À´Ï´Ù.");
+            Debug.Log($"[Stage {stage}] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ÞµÇ¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
             return;
         }
 
@@ -41,19 +41,19 @@ public class GetRewardScript : MonoBehaviour
         Base_Manager.Data.UserData.Red += red;
         Base_Manager.Data.UserData.RewardedStages.Add(stage);
         
-        Debug.Log($"[Stage {stage}] Yellow: {yellow}, Red: {red} Áö±Þ ¿Ï·á");
-        
-        YellowText.text = yellow.ToString();
-        RedText.text = red.ToString();
+        Debug.Log($"[Stage {stage}] Yellow: {yellow}, Red: {red} ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½");
+
+        YellowText.text = StringMethod.ToCurrencyString(yellow);
+        RedText.text = StringMethod.ToCurrencyString(red);
         
         Debug.Log("RewardedStages ::: " + string.Join(", ", Base_Manager.Data.UserData.RewardedStages));
         
         Base_Manager.Data.SaveUserData();
-        Debug.Log("ÀúÀå ¿Ï·á");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½");
     }
     
     /// <summary>
-    /// °ÔÀÓ Å¬¸®¾î UIÀÇ ±¤°í ½ÃÃ» ÈÄ 2¹è º¸»ó ¹öÆ° Å¬¸¯ ½Ã ½ÇÇà (µ¿ÀÏ º¸»óÀ» ÇÑ ¹ø ´õ Áö±ÞÇÔÀ¸·Î½á 2¹è È¹µæ Ã³¸®)
+    /// ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã» ï¿½ï¿½ 2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î½ï¿½ 2ï¿½ï¿½ È¹ï¿½ï¿½ Ã³ï¿½ï¿½)
     /// </summary>
     public void GetRewardDoubleScore()
     {
