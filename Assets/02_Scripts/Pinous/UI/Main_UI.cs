@@ -107,29 +107,40 @@ public class Main_UI : MonoBehaviour
         double expNow = Base_Manager.Data.UserData.EXP;
         double expAdd = Base_Manager.Data.EXP_GET;
         double expMax = Base_Manager.Data.EXP_SET;
-        int nextLevel = Base_Manager.Data.UserData.Level + 2;
-
-        bool isLevelUp = (expNow + expAdd >= expMax);
-        bool isGradeUp = (nextLevel == 100 || nextLevel == 300 || nextLevel == 700 || nextLevel == 1000);
-
-        if (isLevelUp && isGradeUp)
+        
+        if (Base_Manager.Data.PendingGradeUp)
         {
-            double gradeCost = RewardCalculator.GetGradeUpCost();
-
             levelUpCostGroup.SetActive(false);
             gradeUpCostGroup.SetActive(true);
 
+            double gradeCost = RewardCalculator.GetGradeUpCost();
             gradeUpYfCostText.text = StringMethod.ToCurrencyString(gradeCost);
             gradeUpOfCostText.text = StringMethod.ToCurrencyString(gradeCost);
+
+            // 이 시점에 일반 레벨업 버튼은 항상 비활성화
         }
         else
         {
-            double yellowCost = RewardCalculator.GetLevelUpCost();
+            bool expFull = Base_Manager.Data.EXP_Percentage() >= 1f;
+            bool isExactGradeLevel = Array.Exists(Base_Manager.Data.AltaCount,
+                lvl => lvl == Base_Manager.Data.UserData.Level);
 
-            levelUpCostGroup.SetActive(true);
-            gradeUpCostGroup.SetActive(false);
-
-            NextLevelText.text = StringMethod.ToCurrencyString(yellowCost);
+            if (expFull && isExactGradeLevel)
+            {
+                levelUpCostGroup.SetActive(false);
+                gradeUpCostGroup.SetActive(true);
+                double gradeCost = RewardCalculator.GetGradeUpCost();
+                gradeUpYfCostText.text = StringMethod.ToCurrencyString(gradeCost);
+                gradeUpOfCostText.text = StringMethod.ToCurrencyString(gradeCost);
+            }
+            else
+            {
+                // 그 외는 일반 레벨업 UI
+                double yellowCost = RewardCalculator.GetLevelUpCost() / 5;
+                levelUpCostGroup.SetActive(true);
+                gradeUpCostGroup.SetActive(false);
+                NextLevelText.text = StringMethod.ToCurrencyString(yellowCost);
+            }
         }
         
         bool NoneDefault = false;

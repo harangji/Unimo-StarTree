@@ -151,6 +151,7 @@ public class StageManager : MonoBehaviour
 
     private void StageClear()
     {
+        if (StageLoader.CurrentStageNumber == 0) { PlaySceneController.Instance.LoadLobby(); }
         Debug.Log("스테이지 클리어!");
         StageLoader.SaveClearedStage(mStageData.StageNumber); // 다음 스테이지 오픈 저장
         // 보너스 스테이지 별 저장 처리
@@ -204,6 +205,14 @@ public class StageManager : MonoBehaviour
             {
                 mScoreGauge.mNewStarAddBlueReward.SetText(blueReward.ToString());
             }
+            
+            // 새로 얻은 별 개수를 StarSum에 누적
+            int newStarCount = CountBits(rewardFlags);
+            if (newStarCount > 0)
+            {
+                userData.StarSum += newStarCount;
+                Debug.Log($"[업적] 새로 획득한 별 {newStarCount}개 누적 → StarSum: {userData.StarSum}");
+            }
 
             // 새로운 별 획득이 있었을 경우만 저장
             if (rewardFlags != 0 || newStars > CountBits(oldFlags))
@@ -221,6 +230,7 @@ public class StageManager : MonoBehaviour
 
     private void StageFail()
     {
+        if (StageLoader.CurrentStageNumber == 0) { PlaySceneController.Instance.LoadLobby(); }
         Debug.Log("스테이지 실패!");
         PlaySystemRefStorage.playProcessController.GameOver();
     }

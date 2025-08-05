@@ -75,7 +75,7 @@ public class MagicHatEffect : MonoBehaviour, IBoomBoomEngineEffect
                 bonus.MoveSpd = stat.BaseStat.MoveSpd * bonusRatio;
                 Debug.Log($"[MagicHat] 이동속도 +{mBuffPercent:F1}%");
                 break;
-            case EMagicBuffType.AuraRange:
+            case EMagicBuffType.AuraRange: 
                 bonus.AuraRange = stat.BaseStat.AuraRange * bonusRatio;
                 Debug.Log($"[MagicHat] 오라 범위 +{mBuffPercent:F1}%");
                 break;

@@ -76,46 +76,59 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     private void InitLevelUpBUtton()
     {
-        int nextLevel = Base_Manager.Data.UserData.Level + 2;
-        
-        double expNow = Base_Manager.Data.UserData.EXP;
-        double expAdd = Base_Manager.Data.EXP_GET;
-        double expMax = Base_Manager.Data.EXP_SET;
-
-        bool isLevelUp = (expNow + expAdd >= expMax);
-        bool isGradeUp = (nextLevel == 100 || nextLevel == 300 || nextLevel == 700 || nextLevel == 1000);
-
-        double requiredCost = 0;
-        
-        // 레벨업 + 진화 조건일 경우
-        if (isLevelUp && isGradeUp)
+        if (Base_Manager.Data.PendingGradeUp)
         {
-            requiredCost = RewardCalculator.GetGradeUpCost();
-            if (Base_Manager.Data.UserData.Yellow < requiredCost && Base_Manager.Data.UserData.Red < requiredCost)
+            double gradeCost = RewardCalculator.GetGradeUpCost();
+            if (Base_Manager.Data.UserData.Yellow < gradeCost || Base_Manager.Data.UserData.Red < gradeCost)
             {
                 Canvas_Holder.instance.Get_Toast("NM");
                 return;
             }
-            
-            Base_Manager.Data.UserData.Yellow -= requiredCost;
-            Base_Manager.Data.UserData.Red -= requiredCost;
+
+            Base_Manager.Data.UserData.Yellow -= gradeCost;
+            Base_Manager.Data.UserData.Red -= gradeCost;
+            Base_Manager.Data.GradeUp(); // 진화 실행
+
+            Sound_Manager.instance.Play(Sound.Effect, "effect_00");
+            return;
+        }
+        
+        int nextLevel = Base_Manager.Data.UserData.Level + 2;
+        double totalCost;
+        double costPerClick;
+
+        bool isGradeUp = (nextLevel == 100 || nextLevel == 300 || nextLevel == 700 || nextLevel == 1000);
+
+        if (isGradeUp)
+        {
+            totalCost = RewardCalculator.GetGradeUpCost();
+            costPerClick = totalCost / 5.0;
+            if (Base_Manager.Data.UserData.Yellow < costPerClick && Base_Manager.Data.UserData.Red < costPerClick)
+            {
+                Canvas_Holder.instance.Get_Toast("NM");
+                return;
+            }
+
+            Base_Manager.Data.UserData.Yellow -= costPerClick;
+            Base_Manager.Data.UserData.Red -= costPerClick;
             Base_Manager.Data.LevelUP();
             Sound_Manager.instance.Play(Sound.Effect, "effect_00");
         }
         else
         {
-            requiredCost = RewardCalculator.GetLevelUpCost();
-            if (Base_Manager.Data.UserData.Yellow < requiredCost)
+            totalCost = RewardCalculator.GetLevelUpCost();
+            costPerClick = totalCost / 5.0;
+            if (Base_Manager.Data.UserData.Yellow < costPerClick)
             {
                 Canvas_Holder.instance.Get_Toast("NM");
                 return;
             }
-            
-            Base_Manager.Data.UserData.Yellow -= requiredCost;
+
+            Base_Manager.Data.UserData.Yellow -= costPerClick;
             Base_Manager.Data.LevelUP();
             Sound_Manager.instance.Play(Sound.Effect, "effect_00");
         }
-        
-        Debug.Log($"재화 소모 비용 ::: {requiredCost}, 다음 레벨 ::: {nextLevel}");
+
+        Debug.Log($"재화 소모 비용 ::: {costPerClick}, 총비용 ::: {totalCost}, 다음 레벨 ::: {nextLevel}");
     }
 }

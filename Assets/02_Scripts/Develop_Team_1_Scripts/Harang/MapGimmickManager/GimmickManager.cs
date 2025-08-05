@@ -84,9 +84,9 @@ public class GimmickManager : MonoBehaviour
         mGimmickInitializersMapper = new Dictionary<string, GimmickInitializer>
         {
             { "G_TRP_002", gimmickInitializers[0] }, // 블랙홀
-            // { "G_INT_003", gimmickInitializers[1] }, // 특수한 꽃
-            { "G_ENV_004", gimmickInitializers[1] }, // 레드존
-            { "G_TRG_006", gimmickInitializers[2] }, // 지역 활성화
+            { "G_INT_003", gimmickInitializers[1] }, // 특수한 꽃
+            { "G_ENV_004", gimmickInitializers[2] }, // 레드존
+            { "G_TRG_006", gimmickInitializers[3] }, // 지역 활성화
         };
         
         originalTextColor = modeText[0].color;
@@ -111,6 +111,7 @@ public class GimmickManager : MonoBehaviour
     public void ExecuteGimmickTestButton()
     {
         mReadyGimmickQueue.Clear();
+        mCurrentCost = 1000;
         
         InitializeGimmickManager();
         
@@ -148,7 +149,15 @@ public class GimmickManager : MonoBehaviour
             currentGimmick.DeactivateGimmick();
         }
         
-        currentGimmick = mReadyGimmickQueue.Dequeue();
+        if (mReadyGimmickQueue.Count > 0)
+        {
+            currentGimmick = mReadyGimmickQueue.Dequeue();
+        }
+        else
+        {
+            MyDebug.Log("기믹 큐 없음");
+            yield break;
+        }
         
         currentGimmick.SetGimmickTMP(modeText[0]);
         MyDebug.Log($"{modeText[0].text} is Dequeue");
@@ -279,7 +288,7 @@ public class GimmickManager : MonoBehaviour
     {
         List<GimmickSample> selectedGimmickSamples = new List<GimmickSample>();
         
-        if(mCurrentCost <= 0) return selectedGimmickSamples;
+        if(mCurrentCost <= 0) return selectedGimmickSamples; // 복잡도 점수 없으면 못뽐게
         
         foreach (var grade in mCanSelectAbleGrades) //나올 수 있는 Grade를 전부 조회
         {
@@ -287,8 +296,6 @@ public class GimmickManager : MonoBehaviour
             foreach (var gimmickInitializer in gimmickInitializers)
             {
                 if (gimmickInitializer.Costs[(int)grade] > mCurrentCost) continue;
-
-                mCurrentCost -= gimmickInitializer.Costs[(int)grade];
                 
                 GimmickSample gimmickSample = new GimmickSample()
                 {
@@ -316,25 +323,35 @@ public class GimmickManager : MonoBehaviour
         for (int i = 0; i < count; i++) //count 번 실행 // && pool.Count > 0
         {
             // 아직 남은 후보가 없으면 중단
-            // 이미 뽑은 기믹 타입을 제외
+            // 이미 뽑은 기믹 타입을 제외 && 코스트가 부족한 기믹을 제외
             List<GimmickSample> filteredPool = source
-                .Where(x => !cashGimmickTypes.Contains(x.GimmickInitializer.eGimmick))
+                .Where(x => !cashGimmickTypes.Contains(x.GimmickInitializer.eGimmick)&&
+                    x.GimmickCost <= mCurrentCost)
                 .ToList();
 
             if (filteredPool.Count == 0)
-                break;
+            {
+                MyDebug.Log($"현재 코스트 {mCurrentCost} (으)로 나올 수 있는 기믹 없음");
+                return;
+            }
             
-            float totalWeight = filteredPool.Sum(e => e.GimmickWeight);
-            int rand = (int)Random.Range(0, totalWeight);
+            int totalWeight = filteredPool.Sum(e => e.GimmickWeight);
+            int rand = Random.Range(0, totalWeight); //코스트가 충분하다면 반드시 하나를 뽑게
 
             float cumulative = 0;
+            Gimmick readyGimmick = null;
+            
             foreach (GimmickSample entry in filteredPool)
             {
                 cumulative += entry.GimmickWeight; //가중치 더함
                 
                 if (rand <= cumulative) //추첨
                 {
-                    Gimmick readyGimmick = entry.GimmickInitializer.InitializeGimmick(entry.GimmickGrade); //껍데기를 통해 생성
+                    if (entry.GimmickCost > mCurrentCost) continue; //코스트 부족하면 지나가기
+                    
+                    mCurrentCost -= entry.GimmickCost;
+                    
+                    readyGimmick = entry.GimmickInitializer.InitializeGimmick(entry.GimmickGrade); //껍데기를 통해 생성
                     mReadyGimmickQueue.Enqueue(readyGimmick); // 준비된 기믹에 추가
                     MyDebug.Log($"{readyGimmick.gimmickName} is ready");
                     
@@ -347,6 +364,7 @@ public class GimmickManager : MonoBehaviour
                     break;
                 }
             }
+            return;
         }
     }
 }

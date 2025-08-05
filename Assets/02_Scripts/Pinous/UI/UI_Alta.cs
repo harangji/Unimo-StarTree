@@ -84,6 +84,7 @@ public class UI_Alta : UI_Base
         else
         {
             double yellowCost = RewardCalculator.GetLevelUpCost();
+            yellowCost /= 5;
 
             levelGroup.SetActive(true);
             gradeGroup.SetActive(false);
@@ -94,7 +95,7 @@ public class UI_Alta : UI_Base
         m_Slider.value = Base_Manager.Data.EXP_Percentage();
         m_Slider_Text.text = string.Format("{0:0.00}", Base_Manager.Data.EXP_Percentage() * 100.0f) + "%";
         LevelText.text = "LV." + (Base_Manager.Data.UserData.Level + 1).ToString();
-        NextLevelText.text = StringMethod.ToCurrencyString(RewardCalculator.GetLevelUpCost());
+        // NextLevelText.text = StringMethod.ToCurrencyString(RewardCalculator.GetLevelUpCost());
         // NextLevelText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.NextLevel_Base);
         SecText.text = StringMethod.ToCurrencyString(RewardCalculator.GetYfByAltaLevel()) + "/Sec"
             +"\n" + StringMethod.ToCurrencyString(RewardCalculator.GetOfByAltaLevel()) + "/Sec";
