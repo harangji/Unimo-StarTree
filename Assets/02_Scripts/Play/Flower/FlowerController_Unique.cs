@@ -15,15 +15,17 @@ public class FlowerController_Unique : FlowerController
     private float timeAfterActive = 0.08f;
     private int emGimmickGrade;
 
-    // private readonly IBlessingEffect[] mBlessings = new IBlessingEffect[]
-    // {
-    //     new Blessing_MoveSpeed(),
-    //     new Blessing_Armor(),
-    //     new Blessing_ResourceGain(),
-    //     new Blessing_AuraBoost(),
-    // };
+    private readonly IBlessingEffect[] mBlessings = new IBlessingEffect[]
+    {
+        new Blessing_MoveSpeed(),
+        new Blessing_Armor(),
+        new Blessing_ResourceGain(),
+        new Blessing_AuraBoost(),
+    };
+
+    [SerializeField] private GameObject[] mBlessingsIcon;
     
-    private PlayerStatManager mUnimoData;
+    [SerializeField] private PlayerStatManager mUnimoData;
     
     // Start is called before the first frame update
     new void Start()
@@ -62,15 +64,19 @@ public class FlowerController_Unique : FlowerController
         if (!isGrowing) { isGrowing = true; visual.SetFlowerActivate(isGrowing); }
         timeAfterActive = 0.15f;
         currentGrowth += affection;
-        (visual as FlowerFXController_ST001).AffectFlowerFX(currentGrowth / maxGrowth);
-        if (currentGrowth >= maxGrowth) 
-        { 
-            // mBlessings[Random.Range(0, mBlessings.Length)].Apply(mUnimoData, emGimmickGrade);
+        
+        (visual as FlowerFXController_ST001)?.AffectFlowerFX(currentGrowth / maxGrowth);
+        
+        if (currentGrowth >= maxGrowth)
+        {
+            int r = Random.Range(0, mBlessings.Length);
+            mBlessings[r].Apply(mUnimoData, emGimmickGrade);
+            mBlessingsIcon[r].SetActive(true); //아이콘 표시
+            
             completeBloom();
         }
     }
     
-
     protected virtual void DeactivateFlower()
     {
         GetComponent<Collider>().enabled = false;
