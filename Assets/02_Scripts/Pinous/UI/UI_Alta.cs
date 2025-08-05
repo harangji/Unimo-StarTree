@@ -67,6 +67,35 @@ public class UI_Alta : UI_Base
         double expAdd = Base_Manager.Data.EXP_GET;
         double expMax = Base_Manager.Data.EXP_SET;
         int nextLevel = Base_Manager.Data.UserData.Level + 2;
+        
+        if (Base_Manager.Data.UserData.Level >= Data_Manager.MaxLevel)
+        {
+            levelGroup.SetActive(true);
+            gradeGroup.SetActive(false);
+
+            // 게이지 100% 고정
+            m_Slider.value = 1f;
+            m_Slider_Text.text = "100.00%";
+            NextLevelText.text = "MAX";
+
+            // 레벨
+            LevelText.text = "LV." + (Base_Manager.Data.UserData.Level + 1).ToString();
+
+            // 초당 획득량
+            SecText.text = StringMethod.ToCurrencyString(RewardCalculator.GetYfByAltaLevel()) + "/Sec"
+                + "\n" + StringMethod.ToCurrencyString(RewardCalculator.GetOfByAltaLevel()) + "/Sec";
+
+            LevelBuffColorCheck();
+            TextColorCheck();
+
+            // 버튼 비활성화
+            foreach (var btn in FindObjectsOfType<LevelUp_Button>())
+            {
+                btn.GetComponent<UnityEngine.UI.Button>().interactable = false;
+            }
+
+            return;
+        }
 
         bool isLevelUp = (expNow + expAdd >= expMax);
         bool isGradeUp = (nextLevel == 100 || nextLevel == 300 || nextLevel == 700 || nextLevel == 1000);

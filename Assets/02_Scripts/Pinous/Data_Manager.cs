@@ -20,6 +20,8 @@ public class EXP_DATA
 }
 public class Data_Manager
 {
+    public const int MaxLevel = 999;
+    
     public static SpriteAtlas atlas;
 
     public User_Data UserData = new User_Data();
@@ -82,6 +84,13 @@ public class Data_Manager
     
     public void LevelUP()
     {
+        if (UserData.Level >= MaxLevel)
+        {
+            UserData.EXP = EXP_SET; // EXP 100%로 고정
+            Debug.Log($"[Alta] 최대 레벨({MaxLevel})에 도달하여 레벨업 불가");
+            return;
+        }
+        
         if (PendingGradeUp)
         {
             Debug.Log("[Alta] 진화 대기 상태 - 진화 버튼 클릭 시에만 레벨업 가능");
@@ -118,14 +127,17 @@ public class Data_Manager
             }
             LevelCheck();
             Canvas_Holder.instance.GetLevelCheck();
-            // EXP_SET = CalculateExperienceForLevel(15, UserData.Level + 1, exp_data.EXP);
-            // EXP_GET = CalculateExperienceForLevel(5, UserData.Level + 1, exp_data.GET_EXP);
         }
         Main_UI.instance.Text_Check();
     }
     
     public void GradeUp()
     {
+        if (UserData.Level >= MaxLevel)
+        {
+            Debug.Log($"[Alta] 최대 레벨({MaxLevel})에 도달하여 진화 불가");
+            return;
+        }
         if (!PendingGradeUp) return; // 대기 상태가 아니면 무시
 
         UserData.EXP = 0;
@@ -142,11 +154,7 @@ public class Data_Manager
     // AltaCount 배열에 현재 레벨이 포함되어 있는지 체크
     private bool IsAltaGradeLevel(int level)
     {
-        for (int i = 0; i < AltaCount.Length; i++)
-        {
-            if (AltaCount[i] == level) return true;
-        }
-        return false;
+        return Array.Exists(AltaCount, x => x == level);
     }
 
     public float EXP_Percentage()

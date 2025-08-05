@@ -104,9 +104,29 @@ public class Main_UI : MonoBehaviour
     
     public void Text_Check()
     {
-        double expNow = Base_Manager.Data.UserData.EXP;
-        double expAdd = Base_Manager.Data.EXP_GET;
-        double expMax = Base_Manager.Data.EXP_SET;
+        // double expNow = Base_Manager.Data.UserData.EXP;
+        // double expAdd = Base_Manager.Data.EXP_GET;
+        // double expMax = Base_Manager.Data.EXP_SET;
+        
+        // 최대 레벨 도달 시
+        if (Base_Manager.Data.UserData.Level >= Data_Manager.MaxLevel)
+        {
+            levelUpCostGroup.SetActive(true);
+            gradeUpCostGroup.SetActive(false);
+
+            // 게이지 100% 고정
+            m_Slider.fillAmount = 1f;
+            m_Slider_Text.text = "100.00 %";
+            NextLevelText.text = "MAX";
+
+            // 버튼 비활성화
+            foreach (var btn in FindObjectsOfType<LevelUp_Button>())
+            {
+                btn.GetComponent<UnityEngine.UI.Button>().interactable = false;
+            }
+
+            return; // 이하 일반 로직 실행 안 함
+        }
         
         if (Base_Manager.Data.PendingGradeUp)
         {
@@ -116,8 +136,6 @@ public class Main_UI : MonoBehaviour
             double gradeCost = RewardCalculator.GetGradeUpCost();
             gradeUpYfCostText.text = StringMethod.ToCurrencyString(gradeCost);
             gradeUpOfCostText.text = StringMethod.ToCurrencyString(gradeCost);
-
-            // 이 시점에 일반 레벨업 버튼은 항상 비활성화
         }
         else
         {
@@ -169,13 +187,9 @@ public class Main_UI : MonoBehaviour
         Assets_Text[0].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Yellow);
         Assets_Text[1].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Red);
         Assets_Text[2].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Blue);
-        // Assets_Text[1].text = string.Format("{0:#,###}", Base_Manager.Data.UserData.Red);
-        // Assets_Text[2].text = Base_Manager.Data.UserData.Blue.ToString();
         
         GetSecondText.text = StringMethod.ToCurrencyString(RewardCalculator.GetYfByAltaLevel()) + "/Sec"
             +"\n" + StringMethod.ToCurrencyString(RewardCalculator.GetOfByAltaLevel()) + "/Sec";
-        // GetSecondText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Second_Base) + "/Sec";
-        // NextLevelText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.NextLevel_Base);
 
         NameText.text = Base_Manager.Data.UserData.UserName;
         OnActionEvent?.Invoke();
