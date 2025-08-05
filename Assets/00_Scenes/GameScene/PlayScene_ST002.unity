@@ -7588,7 +7588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 875f2ea96e741a04ab03cffc952d1ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bonusPercent: 50
   duration: 5
 --- !u!114 &1413123119
 MonoBehaviour:
@@ -7602,7 +7601,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea3f40d5689efa74aa228daf29f636a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 5
 --- !u!4 &1413123120
 Transform:
   m_ObjectHideFlags: 0
@@ -12684,7 +12682,7 @@ PrefabInstance:
     - target: {fileID: 4876853301105598581, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4876853301105598584, guid: e542909bea402f345a760b7cda46b419,
         type: 3}

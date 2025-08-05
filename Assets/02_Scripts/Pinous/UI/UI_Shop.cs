@@ -271,7 +271,7 @@ public class UI_Shop : UI_Base
                     Canvas_Holder.instance.NoneClose = true;
                     Canvas_Holder.instance.GetUI("##Reward");
                     Canvas_Holder.UI_Holder.Peek().transform.parent = Canvas_Holder.instance.transform;
-                    Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Reward>().GetRewardInit(RewardState.Character, CharCostumer.Charcater, 0, value, 1);
+                    Canvas_Holder.UI_Holder.Peek().GetComponent<UI_Reward>().GetRewardInit(RewardState.Character, CharCostumer.EQ, 0,1, value);
                     CheckShop();
                 });
                 break;
