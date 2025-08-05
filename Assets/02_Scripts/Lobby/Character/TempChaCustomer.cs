@@ -16,8 +16,10 @@ public class TempChaCustomer : MonoBehaviour
         currentengine = Base_Manager.Data.UserData.selectEngine;
 
         int selectedUnimoID = PlayerPrefs.GetInt("LastSelectedUnimoID", 10101);
-        int selectedEngineID = PlayerPrefs.GetInt("LastSelectedEngineID", 21101);
+        int selectedEngineID = PlayerPrefs.GetInt("LastSelectedEngineID", 20101);
 
+        
+        
         Debug.Log($"[TempChaCustomer] 마지막 선택된 캐릭터 ID : {selectedUnimoID}");
         Debug.Log($"[TempChaCustomer] 마지막 선택된 엔진 ID : {selectedEngineID}");
 
