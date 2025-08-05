@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BossGenerator : MonsterGenerator
 {
@@ -11,7 +13,15 @@ public class BossGenerator : MonsterGenerator
     {
         base.OnEnable();
     }
-    
+
+    private void Start()
+    {
+        if (StageLoader.CurrentStageNumber == 0)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
     private new void Update()
     {
         if (isSpawned) return;
@@ -23,16 +33,16 @@ public class BossGenerator : MonsterGenerator
             StartCoroutine(SpawnBossMonster());
             isSpawned = true;
         }
-        else
-        {
-            // Debug.Log($"Stage number: {StageLoader.CurrentStageNumber}");
-        }
+        // else
+        // {
+        //     // Debug.Log($"Stage number: {StageLoader.CurrentStageNumber}");
+        // }
     }
     
     protected override Vector3 findGenPosition()
     {
         //시드 생성
-        Random.InitState(System.DateTime.Now.Millisecond);
+        Random.InitState(DateTime.Now.Millisecond);
 
         float rand = Random.Range(0f, 1f);
         float radius = (rand > 0.995f) ? genRadius : 0.4f * genRadius * Mathf.Sqrt(-Mathf.Log(1 - rand)) + 1.5f;
