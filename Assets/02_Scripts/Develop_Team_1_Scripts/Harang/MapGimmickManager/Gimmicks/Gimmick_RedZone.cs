@@ -49,6 +49,7 @@ public class Gimmick_RedZone : Gimmick
             {
                 mPlayerIDamageAble = iDamageAble;
                 mbTimeElapsed = 0f; //레드존 시간 초기화
+                mDamageTimeElapsed = 0f;
             }
             else
             {
