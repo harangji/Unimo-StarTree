@@ -9,7 +9,6 @@ public class BoomBoomEngineEffectController : MonoBehaviour
     [SerializeField] private ShieldEffect shieldEffect;
     [SerializeField] private TimedInvincibilityEffect timedInvincibleEffect;
     [SerializeField] private MagicHatEffect magicHatEffect;
-    [SerializeField] private AuraRangeSandCastleEffect sandCastleEffect;
     [SerializeField] private GameObject orbitAuraObject;
     [SerializeField] private GameObject cloudAuraObject;
     
@@ -122,20 +121,6 @@ public class BoomBoomEngineEffectController : MonoBehaviour
             case 313:
                 // 도베르만은 ExecuteEffect로 bReviveUsed = false 초기화만 필요
                 Debug.Log("[EffectController] 도베르만 Init은 TriggerManager에서 처리, ExecuteEffect는 리셋용");
-                break;
-            
-            case 323: // 모래성 엔진 (Aura_Range 20초 누적 성장)
-                if (sandCastleEffect != null)
-                {
-                    int level = EngineLevelSystem.GetUniqueLevel(GameManager.Instance.SelectedEngineID);
-                    //sandCastleEffect.Init(GameManager.Instance.SelectedEngineID, level); // 레벨 기반 성장률 적용
-                    sandCastleEffect.ExecuteEffect(); //  실제 버프 실행
-                    Debug.Log("[EffectController] 모래성 엔진(323) 버프 발동");
-                }
-                else
-                {
-                    Debug.LogWarning("[EffectController] SandCastleEffect 연결 안됨");
-                }
                 break;
             case 318: // 개밥그릇 엔진 (OrbitAura ON)
                 if (orbitAuraObject != null)

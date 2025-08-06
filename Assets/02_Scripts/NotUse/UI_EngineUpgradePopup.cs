@@ -16,14 +16,14 @@ public class UI_EngineUpgradePopup : MonoBehaviour
     [SerializeField] private TextMeshProUGUI mYellowCostText;
     [SerializeField] private TextMeshProUGUI mOrangeCostText;
     
-    [Header("UI °ü·Ã")]
+    [Header("UI ê´€ë ¨")]
     [SerializeField] private RectTransform mBgRectTransform;
 
     private int mEngineID;
     private EngineLevelSystem.EEngineStatType mUpgradeStatType;
     private bool bIsUniqueType;
     
-    private UI_Upgrade mUpgradeUI; // Ã¹ ¹øÂ° ÆË¾÷ ÂüÁ¶
+    private UI_Upgrade mUpgradeUI; // ì²« ë²ˆì§¸ íŒì—… ì°¸ì¡°
 
     public void Init(UI_Upgrade upgradeUI)
     {
@@ -32,15 +32,15 @@ public class UI_EngineUpgradePopup : MonoBehaviour
 
     
     // 2. UI_EngineUpgradePopup.cs
-// °õ°õ¿£ÁøÀº YFGainMult °íÁ¤ Ã³¸®
+// ê³°ê³°ì—”ì§„ì€ YFGainMult ê³ ì • ì²˜ë¦¬
     private EngineLevelSystem.EEngineStatType GetDefaultStatTypeForEngine(int engineID)
     {
         return engineID switch
         {
-            20102 => EngineLevelSystem.EEngineStatType.YFGainMult, // °õ°õ
-            21101 => EngineLevelSystem.EEngineStatType.Health, // ¿ÀÅ©Åë
-            21102 => EngineLevelSystem.EEngineStatType.AuraRange, // ¸¶³à¼Ü
-            21103 => EngineLevelSystem.EEngineStatType.MoveSpd, // ¾ÆÀÌ½ºÅ©¸²
+            20102 => EngineLevelSystem.EEngineStatType.YFGainMult, // ê³°ê³°
+            21101 => EngineLevelSystem.EEngineStatType.Health, // ì˜¤í¬í†µ
+            21102 => EngineLevelSystem.EEngineStatType.AuraRange, // ë§ˆë…€ì†¥
+            21103 => EngineLevelSystem.EEngineStatType.MoveSpd, // ì•„ì´ìŠ¤í¬ë¦¼
             _ => EngineLevelSystem.EEngineStatType.Health
         };
     }
@@ -71,7 +71,7 @@ public class UI_EngineUpgradePopup : MonoBehaviour
             ? GetDefaultStatTypeForEngine(engineID)
             : statType;
 
-        //  °íÀ¯ ¿£ÁøÀÏ °æ¿ì °­Á¦ Ä³½Ã ¸®¼Â
+        //  ê³ ìœ  ì—”ì§„ì¼ ê²½ìš° ê°•ì œ ìºì‹œ ë¦¬ì…‹
         if (bIsUniqueType)
             EngineLevelSystem.ForceReloadUniqueLevel(engineID);
 
@@ -100,7 +100,7 @@ public class UI_EngineUpgradePopup : MonoBehaviour
 
         if (success)
         {
-            Debug.Log($"[{mEngineID}] ·¹º§¾÷ ¼º°ø!");
+            Debug.Log($"[{mEngineID}] ë ˆë²¨ì—… ì„±ê³µ!");
             UpdateAllLevelUI();
         }
     }
@@ -114,33 +114,33 @@ public class UI_EngineUpgradePopup : MonoBehaviour
             ? EngineLevelSystem.GetUniqueLevel(mEngineID)
             : EngineLevelSystem.GetStatLevel(mEngineID, mUpgradeStatType);
 
-        Debug.Log($"[UI] UpdateAllLevelUI È£ÃâµÊ ¢º CurLevel: {curLevel}");
+        Debug.Log($"[UI] UpdateAllLevelUI í˜¸ì¶œë¨ â–¶ CurLevel: {curLevel}");
 
         mYellowCostText.text = StringMethod.ToCurrencyString(RewardCalculator.EngineYellowCost(curLevel));
         mOrangeCostText.text = StringMethod.ToCurrencyString(RewardCalculator.EngineOrangeCost(curLevel));
 
         levelText.text = $"Lv. {curLevel} / {maxLevel}";
 
-        // GrowthTable °ª ¾ÈÀüÇÏ°Ô °¡Á®¿À±â
+        // GrowthTable ê°’ ì•ˆì „í•˜ê²Œ ê°€ì ¸ì˜¤ê¸°
         float growthValue = 0f;
         if (data?.GrowthTable != null && data.GrowthTable.Length > 0)
             growthValue = data.GrowthTable[Mathf.Clamp(curLevel, 0, data.GrowthTable.Length - 1)];
 
-        // DescriptionFormat ¾ÈÀü Ã³¸®
+        // DescriptionFormat ì•ˆì „ ì²˜ë¦¬
         if (!string.IsNullOrEmpty(data?.DescriptionFormat))
         {
-            if (data.DescriptionFormat.Contains("{0")) // Æ÷¸ËÀÌ ÀÖ´Â °æ¿ì
+            if (data.DescriptionFormat.Contains("{0")) // í¬ë§·ì´ ìˆëŠ” ê²½ìš°
             {
                 descriptionText.text = string.Format(data.DescriptionFormat, growthValue);
             }
             else
             {
-                descriptionText.text = data.DescriptionFormat; // ±×´ë·Î Ç¥½Ã
+                descriptionText.text = data.DescriptionFormat; // ê·¸ëŒ€ë¡œ í‘œì‹œ
             }
         }
         else
         {
-            descriptionText.text = string.Empty; // DescriptionFormatÀÌ ¾øÀ¸¸é ºó ¹®ÀÚ¿­
+            descriptionText.text = string.Empty; // DescriptionFormatì´ ì—†ìœ¼ë©´ ë¹ˆ ë¬¸ìì—´
         }
 
         Debug.Log($"[UI] EngineID: {mEngineID}, CurLevel: {curLevel}, GrowthValue(raw): {growthValue}, DisplayText: {descriptionText.text}");
@@ -148,18 +148,18 @@ public class UI_EngineUpgradePopup : MonoBehaviour
 
     public void ResetAllStats()
     {
-        var allEngines = BoomBoomEngineDatabase.GetAllEngines(); // ÀüÃ¼ µî·ÏµÈ ¿£Áø ¸ñ·Ï
+        var allEngines = BoomBoomEngineDatabase.GetAllEngines(); // ì „ì²´ ë“±ë¡ëœ ì—”ì§„ ëª©ë¡
         foreach (var engine in allEngines)
         {
             int engineID = engine.EngineID;
 
-            // 1. ÃÊ±âÈ­
+            // 1. ì´ˆê¸°í™”
             EngineLevelSystem.ResetEngine(engineID);  
 
-            // 2. Ä³½Ã °­Á¦ °»½Å
+            // 2. ìºì‹œ ê°•ì œ ê°±ì‹ 
             EngineLevelSystem.ForceReloadUniqueLevel(engineID);
 
-            // 3. °íÀ¯ È¿°ú ½ºÅ©¸³Æ® Init ÀçÈ£Ãâ (ÇöÀç ÀåÂøµÈ ¿£Áø¸¸ Àû¿ëµÊ)
+            // 3. ê³ ìœ  íš¨ê³¼ ìŠ¤í¬ë¦½íŠ¸ Init ì¬í˜¸ì¶œ (í˜„ì¬ ì¥ì°©ëœ ì—”ì§„ë§Œ ì ìš©ë¨)
             var player = PlaySystemRefStorage.playerStatManager;
             if (player != null)
             {
@@ -173,22 +173,22 @@ public class UI_EngineUpgradePopup : MonoBehaviour
                         {
                             int level = EngineLevelSystem.GetUniqueLevel(engineID);
                             initMethod.Invoke(script, new object[] { engineID, level });
-                            Debug.Log($"[ResetAllStats] Init È£ÃâµÊ: {script.GetType().Name} (EngineID={engineID})");
+                            Debug.Log($"[ResetAllStats] Init í˜¸ì¶œë¨: {script.GetType().Name} (EngineID={engineID})");
                         }
                     }
                 }
             }
         }
 
-        Debug.Log("[ResetAllStats] ÀüÃ¼ ¿£Áø ÃÊ±âÈ­ ¿Ï·á");
+        Debug.Log("[ResetAllStats] ì „ì²´ ì—”ì§„ ì´ˆê¸°í™” ì™„ë£Œ");
 
-        // 4. UI °»½ÅÀº ÇöÀç ¼±ÅÃµÈ ¿£Áø¸¸
+        // 4. UI ê°±ì‹ ì€ í˜„ì¬ ì„ íƒëœ ì—”ì§„ë§Œ
         RefreshUI();
     }
     
     private void RefreshUI()
     {
-        UpdateAllLevelUI(); // ·¹º§ ÅØ½ºÆ® ¹× ¼³¸í ´Ù½Ã °»½Å
+        UpdateAllLevelUI(); // ë ˆë²¨ í…ìŠ¤íŠ¸ ë° ì„¤ëª… ë‹¤ì‹œ ê°±ì‹ 
     }
     
     private void SetEngineSprite(int engineID)
