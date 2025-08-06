@@ -116,11 +116,11 @@ public static class UnimoDatabase
         Grade = new EStatGradeSet { MoveSpd = EStatGrade.B /* 생략 */ }
     };
     
-    // 너구리
+    // 쿠
     private static UnimoData CreateUnimo_Raccoon() => new UnimoData
     {
         UnimoID = 10202,
-        Name = "너구리",
+        Name = "쿠",
         Rarity = "Rare",
         ModelID = "CH012",
         Stat = UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat
@@ -306,11 +306,11 @@ public static class UnimoDatabase
         Grade = new EStatGradeSet { MoveSpd = EStatGrade.A }  // Unique 등급 예시
     };
     
-    // 쿠
+    // 마틸다
     private static UnimoData CreateUnimo_Ku() => new UnimoData
     {
         UnimoID = 10401,
-        Name = "쿠",
+        Name = "마틸다",
         Rarity = "Legend",
         ModelID = "CH006",
         Stat = UnimoLevelSystem.ApplyLevelBonus(new SCharacterStat

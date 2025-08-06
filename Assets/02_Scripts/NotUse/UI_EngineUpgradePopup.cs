@@ -115,13 +115,22 @@ public class UI_EngineUpgradePopup : MonoBehaviour
             : EngineLevelSystem.GetStatLevel(mEngineID, mUpgradeStatType);
 
         Debug.Log($"[UI] UpdateAllLevelUI 호출됨 ▶ CurLevel: {curLevel}");
-        
+    
         mYellowCostText.text = StringMethod.ToCurrencyString(RewardCalculator.EngineYellowCost(curLevel));
         mOrangeCostText.text = StringMethod.ToCurrencyString(RewardCalculator.EngineOrangeCost(curLevel));
 
         levelText.text = $"Lv. {curLevel} / {maxLevel}";
-        float growthValue = data.GrowthTable[Mathf.Clamp(curLevel, 0, data.GrowthTable.Length - 1)];
-        descriptionText.text = string.Format(data.DescriptionFormat, growthValue);
+
+        // 안전하게 GrowthTable 값 가져오기
+        float growthValue = 0f;
+        if (data.GrowthTable != null && data.GrowthTable.Length > 0)
+            growthValue = data.GrowthTable[Mathf.Clamp(curLevel, 0, data.GrowthTable.Length - 1)];
+
+        // DescriptionFormat에 {0}이 있을 때만 포맷 적용
+        if (data.DescriptionFormat.Contains("{0}"))
+            descriptionText.text = string.Format(data.DescriptionFormat, growthValue);
+        else
+            descriptionText.text = data.DescriptionFormat;
     }
 
     public void ResetAllStats()
