@@ -15,6 +15,9 @@ public class Mon005State_Preaction : MonsterState_Preaction
     public override void TransitionAction(MonsterController controller)
     {
         this.controller = controller;
+        
+        controller.canCollide = true;
+        
         setMoveDirVector();
     }
 

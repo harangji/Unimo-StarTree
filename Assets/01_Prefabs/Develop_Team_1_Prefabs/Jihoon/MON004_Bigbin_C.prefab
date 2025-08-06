@@ -231,6 +231,8 @@ MonoBehaviour:
   explodeFX: {fileID: 3334270714622040670, guid: ec76bf7085b617642b864a17d4140558,
     type: 3}
   isExplodeFXAtPlayer: 1
+  canCollide: 0
+  mReducedTime: 0
   pattern: 0
   isBoss: 0
 --- !u!114 &1154712326992935214
@@ -283,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2496f0de79cfafe4089067a76a05df68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCollider: {fileID: 0}
+  mainCollider: {fileID: 1095790574522376776}
   defaultDamage: 59
   appliedDamage: 0
   skillDamages: 70000000490000002f000000
@@ -588,6 +590,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e459e05012a741042859fad9aeab479e, type: 3}
   - {fileID: 8300000, guid: 85b9c227fc4ee6d42bec567b5f1fd2c0, type: 3}
   - {fileID: 8300000, guid: 82efc89ee4e864c4aa08bbdaa995dc69, type: 3}
+  attRange: 1.8
 --- !u!114 &9072651477633676679
 MonoBehaviour:
   m_ObjectHideFlags: 0
