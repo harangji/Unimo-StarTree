@@ -106,12 +106,16 @@ public class PlayTimeManager : MonoBehaviour
     }
     private void timeUp()
     {
-        if (PlaySystemRefStorage.stageManager.GetBonusStage())
+        if (PlaySystemRefStorage.stageManager != null)
         {
-            PlaySystemRefStorage.playProcessController.GameClear();
-            return;
+            PlaySystemRefStorage.stageManager.OnTimeOver();
         }
+        // if (PlaySystemRefStorage.stageManager.GetBonusStage())
+        // {
+        //     PlaySystemRefStorage.playProcessController.GameClear();
+        //     return;
+        // }
         isPaused = true;
-        PlaySystemRefStorage.playProcessController.GameOver();
+        // PlaySystemRefStorage.playProcessController.GameOver();
     }
 }
