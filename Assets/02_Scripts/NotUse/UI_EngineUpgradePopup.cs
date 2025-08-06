@@ -115,22 +115,35 @@ public class UI_EngineUpgradePopup : MonoBehaviour
             : EngineLevelSystem.GetStatLevel(mEngineID, mUpgradeStatType);
 
         Debug.Log($"[UI] UpdateAllLevelUI 호출됨 ▶ CurLevel: {curLevel}");
-    
+
         mYellowCostText.text = StringMethod.ToCurrencyString(RewardCalculator.EngineYellowCost(curLevel));
         mOrangeCostText.text = StringMethod.ToCurrencyString(RewardCalculator.EngineOrangeCost(curLevel));
 
         levelText.text = $"Lv. {curLevel} / {maxLevel}";
 
-        // 안전하게 GrowthTable 값 가져오기
+        // GrowthTable 값 안전하게 가져오기
         float growthValue = 0f;
-        if (data.GrowthTable != null && data.GrowthTable.Length > 0)
+        if (data?.GrowthTable != null && data.GrowthTable.Length > 0)
             growthValue = data.GrowthTable[Mathf.Clamp(curLevel, 0, data.GrowthTable.Length - 1)];
 
-        // DescriptionFormat에 {0}이 있을 때만 포맷 적용
-        if (data.DescriptionFormat.Contains("{0}"))
-            descriptionText.text = string.Format(data.DescriptionFormat, growthValue);
+        // DescriptionFormat 안전 처리
+        if (!string.IsNullOrEmpty(data?.DescriptionFormat))
+        {
+            if (data.DescriptionFormat.Contains("{0")) // 포맷이 있는 경우
+            {
+                descriptionText.text = string.Format(data.DescriptionFormat, growthValue);
+            }
+            else
+            {
+                descriptionText.text = data.DescriptionFormat; // 그대로 표시
+            }
+        }
         else
-            descriptionText.text = data.DescriptionFormat;
+        {
+            descriptionText.text = string.Empty; // DescriptionFormat이 없으면 빈 문자열
+        }
+
+        Debug.Log($"[UI] EngineID: {mEngineID}, CurLevel: {curLevel}, GrowthValue(raw): {growthValue}, DisplayText: {descriptionText.text}");
     }
 
     public void ResetAllStats()
