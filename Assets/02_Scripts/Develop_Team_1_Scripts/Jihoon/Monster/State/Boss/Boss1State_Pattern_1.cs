@@ -28,7 +28,7 @@ public class Boss1State_Pattern_1 : BossState_Pattern
         
         for (int i = 0; i < 4; i++)
         {
-            var mon = Instantiate(pattern1, transform.position + transform.forward * 5f, Quaternion.identity);
+            var mon = Instantiate(pattern1, transform.position + transform.forward * 1.5f, Quaternion.identity);
 
             mon.GetComponent<BossPattern1>().motherDamage = GetComponentInParent<Monster>().skillDamages[0];
 
