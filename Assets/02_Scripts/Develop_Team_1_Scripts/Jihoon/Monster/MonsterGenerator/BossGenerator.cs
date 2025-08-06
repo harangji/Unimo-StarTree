@@ -68,5 +68,6 @@ public class BossGenerator : MonsterGenerator
         
         var boss = Instantiate(monsterPattern1, pos, quat);
         boss.GetComponent<MonsterController>().InitEnemy(playerTransform);
+        gameObject.SetActive(false);
     }
 }

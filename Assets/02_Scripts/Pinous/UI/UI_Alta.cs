@@ -31,6 +31,7 @@ public class UI_Alta : UI_Base
 
     [SerializeField] private Image[] levelBuffImgs;
     [SerializeField] private TextMeshProUGUI[] levelBuffTexts;
+    [SerializeField] private LevelUp_Button levelUp_Button;
     
     public Color[] colors;
     int value;
@@ -89,10 +90,11 @@ public class UI_Alta : UI_Base
             TextColorCheck();
 
             // 버튼 비활성화
-            foreach (var btn in FindObjectsOfType<LevelUp_Button>())
-            {
-                btn.GetComponent<UnityEngine.UI.Button>().interactable = false;
-            }
+            levelUp_Button.canPush = false;
+            // foreach (var btn in FindObjectsOfType<LevelUp_Button>())
+            // {
+            //     btn.GetComponent<UnityEngine.UI.Button>().interactable = false;
+            // }
 
             return;
         }

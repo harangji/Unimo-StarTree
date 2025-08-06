@@ -16,6 +16,8 @@ public class Main_UI : MonoBehaviour
     public Animator StarChangeAnimation;
     public Queue<string> holderQueue = new Queue<string>();
     public Queue<Action> holderQueue_Action = new Queue<Action>();
+    public LevelUp_Button levelUp_Button;
+    
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -120,11 +122,12 @@ public class Main_UI : MonoBehaviour
             NextLevelText.text = "MAX";
 
             // 버튼 비활성화
-            foreach (var btn in FindObjectsOfType<LevelUp_Button>())
-            {
-                btn.GetComponent<UnityEngine.UI.Button>().interactable = false;
-            }
-
+            levelUp_Button.canPush = false;
+            // foreach (var btn in FindObjectsOfType<LevelUp_Button>())
+            // {
+            //     btn.GetComponent<UnityEngine.UI.Button>().interactable = false; //버튼 없으므로 오류
+            // }
+            
             return; // 이하 일반 로직 실행 안 함
         }
         
