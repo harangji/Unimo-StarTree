@@ -99,7 +99,7 @@ public class UI_UpgradePopup : MonoBehaviour
         var unimoStat = new UnimoRuntimeStat(data.Stat);
         unimoStat.RecalculateFinalStat();
 
-        var stat = unimoStat.FinalStat;
+        var stat = unimoStat.BaseStat;
         
         statDetailText[0].text  = $"{stat.Health:N0}";
         statDetailText[1].text  = $"+{stat.Armor:F2}";
