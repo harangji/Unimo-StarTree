@@ -116,15 +116,15 @@ public class Data_Manager
             
             UserData.EXP = 0;
             UserData.Level++;
-            if (UserData.Level >= 99)
-            {
-                // Base_Mng.Analytics.RecordCustomEventWithParameters("Level", UserData.Level);
-                if (UserData.GetGameTwo == false)
-                {
-                    UserData.GetGameTwo = true;
-                    Canvas_Holder.instance.GetUI("##Game");
-                }
-            }
+            // if (UserData.Level >= 99)
+            // {
+            //     Base_Mng.Analytics.RecordCustomEventWithParameters("Level", UserData.Level);
+            //     if (UserData.GetGameTwo == false)
+            //     {
+            //         UserData.GetGameTwo = true;
+            //         Canvas_Holder.instance.GetUI("##Game");
+            //     }
+            // }
             LevelCheck();
             Canvas_Holder.instance.GetLevelCheck();
         }

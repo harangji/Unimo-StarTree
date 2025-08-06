@@ -51,8 +51,11 @@ public class MonsterSpawner : MonoBehaviour
         }
         else
         {
-            // 기존 로직
-            if (stage % 10 == 0)
+            if (stage == 0)
+            {
+                key = "1~9";
+            }   
+            else if (stage % 10 == 0)
             {
                 key = stage.ToString(); // 예: "10"
             }

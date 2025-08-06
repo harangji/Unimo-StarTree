@@ -101,6 +101,8 @@ MonoBehaviour:
   explodeFX: {fileID: 3334270714622040670, guid: eb34b8a18a2aafd40b0beb35cab44d2f,
     type: 3}
   isExplodeFXAtPlayer: 1
+  canCollide: 0
+  mReducedTime: 0
   pattern: 0
   isBoss: 0
 --- !u!114 &1072457946450581001
@@ -130,7 +132,7 @@ MonoBehaviour:
   mainCollider: {fileID: 1072457946450581015}
   defaultDamage: 35
   appliedDamage: 0
-  skillDamage1: 0
+  skillDamages: 
 --- !u!114 &-6918510194173504982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,11 +360,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9021766629439997080}
-  - component: {fileID: 5192825066402759826}
+  - component: {fileID: 5726089614154241628}
   - component: {fileID: 4941083265794410959}
   - component: {fileID: 7395392767952065899}
   - component: {fileID: 9021766629439997083}
   - component: {fileID: 3699253768669764405}
+  - component: {fileID: 2185167490584436307}
   m_Layer: 0
   m_Name: StateStorage
   m_TagString: Untagged
@@ -385,7 +388,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 408123861751237808}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5192825066402759826
+--- !u!114 &5726089614154241628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -394,7 +397,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9021766629439997081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e6894efa8ea2f24bbc758925a776590, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ee0bd9770f9cd44f852866ca7b7636b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &4941083265794410959
@@ -449,6 +452,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disappearFX: {fileID: 8074829830595373886}
+--- !u!114 &2185167490584436307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9021766629439997081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5264f91487ebe540bdab23696d962dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &14151544957541135
 PrefabInstance:
   m_ObjectHideFlags: 0

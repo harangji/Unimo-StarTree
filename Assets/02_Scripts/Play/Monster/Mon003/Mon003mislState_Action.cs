@@ -83,32 +83,26 @@ public class Mon003mislState_Action : MonsterState_Action
     {
         hasBomb = true;
         Instantiate(bombFX, transform.position + 0.7f * Vector3.up, Quaternion.identity);
-        
-        if(!EditorMode.Instance.isInvincible)
+
+        if (!EditorMode.Instance.isInvincible)
         {
             Vector3 playerdiff = controller.transform.position - controller.playerTransform.position;
             if (playerdiff.magnitude < bombRadius)
             {
-                if (controller.playerTransform.TryGetComponent<PlayerStatManager>(out var player))
+                if (controller.playerTransform.TryGetComponent<IDamageAble>(out var player))
                 {
                     var monster = GetComponentInParent<IDamageAble>();
-                    var playerGo = GameObject.FindGameObjectWithTag("Player");
-                    
-                    if (playerGo != null && playerGo.TryGetComponent<IDamageAble>(out var receiver))
-                    {
-                        CombatEvent combatEvent = new CombatEvent
-                        {
-                            Sender = monster,
-                            Receiver = receiver,
-                            Damage = (monster as Monster).appliedDamage,
-                            HitPosition = controller.transform.position,
-                            Collider = null,
-                        };
 
-                        CombatSystem.Instance.AddInGameEvent(combatEvent);
-                    }
-                        
-                    
+                    CombatEvent combatEvent = new CombatEvent
+                    {
+                        Sender = monster,
+                        Receiver = player,
+                        Damage = (monster as Monster).appliedDamage,
+                        HitPosition = controller.transform.position,
+                        Collider = null,
+                    };
+
+                    CombatSystem.Instance.AddInGameEvent(combatEvent);
                 }
             }
         }
