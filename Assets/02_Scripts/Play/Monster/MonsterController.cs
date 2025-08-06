@@ -90,13 +90,15 @@ public class MonsterController : MonoBehaviour
                     {
                         Sender = monster,
                         Receiver = player,
-                        Damage = (monster as Monster).appliedDamage,
+                        Damage = ((Monster)monster).appliedDamage,
                         HitPosition = hitPos,
                         Collider = other,
                         IsStrongKnockback = false,
                     };
                 }
 
+                MyDebug.Log($"combatEvent.Damage: {combatEvent.Damage}!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                MyDebug.Log($"((Monster)monster).appliedDamage: {((Monster)monster).appliedDamage}!!!!!!!!!!!!!!!!!!!!!!!!!");
                 CombatSystem.Instance.AddInGameEvent(combatEvent);
 
                 // player.Hit(collideStunTime, hitPos, GetComponent<Monster>().GetDamage());

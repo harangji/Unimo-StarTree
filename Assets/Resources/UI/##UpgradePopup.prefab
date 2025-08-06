@@ -1815,6 +1815,7 @@ MonoBehaviour:
   - {fileID: 7262976469239627000}
   - {fileID: 1393352952739931340}
   - {fileID: 7283075887715502085}
+  mBgRectTransform: {fileID: 3134950271005750552}
 --- !u!1 &968360667085799058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2654,9 +2655,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Upgrade, Assembly-CSharp
-        m_MethodName: GetEQ
+      - m_Target: {fileID: 3718445108954546844}
+        m_TargetAssemblyTypeName: UI_UpgradePopup, Assembly-CSharp
+        m_MethodName: OnClickBBEngineTab
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11246,7 +11247,7 @@ GameObject:
   - component: {fileID: 7286539519324479757}
   - component: {fileID: 7831073785470967717}
   m_Layer: 5
-  m_Name: BG
+  m_Name: StatBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14627,7 +14628,7 @@ GameObject:
   - component: {fileID: 8859434263366323932}
   - component: {fileID: 8719164936223138363}
   m_Layer: 5
-  m_Name: BG
+  m_Name: AllBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14668,14 +14669,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8593616943704649210}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
-  m_RaycastTarget: 0
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

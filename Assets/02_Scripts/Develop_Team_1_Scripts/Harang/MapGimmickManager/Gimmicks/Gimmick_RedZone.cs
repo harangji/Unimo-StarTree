@@ -17,13 +17,13 @@ public class Gimmick_RedZone : Gimmick
     
     [field: SerializeField, LabelText("레드존 크기"), Tooltip("레드존 피해 구역"), Required, Space]
     private float EffectiveRange { get; set; } = 6.7f;
-
+    
+    [SerializeField] private GameObject warningParticle;
+    [SerializeField] private GameObject fireParticle;
+    
     //private
     private IDamageAble mPlayerIDamageAble { get; set; }
     private float mbTimeElapsed { get; set; } = 0f;
-
-    [SerializeField] private GameObject warningParticle;
-    [SerializeField] private GameObject fireParticle;
     
     private float mWaitWarningDuration = 5.0f;
     
@@ -49,6 +49,7 @@ public class Gimmick_RedZone : Gimmick
             {
                 mPlayerIDamageAble = iDamageAble;
                 mbTimeElapsed = 0f; //레드존 시간 초기화
+                mDamageTimeElapsed = 0f;
             }
             else
             {
@@ -133,10 +134,10 @@ public class Gimmick_RedZone : Gimmick
     public IEnumerator FireParticleWaitCoroutine()
     {
         warningParticle.SetActive(true);
-        mbFireParticleStart = true;
         
         yield return new WaitForSeconds(mWaitWarningDuration); //경고 시간 동안 대기
         
+        mbFireParticleStart = true;
         warningParticle.SetActive(false);
         fireParticle.SetActive(true);
     }

@@ -76,22 +76,33 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     private void InitLevelUpBUtton()
     {
-        int nextLevel = Base_Manager.Data.UserData.Level + 2;
+        if (Base_Manager.Data.PendingGradeUp)
+        {
+            double gradeCost = RewardCalculator.GetGradeUpCost();
+            if (Base_Manager.Data.UserData.Yellow < gradeCost || Base_Manager.Data.UserData.Red < gradeCost)
+            {
+                Canvas_Holder.instance.Get_Toast("NM");
+                return;
+            }
+
+            Base_Manager.Data.UserData.Yellow -= gradeCost;
+            Base_Manager.Data.UserData.Red -= gradeCost;
+            Base_Manager.Data.GradeUp(); // 진화 실행
+
+            Sound_Manager.instance.Play(Sound.Effect, "effect_00");
+            return;
+        }
         
-        double expNow = Base_Manager.Data.UserData.EXP;
-        double expAdd = Base_Manager.Data.EXP_GET;
-        double expMax = Base_Manager.Data.EXP_SET;
-
-        bool isLevelUp = (expNow + expAdd >= expMax);
-        bool isGradeUp = (nextLevel == 100 || nextLevel == 300 || nextLevel == 700 || nextLevel == 1000);
-
+        int nextLevel = Base_Manager.Data.UserData.Level + 2;
         double totalCost;
         double costPerClick;
 
-        if (isLevelUp && isGradeUp)
+        bool isGradeUp = (nextLevel == 100 || nextLevel == 300 || nextLevel == 700 || nextLevel == 1000);
+
+        if (isGradeUp)
         {
             totalCost = RewardCalculator.GetGradeUpCost();
-            costPerClick = totalCost / 5.0; // 5회 클릭당 1레벨업
+            costPerClick = totalCost / 5.0;
             if (Base_Manager.Data.UserData.Yellow < costPerClick && Base_Manager.Data.UserData.Red < costPerClick)
             {
                 Canvas_Holder.instance.Get_Toast("NM");

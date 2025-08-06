@@ -11,7 +11,7 @@ public class Main_Character : MonoBehaviour
 
     IEnumerator Get_NeglectReward()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         //double valueCount = (Base_Mng.Data.data.BestScoreGameOne + Base_Mng.Data.data.BestScoreGameTwo) / 10.0f;
         //Debug.Log(valueCount);
@@ -27,9 +27,20 @@ public class Main_Character : MonoBehaviour
         
         Debug.Log($"ÇöÀç ·¹º§ ::: {Base_Manager.Data.UserData.Level+1} ::: È¹µæ ÀçÈ­ ::: ³ë¶û {yfReward}, ÁÖÈ² {ofReward}");
 
-        var go = Instantiate(Resources.Load<Get_TEXT>("TextMESH"));
-        go.Init(transform.position, yfReward);
-        go.Init(transform.position, ofReward);
+        if (yfReward >= 1)
+        {
+            var go = Instantiate(Resources.Load<Get_TEXT>("TextMESH"));
+            go.Init(transform.position, yfReward);
+        }
+        
+        yield return new WaitForSeconds(0.5f);
+
+        if (ofReward >= 1)
+        {
+            var go = Instantiate(Resources.Load<Get_TEXT>("TextMESH_Orange"));
+            go.Init(transform.position, ofReward);
+        }
+        
 
         StartCoroutine(Get_NeglectReward());
     }

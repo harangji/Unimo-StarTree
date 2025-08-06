@@ -38,15 +38,30 @@ public class MonsterSpawner : MonoBehaviour
         int stage = StageLoader.CurrentStageNumber;
         string key;
 
-        if (stage % 10 == 0)
+        if (stage >= 101)
         {
-            key = stage.ToString(); // 예: "10"
+            if (stage % 10 == 0)
+            {
+                key = "100";
+            }
+            else
+            {
+                key = "91~99";
+            }
         }
         else
         {
-            int min = (stage / 10) * 10 + 1;
-            int max = ((stage / 10) + 1) * 10 - 1;
-            key = $"{min}~{max}"; // 예: "1~9", "11~19"
+            // 기존 로직
+            if (stage % 10 == 0)
+            {
+                key = stage.ToString(); // 예: "10"
+            }
+            else
+            {
+                int min = (stage / 10) * 10 + 1;
+                int max = ((stage / 10) + 1) * 10 - 1;
+                key = $"{min}~{max}"; // 예: "1~9", "11~19"
+            }
         }
 
         currentSpawnData = spawnData.GetData(key);

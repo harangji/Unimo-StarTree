@@ -104,33 +104,61 @@ public class Main_UI : MonoBehaviour
     
     public void Text_Check()
     {
-        double expNow = Base_Manager.Data.UserData.EXP;
-        double expAdd = Base_Manager.Data.EXP_GET;
-        double expMax = Base_Manager.Data.EXP_SET;
-        int nextLevel = Base_Manager.Data.UserData.Level + 2;
-
-        bool isLevelUp = (expNow + expAdd >= expMax);
-        bool isGradeUp = (nextLevel == 100 || nextLevel == 300 || nextLevel == 700 || nextLevel == 1000);
-
-        if (isLevelUp && isGradeUp)
+        // double expNow = Base_Manager.Data.UserData.EXP;
+        // double expAdd = Base_Manager.Data.EXP_GET;
+        // double expMax = Base_Manager.Data.EXP_SET;
+        
+        // 최대 레벨 도달 시
+        if (Base_Manager.Data.UserData.Level >= Data_Manager.MaxLevel)
         {
-            double gradeCost = RewardCalculator.GetGradeUpCost();
+            levelUpCostGroup.SetActive(true);
+            gradeUpCostGroup.SetActive(false);
 
+            // 게이지 100% 고정
+            m_Slider.fillAmount = 1f;
+            m_Slider_Text.text = "100.00 %";
+            NextLevelText.text = "MAX";
+
+            // 버튼 비활성화
+            foreach (var btn in FindObjectsOfType<LevelUp_Button>())
+            {
+                btn.GetComponent<UnityEngine.UI.Button>().interactable = false;
+            }
+
+            return; // 이하 일반 로직 실행 안 함
+        }
+        
+        if (Base_Manager.Data.PendingGradeUp)
+        {
             levelUpCostGroup.SetActive(false);
             gradeUpCostGroup.SetActive(true);
 
+            double gradeCost = RewardCalculator.GetGradeUpCost();
             gradeUpYfCostText.text = StringMethod.ToCurrencyString(gradeCost);
             gradeUpOfCostText.text = StringMethod.ToCurrencyString(gradeCost);
         }
         else
         {
-            double yellowCost = RewardCalculator.GetLevelUpCost();
-            yellowCost /= 5;
+            bool expFull = Base_Manager.Data.EXP_Percentage() >= 1f;
+            bool isExactGradeLevel = Array.Exists(Base_Manager.Data.AltaCount,
+                lvl => lvl == Base_Manager.Data.UserData.Level);
 
-            levelUpCostGroup.SetActive(true);
-            gradeUpCostGroup.SetActive(false);
-
-            NextLevelText.text = StringMethod.ToCurrencyString(yellowCost);
+            if (expFull && isExactGradeLevel)
+            {
+                levelUpCostGroup.SetActive(false);
+                gradeUpCostGroup.SetActive(true);
+                double gradeCost = RewardCalculator.GetGradeUpCost();
+                gradeUpYfCostText.text = StringMethod.ToCurrencyString(gradeCost);
+                gradeUpOfCostText.text = StringMethod.ToCurrencyString(gradeCost);
+            }
+            else
+            {
+                // 그 외는 일반 레벨업 UI
+                double yellowCost = RewardCalculator.GetLevelUpCost() / 5;
+                levelUpCostGroup.SetActive(true);
+                gradeUpCostGroup.SetActive(false);
+                NextLevelText.text = StringMethod.ToCurrencyString(yellowCost);
+            }
         }
         
         bool NoneDefault = false;
@@ -159,13 +187,9 @@ public class Main_UI : MonoBehaviour
         Assets_Text[0].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Yellow);
         Assets_Text[1].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Red);
         Assets_Text[2].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Blue);
-        // Assets_Text[1].text = string.Format("{0:#,###}", Base_Manager.Data.UserData.Red);
-        // Assets_Text[2].text = Base_Manager.Data.UserData.Blue.ToString();
         
         GetSecondText.text = StringMethod.ToCurrencyString(RewardCalculator.GetYfByAltaLevel()) + "/Sec"
             +"\n" + StringMethod.ToCurrencyString(RewardCalculator.GetOfByAltaLevel()) + "/Sec";
-        // GetSecondText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Second_Base) + "/Sec";
-        // NextLevelText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.NextLevel_Base);
 
         NameText.text = Base_Manager.Data.UserData.UserName;
         OnActionEvent?.Invoke();

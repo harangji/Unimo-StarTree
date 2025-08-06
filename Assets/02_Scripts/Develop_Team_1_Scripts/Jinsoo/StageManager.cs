@@ -151,6 +151,7 @@ public class StageManager : MonoBehaviour
 
     private void StageClear()
     {
+        if (StageLoader.CurrentStageNumber == 0) { PlaySceneController.Instance.LoadLobby(); }
         Debug.Log("스테이지 클리어!");
         StageLoader.SaveClearedStage(mStageData.StageNumber); // 다음 스테이지 오픈 저장
         // 보너스 스테이지 별 저장 처리
@@ -229,6 +230,7 @@ public class StageManager : MonoBehaviour
 
     private void StageFail()
     {
+        if (StageLoader.CurrentStageNumber == 0) { PlaySceneController.Instance.LoadLobby(); }
         Debug.Log("스테이지 실패!");
         PlaySystemRefStorage.playProcessController.GameOver();
     }

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -27,8 +28,18 @@ public class UI_UpgradePopup : MonoBehaviour
     [Header("상세 스탯")] 
     [SerializeField] private GameObject statDetailPanel;
     [SerializeField] private TextMeshProUGUI[] statDetailText;
+    
+    [Header("UI 관련")]
+    [SerializeField] private RectTransform mBgRectTransform;
 
     private int currentUnitID;
+    private UI_Upgrade mUpgradeUI;
+    
+    public void Init(UI_Upgrade upgradeUI)
+    {
+        mUpgradeUI = upgradeUI;
+    }
+    
 
     private void Awake()
     {
@@ -36,6 +47,20 @@ public class UI_UpgradePopup : MonoBehaviour
         {
             int statIndex = i;  // 클로저 방지
             upgradeButtons[i].onClick.AddListener(() => LevelUp((UnimoLevelSystem.StatType)statIndex));
+        }
+    }
+    
+    void Update()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            if (!RectTransformUtility.RectangleContainsScreenPoint(
+                    mBgRectTransform, 
+                    Input.mousePosition, 
+                    null))
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -179,6 +204,16 @@ public class UI_UpgradePopup : MonoBehaviour
                 maxLevelRemoves[i].SetActive(false);
                 maxLevelTexts[i].SetActive(true);
             }
+        }
+    }
+    
+    public void OnClickBBEngineTab()
+    {
+        CloseUI(); 
+
+        if (mUpgradeUI != null)
+        {
+            mUpgradeUI.GetEQ();
         }
     }
 
