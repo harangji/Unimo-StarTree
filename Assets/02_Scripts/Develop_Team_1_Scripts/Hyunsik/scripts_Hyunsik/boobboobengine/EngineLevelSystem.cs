@@ -20,7 +20,7 @@ public static class EngineLevelSystem
     private static Dictionary<int, int[]> mEngineStatLevels = new();
     private static Dictionary<int, int> mEngineUniqueLevels = new();
 
-    // ----------------- ÀÏ¹İ ½ºÅÈ ·¹º§ -----------------
+    // ----------------- ì¼ë°˜ ìŠ¤íƒ¯ ë ˆë²¨ -----------------
     public static bool LevelUpStat(int engineID, EEngineStatType statType, int amount = 1)
     {
         int[] levels = GetOrCreateStatLevelArray(engineID);
@@ -67,7 +67,7 @@ public static class EngineLevelSystem
         return levels;
     }
 
-    // ----------------- °íÀ¯ È¿°ú ·¹º§ -----------------
+    // ----------------- ê³ ìœ  íš¨ê³¼ ë ˆë²¨ -----------------
     public static bool LevelUpUnique(int engineID, int amount = 1)
     {
         int cur = GetUniqueLevel(engineID);
@@ -94,7 +94,7 @@ public static class EngineLevelSystem
             lv = PlayerPrefs.GetInt(FormatUniqueKey(engineID), 0);
             mEngineUniqueLevels[engineID] = lv;
 
-            Debug.Log($"[EngineLevelSystem] PlayerPrefs ·ÎµåµÊ: {FormatUniqueKey(engineID)} = {lv}");
+            Debug.Log($"[EngineLevelSystem] PlayerPrefs ë¡œë“œë¨: {FormatUniqueKey(engineID)} = {lv}");
         }
         return lv;
     }
@@ -103,7 +103,7 @@ public static class EngineLevelSystem
     {
         int lv = PlayerPrefs.GetInt(FormatUniqueKey(engineID), 0);
         mEngineUniqueLevels[engineID] = lv;
-        Debug.Log($"[EngineLevelSystem] Ä³½Ã °­Á¦ °»½Å: {FormatUniqueKey(engineID)} = {lv}");
+        Debug.Log($"[EngineLevelSystem] ìºì‹œ ê°•ì œ ê°±ì‹ : {FormatUniqueKey(engineID)} = {lv}");
     }
 
     public static void SetUniqueLevel(int engineID, int level)
@@ -112,17 +112,17 @@ public static class EngineLevelSystem
         PlayerPrefs.SetInt(FormatUniqueKey(engineID), level);
         PlayerPrefs.Save();
 
-        Debug.Log($"[EngineLevelSystem] °íÀ¯ ·¹º§ ÀúÀå ¿Ï·á: {FormatUniqueKey(engineID)} = {level}");
+        Debug.Log($"[EngineLevelSystem] ê³ ìœ  ë ˆë²¨ ì €ì¥ ì™„ë£Œ: {FormatUniqueKey(engineID)} = {level}");
     }
 
-    // ----------------- ÃÊ±âÈ­ ±â´É -----------------
+    // ----------------- ì´ˆê¸°í™” ê¸°ëŠ¥ -----------------
     public static void ResetEngine(int engineID)
     {
-        //  °íÀ¯ ·¹º§ Ä³½Ã Á¦°Å
+        //  ê³ ìœ  ë ˆë²¨ ìºì‹œ ì œê±°
         mEngineUniqueLevels.Remove(engineID); 
         PlayerPrefs.DeleteKey($"Engine_{engineID}_UniqueLevel");
 
-        //  ÀÏ¹İ ½ºÅÈ ·¹º§ ÃÊ±âÈ­
+        //  ì¼ë°˜ ìŠ¤íƒ¯ ë ˆë²¨ ì´ˆê¸°í™”
         mEngineStatLevels[engineID] = new int[StatCount];
         for (int i = 0; i < StatCount; i++)
             PlayerPrefs.DeleteKey($"Engine_{engineID}_Stat_{i}");
@@ -130,7 +130,7 @@ public static class EngineLevelSystem
         PlayerPrefs.Save();
     }
 
-    // ----------------- Key ÇïÆÛ -----------------
+    // ----------------- Key í—¬í¼ -----------------
     private static string FormatStatKey(int engineID, int statIndex)
     {
         return $"Engine_{engineID}_Stat_{statIndex}";

@@ -38235,7 +38235,6 @@ MonoBehaviour:
   shieldEffect: {fileID: 1198909784}
   timedInvincibleEffect: {fileID: 1198909783}
   magicHatEffect: {fileID: 1198909782}
-  sandCastleEffect: {fileID: 1198909781}
   orbitAuraObject: {fileID: 2008979350}
   cloudAuraObject: {fileID: 628752263}
 --- !u!4 &872065067
@@ -51090,7 +51089,6 @@ GameObject:
   - component: {fileID: 1198909780}
   - component: {fileID: 1198909779}
   - component: {fileID: 1198909778}
-  - component: {fileID: 1198909781}
   - component: {fileID: 1198909785}
   - component: {fileID: 1198909782}
   - component: {fileID: 1198909784}
@@ -51142,20 +51140,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1198909781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1198909777}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76980e30230614f4db7edf7c81d935d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rangeIncreasePercent: 0.5
-  growDuration: 20
 --- !u!114 &1198909782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57353,6 +57337,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb7ef6ba13e1a6d489db370363c05410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isStop: 0000000000
+  isAllStop: 0
   spawnData: {fileID: 11400000, guid: 9191764d2ba2174489597fdb67435be1, type: 2}
   monsterFactories:
   - {fileID: 513950975}
@@ -96495,12 +96481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9f600b74f87fd4da7318b7f9d045e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawners:
-  - {fileID: 2044775332}
-  - {fileID: 1803579853}
-  - {fileID: 622374548}
-  - {fileID: 326843633}
-  - {fileID: 1398289740}
+  monsterSpawner: {fileID: 0}
   buttonsText:
   - {fileID: 2121115336}
   - {fileID: 1672272295}
