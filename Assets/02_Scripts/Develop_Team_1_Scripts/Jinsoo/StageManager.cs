@@ -70,6 +70,8 @@ public class StageManager : MonoBehaviour
         mStageText.text = mStageData.StageNumber.ToString();
         
         DeleteText();
+        
+        Debug.Log($"BonusStage임 ? ::: {mStageData.IsBonusStage}");
     }
     
     // 나중에 지울 함수 (기획팀이 밸런스 패치를 위해 화면에 띄울 난이도 Text 함수)
@@ -133,7 +135,7 @@ public class StageManager : MonoBehaviour
     }
 
     // 타임 오버 시 호출됨
-    private void OnTimeOver()
+    public void OnTimeOver()
     {
         if (mbStageEnded) return;
 

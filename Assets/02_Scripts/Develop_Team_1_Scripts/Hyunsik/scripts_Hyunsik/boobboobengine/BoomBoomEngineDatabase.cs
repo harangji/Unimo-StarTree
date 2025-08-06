@@ -717,9 +717,9 @@ public static class BoomBoomEngineDatabase
             ModelID = "EQC006_SandCastle",
             SkillID = 323,
             IsUniqueType = true,
-            DescriptionFormat = "오라 범위, 오라 강도 {0:P2} 증가",
+            DescriptionFormat = "체력과 방어력 50% 감소. 오라 범위, 오라 강도 {0:P2} 증가",
             GrowthTable = Enumerable.Range(0, 51)
-                .Select(i => 0.0030f + i * ((0.0430f - 0.0030f) / 50f)) // 0레벨: 0.0030 (0.30%), 50레벨: 0.0430 (4.30%)
+                .Select(i => 0.0030f + i * ((0.0070f - 0.0030f) / 50f)) 
                 .ToArray(),
             StatBonus = new SCharacterStat { },
             GrowthStatCalculator = (level, table, stat) =>
@@ -727,7 +727,10 @@ public static class BoomBoomEngineDatabase
                 float bonusPercent = table[Mathf.Clamp(level, 0, table.Length - 1)];
                 stat.AuraRange = bonusPercent;  // 직접 비율로 넣기
                 stat.AuraStr = bonusPercent;
-                Debug.Log($"[모래성엔진] AuraRange, AuraStr 보정률 적용: {bonusPercent * 100f}% (레벨 {level})");
+                stat.Health = -0.50f;  // -50% 감소
+                stat.Armor = -0.50f;   // -50% 감소
+                
+                Debug.Log($"[모래성엔진] AuraRange, AuraStr +{bonusPercent * 100f}%, Health -50%, Armor -50% (레벨 {level})");
                 return stat;
             }
         };

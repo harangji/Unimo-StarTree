@@ -38051,7 +38051,6 @@ MonoBehaviour:
   shieldEffect: {fileID: 1198909784}
   timedInvincibleEffect: {fileID: 1198909783}
   magicHatEffect: {fileID: 1198909782}
-  sandCastleEffect: {fileID: 1198909781}
   orbitAuraObject: {fileID: 2008979350}
   cloudAuraObject: {fileID: 628752263}
 --- !u!4 &872065067
@@ -50365,7 +50364,6 @@ GameObject:
   - component: {fileID: 1198909780}
   - component: {fileID: 1198909779}
   - component: {fileID: 1198909778}
-  - component: {fileID: 1198909781}
   - component: {fileID: 1198909785}
   - component: {fileID: 1198909782}
   - component: {fileID: 1198909784}
@@ -50417,20 +50415,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1198909781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1198909777}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76980e30230614f4db7edf7c81d935d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rangeIncreasePercent: 0.5
-  growDuration: 20
 --- !u!114 &1198909782
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -100,7 +100,7 @@ public class PlayerVisualController : MonoBehaviour
     {
         ratio = Mathf.Clamp01(ratio);
         float newspeed = (1f-ratio) * specialAnimMinSpeed + ratio * specialAnimMaxSpeed;
-        // if (equipAnimator != null) { equipAnimator.SetFloat("movesync", newspeed); }
+        // if (equipAnimator != null) { equipAnimator.SetFloat("movesync", newspeed); } 
         // if (characterAnimator != null) { characterAnimator.SetFloat("movesync", newspeed); }
     }
     public void AddInvincibleBlinker(HitInvincibleBlinker blinker)

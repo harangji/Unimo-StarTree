@@ -7588,7 +7588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 875f2ea96e741a04ab03cffc952d1ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bonusPercent: 50
   duration: 5
 --- !u!114 &1413123119
 MonoBehaviour:
@@ -7602,7 +7601,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea3f40d5689efa74aa228daf29f636a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 5
 --- !u!4 &1413123120
 Transform:
   m_ObjectHideFlags: 0
@@ -12358,7 +12356,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uACC4\uC18D\uD558\uAE30"
+  m_text: Continuar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5e994e850b8324b18a58aa8c049a7865, type: 2}
   m_sharedMaterial: {fileID: -676856466882600281, guid: 5e994e850b8324b18a58aa8c049a7865,
@@ -12386,13 +12384,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
+  m_fontSize: 60.55
   m_fontSizeBase: 75
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontSizeMax: 62.16
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -12566,7 +12564,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB2E4\uC2DC\uD558\uAE30"
+  m_text: Reintentar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5e994e850b8324b18a58aa8c049a7865, type: 2}
   m_sharedMaterial: {fileID: -676856466882600281, guid: 5e994e850b8324b18a58aa8c049a7865,
@@ -12594,13 +12592,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
+  m_fontSize: 57.35
   m_fontSizeBase: 75
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontSizeMax: 62.16
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -12684,7 +12682,7 @@ PrefabInstance:
     - target: {fileID: 4876853301105598581, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4876853301105598584, guid: e542909bea402f345a760b7cda46b419,
         type: 3}
@@ -14376,7 +14374,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uADF8\uB9CC\uD558\uAE30"
+  m_text: Salir
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5e994e850b8324b18a58aa8c049a7865, type: 2}
   m_sharedMaterial: {fileID: -676856466882600281, guid: 5e994e850b8324b18a58aa8c049a7865,
@@ -14404,13 +14402,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
+  m_fontSize: 62.16
   m_fontSizeBase: 75
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontSizeMax: 62.16
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

@@ -39,12 +39,6 @@ public class EngineEffectTriggerManager : MonoBehaviour
             StartSkillInactiveTimer();
         }
 
-        //if (skillID == 323)
-        //{
-        //    Debug.Log("[EngineTrigger] 323번(모래성) 엔진 감지됨 → 비활성화 타이머 시작");
-        //    StartSkillInactiveTimer();
-        //}
-
         UpdateOrbitAuraState();
         
         BoomBoomEngineData data = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID);
@@ -60,7 +54,6 @@ public class EngineEffectTriggerManager : MonoBehaviour
     private int selectedSkillID;
     void Update()
     {
-        // int selectedSkillID = BoomBoomEngineDatabase.GetEngineData(GameManager.Instance.SelectedEngineID)?.SkillID ?? -1;
         if (bSkillInactiveTimer)
         {
             inactiveSkillTime += Time.deltaTime;
@@ -84,11 +77,6 @@ public class EngineEffectTriggerManager : MonoBehaviour
                 if (sandcastleTimer >= sandcastleTriggerInterval)
                 {
                     var sandCastleEffect = PlaySystemRefStorage.playerStatManager.GetComponent<AuraRangeSandCastleEffect>();
-                    //if (sandCastleEffect != null && !sandCastleEffect.IsActive())
-                    //{
-                    //    int level = EngineLevelSystem.GetUniqueLevel(GameManager.Instance.SelectedEngineID);
-                    //    StartCoroutine(WaitForStatThenActivate(PlaySystemRefStorage.playerStatManager, sandCastleEffect, GameManager.Instance.SelectedEngineID, level));
-                    //}
 
                     sandcastleTimer = 0f;
                 }
@@ -251,8 +239,7 @@ public class EngineEffectTriggerManager : MonoBehaviour
     private IEnumerator WaitForStatThenActivate(PlayerStatManager target, AuraRangeSandCastleEffect sandCastle, int engineID, int level)
     {
         yield return new WaitUntil(() => target != null && target.GetStat() != null);
-
-        //sandCastle.Init(engineID, level);
+        
         sandCastle.ExecuteEffect();
     }
 }
