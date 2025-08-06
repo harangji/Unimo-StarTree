@@ -63,8 +63,10 @@ public class GetRewardScript : MonoBehaviour
             Base_Manager.Data.UserData.Yellow += yellow;
             Base_Manager.Data.UserData.Red += red;
             
-            YellowText.text = (yellow * 2).ToString();
-            RedText.text = (red * 2).ToString();
+            YellowText.text = StringMethod.ToCurrencyString(yellow*2);
+            RedText.text = StringMethod.ToCurrencyString(red*2);
+            
+            Base_Manager.Data.SaveUserData();
             
             // Base_Manager.Data.UserData.Red += double.Parse(texts[0].text);
             // var yellow = StringMethod.ToCurrencyDouble(texts[1].text);
