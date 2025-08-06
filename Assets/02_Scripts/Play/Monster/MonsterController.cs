@@ -24,7 +24,7 @@ public class MonsterController : MonoBehaviour
     public bool isExplode = true;
     public GameObject explodeFX;
     public bool isExplodeFXAtPlayer = true;
-
+    [HideInInspector] public bool canCollide;
     [SerializeField] private float mReducedTime = 0; // 몬스터마다 줄이는 시간
 
     protected MonsterMachine machine;
@@ -42,6 +42,11 @@ public class MonsterController : MonoBehaviour
     
     public event Action<MonsterController> OnDestroyed;
 
+    private void Awake()
+    {
+        canCollide = true;
+    }
+
     private void Update()
     {
         if (isBoss) return;
@@ -55,7 +60,7 @@ public class MonsterController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isExplode || EditorMode.Instance.isInvincible)
+        if (!isExplode || EditorMode.Instance.isInvincible || !canCollide)
         {
             return;
         }
