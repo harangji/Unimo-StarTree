@@ -185,7 +185,7 @@ public static class BoomBoomEngineDatabase
         {
             // 10초 동안 유니모의 Critical_Chance 100%
             EngineID = 20202,
-            Name = "너구리",
+            Name = "쿠",
             Rarity = "Rare",
             ModelID = "EQC004_Sack",
             SkillID = 304,
@@ -265,10 +265,18 @@ public static class BoomBoomEngineDatabase
             Rarity = "Rare",
             ModelID = "EQC005_HatchedEgg",
             SkillID = 307,
-            StatBonus = new SCharacterStat
+            IsUniqueType = true,
+            DescriptionFormat = "방어력 {0:P2} 증가",
+            GrowthTable = Enumerable.Range(0, 51)
+                .Select(i => 0.001f + i * ((0.0035f - 0.001f) / 50f)) // 0.001 → 0.0035
+                .ToArray(),
+            StatBonus = new SCharacterStat { },
+            GrowthStatCalculator = (level, table, stat) =>
             {
-                YFGainMult = 1f,
-                OFGainMult = 1f
+            float bonusPercent = table[Mathf.Clamp(level, 0, table.Length - 1)];
+            stat.Armor = bonusPercent;  // 직접 비율로 넣기
+            Debug.Log($"[둠둠엔진] Armor 보정률 적용: {bonusPercent * 100f}% (레벨 {level})");
+            return stat;
             }
         };
 
@@ -280,17 +288,28 @@ public static class BoomBoomEngineDatabase
     {
         var data = new BoomBoomEngineData
         {
-            // 매초마다 주변 별꽃들의 개화도 n% 증가
+         
             EngineID = 20301,
             Name = "고등어",
             Rarity = "Unique",
             ModelID = "EQC005_CleanBucket",
             SkillID = 308,
-            DescriptionFormat = "제작 못함",
-            StatBonus = new SCharacterStat { }
+            IsUniqueType = true,
+            DescriptionFormat = "방어력, 오라 강도 {0:P2} 증가",
+            GrowthTable = Enumerable.Range(0, 51)
+                .Select(i => 0.0001f + i * ((0.0026f - 0.0001f) / 50f)) // 0.01% → 0.26%
+                .ToArray(),
+            StatBonus = new SCharacterStat { },
+            GrowthStatCalculator = (level, table, stat) =>
+            {
+                float bonusPercent = table[Mathf.Clamp(level, 0, table.Length - 1)];
+                stat.Armor = bonusPercent;  // 직접 비율로 넣기
+                stat.AuraStr = bonusPercent;
+                Debug.Log($"[둠둠엔진] Armor, AuraStr 보정률 적용: {bonusPercent * 100f}% (레벨 {level})");
+                return stat;
+            }
         };
-
-        // 제작 못함
+        
         engineDataList.Add(data); 
         return data;
     }
@@ -305,8 +324,20 @@ public static class BoomBoomEngineDatabase
             Rarity = "Unique",
             ModelID = "EQC005_Scootus",
             SkillID = 309,
-            DescriptionFormat = "제작 못함",
-            StatBonus = new SCharacterStat { }
+            IsUniqueType = true,
+            DescriptionFormat = "속도, 오라 범위 {0:P2} 증가",
+            GrowthTable = Enumerable.Range(0, 51)
+                .Select(i => 0.0001f + i * ((0.0031f - 0.0001f) / 50f)) // 0.01% → 0.26%
+                .ToArray(),
+            StatBonus = new SCharacterStat { },
+            GrowthStatCalculator = (level, table, stat) =>
+            {
+                float bonusPercent = table[Mathf.Clamp(level, 0, table.Length - 1)];
+                stat.MoveSpd = bonusPercent;  // 직접 비율로 넣기
+                stat.AuraRange = bonusPercent;
+                Debug.Log($"[둠둠엔진] MoveSpd, AuraRange 보정률 적용: {bonusPercent * 100f}% (레벨 {level})");
+                return stat;
+            }
         };
 
         
@@ -345,15 +376,25 @@ public static class BoomBoomEngineDatabase
         {
             // 주황 별꽃을 얻을 때 n%로 파랑 별꽃으로 대체해서 ?득
             EngineID = 20401,
-            Name = "쿠",
+            Name = "마틸다",
             Rarity = "Legend",
             ModelID = "EQC005_MonoPlane",
             SkillID = 311,
-            DescriptionFormat = "제작 못함",
-            StatBonus = new SCharacterStat { }
+            IsUniqueType = true,
+            DescriptionFormat = "크리티컬 확률 {0:P0} 증가",
+            GrowthTable = Enumerable.Range(0, 51)
+                .Select(i => 0.0001f + i * ((0.0031f - 0.0001f) / 50f)) // 0.01% → 0.26%
+                .ToArray(),
+            StatBonus = new SCharacterStat { },
+            GrowthStatCalculator = (level, table, stat) =>
+            {
+                float bonusPercent = table[Mathf.Clamp(level, 0, table.Length - 1)];
+                stat.CriticalChance = bonusPercent;  // 직접 비율로 넣기
+                Debug.Log($"[마틸다엔진] CriticalChance 보정률 적용: {bonusPercent * 100f}% (레벨 {level})");
+                return stat;
+            }
         };
-
-        // 제작 못함
+        
         engineDataList.Add(data);
         return data;
     }
@@ -368,11 +409,22 @@ public static class BoomBoomEngineDatabase
             Rarity = "Legend",
             ModelID = "EQC005_EmperorPenguin",
             SkillID = 312,
-            DescriptionFormat = "제작 못함",
-            StatBonus = new SCharacterStat { }
+            IsUniqueType = true,
+            DescriptionFormat = "속도, 오라 강도 {0:P2} 증가",
+            GrowthTable = Enumerable.Range(0, 51)
+                .Select(i => 0.0001f + i * ((0.0031f - 0.0001f) / 50f)) // 0.01% → 0.26%
+                .ToArray(),
+            StatBonus = new SCharacterStat { },
+            GrowthStatCalculator = (level, table, stat) =>
+            {
+                float bonusPercent = table[Mathf.Clamp(level, 0, table.Length - 1)];
+                stat.MoveSpd = bonusPercent;  // 직접 비율로 넣기
+                stat.AuraStr = bonusPercent;
+                Debug.Log($"[프리모엔진] MoveSpd, AuraStr 보정률 적용: {bonusPercent * 100f}% (레벨 {level})");
+                return stat;
+            }
         };
-
-        //제작 못함
+        
         engineDataList.Add(data); 
         return data;
     }
@@ -527,9 +579,11 @@ public static class BoomBoomEngineDatabase
             Rarity = "Rare",
             ModelID = "EQC004_DogBowl",
             SkillID = 318,
-            DescriptionFormat = "{0} 오라 범위, {1}오라 강도, {2}의 이동속도가지고 " +
-                                "플레어 주위를 회전하는 강아지 소환",
-            StatBonus = new SCharacterStat { }
+            IsUniqueType = true,
+            DescriptionFormat = "플레어 주위를 회전하는 강아지 소환",
+            GrowthTable = new float[0], // 수치 필요 없으면 비워도 됨
+            StatBonus = new SCharacterStat { },
+            GrowthStatCalculator = (level, table, stat) => stat
         };
 
         engineDataList.Add(data); 
@@ -546,10 +600,22 @@ public static class BoomBoomEngineDatabase
             Rarity = "Unique",
             ModelID = "EQC008_ElfCup",
             SkillID = 320,
-            DescriptionFormat = "제작 못함",
-            StatBonus = new SCharacterStat { }
+            IsUniqueType = true,
+            DescriptionFormat = "오라 범위, 오라 강도 {0:P2} 증가",
+            GrowthTable = Enumerable.Range(0, 51)
+                .Select(i => 0.0001f + i * ((0.0031f - 0.0001f) / 50f)) // 0.01% → 0.26%
+                .ToArray(),
+            StatBonus = new SCharacterStat { },
+            GrowthStatCalculator = (level, table, stat) =>
+            {
+                float bonusPercent = table[Mathf.Clamp(level, 0, table.Length - 1)];
+                stat.AuraRange = bonusPercent;  // 직접 비율로 넣기
+                stat.AuraStr = bonusPercent;
+                Debug.Log($"[엘프컵엔진] AuraRange, AuraStr 보정률 적용: {bonusPercent * 100f}% (레벨 {level})");
+                return stat;
+            }
         };
-        //제작 못함
+        
         engineDataList.Add(data);
         return data;
     }
@@ -594,7 +660,15 @@ public static class BoomBoomEngineDatabase
             Rarity = "Unique",
             ModelID = "EQC010_Cloud",
             SkillID = 319,
-            DescriptionFormat = "맵을 돌아다는 {0:P0} 아우라 크기를 가진 구름 소환",
+            IsUniqueType = true,
+            DescriptionFormat = "맵을 돌아다니면서 별꽃을 성장 시키는 구름 소환",
+            GrowthTable = Enumerable.Range(0, 0)
+                .Select(i => 0f + i ) // 0레벨: 0.0030 (0.30%), 50레벨: 0.0430 (4.30%)
+                .ToArray(),
+            GrowthStatCalculator = (level, table, stat) =>
+            {
+                return stat;
+            },
             StatBonus = new SCharacterStat { }
         };
 
@@ -643,12 +717,19 @@ public static class BoomBoomEngineDatabase
             ModelID = "EQC006_SandCastle",
             SkillID = 323,
             IsUniqueType = true,
-            DescriptionFormat = "20초에 걸쳐서 아우라 크기 {0:P0} 까지 증가, 피격 시 초기화",
-            StatBonus = new SCharacterStat { },
+            DescriptionFormat = "오라 범위, 오라 강도 {0:P2} 증가",
             GrowthTable = Enumerable.Range(0, 51)
-                .Select(i => 0.10f + i * ((1.70f - 0.10f) / 50f)) // 10% ~ 170%
+                .Select(i => 0.0030f + i * ((0.0430f - 0.0030f) / 50f)) // 0레벨: 0.0030 (0.30%), 50레벨: 0.0430 (4.30%)
                 .ToArray(),
-            TriggerCondition = ETriggerCondition.OnStart,
+            StatBonus = new SCharacterStat { },
+            GrowthStatCalculator = (level, table, stat) =>
+            {
+                float bonusPercent = table[Mathf.Clamp(level, 0, table.Length - 1)];
+                stat.AuraRange = bonusPercent;  // 직접 비율로 넣기
+                stat.AuraStr = bonusPercent;
+                Debug.Log($"[모래성엔진] AuraRange, AuraStr 보정률 적용: {bonusPercent * 100f}% (레벨 {level})");
+                return stat;
+            }
         };
 
         engineDataList.Add(data); 
