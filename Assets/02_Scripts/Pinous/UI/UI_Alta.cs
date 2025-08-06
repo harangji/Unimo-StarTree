@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -63,11 +64,6 @@ public class UI_Alta : UI_Base
     }
     public void Text_Check()
     {
-        double expNow = Base_Manager.Data.UserData.EXP;
-        double expAdd = Base_Manager.Data.EXP_GET;
-        double expMax = Base_Manager.Data.EXP_SET;
-        int nextLevel = Base_Manager.Data.UserData.Level + 2;
-        
         if (Base_Manager.Data.UserData.Level >= Data_Manager.MaxLevel)
         {
             levelGroup.SetActive(true);
@@ -87,57 +83,40 @@ public class UI_Alta : UI_Base
 
             LevelBuffColorCheck();
             TextColorCheck();
-
-            // 버튼 비활성화
-            foreach (var btn in FindObjectsOfType<LevelUp_Button>())
-            {
-                btn.GetComponent<UnityEngine.UI.Button>().interactable = false;
-            }
-
-            return;
-        }
-
-        bool isLevelUp = (expNow + expAdd >= expMax);
-        bool isGradeUp = (nextLevel == 100 || nextLevel == 300 || nextLevel == 700 || nextLevel == 1000);
-
-        if (isLevelUp && isGradeUp)
-        {
-            double gradeCost = RewardCalculator.GetGradeUpCost();
-
-            levelGroup.SetActive(false);
-            gradeGroup.SetActive(true);
-
-            gradeYfText.text = StringMethod.ToCurrencyString(gradeCost);
-            gradeOfText.text = StringMethod.ToCurrencyString(gradeCost);
         }
         else
         {
-            double yellowCost = RewardCalculator.GetLevelUpCost();
-            yellowCost /= 5;
+            if (Base_Manager.Data.PendingGradeUp)
+            {
+                levelGroup.SetActive(false);
+                gradeGroup.SetActive(true);
 
-            levelGroup.SetActive(true);
-            gradeGroup.SetActive(false);
-
-            NextLevelText.text = StringMethod.ToCurrencyString(yellowCost);
+                double gradeCost = RewardCalculator.GetGradeUpCost();
+                gradeYfText.text = StringMethod.ToCurrencyString(gradeCost);
+                gradeOfText.text = StringMethod.ToCurrencyString(gradeCost);
+            }
+            else
+            {
+                double yellowCost = RewardCalculator.GetLevelUpCost() / 5;
+                levelGroup.SetActive(true);
+                gradeGroup.SetActive(false);
+                NextLevelText.text = StringMethod.ToCurrencyString(yellowCost);
+            }
+            m_Slider.value = Base_Manager.Data.EXP_Percentage();
+            m_Slider_Text.text = string.Format("{0:0.00}", Base_Manager.Data.EXP_Percentage() * 100.0f) + "%";
         }
         
-        m_Slider.value = Base_Manager.Data.EXP_Percentage();
-        m_Slider_Text.text = string.Format("{0:0.00}", Base_Manager.Data.EXP_Percentage() * 100.0f) + "%";
         LevelText.text = "LV." + (Base_Manager.Data.UserData.Level + 1).ToString();
         // NextLevelText.text = StringMethod.ToCurrencyString(RewardCalculator.GetLevelUpCost());
         // NextLevelText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.NextLevel_Base);
         SecText.text = StringMethod.ToCurrencyString(RewardCalculator.GetYfByAltaLevel()) + "/Sec"
             +"\n" + StringMethod.ToCurrencyString(RewardCalculator.GetOfByAltaLevel()) + "/Sec";
         
-        
         LevelBuffColorCheck();
         
         TextColorCheck();
     }
 
-    /// <summary>
-    /// TODO:: 우선적으로 만든 함수인데 이렇게 계속 호출하는 방식보단 레벨 변화가 감지될 때에만 한 번 실행하는게 좋아보이기는 함...
-    /// </summary>
     private void LevelBuffColorCheck()
     {
         var level = Base_Manager.Data.UserData.Level + 1;

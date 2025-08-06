@@ -31,7 +31,7 @@ public class Data_Manager
 
     public float EXP_SET = 0;
     public float EXP_GET = 0;
-    public bool PendingGradeUp = false; // 진화 대기 상태 추가
+    public bool PendingGradeUp; // 진화 대기 상태 추가
     
     public static bool SetPlayScene = false;
     public static int QualityLevel;
@@ -80,6 +80,11 @@ public class Data_Manager
         }
         UserData.BonusRewardCount += timer;
         if (UserData.BonusRewardCount >= 900.0f) UserData.BonusRewardCount = 1000.0f;
+        
+        if (IsAltaGradeLevel(UserData.Level+1) && UserData.EXP >= EXP_SET)
+        {
+            PendingGradeUp = true;
+        }
     }
     
     public void LevelUP()

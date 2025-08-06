@@ -76,6 +76,12 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     private void InitLevelUpBUtton()
     {
+        if (Base_Manager.Data.UserData.Level >= Data_Manager.MaxLevel)
+        {
+            Debug.Log($"[Alta][LevelUp_Button] 최대 레벨({Data_Manager.MaxLevel})에 도달하여 레벨업 불가");
+            return;
+        }
+        
         if (Base_Manager.Data.PendingGradeUp)
         {
             double gradeCost = RewardCalculator.GetGradeUpCost();
@@ -128,7 +134,8 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             Base_Manager.Data.LevelUP();
             Sound_Manager.instance.Play(Sound.Effect, "effect_00");
         }
-
+        
+        Base_Manager.Data.SaveUserData();
         Debug.Log($"재화 소모 비용 ::: {costPerClick}, 총비용 ::: {totalCost}, 다음 레벨 ::: {nextLevel}");
     }
 }

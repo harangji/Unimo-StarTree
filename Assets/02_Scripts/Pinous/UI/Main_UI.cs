@@ -104,13 +104,10 @@ public class Main_UI : MonoBehaviour
     
     public void Text_Check()
     {
-        // double expNow = Base_Manager.Data.UserData.EXP;
-        // double expAdd = Base_Manager.Data.EXP_GET;
-        // double expMax = Base_Manager.Data.EXP_SET;
-        
         // 최대 레벨 도달 시
         if (Base_Manager.Data.UserData.Level >= Data_Manager.MaxLevel)
         {
+            // 레벨업/진화 버튼 UI
             levelUpCostGroup.SetActive(true);
             gradeUpCostGroup.SetActive(false);
 
@@ -118,47 +115,28 @@ public class Main_UI : MonoBehaviour
             m_Slider.fillAmount = 1f;
             m_Slider_Text.text = "100.00 %";
             NextLevelText.text = "MAX";
-
-            // 버튼 비활성화
-            foreach (var btn in FindObjectsOfType<LevelUp_Button>())
-            {
-                btn.GetComponent<UnityEngine.UI.Button>().interactable = false;
-            }
-
-            return; // 이하 일반 로직 실행 안 함
-        }
-        
-        if (Base_Manager.Data.PendingGradeUp)
-        {
-            levelUpCostGroup.SetActive(false);
-            gradeUpCostGroup.SetActive(true);
-
-            double gradeCost = RewardCalculator.GetGradeUpCost();
-            gradeUpYfCostText.text = StringMethod.ToCurrencyString(gradeCost);
-            gradeUpOfCostText.text = StringMethod.ToCurrencyString(gradeCost);
         }
         else
         {
-            bool expFull = Base_Manager.Data.EXP_Percentage() >= 1f;
-            bool isExactGradeLevel = Array.Exists(Base_Manager.Data.AltaCount,
-                lvl => lvl == Base_Manager.Data.UserData.Level);
-
-            if (expFull && isExactGradeLevel)
+            if (Base_Manager.Data.PendingGradeUp)
             {
+                Base_Manager.Data.PendingGradeUp = true;
                 levelUpCostGroup.SetActive(false);
                 gradeUpCostGroup.SetActive(true);
+
                 double gradeCost = RewardCalculator.GetGradeUpCost();
                 gradeUpYfCostText.text = StringMethod.ToCurrencyString(gradeCost);
                 gradeUpOfCostText.text = StringMethod.ToCurrencyString(gradeCost);
             }
             else
             {
-                // 그 외는 일반 레벨업 UI
                 double yellowCost = RewardCalculator.GetLevelUpCost() / 5;
                 levelUpCostGroup.SetActive(true);
                 gradeUpCostGroup.SetActive(false);
                 NextLevelText.text = StringMethod.ToCurrencyString(yellowCost);
             }
+            m_Slider.fillAmount = Base_Manager.Data.EXP_Percentage();
+            m_Slider_Text.text = $"{Base_Manager.Data.EXP_Percentage() * 100.0f:0.00} %";
         }
         
         bool NoneDefault = false;
@@ -179,9 +157,7 @@ public class Main_UI : MonoBehaviour
             value = 0;
             objs[0].SetActive(true);
         }
-
-        m_Slider.fillAmount = Base_Manager.Data.EXP_Percentage();
-        m_Slider_Text.text = $"{Base_Manager.Data.EXP_Percentage() * 100.0f:0.00} %";
+        
         LevelText.text = "LV." + (Base_Manager.Data.UserData.Level + 1).ToString();
 
         Assets_Text[0].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Yellow);
