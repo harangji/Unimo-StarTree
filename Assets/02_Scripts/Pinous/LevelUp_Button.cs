@@ -8,6 +8,8 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     bool isPush = false;
     float timer = 0.0f;
     Coroutine coroutine;
+    public bool canPush { get; set; }= true;
+    
     public void EXP_UP_Button()
     {
         InitLevelUpBUtton();
@@ -16,6 +18,7 @@ public class LevelUp_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     }
     public void OnPointerDown(PointerEventData eventData)
     {
+        if(!isPush) return;
         EXP_UP_Button();
         coroutine = StartCoroutine(Push_Coroutine());
     }

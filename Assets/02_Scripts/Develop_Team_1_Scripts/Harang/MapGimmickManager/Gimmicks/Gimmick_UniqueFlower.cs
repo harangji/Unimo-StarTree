@@ -45,7 +45,8 @@ public class Gimmick_UniqueFlower : Gimmick
         mUniqueController.bCanGlow = false;
         
         await FadeAll(false);
-
+        
+        if (!this) return; //采捞 捞固 SetActive(false);老 版快 贸府
         gameObject.SetActive(false);
     }
 }

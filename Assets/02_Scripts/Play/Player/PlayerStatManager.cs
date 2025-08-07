@@ -319,10 +319,11 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         bExternalInvincibility = isActive;
     }
 
-    public bool IsInvincible()
-    {
-        return isInvincible || bExternalInvincibility;
-    }
+    // private bool CanNotStunned;
+    // public bool IsInvincible()
+    // {
+    //     return isInvincible || ( bExternalInvincibility && CanNotStunned );
+    // }
 
     public AuraController GetAuraController()
     {
@@ -334,7 +335,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         var stun = 0.8f;
         var hitPos = combatEvent.HitPosition;
         
-        if (IsInvincible())   // 외부 무적 포함해서 처리
+        if (isInvincible || ( bExternalInvincibility && combatEvent.CanStunned ))   // 외부 무적 포함해서 처리
         {
             return;
         }
@@ -356,7 +357,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
             return;
         }
 
-        if (!combatEvent.CanBeStunned)
+        if (combatEvent.CanStunned)
         {
             //  스턴 시간 감소 적용
             stun = Mathf.Max(stun * (1f - fStunReduceRate), 0.2f);

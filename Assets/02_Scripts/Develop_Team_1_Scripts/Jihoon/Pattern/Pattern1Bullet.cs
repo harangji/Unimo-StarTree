@@ -32,7 +32,7 @@ public class Pattern1Bullet : MonoBehaviour, IDamageAble
                     Damage = damage,
                     HitPosition = hitPos,
                     Collider = other,
-                    CanBeStunned = true,
+                    CanStunned = false,
                 };
 
                 CombatSystem.Instance.AddInGameEvent(combatEvent);

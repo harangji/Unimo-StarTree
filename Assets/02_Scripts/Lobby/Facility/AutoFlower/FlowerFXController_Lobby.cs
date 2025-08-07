@@ -92,8 +92,8 @@ public class FlowerFXController_Lobby : MonoBehaviour
          // Base_Manager.Data.AssetPlus(Asset_State.Yellow, reward);
          Land.instance.FlowerValue--;
         
-         var go = Instantiate(Resources.Load<Get_TEXT>("TextMESH"));
-         go.gameObject.SetActive(false); //±ôºýÀÌ´Â Çö»ó ¼öÁ¤
+         // Get_TEXT go = Instantiate(Resources.Load<Get_TEXT>("TextMESH"));
+         // go.gameObject.SetActive(false); //±ôºýÀÌ´Â Çö»ó ¼öÁ¤
          // go.Init(transform.position + new Vector3(0, 3.0f, 0), reward);
 
         yield break;

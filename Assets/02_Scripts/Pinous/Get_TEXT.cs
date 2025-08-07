@@ -10,6 +10,8 @@ public class Get_TEXT : MonoBehaviour
     public TextMeshProUGUI m_Text;
 
     float UpRange = 0.0f;
+    private bool mbInitComplete = false;
+    
     private void Start()
     {
         cam = Camera.main;
@@ -27,15 +29,19 @@ public class Get_TEXT : MonoBehaviour
         pos.z += Random.Range(-1.0f, 1.0f);
 
         target = pos;
-        m_Text.text = StringMethod.ToCurrencyString(Get);
         transform.SetParent(Canvas_Holder.instance.LAYER_HOLDER, false);
+        gameObject.transform.position = pos;
+        
+        m_Text.text = Get.ToCurrencyString();
         
         gameObject.SetActive(true);
         Invoke("ReturnText", 3.0f);
+        mbInitComplete = true;
     }
 
     private void Update()
     {
+        if(!mbInitComplete) return;
         Vector3 targetPos = new Vector3(target.x, target.y + UpRange, target.z);
         transform.position = cam.WorldToScreenPoint(targetPos);
         if (UpRange <= 0.3f)

@@ -29,7 +29,7 @@ public class Main_Character : MonoBehaviour
 
         if (yfReward >= 1)
         {
-            var go = Instantiate(Resources.Load<Get_TEXT>("TextMESH"));
+            Get_TEXT go = Instantiate(Resources.Load<Get_TEXT>("TextMESH"));
             go.Init(transform.position, yfReward);
         }
         
@@ -37,11 +37,10 @@ public class Main_Character : MonoBehaviour
 
         if (ofReward >= 1)
         {
-            var go = Instantiate(Resources.Load<Get_TEXT>("TextMESH_Orange"));
+            Get_TEXT go = Instantiate(Resources.Load<Get_TEXT>("TextMESH_Orange"));
             go.Init(transform.position, ofReward);
         }
         
-
         StartCoroutine(Get_NeglectReward());
     }
 

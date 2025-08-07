@@ -26,10 +26,10 @@ public class StageSelectUI : MonoBehaviour
 
     public void StageUpgrade()
     {
-        int NextStage = mNextStage + 1;
-        StageLoader.SaveClearedStage(NextStage);
-        mNextStage = NextStage;
+        StageLoader.SaveClearedStage(mNextStage);
+        mNextStage += 1;
         UpdateUI();
+        // int NextStage = mNextStage + 1;
     }
 
     public void StageDowngrade()

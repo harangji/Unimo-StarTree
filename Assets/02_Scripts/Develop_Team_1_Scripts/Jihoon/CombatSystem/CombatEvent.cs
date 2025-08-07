@@ -21,7 +21,7 @@ public class CombatEvent : InGameEvent
     public int Damage { get; set; }
     public Vector3 HitPosition { get; set; }
     public Collider Collider { get; set; }
-    public bool CanBeStunned { get; set; }
+    public bool CanStunned { get; set; } = true;
     public bool IsStrongKnockback { get; set; }
     public bool IsTimeReduceMod { get; set; } = false; // 시간을 감소시키는 모드인지
     public float TimeReduceAmount { get; set; } = 0f; // 시간을 얼마나 감소시켜야 하는지 추가.
