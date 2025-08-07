@@ -65,7 +65,7 @@ public abstract class Gimmick : MonoBehaviour
     
     //ReadOnly
     [LabelText("기믹 등급"), Tooltip("기믹을 설정할 때 동적으로 할당되는 기믹의 등급"), ReadOnly]
-    protected eGimmickGrade emGimmickGrade { get; set; } // 동적으로 설정할 기믹 등급
+    public eGimmickGrade emGimmickGrade { get; set; } // 동적으로 설정할 기믹 등급
 
     [LabelText("기믹 타입"), Tooltip("해로운 기믹, 이로운 기믹 설정"), ReadOnly]
     public abstract eGimmickType eGimmickType { get;}

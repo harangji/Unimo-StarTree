@@ -111,7 +111,6 @@ public class GimmickManager : MonoBehaviour
     public void ExecuteGimmickTestButton()
     {
         mReadyGimmickQueue.Clear();
-        mCurrentCost = 1000;
         
         InitializeGimmickManager();
         
@@ -191,7 +190,7 @@ public class GimmickManager : MonoBehaviour
     //기믹 매니저 초기화
     private void InitializeGimmickManager()
     {
-        mCurrentStage = StageLoader.CurrentStageNumber; //스테이지 int 캐싱 //최소 1 (이미 되어있음) (테스트 100)
+        mCurrentStage = StageLoader.CurrentStageNumber + 800; //스테이지 int 캐싱 //최소 1 (이미 되어있음) (테스트 100)
 
         if (SettingByStageNumber(mCurrentStage)) //스테이지 수에 따른 설정들 - false일 경우 기믹 갯수가 0이므로 실행 안함
         {
@@ -288,12 +287,12 @@ public class GimmickManager : MonoBehaviour
     {
         List<GimmickSample> selectedGimmickSamples = new List<GimmickSample>();
         
-        if(mCurrentCost <= 0) return selectedGimmickSamples; // 복잡도 점수 없으면 못뽐게
+        if(mCurrentCost <= 0) return selectedGimmickSamples; // 복잡도 점수 없으면 못뽑게
         
-        foreach (var grade in mCanSelectAbleGrades) //나올 수 있는 Grade를 전부 조회
+        foreach (eGimmickGrade grade in mCanSelectAbleGrades) //나올 수 있는 Grade를 전부 조회
         {
             //하나의 Grade의 gimmickInitializers 모두 조회
-            foreach (var gimmickInitializer in gimmickInitializers)
+            foreach (GimmickInitializer gimmickInitializer in gimmickInitializers)
             {
                 if (gimmickInitializer.Costs[(int)grade] > mCurrentCost) continue;
                 
@@ -349,11 +348,13 @@ public class GimmickManager : MonoBehaviour
                 {
                     if (entry.GimmickCost > mCurrentCost) continue; //코스트 부족하면 지나가기
                     
+                    //기믹 뽑힘
+                    //MyDebug.Log($"CurrentCost -> CurrentCost {mCurrentCost} - GimmickCost {entry.GimmickCost} = {mCurrentCost - entry.GimmickCost}");
                     mCurrentCost -= entry.GimmickCost;
                     
                     readyGimmick = entry.GimmickInitializer.InitializeGimmick(entry.GimmickGrade); //껍데기를 통해 생성
                     mReadyGimmickQueue.Enqueue(readyGimmick); // 준비된 기믹에 추가
-                    MyDebug.Log($"{readyGimmick.gimmickName} is ready");
+                    MyDebug.Log($" {readyGimmick.emGimmickGrade} {readyGimmick.gimmickName} is ready");
                     
                     cashGimmickTypes.Add(entry.GimmickInitializer.eGimmick); // 뽑은 타입을 추가, 중복방지
                     
@@ -364,7 +365,6 @@ public class GimmickManager : MonoBehaviour
                     break;
                 }
             }
-            return;
         }
     }
 }
