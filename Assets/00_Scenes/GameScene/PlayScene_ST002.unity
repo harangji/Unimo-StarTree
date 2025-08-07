@@ -437,50 +437,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3eb14303bf48b049bf22e425ae31395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &78303977
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 78303978}
-  - component: {fileID: 78303979}
-  m_Layer: 0
-  m_Name: StatMulipliyer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &78303978
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 78303977}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 159835806}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &78303979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 78303977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5030e6b005171e440a5ea4c37c2dca50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &79281781
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,7 +670,6 @@ Transform:
   m_Children:
   - {fileID: 1722896035}
   - {fileID: 229194274}
-  - {fileID: 78303978}
   - {fileID: 1802229742}
   - {fileID: 1572692448}
   m_Father: {fileID: 0}
@@ -8798,7 +8753,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1722896035}
-  - component: {fileID: 1722896037}
   - component: {fileID: 1722896036}
   m_Layer: 0
   m_Name: DataManager
@@ -8832,18 +8786,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5bdfd0e9eac949a489f4e0f763ffc924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1722896037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1722896034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd0719444684ead4685a25f82976784e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1729078508
@@ -10776,7 +10718,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1971803515}
   - component: {fileID: 1971803516}
-  - component: {fileID: 1971803518}
   - component: {fileID: 1971803517}
   m_Layer: 0
   m_Name: PlayDataContoller
@@ -10835,18 +10776,6 @@ MonoBehaviour:
   maxTime: 60
   reduceIncTime: 63
   timerGauge: {fileID: 4088}
---- !u!114 &1971803518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1971803514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef7c76f11b1f41a4ab496cc2f99d82b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1978767792
 GameObject:
   m_ObjectHideFlags: 0
@@ -11869,7 +11798,6 @@ MonoBehaviour:
   shieldEffect: {fileID: 0}
   timedInvincibleEffect: {fileID: 0}
   magicHatEffect: {fileID: 0}
-  sandCastleEffect: {fileID: 0}
   orbitAuraObject: {fileID: 0}
   cloudAuraObject: {fileID: 0}
 --- !u!4 &2100808603

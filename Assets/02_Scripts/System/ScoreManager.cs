@@ -42,13 +42,15 @@ public class ScoreManager : MonoBehaviour
         
         for (int i = 1; i < gatheredResources.Count; i++)
         {
-            specialResourceTxts[i-1].text = gatheredResources[i].ToString();
+            specialResourceTxts[i-1].text = StringMethod.ToCurrencyString(gatheredResources[i]);
+            // specialResourceTxts[i-1].text = gatheredResources[i].ToString();
         }
         PlaySystemRefStorage.playProcessController.SubscribeGameoverAction(() => 
         {
             for (int i = 1; i < gatheredResources.Count; i++)
             {
-                specialResourceTxts[i-1].text = gatheredResources[i].ToString();
+                specialResourceTxts[i-1].text = StringMethod.ToCurrencyString(gatheredResources[i]);
+                // specialResourceTxts[i-1].text = gatheredResources[i].ToString();
             }
     
             scoreTxt.text = StringMethod.ToCurrencyString(gatheredResources[0]);
@@ -99,7 +101,8 @@ public class ScoreManager : MonoBehaviour
 
         if (idx != 0)
         {
-            specialResourceTxts[idx - 1].text = gatheredResources[idx].ToString();
+            specialResourceTxts[idx - 1].text = StringMethod.ToCurrencyString(gatheredResources[idx]);
+            // specialResourceTxts[idx - 1].text = gatheredResources[idx].ToString();
         }
 
         scoreTxt.text = StringMethod.ToCurrencyString(gatheredResources[0]);

@@ -18,10 +18,14 @@ public class BossState_PreAction : MonsterState_Preaction
 
     private void Start()
     {
-        for (int i = 0; i < 4; i++)
-        {
-            currentTime[i] = 0;
-        }
+        // for (int i = 0; i < 4; i++)
+        // {
+        //     currentTime[i] = 0;
+        // }
+        currentTime[0] = 10;
+        currentTime[1] = 15;
+        currentTime[2] = 15;
+        currentTime[3] = 20;
     }
 
     private void Update()
