@@ -375,7 +375,7 @@ public class PlayerStatManager : MonoBehaviour, IDamageAble
         Debug.Log($"{combatEvent.TimeReduceAmount}초 감소했습니다.");
         
         //데미지 처리
-        var reducedDamage = combatEvent.Damage * (1f - mStat.FinalStat.Armor); 
+        float reducedDamage = Mathf.Max(1f, combatEvent.Damage * (1f - mStat.FinalStat.Armor));
         currentHP -= reducedDamage;
 
         if(EditorMode.Instance.isShowDamage) DamageUIManager.instance.GetUI(reducedDamage);
