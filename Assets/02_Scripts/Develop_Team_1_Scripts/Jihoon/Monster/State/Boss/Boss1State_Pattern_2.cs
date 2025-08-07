@@ -4,8 +4,8 @@ using UnityEngine;
 public class Boss1State_Pattern_2 : BossState_Pattern
 {
     private static readonly int PATTERN2 = Animator.StringToHash("Pattern2");
-    private float safeZoneChargeTime = 2f;
-    private float chargeTime = 5f;
+    private float safeZoneChargeTime = 1.5f;
+    private float chargeTime = 4f;
     
     private float lapseTime;
     private float radius = 25f;

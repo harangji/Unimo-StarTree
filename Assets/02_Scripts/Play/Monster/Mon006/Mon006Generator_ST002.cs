@@ -46,7 +46,7 @@ public class Mon006Generator_ST002 : MonsterGenerator
         yield return new WaitForSeconds(6f);
         manager.ResumeGenerateAllMonster();
         isPaused = true;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
         isPaused = false;
         isExtreme = false;
         yield break;
@@ -67,7 +67,7 @@ public class Mon006Generator_ST002 : MonsterGenerator
         yield return new WaitForSeconds(6f);
         manager.ResumeGenerateAllMonster();
         isPaused = true;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
         isPaused = false;
         isExtreme = false;
         yield break;

@@ -22,10 +22,10 @@ public class BossState_PreAction : MonsterState_Preaction
         // {
         //     currentTime[i] = 0;
         // }
-        currentTime[0] = 10;
-        currentTime[1] = 15;
-        currentTime[2] = 15;
-        currentTime[3] = 20;
+        currentTime[0] = 15;
+        currentTime[1] = 7;
+        currentTime[2] = 18;
+        currentTime[3] = 25;
     }
 
     private void Update()
@@ -97,7 +97,7 @@ public class BossState_PreAction : MonsterState_Preaction
     {
         canPattern = false;
         
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
 
         canPattern = true;
     }

@@ -10,7 +10,7 @@ public class Boss1State_Pattern_3 : BossState_Pattern
     private const float ARENA_RADIUS = 16f;
     private const float INDICATOR_ALPHA = 20f / 255f;
     private const float INDICATOR_DURATION = 1.5f;
-    private const float DASH_DELAY = 5f;
+    private const float DASH_DELAY = 3f;
 
     private bool canDash;
     private bool hasDashed; 
