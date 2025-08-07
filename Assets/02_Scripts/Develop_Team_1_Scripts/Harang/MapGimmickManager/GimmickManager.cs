@@ -141,7 +141,7 @@ public class GimmickManager : MonoBehaviour
     private IEnumerator TriggerGimmickCoroutine() 
     {
         yield return new WaitForSeconds(PlayProcessController.InitTimeSTATIC);
-        PlaySceneController.Instance.PauseGame();
+        // PlaySceneController.Instance.PauseGame();
         
         if (currentGimmick && currentGimmick.BReadyExecute && !currentGimmick.BDeactivateStart) //나갈 준비 다됨 && 사라지기 시작 하지 않음
         {
@@ -182,7 +182,7 @@ public class GimmickManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(1.5f);
         warningPopup.SetActive(false);
         
-        PlaySceneController.Instance.ResumeGame();
+        // PlaySceneController.Instance.ResumeGame();
         currentGimmick.ActivateGimmick();
         yield break;
     }
@@ -190,7 +190,7 @@ public class GimmickManager : MonoBehaviour
     //기믹 매니저 초기화
     private void InitializeGimmickManager()
     {
-        mCurrentStage = StageLoader.CurrentStageNumber + 800; //스테이지 int 캐싱 //최소 1 (이미 되어있음) (테스트 100)
+        mCurrentStage = StageLoader.CurrentStageNumber; //스테이지 int 캐싱 //최소 1 (이미 되어있음) (테스트 100)
 
         if (SettingByStageNumber(mCurrentStage)) //스테이지 수에 따른 설정들 - false일 경우 기믹 갯수가 0이므로 실행 안함
         {
