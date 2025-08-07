@@ -101,6 +101,7 @@ public class Main_UI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gradeUpYfCostText;
     [SerializeField] private TextMeshProUGUI gradeUpOfCostText;
     [SerializeField] private Image gradeUpOfCostImg;
+    [SerializeField] private LevelUp_Button mLevelUpBtn;
     
     public void Text_Check()
     {
@@ -115,6 +116,8 @@ public class Main_UI : MonoBehaviour
             m_Slider.fillAmount = 1f;
             m_Slider_Text.text = "100.00 %";
             NextLevelText.text = "MAX";
+
+            mLevelUpBtn.canPush = false;
         }
         else
         {
@@ -137,6 +140,7 @@ public class Main_UI : MonoBehaviour
             }
             m_Slider.fillAmount = Base_Manager.Data.EXP_Percentage();
             m_Slider_Text.text = $"{Base_Manager.Data.EXP_Percentage() * 100.0f:0.00} %";
+            mLevelUpBtn.canPush = true;
         }
         
         bool NoneDefault = false;

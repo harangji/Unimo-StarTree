@@ -32,6 +32,7 @@ public class UI_Alta : UI_Base
 
     [SerializeField] private Image[] levelBuffImgs;
     [SerializeField] private TextMeshProUGUI[] levelBuffTexts;
+    [SerializeField] private LevelUp_Button mLevelUpBtn;
     
     public Color[] colors;
     int value;
@@ -83,6 +84,7 @@ public class UI_Alta : UI_Base
 
             LevelBuffColorCheck();
             TextColorCheck();
+            mLevelUpBtn.canPush = false;
         }
         else
         {
@@ -104,6 +106,7 @@ public class UI_Alta : UI_Base
             }
             m_Slider.value = Base_Manager.Data.EXP_Percentage();
             m_Slider_Text.text = string.Format("{0:0.00}", Base_Manager.Data.EXP_Percentage() * 100.0f) + "%";
+            mLevelUpBtn.canPush = true;
         }
         
         LevelText.text = "LV." + (Base_Manager.Data.UserData.Level + 1).ToString();
