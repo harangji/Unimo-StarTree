@@ -76,9 +76,12 @@ public static class EngineLevelSystem
         var yellowCost = RewardCalculator.EngineYellowCost(cur);
         var redCost = RewardCalculator.EngineOrangeCost(cur);
 
-        if (Base_Manager.Data.UserData.Yellow < yellowCost || Base_Manager.Data.UserData.Red < redCost) 
+        if (Base_Manager.Data.UserData.Yellow < yellowCost || Base_Manager.Data.UserData.Red < redCost)
+        {
+            Canvas_Holder.instance.Get_Toast("NM");
             return false;
-
+        }
+        
         Base_Manager.Data.UserData.Yellow -= yellowCost;
         Base_Manager.Data.UserData.Red -= redCost;
 

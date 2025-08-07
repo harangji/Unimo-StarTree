@@ -31,21 +31,23 @@ public class UI_Change : UI_Base
 
     private void CountCheck()
     {
-        OrangeSlider.maxValue = (float)blueCount;
-        YellowSlider.maxValue = (float)blueCount;
+        OrangeSlider.maxValue = 100000;
+        YellowSlider.maxValue = 100000;
+        // OrangeSlider.maxValue = (float)blueCount;
+        // YellowSlider.maxValue = (float)blueCount;
     }
 
     void TextCheck()
     {
-        Blue.text = BlueStarCount.ToString();
+        Blue.text = StringMethod.ToCurrencyString(BlueStarCount);
         Blue.color = Base_Manager.Data.UserData.Blue >= BlueStarCount ? Color.green : Color.red;
-        Orange.text = OrangeStarCount.ToString();
+        Orange.text = StringMethod.ToCurrencyString(OrangeStarCount);
         Yellow.text = StringMethod.ToCurrencyString(YellowStarCount);
     }
 
     void BlueCount()
     {
-        BlueStarCount = (OrangeStarCount / 500) + (int)(YellowStarCount / Base_Manager.Data.UserData.Second_Base);
+        BlueStarCount = (OrangeStarCount / 500) + (YellowStarCount / 2500);
     }
 
     // Orange
@@ -54,12 +56,13 @@ public class UI_Change : UI_Base
         // 슬라이더 값 = 사용하려는 Blue 수
         BlueStarCount = Mathf.FloorToInt(value); // 정수 보장
 
-        // Orange = Blue × 150 (정해진 교환 비율)
-        OrangeStarCount = BlueStarCount * 150;
+        // Orange = Blue × 500 (정해진 교환 비율)
+        OrangeStarCount = BlueStarCount * 500;
 
         // YellowSlider.value = 0;
         // YellowStarCount = 0;
 
+        BlueCount();
         TextCheck();
         
         // var index = YellowStarCount / Base_Manager.Data.UserData.Second_Base;
@@ -71,21 +74,25 @@ public class UI_Change : UI_Base
         // }
         //
         // OrangeStarCount = (int)(value * 500);
-        // BlueCount();
         // TextCheck();
     }
 
     // Yellow
     void ValueChangeSlider_Yellow(float value)
     {
-        var index = OrangeStarCount / 500;
-        var DetectedYellow = Base_Manager.Data.UserData.Blue - index;
-        if(value >= DetectedYellow)
-        {
-            value = (float)DetectedYellow;
-            YellowSlider.value = value;
-        }
-        YellowStarCount = (int)(value * Base_Manager.Data.UserData.Second_Base);
+        BlueStarCount = Mathf.FloorToInt(value);
+        
+        // 임시로 2500 으로 설정 해놓음.
+        YellowStarCount = BlueStarCount * 2500;
+        
+        // var index = OrangeStarCount / 500;
+        // var DetectedYellow = Base_Manager.Data.UserData.Blue - index;
+        // if(value >= DetectedYellow)
+        // {
+        //     value = (float)DetectedYellow;
+        //     YellowSlider.value = value;
+        // }
+        // YellowStarCount = (int)(value * Base_Manager.Data.UserData.Second_Base);
         BlueCount();
         TextCheck();
     }

@@ -73,6 +73,7 @@ public static class UnimoLevelSystem
 
         if (!UserHasEnoughCurrency(cost.RequireYF, cost.RequireOF))
         {
+            Canvas_Holder.instance.Get_Toast("NM");
             Debug.Log($"[강화 실패] 재화 부족 - YF:{cost.RequireYF}, OF:{cost.RequireOF}");
             return false;
         }
