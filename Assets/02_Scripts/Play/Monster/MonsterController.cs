@@ -101,9 +101,7 @@ public class MonsterController : MonoBehaviour
                         IsStrongKnockback = false,
                     };
                 }
-
-                MyDebug.Log($"combatEvent.Damage: {combatEvent.Damage}!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                MyDebug.Log($"((Monster)monster).appliedDamage: {((Monster)monster).appliedDamage}!!!!!!!!!!!!!!!!!!!!!!!!!");
+                
                 CombatSystem.Instance.AddInGameEvent(combatEvent);
 
                 // player.Hit(collideStunTime, hitPos, GetComponent<Monster>().GetDamage());
