@@ -22,7 +22,7 @@ public class UI_Vane : UI_Base
         {
             if (Base_Manager.Data.UserData.BuffFloating[i] >= 0.0f)
             {
-                Base_Manager.Data.UserData.BuffFloating[i] -= Time.deltaTime;
+                // Base_Manager.Data.UserData.BuffFloating[i] -= Time.deltaTime;
                 Text_Timers[i].text = ShowTimer(Base_Manager.Data.UserData.BuffFloating[i]);
                 sliders[i].value = Base_Manager.Data.UserData.BuffFloating[i] / 1800.0f;
             }
@@ -44,6 +44,7 @@ public class UI_Vane : UI_Base
         Base_Manager.ADS.ShowRewardedAds(() => GetTimer(value));
     }
 
+    //바람개비 광고 부스터 설정
     public void GetTimer(int value)
     {
         Canvas_Holder.instance.Get_Toast("ADS");

@@ -219,6 +219,7 @@ public class ADS_Manager
         if (Base_Manager.Data.UserData.ADSBuy)
         {
             _rewardedCallback?.Invoke();
+            //광고 봤는지 퀘스트 클리어시키기
             Base_Manager.Data.UserData.ADS++;
             Base_Manager.Data.UserData.ADSNoneReset++;
             PlayerPrefs.SetInt("GetRewardCount", 2);
