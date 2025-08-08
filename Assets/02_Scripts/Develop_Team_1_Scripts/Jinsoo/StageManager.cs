@@ -77,7 +77,7 @@ public class StageManager : MonoBehaviour
     // 나중에 지울 함수 (기획팀이 밸런스 패치를 위해 화면에 띄울 난이도 Text 함수)
     public void DeleteText()
     {
-        mLevelText.text = mScoreGauge.GetCurrentScore() + " / " + mScoreGauge.GetTargetScore() + "\n"
+        mLevelText.text = StringMethod.ToCurrencyString(mScoreGauge.GetCurrentScore()) + " / " + mScoreGauge.GetTargetScore() + "\n"
                           + mCurrentDifficulty + " / " + mMaxDifficulty + "\n"
                           + mFlowerCount.AllFlowers.Count + " / " + mStageData.MaxFlowerCount;
     }

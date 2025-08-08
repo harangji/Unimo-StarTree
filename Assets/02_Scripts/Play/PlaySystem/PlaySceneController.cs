@@ -64,6 +64,11 @@ public class PlaySceneController : MonoBehaviour
     
     public void NextGame()
     {
+        if (Base_Manager.Data.UserData.BestStage >= 1000)
+        {
+            LoadLobby();
+            return;
+        }
         int mNextStage = Base_Manager.Data.UserData.BestStage + 1;
         StageLoader.LoadStage(mNextStage);
     }
