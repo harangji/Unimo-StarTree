@@ -80,15 +80,14 @@ public class Base_Manager : MonoBehaviour
                     saveTimer = 0.0f;
                 }
             }
-
-            // ToDo : 하랑 BuffFloating 사용처를 모르기 때문에 보류
-            // for(int i = 0; i < Data.UserData.BuffFloating.Length; i++)
-            // {
-            //     if (Data.UserData.BuffFloating[i] >= 0.0f)
-            //     {
-            //         Data.UserData.BuffFloating[i] -= Time.deltaTime;
-            //     }
-            // }
+            
+            for(int i = 0; i < Data.UserData.BuffFloating.Length; i++)
+            {
+                if (Data.UserData.BuffFloating[i] >= 0.0f)
+                {
+                    Data.UserData.BuffFloating[i] -= Time.deltaTime;
+                }
+            }
         }
     }
 
