@@ -26,14 +26,8 @@ public class Canvas_Holder : MonoBehaviour
             Main_UI.instance.holderQueue.Enqueue("##Offline_Reward");
             Main_UI.instance.holderQueue_Action.Enqueue(null);
         }
-        
-        float timer = (float)Base_Manager.instance.TimerCheck();
-        for(int i = 0; i < Base_Manager.Data.UserData.BuffFloating.Length; i++)
-        {
-            Base_Manager.Data.UserData.BuffFloating[i] -= timer;
-            if (Base_Manager.Data.UserData.BuffFloating[i] <= 0.0f) Base_Manager.Data.UserData.BuffFloating[i] = 0.0f;
-        }
     }
+    
     private void Update()
     {
         if(UI_Holder.Count == 0)
@@ -52,18 +46,6 @@ public class Canvas_Holder : MonoBehaviour
                 ClosePopupUI();
             }
             else GetUI("##EXIT");
-        }
-        
-        for (int i = 0; i < 3; i++)
-        {
-            if (Base_Manager.Data.UserData.BuffFloating[i] > 0.0f)
-            {
-                Base_Manager.Data.UserData.BuffFloating[i] -= Time.deltaTime;
-            }
-            else
-            {
-                Base_Manager.Data.UserData.BuffFloating[i] = 0.0f;
-            }
         }
     }
 
