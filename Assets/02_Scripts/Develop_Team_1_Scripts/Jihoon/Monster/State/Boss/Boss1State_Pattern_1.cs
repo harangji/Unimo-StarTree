@@ -32,7 +32,7 @@ public class Boss1State_Pattern_1 : BossState_Pattern
 
             mon.GetComponent<BossPattern1>().motherDamage = GetComponentInParent<Monster>().skillDamages[0];
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
         }
 
         yield return new WaitForSeconds(1f);

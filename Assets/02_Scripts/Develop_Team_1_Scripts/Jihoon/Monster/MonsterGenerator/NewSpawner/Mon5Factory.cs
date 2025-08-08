@@ -15,7 +15,7 @@ public class Mon5Factory : MonsterFactory
 
         int spawnCount = cost switch
         {
-            1 => 1,
+            2 => 1,
             _ => 7
         };
         var group = new PatternGroup { Remaining = spawnCount, Cost = cost };
@@ -77,19 +77,19 @@ public class Mon5Factory : MonsterFactory
         switch (allowedPattern)
         {
             case 1:
-                return 1;
+                return 2;
             case 2:
                 return rate switch
                 {
-                    < 70 => 1,
-                    _ => 3
+                    < 70 => 2,
+                    _ => 4
                 };
             case 3:
                 return rate switch
                 {
-                    < 60 => 1,
-                    < 85 => 3,
-                    _ => 5
+                    < 60 => 2,
+                    < 85 => 4,
+                    _ => 7
                 };
         }
 

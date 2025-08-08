@@ -103,7 +103,6 @@ public class Data_Manager
         }
         
         UserData.EXP += EXP_GET;
-        UserData.Second_Base = CalculateExperienceForLevel(5, UserData.Level + 1, exp_data.L_GOLD_GET);
         UserData.NextLevel_Base = CalculateExperienceForLevel(10,UserData.Level + 1, exp_data.L_GOLD);
 
         if (UserData.Level <= 100) UserData.NextLevel_Base /= 2;
@@ -293,7 +292,6 @@ public class Data_Manager
         data.UserName = UserData.UserName;
         data.EXP = 0;
         data.Level = 0;
-        data.Second_Base = 5;
         data.Yellow = 0;
         data.Red = 0;
         data.Blue = 0;

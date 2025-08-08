@@ -17,12 +17,12 @@ public class Mon1Factory : MonsterFactory
         
         if (!TryConsumeDifficulty(cost)) return null;
 
-        int spawnCount = cost < 4 ? 1 : 8;
+        int spawnCount = cost < 5 ? 1 : 8;
         var group = new PatternGroup { Remaining = spawnCount, Cost = cost };
         ActiveGroups.Add(group);
 
         var prefab = GetPrefabFromRate(cost);
-        float offset = cost <= 5 ? 6.5f : 7.5f;
+        float offset = cost <= 6 ? 6.5f : 7.5f;
 
         return spawnCount == 1
             ? SpawnSingle(prefab, group, out var single) ? single : null
@@ -34,19 +34,19 @@ public class Mon1Factory : MonsterFactory
         switch (allowedPattern)
         {
             case 1:
-                return 2;
+                return 3;
             case 2:
                 return rate switch
                 {
-                    < 70 => 2,
-                    _ => 4
+                    < 70 => 3,
+                    _ => 5
                 };
             case 3:
                 return rate switch
                 {
-                    < 60 => 2,
-                    < 85 => 4,
-                    _ => 5
+                    < 60 => 3,
+                    < 85 => 5,
+                    _ => 6
                 };
         }
         

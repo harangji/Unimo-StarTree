@@ -17,14 +17,14 @@ public class Mon3Factory : MonsterFactory
 
         int spawnCount = cost switch
         {
-            2 => 1,
+            3 => 1,
             4 => 5,
             _ => 8
         };
         var group = new PatternGroup { Remaining = spawnCount, Cost = cost };
         ActiveGroups.Add(group);
 
-        if (cost == 2)
+        if (cost == 3)
         {
             var ctrl = DefaultSpawn(0);
             ctrl.InitEnemy(PlayerTransform);
@@ -47,19 +47,19 @@ public class Mon3Factory : MonsterFactory
         switch (allowedPattern)
         {
             case 1:
-                return 2;
+                return 3;
             case 2:
                 return rate switch
                 {
-                    < 70 => 2,
+                    < 70 => 3,
                     _ => 4
                 };
             case 3:
                 return rate switch
                 {
-                    < 60 => 2,
+                    < 60 => 3,
                     < 85 => 4,
-                    _ => 7
+                    _ => 6
                 };
         }
 

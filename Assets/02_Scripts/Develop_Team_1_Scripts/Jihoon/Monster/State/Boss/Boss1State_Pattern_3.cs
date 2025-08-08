@@ -6,7 +6,7 @@ public class Boss1State_Pattern_3 : BossState_Pattern
     private static readonly int PATTERN3 = Animator.StringToHash("Pattern3");
     [SerializeField] private GameObject indicator;
 
-    private const float DASH_SPEED = 24f;
+    private const float DASH_SPEED = 20f;
     private const float ARENA_RADIUS = 16f;
     private const float INDICATOR_ALPHA = 20f / 255f;
     private const float INDICATOR_DURATION = 1.5f;
