@@ -27,12 +27,12 @@ public class Mon2Factory : MonsterFactory
         var group = new PatternGroup { Remaining = spawnCount, Cost = cost };
         ActiveGroups.Add(group);
 
-        if (cost == 3)
+        if (cost == 4)
         {
             var ctrl = StartPattern1();
             RegisterDestroyCallback(ctrl, group);
         }
-        else if (cost == 5)
+        else if (cost == 6)
         {
             if (isPattern2Active) return null;
             StartCoroutine(StartPattern2Coroutine(group));
@@ -51,18 +51,18 @@ public class Mon2Factory : MonsterFactory
         switch (allowedPattern)
         {
             case 1:
-                return 3;
+                return 4;
             case 2:
                 return rate switch
                 {
-                    < 70 => 3,
-                    _ => 5
+                    < 70 => 4,
+                    _ => 6
                 };
             case 3:
                 return rate switch
                 {
-                    < 60 => 3,
-                    < 85 => 5,
+                    < 60 => 4,
+                    < 85 => 6,
                     _ => 7
                 };
         }
@@ -94,8 +94,8 @@ public class Mon2Factory : MonsterFactory
     /// <returns>소환할 몬스터 수</returns>
     private int GetSpawnCountByCost(int cost)
     {
-        if (cost == 3) return 1;
-        if (cost == 5) return 6;
+        if (cost == 4) return 1;
+        if (cost == 6) return 6;
         return 12;
     }
 

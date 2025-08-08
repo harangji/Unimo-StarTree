@@ -23,7 +23,6 @@ public class Main_UI : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log($"Base_Manager.Data.UserData.Second_Base : {Base_Manager.Data.UserData.Second_Base}");
         Text_Check();
         RectADSCheck();
 

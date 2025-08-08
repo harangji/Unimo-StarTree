@@ -22,7 +22,7 @@ public class Mon4Factory : MonsterFactory
         var group = new PatternGroup { Remaining = spawnCount, Cost = cost };
         ActiveGroups.Add(group);
 
-        if (cost == 1)
+        if (cost == 2)
         {
             Debug.Log("[슬라임]: 패턴 1");
             var ctrl = DefaultSpawn(0);
@@ -52,17 +52,17 @@ public class Mon4Factory : MonsterFactory
         switch (allowedPattern)
         {
             case 1:
-                return 1;
+                return 2;
             case 2:
                 return rate switch
                 {
-                    < 70 => 1,
+                    < 70 => 2,
                     _ => 3
                 };
             case 3:
                 return rate switch
                 {
-                    < 33 => 1,
+                    < 33 => 2,
                     < 66 => 3,
                     _ => 5
                 };

@@ -1222,7 +1222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 140373426390732208}
   - component: {fileID: 202702374977670648}
-  - component: {fileID: 8894038903820872338}
+  - component: {fileID: 9106466866453916229}
   - component: {fileID: 3155139863087760817}
   - component: {fileID: 3473981320480033012}
   - component: {fileID: 2048600256913732848}
@@ -1280,8 +1280,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &8894038903820872338
-BoxCollider:
+--- !u!136 &9106466866453916229
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1298,9 +1298,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 6, y: 2, z: 3}
-  m_Center: {x: 0, y: 1, z: -0.5}
+  serializedVersion: 2
+  m_Radius: 2.5
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 2.5, z: 0}
 --- !u!114 &3155139863087760817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1349,7 +1351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2496f0de79cfafe4089067a76a05df68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCollider: {fileID: 8894038903820872338}
+  mainCollider: {fileID: 9106466866453916229}
   defaultDamage: 65
   appliedDamage: 0
   skillDamages: 16000000500000003e000000

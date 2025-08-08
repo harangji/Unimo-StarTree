@@ -15,8 +15,8 @@ public class UI_Offline : UI_Base
         Camera_Event.instance.GetCameraEvent(CameraMoveState.Offline);
         float timer = (float)Base_Manager.instance.TimerCheck();
         slider.value = timer / 43200;
-
-        valueCount = Base_Manager.Data.UserData.Second_Base * timer;
+        
+        valueCount = RewardCalculator.GetYfByAltaLevel() * timer;
         RewardText.text = StringMethod.ToCurrencyString(valueCount);
 
         base.Start();
