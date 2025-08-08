@@ -101,6 +101,7 @@ public class Main_UI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gradeUpOfCostText;
     [SerializeField] private Image gradeUpOfCostImg;
     [SerializeField] private LevelUp_Button mLevelUpBtn;
+    private double mYfValue, mOfValue;
     
     public void Text_Check()
     {
@@ -167,8 +168,19 @@ public class Main_UI : MonoBehaviour
         Assets_Text[1].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Red);
         Assets_Text[2].text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.Blue);
         
-        GetSecondText.text = StringMethod.ToCurrencyString(RewardCalculator.GetYfByAltaLevel()) + "/Sec"
-            +"\n" + StringMethod.ToCurrencyString(RewardCalculator.GetOfByAltaLevel()) + "/Sec";
+        if (Base_Manager.Data.UserData.BuffFloating[0]>0.0f)
+        {
+            mYfValue = RewardCalculator.GetYfByAltaLevel() * 2;
+            mOfValue = RewardCalculator.GetOfByAltaLevel() * 2;
+        }
+        else
+        {
+            mYfValue = RewardCalculator.GetYfByAltaLevel();
+            mOfValue = RewardCalculator.GetOfByAltaLevel();
+        }
+        
+        GetSecondText.text = StringMethod.ToCurrencyString(mYfValue) + "/Sec"
+            +"\n" + StringMethod.ToCurrencyString(mOfValue) + "/Sec";
 
         NameText.text = Base_Manager.Data.UserData.UserName;
         OnActionEvent?.Invoke();

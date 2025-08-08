@@ -37,6 +37,8 @@ public class UI_Alta : UI_Base
     public Color[] colors;
     int value;
     public GameObject InformationPanel;
+    
+    private double mYfValue, mOfValue;
 
     public override void Start()
     {
@@ -74,16 +76,7 @@ public class UI_Alta : UI_Base
             m_Slider.value = 1f;
             m_Slider_Text.text = "100.00%";
             NextLevelText.text = "MAX";
-
-            // ·¹º§
-            LevelText.text = "LV." + (Base_Manager.Data.UserData.Level + 1).ToString();
-
-            // ÃÊ´ç È¹µæ·®
-            SecText.text = StringMethod.ToCurrencyString(RewardCalculator.GetYfByAltaLevel()) + "/Sec"
-                + "\n" + StringMethod.ToCurrencyString(RewardCalculator.GetOfByAltaLevel()) + "/Sec";
-
-            LevelBuffColorCheck();
-            TextColorCheck();
+            
             mLevelUpBtn.canPush = false;
         }
         else
@@ -109,11 +102,22 @@ public class UI_Alta : UI_Base
             mLevelUpBtn.canPush = true;
         }
         
+        if (Base_Manager.Data.UserData.BuffFloating[0]>0.0f)
+        {
+            mYfValue = RewardCalculator.GetYfByAltaLevel() * 2;
+            mOfValue = RewardCalculator.GetOfByAltaLevel() * 2;
+        }
+        else
+        {
+            mYfValue = RewardCalculator.GetYfByAltaLevel();
+            mOfValue = RewardCalculator.GetOfByAltaLevel();
+        }
+        
         LevelText.text = "LV." + (Base_Manager.Data.UserData.Level + 1).ToString();
         // NextLevelText.text = StringMethod.ToCurrencyString(RewardCalculator.GetLevelUpCost());
         // NextLevelText.text = StringMethod.ToCurrencyString(Base_Manager.Data.UserData.NextLevel_Base);
-        SecText.text = StringMethod.ToCurrencyString(RewardCalculator.GetYfByAltaLevel()) + "/Sec"
-            +"\n" + StringMethod.ToCurrencyString(RewardCalculator.GetOfByAltaLevel()) + "/Sec";
+        SecText.text = StringMethod.ToCurrencyString(mYfValue) + "/Sec"
+            +"\n" + StringMethod.ToCurrencyString(mOfValue) + "/Sec";
         
         LevelBuffColorCheck();
         

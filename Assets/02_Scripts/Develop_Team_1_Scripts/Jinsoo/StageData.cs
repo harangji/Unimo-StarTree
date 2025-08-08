@@ -38,7 +38,7 @@ public class StageData
 
             double difficulty = 15 * Mathf.Pow(1.0164f, stageNum - 1 - BonusStageNumber);
             DifficultyValue = Mathf.Min(60, Mathf.RoundToInt((float)difficulty));
-            if (IsBossStage) DifficultyValue += 5;
+            if (IsBossStage && StageLoader.CurrentStageNumber != 0) DifficultyValue += 5;
 
             MaxFlowerCount = 10 + (stageNum - 1) / 25;
         }
