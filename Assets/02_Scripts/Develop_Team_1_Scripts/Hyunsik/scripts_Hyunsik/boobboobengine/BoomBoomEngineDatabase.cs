@@ -266,9 +266,9 @@ public static class BoomBoomEngineDatabase
             ModelID = "EQC005_HatchedEgg",
             SkillID = 307,
             IsUniqueType = true,
-            DescriptionFormat = "방어력 {0:P2} 증가",
+            DescriptionFormat = "방어력 {0:P0} 증가",
             GrowthTable = Enumerable.Range(0, 51)
-                .Select(i => 0.001f + i * ((0.0035f - 0.001f) / 50f)) // 0.001 → 0.0035
+                .Select(i => 0.1f + i * ((0.35f - 0.1f) / 50f)) // 0.001 → 0.0035
                 .ToArray(),
             StatBonus = new SCharacterStat { },
             GrowthStatCalculator = (level, table, stat) =>
@@ -295,9 +295,9 @@ public static class BoomBoomEngineDatabase
             ModelID = "EQC005_CleanBucket",
             SkillID = 308,
             IsUniqueType = true,
-            DescriptionFormat = "방어력, 오라 강도 {0:P2} 증가",
+            DescriptionFormat = "방어력, 오라 강도 {0:P1} 증가",
             GrowthTable = Enumerable.Range(0, 51)
-                .Select(i => 0.0001f + i * ((0.0026f - 0.0001f) / 50f)) // 0.01% → 0.26%
+                .Select(i => 0.01f + i * ((0.26f - 0.01f) / 50f)) // 0.01% → 0.26%
                 .ToArray(),
             StatBonus = new SCharacterStat { },
             GrowthStatCalculator = (level, table, stat) =>
@@ -318,16 +318,16 @@ public static class BoomBoomEngineDatabase
     {
         var data = new BoomBoomEngineData
         {
-            // 미사일 3개 발사, 미사일에 피격된 별꽃 개화도 50% 증가
+           
             EngineID = 20302,
             Name = "아우구스투스",
             Rarity = "Unique",
             ModelID = "EQC005_Scootus",
             SkillID = 309,
             IsUniqueType = true,
-            DescriptionFormat = "속도, 오라 범위 {0:P2} 증가",
+            DescriptionFormat = "속도, 오라 범위 {0:P1} 증가",
             GrowthTable = Enumerable.Range(0, 51)
-                .Select(i => 0.0001f + i * ((0.0031f - 0.0001f) / 50f)) // 0.01% → 0.26%
+                .Select(i => 0.01f + i * ((0.31f - 0.01f) / 50f)) // 0.01% → 0.26%
                 .ToArray(),
             StatBonus = new SCharacterStat { },
             GrowthStatCalculator = (level, table, stat) =>
@@ -339,9 +339,8 @@ public static class BoomBoomEngineDatabase
                 return stat;
             }
         };
-
         
-        // 제작 못함
+        
         engineDataList.Add(data); 
         return data;
     }
@@ -383,7 +382,7 @@ public static class BoomBoomEngineDatabase
             IsUniqueType = true,
             DescriptionFormat = "크리티컬 확률 {0:P0} 증가",
             GrowthTable = Enumerable.Range(0, 51)
-                .Select(i => 0.0001f + i * ((0.0031f - 0.0001f) / 50f)) // 0.01% → 0.26%
+                .Select(i => 0.01f + i * ((0.31f - 0.01f) / 50f)) // 0.01% → 0.26%
                 .ToArray(),
             StatBonus = new SCharacterStat { },
             GrowthStatCalculator = (level, table, stat) =>
@@ -410,9 +409,9 @@ public static class BoomBoomEngineDatabase
             ModelID = "EQC005_EmperorPenguin",
             SkillID = 312,
             IsUniqueType = true,
-            DescriptionFormat = "속도, 오라 강도 {0:P2} 증가",
+            DescriptionFormat = "속도, 오라 강도 {0:P1} 증가",
             GrowthTable = Enumerable.Range(0, 51)
-                .Select(i => 0.0001f + i * ((0.0031f - 0.0001f) / 50f)) // 0.01% → 0.26%
+                .Select(i => 0.01f + i * ((0.31f - 0.01f) / 50f)) // 0.01% → 0.26%
                 .ToArray(),
             StatBonus = new SCharacterStat { },
             GrowthStatCalculator = (level, table, stat) =>
@@ -525,7 +524,7 @@ public static class BoomBoomEngineDatabase
             ModelID = "EQC002_Icecream",
             SkillID = 316,
             IsUniqueType = true, // 고유 효과로 취급 시 필요
-            DescriptionFormat = "이동속도 {0:P0} 증가",
+            DescriptionFormat = "이동속도 {0:P1} 증가",
             GrowthTable = Enumerable.Range(0, 51)
                 .Select(i => 0.02f + i * (0.08f / 50f))  // 2% ~ 10%
                 .ToArray(),
@@ -601,9 +600,9 @@ public static class BoomBoomEngineDatabase
             ModelID = "EQC008_ElfCup",
             SkillID = 320,
             IsUniqueType = true,
-            DescriptionFormat = "오라 범위, 오라 강도 {0:P2} 증가",
+            DescriptionFormat = "오라 범위, 오라 강도 {0:P1} 증가",
             GrowthTable = Enumerable.Range(0, 51)
-                .Select(i => 0.0001f + i * ((0.0031f - 0.0001f) / 50f)) // 0.01% → 0.26%
+                .Select(i => 0.01f + i * ((0.31f - 0.01f) / 50f)) // 0.01% → 0.26%
                 .ToArray(),
             StatBonus = new SCharacterStat { },
             GrowthStatCalculator = (level, table, stat) =>
@@ -717,9 +716,9 @@ public static class BoomBoomEngineDatabase
             ModelID = "EQC006_SandCastle",
             SkillID = 323,
             IsUniqueType = true,
-            DescriptionFormat = "체력과 방어력 50% 감소. 오라 범위, 오라 강도 {0:P2} 증가",
+            DescriptionFormat = "체력과 방어력 50% 감소. 오라 범위, 오라 강도 {0:P1} 증가",
             GrowthTable = Enumerable.Range(0, 51)
-                .Select(i => 0.0030f + i * ((0.0070f - 0.0030f) / 50f)) 
+                .Select(i => 0.03f + i * ((0.07f - 0.03f) / 50f)) 
                 .ToArray(),
             StatBonus = new SCharacterStat { },
             GrowthStatCalculator = (level, table, stat) =>
