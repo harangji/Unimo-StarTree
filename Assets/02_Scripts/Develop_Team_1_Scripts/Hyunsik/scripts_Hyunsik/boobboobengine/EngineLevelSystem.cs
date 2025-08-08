@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class EngineLevelSystem
 {
-    private const int MaxLevel = 50;
+    public const int MaxLevel = 50;
 
     public enum EEngineStatType
     {

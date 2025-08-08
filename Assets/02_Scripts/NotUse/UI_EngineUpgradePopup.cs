@@ -18,6 +18,8 @@ public class UI_EngineUpgradePopup : MonoBehaviour
     
     [Header("UI 관련")]
     [SerializeField] private RectTransform mBgRectTransform;
+    [SerializeField] private GameObject mCostText; // Max 레벨 시 mCostText의 Active를 끄고,
+    [SerializeField] private GameObject mMaxText; // mMaxText의 Active를 킨다.
 
     private int mEngineID;
     private EngineLevelSystem.EEngineStatType mUpgradeStatType;
@@ -107,7 +109,7 @@ public class UI_EngineUpgradePopup : MonoBehaviour
 
     private void UpdateAllLevelUI()
     {
-        const int maxLevel = 50;
+        int maxLevel = EngineLevelSystem.MaxLevel;
         BoomBoomEngineData data = BoomBoomEngineDatabase.GetEngineData(mEngineID);
 
         int curLevel = bIsUniqueType
@@ -115,11 +117,25 @@ public class UI_EngineUpgradePopup : MonoBehaviour
             : EngineLevelSystem.GetStatLevel(mEngineID, mUpgradeStatType);
 
         Debug.Log($"[UI] UpdateAllLevelUI 호출됨 ▶ CurLevel: {curLevel}");
+        
+        bool isMax = curLevel >= maxLevel || mEngineID == 21202 || mEngineID == 20411;
+        
+        if (mCostText != null) mCostText.SetActive(!isMax);
+        if (mMaxText != null)  mMaxText.SetActive(isMax);
+        if (upgradeButton != null) upgradeButton.interactable = !isMax;
 
         mYellowCostText.text = StringMethod.ToCurrencyString(RewardCalculator.EngineYellowCost(curLevel));
         mOrangeCostText.text = StringMethod.ToCurrencyString(RewardCalculator.EngineOrangeCost(curLevel));
 
-        levelText.text = $"Lv. {curLevel} / {maxLevel}";
+        if (isMax)
+        {
+            levelText.text = $"Lv. MAX";
+        }
+        else
+        {
+            levelText.text = $"Lv. {curLevel} / {maxLevel}";
+        }
+        
 
         // GrowthTable 값 안전하게 가져오기
         float growthValue = 0f;
