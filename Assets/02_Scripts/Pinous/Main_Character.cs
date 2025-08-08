@@ -19,8 +19,8 @@ public class Main_Character : MonoBehaviour
         var ofReward = RewardCalculator.GetOfByAltaLevel();
         if (Base_Manager.Data.UserData.BuffFloating[0]>0.0f)
         {
-            yfReward *= 1.3f;
-            ofReward *= 1.3f;
+            yfReward *= 2f;
+            ofReward *= 2f;
         }
         Base_Manager.Data.AssetPlus(Asset_State.Yellow, yfReward);
         Base_Manager.Data.AssetPlus(Asset_State.Red, ofReward);

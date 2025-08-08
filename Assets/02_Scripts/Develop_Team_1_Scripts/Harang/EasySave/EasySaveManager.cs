@@ -108,7 +108,7 @@ public class User_Data
     // 전체 스테이지 보상 획득 여부 저장
     public HashSet<int> RewardedStages = new HashSet<int>();
 
-    //?????
+    //바람개비 광고 부스터 시간
     public float[] BuffFloating = new float[3];
 
     //보유한 캐릭터 true, 미보유 false

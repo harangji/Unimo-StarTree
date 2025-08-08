@@ -21,7 +21,7 @@ public class Mon5Factory : MonsterFactory
         var group = new PatternGroup { Remaining = spawnCount, Cost = cost };
         ActiveGroups.Add(group);
         
-        if (cost == 1)
+        if (cost == 2)
         {
             group = new PatternGroup { Remaining = 1, Cost = cost };
             ActiveGroups.Add(group);
